@@ -1,5 +1,5 @@
 # Streamline Tools
-Streamline Tools for Oracle CPQ Cloud
+Streamline Tools for Oracle CPQ Cloud - Current hour(s) - 1
 
 
 ## Resource Gathering
@@ -8,6 +8,15 @@ Streamline Tools for Oracle CPQ Cloud
 ### Chrome Extension
 
 https://developer.chrome.com/extensions/getstarted
+
+### Extension Logic
+- [ ] manifest.json
+- [ ] background.js
+
+#### UI
+
+- [ ] popup.html
+- [ ] popup.js
 
 ### Github API
 
