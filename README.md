@@ -6,6 +6,8 @@ Streamline Tools for Oracle CPQ Cloud
 
 ## Chrome Extension
 
+https://developer.chrome.com/extensions/getstarted
+
 ## Github API
 
 ## VSCode/Text Editor
