@@ -9,9 +9,10 @@ Streamline Tools for Oracle CPQ Cloud - Current hour(s) - 1
 
 https://developer.chrome.com/extensions/getstarted
 
-### Extension Logic
+#### Extension Logic
 - [ ] manifest.json
 - [ ] background.js
+- [ ] contentscript.js
 
 #### UI
 
