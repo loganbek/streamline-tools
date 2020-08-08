@@ -1,15 +1,22 @@
-# steamlineTools
+# Streamline Tools
 Streamline Tools for Oracle CPQ Cloud
 
 
 ## Resource Gathering
 
-## Chrome Extension
+
+### Chrome Extension
 
 https://developer.chrome.com/extensions/getstarted
 
-## Github API
+### Github API
 
-## VSCode/Text Editor
+https://developer.github.com/v3/
 
-## JS util libs (jQuery?).
+### VSCode/Text Editor
+
+https://code.visualstudio.com/api
+
+### JS util libs - TBD
+jQuery?
+maybe FE lib
