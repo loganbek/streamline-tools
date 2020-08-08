@@ -13,6 +13,7 @@ https://developer.chrome.com/extensions/getstarted
 
 https://developer.chrome.com/extensions/api_index
 
+asynch js call to local file system
 
 #### Extension Logic
 - [ ] manifest.json
