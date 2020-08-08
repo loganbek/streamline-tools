@@ -25,6 +25,16 @@ asynch js call to local file system
 - [ ] popup.html
 - [ ] popup.js
 
+#### Color Scheme
+
+- [ ] #80CFE2 - lightest blue
+- [ ] #00A0C6 - lighter blue
+- [ ] #0C5FA8 - light blue
+- [ ] #60017C - purple
+- [ ] #AC057E - pink
+- [ ] #F0037F - hot pink
+- [ ] #4F1E72 - purp2
+
 ### Github API
 
 https://developer.github.com/v3/
