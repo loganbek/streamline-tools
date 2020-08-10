@@ -1,5 +1,5 @@
 # Streamline Tools
-Streamline Tools for Oracle CPQ Cloud - Current hour(s) - 2
+Streamline Tools for Oracle CPQ Cloud - Current hour(s) - 4
 
 
 ## Resource Gathering
@@ -16,7 +16,7 @@ https://developer.chrome.com/extensions/api_index
 asynch js call to local file system
 
 #### Extension Logic
-- [ ] manifest.json
+- [x] manifest.json
 - [ ] background.js
 - [ ] contentscript.js
 
@@ -24,6 +24,8 @@ asynch js call to local file system
 
 - [ ] popup.html
 - [ ] popup.js
+- [ ] options.html
+- [ ] options.js
 
 #### Color Scheme
 
