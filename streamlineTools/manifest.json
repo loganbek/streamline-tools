@@ -1,11 +1,17 @@
 {
-  "name": "Getting Started Example",
-  "version": "1.0",
-  "description": "Build an Extension!",
-  "permissions": ["activeTab", "declarativeContent", "storage"],
+  "name": "Streamline Tools",
+  "version": "0.0.1",
+  "description": "Streamline Tools for Oracle CPQ Cloud!",
+  "permissions": [
+    "activeTab",
+    "declarativeContent",
+    "storage"
+  ],
   "options_page": "options.html",
   "background": {
-    "scripts": ["background.js"],
+    "scripts": [
+      "background.js"
+    ],
     "persistent": false
   },
   "page_action": {
