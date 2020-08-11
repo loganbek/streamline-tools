@@ -1,6 +1,6 @@
 # Streamline Tools
 
-Streamline Tools for Oracle CPQ Cloud - Current hour(s) - 5
+Streamline Tools for Oracle CPQ Cloud - Current hour(s) - 6
 
 
 ## Resource Gathering
