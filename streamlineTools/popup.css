@@ -1,0 +1,27 @@
+button {
+    min-width: 150px;
+    margin: 5px;
+    border-style: solid;
+    border-radius: 3px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#unload {
+    border-color: #80CFE2;
+}
+
+#load {
+    border-color: #60017C;
+}
+
+
+/* 
+- [ ] #80CFE2 - lightest blue
+- [ ] #00A0C6 - lighter blue
+- [ ] #0C5FA8 - light blue
+- [ ] #60017C - purple
+- [ ] #AC057E - pink
+- [ ] #F0037F - hot pink
+- [ ] #4F1E72 - purp2 
+*/

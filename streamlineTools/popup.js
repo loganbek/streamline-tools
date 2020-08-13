@@ -12,10 +12,16 @@ let loadButton = document.getElementById('load');
 
 unloadButton.onclick = function (params) {
   console.log("unload clicked");
+  //TODO: BML code selector
+
+  //TODO: Send to local VSCode
 }
 
 loadButton.onclick = function (params) {
   console.log("load clicked");
+  //TODO: load BML from local file 
+
+  //TODO: Insert back in DOM
 }
 
 // let changeColor = document.getElementById('changeColor');
