@@ -2,4 +2,6 @@
 
 ![Logo](SLCPQ_LOGO_SITE.png)
 
-Streamline Tools for Oracle CPQ Cloud - Current hour(s) - 10
+Streamline Tools for Oracle CPQ Cloud - Current hour(s) - 11
+
+## Installation Instructions

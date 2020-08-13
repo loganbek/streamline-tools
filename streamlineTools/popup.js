@@ -2,7 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// 'use strict';
+'use strict';
+
+let unloaded = false;
+
+let unloadButton = document.getElementById('unload');
+
+let loadButton = document.getElementById('load');
+
+unloadButton.onclick = function (params) {
+  console.log("unload clicked");
+}
+
+loadButton.onclick = function (params) {
+  console.log("load clicked");
+}
 
 // let changeColor = document.getElementById('changeColor');
 
