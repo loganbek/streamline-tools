@@ -6,7 +6,7 @@ Streamline Tools for Oracle CPQ Cloud - Current hour(s) - 11
 
 ## Installation Instructions
 
-1) Download the latest version of Streamline Tools ![here](https://github.com/loganbek/streamlineTools/releases/tag/v0.0.1-alpha).
+1) Download the latest version of Streamline Tools [here](https://github.com/loganbek/streamlineTools/releases/tag/v0.0.1-alpha).
 
 2) Unzip the file into a streamLineTools folder.
 
