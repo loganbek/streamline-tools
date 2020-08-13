@@ -6,14 +6,16 @@ Streamline Tools for Oracle CPQ Cloud - Current hour(s) - 11
 
 ## Installation Instructions
 
-1) Download the latest version of Streamline Tools here
+1) Download the latest version of Streamline Tools ![here](https://github.com/loganbek/streamlineTools/releases/tag/v0.0.1-alpha).
 
-2) Go to "brave://extensions/" or "chrome://extensions/"
+2) Unzip the file into a streamLineTools folder.
 
-3) Enable Developer Mode
+3) Go to "brave://extensions/" or "chrome://extensions/" in your favorite browser.
 
-4) Press "Load unpacked"
+4) Enable Developer Mode.
 
-5) Select the unzipped "streamLineTools" folder
+5) Press the "Load unpacked" button.
 
-6) Congratulations you've successfully installed Streamline Tools!
+6) Select the unzipped streamLineTools folder.
+
+7) Congratulations you've successfully installed Streamline Tools!
