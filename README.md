@@ -19,3 +19,13 @@ Streamline Tools for Oracle CPQ Cloud - Current hour(s) - 15
 6) Select the unzipped streamLineTools folder.
 
 7) Congratulations you've successfully installed Streamline Tools!
+
+<!-- 
+### Additional
+
+brave://flags/ 
+
+If you want to experiment with the Native File System API locally, enable the #native-file-system-api flag in chrome://flags
+
+WARNING: CAUSES MOST EXTENSIONS TO CRASH
+-->
