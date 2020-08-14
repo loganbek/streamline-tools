@@ -14,7 +14,14 @@ unloadButton.onclick = function (params) {
   console.log("unload clicked");
   //TODO: BML code selector
   let unloaded = true;
-  let code = document.getElementsByClassName('bml');
+
+  //*[@id="selection_field_text"]/strong/text()[1]
+  // let code = document.getElementsByClassName('bml');
+  // /html/body/div[1]/div[3]/div[2]/div[7]/strong/text()[1]
+
+
+
+  let code = document.querySelector('*[@id="selection_field_text"]/strong/text()[1]');
   console.log(code);
 
   // HTMLCollection
