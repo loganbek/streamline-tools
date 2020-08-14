@@ -31,7 +31,7 @@ unloadButton.onclick = function (params) {
 loadButton.onclick = function (params) {
   console.log("load clicked");
   //TODO: load BML from local file 
-
+  // read file
   //TODO: Insert back in DOM
 
   let unloaded = false;

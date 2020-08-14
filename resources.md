@@ -14,6 +14,8 @@
 
 asynch js call to local file system - <https://web.dev/native-file-system/>
 
+<https://github.com/loganbek/text-editor>
+
 ### Extension Logic
 
 - [x] manifest.json

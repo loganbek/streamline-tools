@@ -15,5 +15,4 @@ Meeting Structure:
 weds - indepth
 sat - q and a
 
-
 ## 8/16/20
