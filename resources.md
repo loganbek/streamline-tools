@@ -12,7 +12,7 @@
 
 <https://developer.chrome.com/extensions/declarativeContent>
 
-asynch js call to local file system
+asynch js call to local file system - <https://web.dev/native-file-system/>
 
 ### Extension Logic
 
