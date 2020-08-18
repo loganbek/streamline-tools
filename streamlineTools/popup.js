@@ -21,7 +21,7 @@ unloadButton.onclick = function (params) {
   // /html/body/div[1]/div[3]/div[2]/div[7]/strong/text()[1]
 
 
-  #selection_field > strong
+  // #selection_field > strong
   let code = document.getElementById('selection_field_text');
   console.log(code);
 

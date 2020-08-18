@@ -17,3 +17,5 @@ chrome.runtime.onInstalled.addListener(function () {
     }]);
   });
 });
+
+// chrome.browserAction.setBadgeText(object details, function callback)

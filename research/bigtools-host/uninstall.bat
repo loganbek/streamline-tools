@@ -1,0 +1,1 @@
+REG DELETE "HKCU\Software\Google\Chrome\NativeMessagingHosts\com.piercewashington.app_launcher" /f
