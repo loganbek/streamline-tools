@@ -19,9 +19,9 @@ sat - q and a
 
 ## 8/19/20
 
-- [ ] big too hoss
+- [ ] DOM BML
 - [ ] json path to bml code - x.widget.items[1].component.widget.items[1].component.widget.items[0].component.data
-- [ ] 
+- [ ] big too hoss
 
 ### EXTRA CREDIT
 - [ ] chrome.browserAction.setBadgeText(object details, function callback)

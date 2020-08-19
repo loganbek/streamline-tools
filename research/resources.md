@@ -12,6 +12,8 @@
 
 <https://developer.chrome.com/extensions/declarativeContent>
 
+<https://developer.chrome.com/extensions/content_scripts>
+
 asynch js call to local file system - <https://web.dev/native-file-system/>
 
 <https://github.com/loganbek/text-editor>
