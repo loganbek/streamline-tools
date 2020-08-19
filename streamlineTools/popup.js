@@ -22,8 +22,10 @@ unloadButton.onclick = function (params) {
 
 
   // #selection_field > strong
-  let code = document.getElementById('selection_field_text');
-  console.log(code);
+  // let code = document.getElementById('selection_field_text');
+
+
+  // console.log(code);
 
   // HTMLCollection
   //TODO: Send to local VSCode
