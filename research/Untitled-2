@@ -4,4 +4,13 @@ widget.items[1].component.widget.items[1].component.widget.items[0].component.da
 
 $..[?(@.componentId=='bmlCodeEditor')].data <- this one works
 
+var response = jsonPath(pageParamJSON , "$..[?(@.componentId=='bmlCodeEditor')].data").toJSONString();
+
+var response = jsonPath(jsonRespStr , "$..[?(@.componentId=='bmlCodeEditor')].data");
+
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = 'script.js';
+document.head.appendChild(script);
+
 http://www.jsonquerytool.com/ - 
