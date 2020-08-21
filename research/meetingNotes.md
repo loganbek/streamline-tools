@@ -39,6 +39,14 @@ sat - q and a
 
 - [x] grab fs from laptop
 - [ ] define file structure ->
+-> BmProjects
+    -> cdk.bigmachines.com
+        -> config
+        -> commerce
+        -> file manager
+        -> utils
+            -> function.test.bml
+            -> function.bml
 
 ### EXTRA CREDIT
 
@@ -47,5 +55,18 @@ sat - q and a
 - [ ] chrome.browserAction.setBadgeText(object details, function callback)
 
 -------------------------
+
 <!-- 
-TODO: Streamline Tools v0.1.0-alpha Release -->
+TODO: Streamline Tools v0.1.0-alpha Release
+
+High Level User Flow
+
+1) Install Extension.
+2) Install VSCode + BML extension (CPQ Consultatnt).
+2) Extension correctly detects whether it is looking @ BM (color) or another Page (transparent).
+3) User goes to BM pricing function.
+4) User presses "Unload BML" in popup.
+5) pricing.bml opens in VSCode.
+6) User saves file.
+7) User presses "Loal BML" in popup.
+-->
