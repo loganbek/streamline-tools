@@ -39,13 +39,17 @@ var response = jsonPath(jsonRespStr , "$..[?(@.componentId=='bmlCodeEditor')].da
 - [ ] message passing
     branches
 - [ ] saving blank/bml file or passing into text editor
+    - [] save code
+
+<https://github.com/loganbek/text-editor>
+<https://googlechromelabs.github.io/text-editor/>
 
 ### DISCUSSION
 
 - [x] grab fs from laptop
 - [ ] define initial file structure ->
 -> BmProjects
-    -> cdk.bigmachines.com
+    -> devmcnichols.bigmachines.com
         -> config
         -> commerce
             -> pricing.test.bml
@@ -60,6 +64,7 @@ var response = jsonPath(jsonRespStr , "$..[?(@.componentId=='bmlCodeEditor')].da
 
 ### EXTRA CREDIT
 
+- [ ] loading bml
 - [ ] looking for 1st version of big tools - ON HOLD
 - [ ] research convert to :) vscode format
 - [ ] chrome.browserAction.setBadgeText(object details, function callback)
