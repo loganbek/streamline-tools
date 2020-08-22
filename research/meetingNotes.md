@@ -31,6 +31,15 @@ sat - q and a
     `$..[?(@.componentId=='bmlCodeEditor')].data`
     jsonRespStr
     <http://www.jsonquerytool.com/>
+
+var response = jsonPath(pageParamJSON , "$..[?(@.componentId=='bmlCodeEditor')].data").toJSONString();
+
+jsonRespStr = "{}";
+
+var response = jsonPath(jsonRespStr , "$..[?(@.componentId=='bmlCodeEditor')].data").toJSONString();
+
+.toJSONString();
+
 - [ ] message passing
     branches
 - [ ] saving blank/bml file or passing into text editor
