@@ -37,7 +37,7 @@ jsonRespStr = "{}";
 var response = jsonPath(jsonRespStr , "$..[?(@.componentId=='bmlCodeEditor')].data").toJSONString();
 
 - [ ] message passing
-    branches
+- [x] branch - messagePassing
 - [ ] saving blank/bml file or passing into text editor
     - [] save code
 
