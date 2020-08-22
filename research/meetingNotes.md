@@ -32,13 +32,9 @@ sat - q and a
     jsonRespStr
     <http://www.jsonquerytool.com/>
 
-var response = jsonPath(pageParamJSON , "$..[?(@.componentId=='bmlCodeEditor')].data").toJSONString();
-
 jsonRespStr = "{}";
 
 var response = jsonPath(jsonRespStr , "$..[?(@.componentId=='bmlCodeEditor')].data").toJSONString();
-
-.toJSONString();
 
 - [ ] message passing
     branches
@@ -47,15 +43,20 @@ var response = jsonPath(jsonRespStr , "$..[?(@.componentId=='bmlCodeEditor')].da
 ### DISCUSSION
 
 - [x] grab fs from laptop
-- [ ] define file structure ->
+- [ ] define initial file structure ->
 -> BmProjects
     -> cdk.bigmachines.com
         -> config
         -> commerce
+            -> pricing.test.bml
+            -> pricing.bml
         -> file manager
         -> utils
             -> function.test.bml
             -> function.bml
+
+- [ ] test script functionality
+    maybe $..[?(@.componentId=='mainScriptForm')].data")
 
 ### EXTRA CREDIT
 
