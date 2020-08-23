@@ -10,10 +10,62 @@ let unloadButton = document.getElementById('unload');
 
 let loadButton = document.getElementById('load');
 
+// const setUnload = info => {
+//   // document.getElementById('total').textContent = info.total;
+//   // document.getElementById('inputs').textContent = info.inputs;
+//   // document.getElementById('buttons').textContent = info.buttons;
+
+//   console.log(info);
+//   console.log(info.total);
+// };
+
+// // Once the DOM is ready...
+// window.addEventListener('DOMContentLoaded', () => {
+//   // ...query for the active tab...
+//   chrome.tabs.query({
+//     active: true,
+//     currentWindow: true
+//   }, tabs => {
+//     // ...and send a request for the DOM info...
+//     chrome.tabs.sendMessage(
+//       tabs[0].id,
+//       { from: 'popup', subject: 'Unload' },
+//       // ...also specifying a callback to be called 
+//       //    from the receiving end (content script).
+//       setUnload);
+//   });
+// });
+
 unloadButton.onclick = function (params) {
   console.log("unload clicked");
   //TODO: BML code selector
   let unloaded = true;
+
+  const setUnload = info => {
+    // document.getElementById('total').textContent = info.total;
+    // document.getElementById('inputs').textContent = info.inputs;
+    // document.getElementById('buttons').textContent = info.buttons;
+
+    console.log(info);
+    // console.log(info.total);
+  };
+
+  // Once the DOM is ready...
+  // window.addEventListener('DOMContentLoaded', () => {
+  // ...query for the active tab...
+  chrome.tabs.query({
+    active: true,
+    currentWindow: true
+  }, tabs => {
+    // ...and send a request for the DOM info...
+    chrome.tabs.sendMessage(
+      tabs[0].id,
+      { from: 'popup', subject: 'unload' },
+      // ...also specifying a callback to be called 
+      //    from the receiving end (content script).
+      setUnload);
+  });
+  // });
 
   // innerhtml
   //*[@id="selection_field_text"]/strong/text()[1]
