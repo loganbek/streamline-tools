@@ -5,7 +5,14 @@
   "permissions": [
     "activeTab",
     "declarativeContent",
-    "storage"
+    "storage",
+    {
+      "fileSystem": [
+        "write",
+        "retainEntries",
+        "directory"
+      ]
+    }
   ],
   "options_page": "options.html",
   "background": {

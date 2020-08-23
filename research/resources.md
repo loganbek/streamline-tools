@@ -16,6 +16,10 @@
 
 asynch js call to local file system - <https://web.dev/native-file-system/>
 
+<https://developer.chrome.com/apps/fileSystem>
+
+<https://developer.chrome.com/apps/app_codelab_filesystem>
+
 <https://github.com/loganbek/text-editor>
 
 You are going to need to write a Chrome extension that exposes an API to your website. This is the easy part. You inject a content script to your website, and then use `chrome.extension.sendMessage` to communicate back to your extension.
