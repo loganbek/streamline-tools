@@ -34,7 +34,7 @@ sat - q and a
 
 jsonRespStr = "{}";
 
-var response = jsonPath(jsonRespStr , "$..[?(@.componentId=='bmlCodeEditor')].data").toJSONString();
+var response = jsonPath(jsonRespStr.toJSON() , "$..[?(@.componentId=='bmlCodeEditor')].data");
 
 - [ ] message passing
     - [x] branch - messagePassing - WIP - <https://stackoverflow.com/questions/20019958/chrome-extension-how-to-send-data-from-content-script-to-popup-html>
@@ -43,18 +43,18 @@ var response = jsonPath(jsonRespStr , "$..[?(@.componentId=='bmlCodeEditor')].da
 
 <https://github.com/loganbek/text-editor>
 <https://googlechromelabs.github.io/text-editor/>
+<https://groups.google.com/a/chromium.org/g/chromium-extensions/c/R80PmfqEI6k?pli=1>
 
 ### DISCUSSION
 
 - [x] grab fs from laptop
-- [ ] define initial file structure ->
+- [ ] define initial file structure -> Chris pull req
 -> BmProjects
-    -> devmcnichols.bigmachines.com
-        -> config
+    -> devmcnichols
+        -> config - chris breakout further
         -> commerce
             -> pricing.test.bml
             -> pricing.bml
-        -> file manager
         -> utils
             -> function.test.bml
             -> function.bml
@@ -66,8 +66,17 @@ var response = jsonPath(jsonRespStr , "$..[?(@.componentId=='bmlCodeEditor')].da
 
 - [ ] loading bml
 - [ ] looking for 1st version of big tools - ON HOLD
-- [ ] research convert to :) vscode format
+- [x] research convert to :) vscode format
 - [ ] chrome.browserAction.setBadgeText(object details, function callback)
+
+## 8/2
+
+### DEVLIVERABLES
+
+## UNLOAD
+
+-[] FIX - var response = jsonPath(jsonRespStr.toJSON() , "$..[?(@.componentId=='bmlCodeEditor')].data");
+-[] messagePassing
 
 -------------------------
 
