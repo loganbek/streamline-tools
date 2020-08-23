@@ -37,7 +37,7 @@ jsonRespStr = "{}";
 var response = jsonPath(jsonRespStr , "$..[?(@.componentId=='bmlCodeEditor')].data").toJSONString();
 
 - [ ] message passing
-    branches
+    - [x] branch - messagePassing - WIP - <https://stackoverflow.com/questions/20019958/chrome-extension-how-to-send-data-from-content-script-to-popup-html>
 - [ ] saving blank/bml file or passing into text editor
     - [] save code
 
