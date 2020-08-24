@@ -36,6 +36,8 @@ jsonRespStr = "{}";
 
 var response = jsonPath(jsonRespStr.toJSON() , "$..[?(@.componentId=='bmlCodeEditor')].data");
 
+jsonPath(jsonRespStr, "$..[?(@.componentId=='bmlCodeEditor')].data");
+
 - [ ] message passing
     - [x] branch - messagePassing - WIP - <https://stackoverflow.com/questions/20019958/chrome-extension-how-to-send-data-from-content-script-to-popup-html>
 - [ ] saving blank/bml file or passing into text editor
@@ -75,8 +77,9 @@ var response = jsonPath(jsonRespStr.toJSON() , "$..[?(@.componentId=='bmlCodeEdi
 
 ## UNLOAD
 
--[] FIX - var response = jsonPath(jsonRespStr , "$..[?(@.componentId=='bmlCodeEditor')].data");
--[] messagePassing
+- [ ] FIX - var response = jsonPath(jsonRespStr , "$..[?(@.componentId=='bmlCodeEditor')].data");
+- [x] - WORKING -> jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data");
+- [ ] messagePassing
 
 -------------------------
 
