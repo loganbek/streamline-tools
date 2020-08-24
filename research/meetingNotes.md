@@ -75,7 +75,7 @@ var response = jsonPath(jsonRespStr.toJSON() , "$..[?(@.componentId=='bmlCodeEdi
 
 ## UNLOAD
 
--[] FIX - var response = jsonPath(jsonRespStr.toJSON() , "$..[?(@.componentId=='bmlCodeEditor')].data");
+-[] FIX - var response = jsonPath(jsonRespStr , "$..[?(@.componentId=='bmlCodeEditor')].data");
 -[] messagePassing
 
 -------------------------
