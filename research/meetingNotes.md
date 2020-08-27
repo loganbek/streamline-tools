@@ -71,7 +71,7 @@ jsonPath(jsonRespStr, "$..[?(@.componentId=='bmlCodeEditor')].data");
 - [x] research convert to :) vscode format
 - [ ] chrome.browserAction.setBadgeText(object details, function callback)
 
-## 8/2
+## 8/27/20
 
 ### DEVLIVERABLES
 
@@ -82,12 +82,7 @@ jsonPath(jsonRespStr, "$..[?(@.componentId=='bmlCodeEditor')].data");
 - [x] messagePassing
 jsonPath(jsonRespStr, "$.[?(@.componentId=='bmlCodeEditor')].data");
 
-## TODO:
-
-- [ ] new message passing branch - messagePassing2
-- [ ] look into other save
-- [ ] 
-
+## 8/30/20
 
 - [ ] use $.widget.items[1].component.widget.items[1].component.widget.items[0].component.data" for now
 - [ ] json path lib that supports query
