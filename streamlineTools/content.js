@@ -14,5 +14,6 @@ chrome.runtime.onMessage.addListener(
             "from a content script:" + sender.tab.url :
             "from the extension");
         if (request.greeting == "hello")
+            jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data");
             sendResponse({ farewell: "goodbye" });
     });
