@@ -5,14 +5,7 @@
   "permissions": [
     "activeTab",
     "declarativeContent",
-    "storage",
-    {
-      "fileSystem": [
-        "write",
-        "retainEntries",
-        "directory"
-      ]
-    }
+    "storage"
   ],
   "options_page": "options.html",
   "background": {
@@ -36,7 +29,7 @@
   "web_accessible_resources": [
     "jsonpath-0.8.0.js"
   ],
-  "page_action": {
+  "browser_action": {
     "default_popup": "popup.html",
     "default_icon": {
       "16": "images/stream_line16.png",

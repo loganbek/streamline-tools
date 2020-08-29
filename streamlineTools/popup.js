@@ -80,6 +80,10 @@ loadButton.onclick = function (params) {
   //TODO: load BML from local file
   // readTextFile(); 
   // read file
+
+  let file = "file://Users/loganbek/Downloads/prepareViewAllRFQData.bml";
+  readFile = readTextFile(file);
+
   function readTextFile(file)
   {
       var rawFile = new XMLHttpRequest();
