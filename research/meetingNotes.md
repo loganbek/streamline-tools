@@ -87,7 +87,7 @@ jsonPath(jsonRespStr, "$.[?(@.componentId=='bmlCodeEditor')].data");
 - [ ] use $.widget.items[1].component.widget.items[1].component.widget.items[0].component.data" for now
 - [ ] json path lib that supports query
 - [ ] test w
-- [ ] isolate why mp errors
+- [x] isolate why mp errors - erros on reload of extension w/o page refresh
 
 -------------------------
 
