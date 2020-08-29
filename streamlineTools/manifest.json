@@ -27,7 +27,7 @@
         "*://*.bigmachines.com/*"
       ],
       "js": [
-        "content.js"
+        "content.js", "jsonpath-0.8.0.js"
       ]
     }
   ],
