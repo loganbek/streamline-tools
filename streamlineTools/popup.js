@@ -77,8 +77,26 @@ unloadButton.onclick = function (params) {
 
 loadButton.onclick = function (params) {
   console.log("load clicked");
-  //TODO: load BML from local file 
+  //TODO: load BML from local file
+  // readTextFile(); 
   // read file
+  function readTextFile(file)
+  {
+      var rawFile = new XMLHttpRequest();
+      rawFile.open("GET", file, false);
+      rawFile.onreadystatechange = function ()
+      {
+          if(rawFile.readyState === 4)
+          {
+              if(rawFile.status === 200 || rawFile.status == 0)
+              {
+                  var allText = rawFile.responseText;
+                  alert(allText);
+              }
+          }
+      }
+      rawFile.send(null);
+  }
   //TODO: Insert back in DOM
 
   let unloaded = false;
