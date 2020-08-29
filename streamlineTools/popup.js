@@ -4,6 +4,12 @@
 
 'use strict';
 
+const script = document.createElement('script');
+script.setAttribute("type", "module");
+script.setAttribute("src", chrome.extension.getURL('jsonpath-0.8.0.js'));
+const head = document.head || document.getElementsByTagName("head")[0] || document.documentElement;
+head.insertBefore(script, head.lastChild);
+
 let unloaded = false;
 
 let unloadButton = document.getElementById('unload');
@@ -22,6 +28,7 @@ unloadButton.onclick = function (params) {
   //TODO: BML code selector
   let unloaded = true;
   // let filename = document.getElementById('variableName').value;
+  // console.log(jsonRespStr);
 
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     chrome.tabs.sendMessage(tabs[0].id, { greeting: "unload" }, function (response) {

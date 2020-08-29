@@ -27,9 +27,14 @@
         "*://*.bigmachines.com/*"
       ],
       "js": [
-        "content.js", "jsonpath-0.8.0.js"
-      ]
+        "jsonpath-0.8.0.js",
+        "content.js"
+      ],
+      "all_frames": true
     }
+  ],
+  "web_accessible_resources": [
+    "jsonpath-0.8.0.js"
   ],
   "page_action": {
     "default_popup": "popup.html",
