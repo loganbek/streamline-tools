@@ -81,26 +81,26 @@ loadButton.onclick = function (params) {
   // readTextFile(); 
   // read file
 
-  let file = "file://Users/loganbek/Downloads/prepareViewAllRFQData.bml";
-  readFile = readTextFile(file);
+  // let file = "file://Users/loganbek/Downloads/prepareViewAllRFQData.bml";
+  // readFile = readTextFile(file);
 
-  function readTextFile(file)
-  {
-      var rawFile = new XMLHttpRequest();
-      rawFile.open("GET", file, false);
-      rawFile.onreadystatechange = function ()
-      {
-          if(rawFile.readyState === 4)
-          {
-              if(rawFile.status === 200 || rawFile.status == 0)
-              {
-                  var allText = rawFile.responseText;
-                  alert(allText);
-              }
-          }
-      }
-      rawFile.send(null);
-  }
+  // function readTextFile(file)
+  // {
+  //     var rawFile = new XMLHttpRequest();
+  //     rawFile.open("GET", file, false);
+  //     rawFile.onreadystatechange = function ()
+  //     {
+  //         if(rawFile.readyState === 4)
+  //         {
+  //             if(rawFile.status === 200 || rawFile.status == 0)
+  //             {
+  //                 var allText = rawFile.responseText;
+  //                 alert(allText);
+  //             }
+  //         }
+  //     }
+  //     rawFile.send(null);
+  // }
   //TODO: Insert back in DOM
 
   let unloaded = false;
