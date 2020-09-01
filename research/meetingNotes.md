@@ -82,12 +82,20 @@ jsonPath(jsonRespStr, "$..[?(@.componentId=='bmlCodeEditor')].data");
 - [x] messagePassing
 jsonPath(jsonRespStr, "$.[?(@.componentId=='bmlCodeEditor')].data");
 
-## 8/30/20
+## 8/31/20
 
 - [ ] use $.widget.items[1].component.widget.items[1].component.widget.items[0].component.data" for now
 - [ ] json path lib that supports query
 - [x] test mp w code
 - [x] isolate why mp errors - erros on reload of extension w/o page refresh
+
+
+### DELIVERABLES
+
+1) chrome.runtime.onMessage.addListener(
+    function (request, sender, sendResponse) { <- size limit
+2) - [ ] use $.widget.items[1].component.widget.items[1].component.widget.items[0].component.data" for now
+- [ ] json path lib that supports query
 
 -------------------------
 
