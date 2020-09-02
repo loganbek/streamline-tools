@@ -25,7 +25,7 @@ sat - q and a
 
 ## 8/23/20
 
-### DELIVERABLES
+### DELIVERABLES 1
 
 - [x] correct json path expression for bml code
     `$..[?(@.componentId=='bmlCodeEditor')].data`
@@ -73,7 +73,7 @@ jsonPath(jsonRespStr, "$..[?(@.componentId=='bmlCodeEditor')].data");
 
 ## 8/27/20
 
-### DEVLIVERABLES
+### DEVLIVERABLES 2
 
 ## UNLOAD
 
@@ -89,15 +89,32 @@ jsonPath(jsonRespStr, "$.[?(@.componentId=='bmlCodeEditor')].data");
 - [x] test mp w code
 - [x] isolate why mp errors - erros on reload of extension w/o page refresh
 
+## 9/6/20
 
-### DELIVERABLES
+### DELIVERABLES 3
 
-1) chrome.runtime.onMessage.addListener(
+1) - [ ] chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) { <- size limit
+There does not appear to be a limit or atleast there isn't one mentioned in the docs: <https://developer.chrome.com/extensions/runtime#event-onMessage>
+js string size limit - 
+
 2) - [ ] use $.widget.items[1].component.widget.items[1].component.widget.items[0].component.data" for now
 - [ ] json path lib that supports query
+- maybe jsonpath-1.0.2.js
 
--------------------------
+## 9/9/20
+
+## 9/13/20
+
+## 9/16/20
+
+## 9/23/20
+
+## 9/27/20
+
+## 9/30/20
+
+## 10/4/20
 
 <!-- 
 TODO: Streamline Tools v0.1.0-alpha Release

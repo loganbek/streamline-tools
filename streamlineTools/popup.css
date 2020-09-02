@@ -12,9 +12,16 @@ button {
 }
 
 #load {
+    border-color: #0C5FA8;
+}
+
+#unloadTest {
     border-color: #60017C;
 }
 
+#loadTest {
+    border-color: #F0037F;
+}
 
 /* 
 - [ ] #80CFE2 - lightest blue

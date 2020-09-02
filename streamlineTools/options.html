@@ -8,17 +8,48 @@
       margin-top: 10px;
     }
   </style>
+  <link rel="stylesheet" href="options.css">
+  </link>
 </head>
 
 <body>
   <div>
-    <p>Text Editor: </p>
+    <!-- <img id="logo" src="SLCPQ_LOGO_SITE.png" /> -->
+    <h1>Streamline Tools v0.0.1-alpha</h1>
   </div>
   <div>
-    <p>Other options</p>
+    <h2>BML Options</h2>
+
+    <h3>Comment Header</h3>
+    <textarea id="commentHeader">
+      <!-- Streamline Tools v0.01-alpha -->
+    </textarea>
+
+    <h3>Comment Footer</h3>
+    <textarea id="commentFooter">
+      <!-- Modified by: Chris Williams on 9/1/20 -->
+    </textarea>
   </div>
 
-  <button>Save Changes</button>
+  <div>
+    Favorite color:
+    <select id="color">
+      <option value="red">red</option>
+      <option value="green">green</option>
+      <option value="blue">blue</option>
+      <option value="yellow">yellow</option>
+    </select>
+  </div>
+
+  <div>
+    <label>
+      <input type="checkbox" id="like">
+      I like colors.
+    </label>
+  </div>
+
+  <div id="status"></div>
+  <button id="save">Save</button>
 </body>
 <script src="options.js"></script>
 
