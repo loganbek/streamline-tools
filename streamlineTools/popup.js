@@ -4,17 +4,19 @@
 
 'use strict';
 
-const script = document.createElement('script');
-script.setAttribute("type", "module");
-script.setAttribute("src", chrome.extension.getURL('jsonpath-0.8.0.js'));
-const head = document.head || document.getElementsByTagName("head")[0] || document.documentElement;
-head.insertBefore(script, head.lastChild);
+// const script = document.createElement('script');
+// script.setAttribute("type", "module");
+// script.setAttribute("src", chrome.extension.getURL('jsonpath-0.8.0.js'));
+// const head = document.head || document.getElementsByTagName("head")[0] || document.documentElement;
+// head.insertBefore(script, head.lastChild);
 
 let unloaded = false;
+let unloadedTest = false;
 
 let unloadButton = document.getElementById('unload');
-
 let loadButton = document.getElementById('load');
+let unloadTestButton = document.getElementById('unloadTest');
+let loadTestButton = document.getElementById('loadTest');
 
 function saveText(filename, text) {
   var tempElem = document.createElement('a');
@@ -105,6 +107,30 @@ loadButton.onclick = function (params) {
 
   let unloaded = false;
 }
+
+unloadTestButton.onclick = function (params) {
+  console.log("unloadTest clicked");
+  let unloadedTest = true;
+
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, { greeting: "unloadTest" }, function (response) {
+      console.log(response.filename);
+      console.log(response.code);
+      if (response.code && response.filename) {
+        saveText(response.filename + ".test" + ".bml", response.code);
+      }
+    });
+
+  }
+}
+
+loadTestButton.onclick = function (params) {
+  console.log("loadTest clicked");
+
+  let unloadedTest = false;
+}
+
+
 
 // let changeColor = document.getElementById('changeColor');
 
