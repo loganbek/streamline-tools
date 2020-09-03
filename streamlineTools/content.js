@@ -29,6 +29,10 @@ chrome.runtime.onMessage.addListener(
             //     console.log(data);
             // });
             code = "// Commerce BML Library > emailNotificationGenerator\ntotalMarginVal = \"\";\ntotalDiscVal = \"\";\ntotalVal = \"\";\napprovalReason = \"your\";\nemailBodyOM = \"\"; //Manual Estimate Approval\nif(ReasonName == \"Manual Estimate Approval\"){\n\tapprovalReason = \"Manual Estimate\";\n}elif(ReasonName == \"Management Approval\"){\n\tapprovalReason = \"Manager\";\n}elif(ReasonName == \"VP Sales Approval\"){\n\tapprovalReason = \"VP\";\n}\nemailBodyOM =\tpreparedByName_quote + \" has submitted quote \" + quoteNumber_quote + \" for \" + approvalReason \n\t\t\t+ \" review.\\n\\n\"\n\t\t\t+ \"You can use the link below to review the transaction.\\n\"\n\t\t\t+ \"\\tDirect Link:\\n\\n\"\n\t\t\t+ \"\\t\\t\" + TransactionURL;\n\nemailBody =\tpreparedByName_quote + \" has submitted quote \" + quoteNumber_quote + \" for \" + approvalReason +\" review.\\n\"\n\t\t+ \"\\n\"\n\t\t+ \"Please Respond to this email with the word Approve or Reject in the first line.\\n\"\n\t\t+ \"Add any comments you may have on the second line.\\n\"\n\t\t+ \"\\n\";\nif(len(SubmitComment) > 0){\n\temailBody = emailBody \t+ \"Requester's Comment:\\n\"\n\t\t\t\t+ \"\\t\" + SubmitComment + \"\\n\"\n\t\t\t\t+ \"\\n\";\n}\nif(len(ReasonDescription) > 0){\n\temailBody = emailBody \t+ \"Reason for Approval:\\n\"\n\t\t\t \t+ \"\\t\" + ReasonDescription + \"\\n\"\n\t\t\t\t+ \"\\n\";\n}\nif(string(totalMarginDollar_quote) <> \"\"){\n\tmarginArr = split(string(totalMarginDollar_quote),\".\");\n\tif(len(marginArr[1]) == 1){\n\t\ttotalMarginVal = string(totalMarginDollar_quote) + \"0\";\n\t}else{\n\t\ttotalMarginVal = string(totalMarginDollar_quote);\n\t}\n}\n\nif(string(totalDiscount_quote) <> \"\"){\n\tdiscArr = split(string(totalDiscount_quote),\".\");\n\tif(len(discArr[1]) == 1){\n\t\ttotalDiscVal = string(totalDiscount_quote) + \"0\";\n\t}else{\n\t\ttotalDiscVal = string(totalDiscount_quote);\n\t}\n}\n\nif(string(total_quote) <> \"\"){\n\ttotalArr = split(string(total_quote),\".\");\n\tif(len(totalArr[1]) == 1){\n\t\ttotalVal = string(total_quote) + \"0\";\n\t}else{\n\t\ttotalVal = string(total_quote);\n\t}\n}\n\nemailBody = emailBody \t+ \"Quote Information:\\n\"\n\t\t\t+ \"\\n\";\nif(ReasonName == \"Discount Above Threshold\" OR ReasonName == \"Total Margin Below Threshold\" OR ReasonName == \"Management Approval\"){\n\temailBody = emailBody \t+ \"\\tTotal Quote Margin:       \" + string(totalMarginPercent_quote) + \"%\\n\"\n\t\t\t\t+ \"\\tTotal Quote Margin:     $ \" + totalMarginVal + \"\\n\"\n\t\t\t\t+ \"\\tTotal Quote Discount:   $ \" + totalDiscVal + \"\\n\";\n}\nemailBody = emailBody \t+ \"\\tTotal Quote Value:      $ \" + totalVal + \"\\n\"\n\t\t\t+ \"\\n\"\n\t\t\t+ \"You can use the link below to review the transaction.\\n\"\n\t\t\t+ \"\\tDirect Link:\\n\"\n\t\t\t+ \"\\t\\t\" + TransactionURL + \"\\n\"\n\t\t\t+ \"\\n\";\n\n// add in the xsl view of the Quote\nxslName = \"propsal\";\nif(ReasonName == \"Manual Estimate Approval\"){\n\treturn emailBodyOM + \"$,$\" + xslName;\n}\nreturn emailBody + \"$,$\" + xslName;";
+            testCode = "PLACEHOLDER TEST CODE";
+            // <input type="checkbox" autocomplete="off" id="useScript" name="useScript" class=" x-form-checkbox x-form-field" checked="">
+            // <textarea style="width: 242px; height: 44px;" autocomplete="off" id="ext-comp-1080" name="testScript" class=" x-form-textarea x-form-field "></textarea>
+            // maybe $..[?(@.componentId=='mainScriptForm')].data")
             // header = "// " + filename + ".bml";
             // footer = "// modified by: ";
 
@@ -50,7 +54,7 @@ chrome.runtime.onMessage.addListener(
         } else if (request.greeting == "unloadTest") {
             sendResponse({
                 filename: filename,
-                code: "placeholder test script"
+                code: testCode
             });
         }
     });
