@@ -110,6 +110,7 @@ js string size limit -
 - [ ] Comment Headers
 - [ ] Dark Mode
 - [ ] Directory Structure
+- [ ] Multi OS Support (Windows)
 
 ## 9/9/20
 
