@@ -20,7 +20,7 @@ Streamline Tools for Oracle CPQ Cloud - Current hour(s) - 40
 
 7) Open your local "Downloads" folder in Visual Studio Code.
 
-8) Install the "" Extension for VSCode found [here](https://marketplace.visualstudio.com/items?itemName=Oracle.oracledevtools).
+8) Install the "Oracle Developer Tools" Extension for VSCode found [here](https://marketplace.visualstudio.com/items?itemName=Oracle.oracledevtools).
 
 9) Congratulations you've successfully installed Streamline Tools!
 
