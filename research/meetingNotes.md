@@ -102,6 +102,14 @@ js string size limit -
 - [ ] json path lib that supports query
 - maybe jsonpath-1.0.2.js
 
+### DISCUSSION
+
+- [ ] test scripts
+- [ ] Options/Bells + Whistles
+- [ ] Comment Headers
+- [ ] Dark Mode
+- [ ] Directory Structure
+
 ## 9/9/20
 
 ## 9/13/20
