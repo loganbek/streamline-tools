@@ -112,8 +112,11 @@ js string size limit -
     - [ ] chrome data sync api
 - [ ] Comment Headers
 - [ ] Dark Mode
-- [ ] Directory Structure
+- [ ] Directory Structure- Pull Req
 - [ ] Multi OS Support (Windows)
+- [ ] Repo Badging
+- [ ] Icon lock badge (when unloaded)
+
 
 ## 9/9/20
 
