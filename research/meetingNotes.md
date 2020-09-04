@@ -107,6 +107,7 @@ js string size limit -
 - [ ] Test Scripts
     - [ ] UNLOAD
 - [ ] Options/Bells + Whistles
+    - [ ] chrome data sync api
 - [ ] Comment Headers
 - [ ] Dark Mode
 - [ ] Directory Structure
