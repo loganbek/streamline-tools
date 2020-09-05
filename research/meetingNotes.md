@@ -107,6 +107,7 @@ js string size limit -
 
 ### DISCUSSION
 
+- [ ] LOAD BML
 - [ ] Test Scripts
     - [ ] UNLOAD
 - [ ] Options/Bells + Whistles
@@ -117,6 +118,10 @@ js string size limit -
 - [ ] Multi OS Support (Windows)
 - [ ] Repo Badging
 - [ ] Icon lock badge (when unloaded)
+
+### TODO:
+- [ ] cleanup
+- [ ] isolate save dialog setting
 
 
 ## 9/9/20
