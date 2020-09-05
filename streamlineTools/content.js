@@ -8,6 +8,16 @@
 //     }
 // });
 
+function injectJs(link) {
+    var scr = document.createElement('script');
+    scr.type = "text/javascript";
+    scr.src = link;
+    document.getElementsByTagName('head')[0].appendChild(scr)
+    //document.body.appendChild(scr);
+}
+
+injectJs(chrome.extension.getURL('injected.js'));
+
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
         console.log(sender.tab ?
@@ -21,7 +31,7 @@ chrome.runtime.onMessage.addListener(
             if (!filename) {
                 filename = "nofilename";
             }
-            console.log(jsonRespStr);
+            // console.log(jsonRespStr);
             // const windowData = new ExtractPageVariable('jsonRespStr').data;
             // windowData.then(console.log);
             // windowData.then(data => {
@@ -51,12 +61,13 @@ chrome.runtime.onMessage.addListener(
                 // header: header,
                 // footer: footer
             });
-        } else if (request.greeting == "unloadTest") {
-            sendResponse({
-                filename: filename,
-                code: testCode
-            });
         }
+        // else if (request.greeting == "unloadTest") {
+        //     sendResponse({
+        //         filename: filename,
+        //         code: testCode
+        //     });
+        // }
     });
 
 // class ExtractPageVariable {

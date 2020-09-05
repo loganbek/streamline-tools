@@ -30,7 +30,8 @@
     }
   ],
   "web_accessible_resources": [
-    "jsonpath-1.0.2.js"
+    "jsonpath-1.0.2.js",
+    "injected.js"
   ],
   "browser_action": {
     "default_popup": "popup.html",

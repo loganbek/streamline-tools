@@ -120,8 +120,7 @@ unloadTestButton.onclick = function (params) {
         saveText(response.filename + ".test" + ".bml", response.code);
       }
     });
-
-  }
+  });
 }
 
 loadTestButton.onclick = function (params) {
