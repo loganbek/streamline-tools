@@ -81,11 +81,45 @@ function jsonPath(obj, expr, arg) {
     }
 }
 
+// var ChromeRequest = (function () {
+//     var requestId = 0;
+
+//     function getData(data) {
+//         var id = requestId++;
+
+//         return new Promise(function (resolve, reject) {
+//             var listener = function (evt) {
+//                 if (evt.detail.requestId == id) {
+//                     // Deregister self
+//                     window.removeEventListener("sendChromeData", listener);
+//                     resolve(evt.detail.data);
+//                 }
+//             }
+
+//             window.addEventListener("sendChromeData", listener);
+
+//             var payload = { data: data, id: id };
+
+//             window.dispatchEvent(new CustomEvent("getChromeData", { detail: payload }));
+//         });
+//     }
+
+//     return { getData: getData };
+// })();
+
+
+
 function main() {
     // alert(jsonRespStr);
     // console.log(jsonRespStr);
-    code = jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data");
-    alert(code);
+    // code = jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data");
+    // alert(code);
+    // ChromeRequest.getData("jsonRespStr").then(function (data) { alert(data) });
+    // Page context
+    var message = jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data")
+    // alert(message);
+    var event = new CustomEvent("PassToBackground", { detail: message });
+    window.dispatchEvent(event);
 }
 
 main();
