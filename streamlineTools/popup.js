@@ -83,7 +83,19 @@ loadButton.addEventListener('click', async (e) => {
   const file = await fileHandle.getFile();
   const contents = await file.text();
   // textArea.value = contents;
-  alert(contents);
+  // alert(contents);
+
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, { greeting: "load", code: contents }, function (response) {
+      console.log(response.success);
+      // console.log(response.filename);
+      // console.log(response.code);
+      // if (response.code && response.filename) {
+      //   saveText(response.filename + ".bml", response.code);
+      // }
+    });
+  });
+
 });
 // loadButton.onclick = function (params) {
 //   console.log("load clicked");

@@ -108,7 +108,7 @@ function jsonPath(obj, expr, arg) {
 // })();
 
 window.addEventListener('load', function () {
-    alert("It's loaded!");
+    // alert("It's loaded!");
     main();
 })
 

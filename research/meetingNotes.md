@@ -104,8 +104,10 @@ works fine for pricing in devMcnichols - 3972 loc
 
 ### DISCUSSION
 
-- [ ] LOAD BML
+- [x] UNLOAD E2E
+- [ ] LOAD BML - approach update jsonRespStr via injected.js or a write version
 - [ ] Test Scripts
+    - [ ] can i get a few samples
     - [ ] id="useScript", inputType="checkbox"
     - [ ] UNLOAD - WIP
         - [ ] jsonpath to testscript
@@ -118,28 +120,29 @@ works fine for pricing in devMcnichols - 3972 loc
 
 ####
 
-Next Verison:
+Next Verison (Working POC) v0.1.0 alpha:
     - [ ] finish LOAD BML
-        - [ ] READ + pass from content.js -> inject.js
+        - [x] READ
+        - [ ] pass from content.js -> inject.js
         - [ ] update DOM in inject.js   
-        - [ ] Assuming we "loaded" from local can we inject back into DOM.
+    - [ ] hide functionality besides LOAD BML/UNLOAD BML
 
 #### BACK_BURNER
 
 - [ ] json path lib that supports query
     - [ ] maybe jsonpath-1.0.2.js
-- [ ] Dark Mode
 - [ ] Directory Structure <- Pull Req
 - [ ] Multi OS Support (Linux/Windows)
 - [ ] Multi Editor Support
 - [ ] Repo Badging
 - [ ] Icon lock badge (when unloaded)
+- [ ] Dark Mode
 
 ### TODO:
 
-- [ ] add file overwrite instead of `pricing (1).bml` and `pricing.test (1).bml`. 
+- [ ] file should overwrite instead of `pricing (1).bml` and `pricing.test (1).bml`. 
 - [ ] cleanup
-- [ ] isolate save dialog setting
+- [ ] isolate save dialog setting - WIP
 
 ### DELIVERABLES 4
 
