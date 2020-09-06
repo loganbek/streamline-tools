@@ -77,36 +77,68 @@ unloadButton.onclick = function (params) {
   //TODO: Send to local VSCode
 }
 
-loadButton.onclick = function (params) {
-  console.log("load clicked");
-  //TODO: load BML from local file
-  // readTextFile(); 
-  // read file
+let fileHandle;
+loadButton.addEventListener('click', async (e) => {
+  fileHandle = await window.chooseFileSystemEntries();
+  const file = await fileHandle.getFile();
+  const contents = await file.text();
+  // textArea.value = contents;
+  alert(contents);
+});
+// loadButton.onclick = function (params) {
+//   console.log("load clicked");
 
-  // let file = "file://Users/loganbek/Downloads/prepareViewAllRFQData.bml";
-  // readFile = readTextFile(file);
+//   let fileHandle;
 
-  // function readTextFile(file)
-  // {
-  //     var rawFile = new XMLHttpRequest();
-  //     rawFile.open("GET", file, false);
-  //     rawFile.onreadystatechange = function ()
-  //     {
-  //         if(rawFile.readyState === 4)
-  //         {
-  //             if(rawFile.status === 200 || rawFile.status == 0)
-  //             {
-  //                 var allText = rawFile.responseText;
-  //                 alert(allText);
-  //             }
-  //         }
-  //     }
-  //     rawFile.send(null);
-  // }
-  //TODO: Insert back in DOM
+//   fileHandle = window.chooseFileSystemEntries();
+//   // Do something with the file handle
+//   alert(fileHandle);
 
-  let unloaded = false;
-}
+
+//   // let file = "file:///Users/loganbek/Downloads/pricing.bml";
+//   // readFile(file);
+//   // function readFile(file) {
+//   //   const reader = new FileReader();
+//   //   reader.addEventListener('load', (event) => {
+//   //     const result = event.target.result;
+//   //     // Do something with result
+//   //     alert(result);
+//   //   });
+
+//   //   reader.addEventListener('progress', (event) => {
+//   //     if (event.loaded && event.total) {
+//   //       const percent = (event.loaded / event.total) * 100;
+//   //       console.log(`Progress: ${Math.round(percent)}`);
+//   //     }
+//   //   });
+//   //   reader.readAsText(result);
+//   // }
+
+
+//   //TODO: load BML from local file
+//   // readTextFile(); 
+//   // read file
+
+//   // let file = "file://Users/loganbek/Downloads/pricing.bml";
+//   // readFile = readTextFile(file);
+
+//   // function readTextFile(file) {
+//   //   var rawFile = new XMLHttpRequest();
+//   //   rawFile.open("GET", file, false);
+//   //   rawFile.onreadystatechange = function () {
+//   //     if (rawFile.readyState === 4) {
+//   //       if (rawFile.status === 200 || rawFile.status == 0) {
+//   //         var allText = rawFile.responseText;
+//   //         alert(allText);
+//   //       }
+//   //     }
+//   //   }
+//   //   rawFile.send(null);
+//   // }
+//   //TODO: Insert back in DOM
+
+//   let unloaded = false;
+// }
 
 unloadTestButton.onclick = function (params) {
   console.log("unloadTest clicked");
