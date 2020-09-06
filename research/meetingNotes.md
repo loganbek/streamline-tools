@@ -104,6 +104,7 @@ works fine for pricing in devMcnichols
 
 ### DISCUSSION
 
+- [ ] LOAD BML
 - [ ] Test Scripts
     - [ ] UNLOAD
 - [ ] Options/Bells + Whistles
@@ -125,6 +126,12 @@ Next Verison:
 - [ ] Multi Editor Support
 - [ ] Repo Badging
 - [ ] Icon lock badge (when unloaded)
+
+### TODO:
+- [ ] cleanup
+- [ ] isolate save dialog setting
+
+### DELIVERABLES 4
 
 ## 9/9/20
 
