@@ -93,17 +93,14 @@ jsonPath(jsonRespStr, "$.[?(@.componentId=='bmlCodeEditor')].data");
 
 ### DELIVERABLES 3
 
-1) - [ ] chrome.runtime.onMessage.addListener(
+1) - [x] chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) { <- size limit
 There does not appear to be a limit or atleast there isn't one mentioned in the docs: <https://developer.chrome.com/extensions/runtime#event-onMessage>
-js string size limit - 
+works fine for pricing in devMcnichols 
 
-2) - [ ] use $.widget.items[1].component.widget.items[1].component.widget.items[0].component.data" for now
+2) - [x] use $.widget.items[1].component.widget.items[1].component.widget.items[0].component.data" for now
 - [ ] json path lib that supports query
 - maybe jsonpath-1.0.2.js
-
--branch jsonpath trials
-    - jsonpath-1.0.2.js
 
 ### DISCUSSION
 
@@ -112,12 +109,22 @@ js string size limit -
 - [ ] Options/Bells + Whistles
     - [ ] chrome data sync api
 - [ ] Comment Headers
+
+####
+
+Next Verison:
+    - [ ] add LOAD
+        - [ ] READ + pass from content.js -> inject.js
+        - [ ] update DOM in inject.js   
+
+#### BACK_BURNER
+
 - [ ] Dark Mode
-- [ ] Directory Structure- Pull Req
-- [ ] Multi OS Support (Windows)
+- [ ] Directory Structure <- Pull Req
+- [ ] Multi OS Support (Linux/Windows)
+- [ ] Multi Editor Support
 - [ ] Repo Badging
 - [ ] Icon lock badge (when unloaded)
-
 
 ## 9/9/20
 
