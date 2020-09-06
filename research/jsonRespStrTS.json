@@ -16386,9 +16386,13 @@
                                                                                                         ]
                                                                                                     },
                                                                                                     "data": [
-                                                                                                        null,
                                                                                                         {
-                                                                                                            "name": "testScript"
+                                                                                                            "name": "useScript",
+                                                                                                            "value": "on"
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "name": "testScript",
+                                                                                                            "value": "//test script\nactionName = \"update\";\nreturn \"\";"
                                                                                                         }
                                                                                                     ],
                                                                                                     "wdgType": "Form"
