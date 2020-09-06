@@ -110,6 +110,7 @@ works fine for pricing in devMcnichols
 - [ ] Options/Bells + Whistles
     - [ ] chrome data sync api
 - [ ] Comment Headers
+- [ ] Other Commerce Pages besides library functions
 
 ####
 

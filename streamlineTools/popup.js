@@ -115,9 +115,9 @@ unloadTestButton.onclick = function (params) {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     chrome.tabs.sendMessage(tabs[0].id, { greeting: "unloadTest" }, function (response) {
       console.log(response.filename);
-      console.log(response.code);
-      if (response.code && response.filename) {
-        saveText(response.filename + ".test" + ".bml", response.code);
+      console.log(response.testCode);
+      if (response.testCode && response.filename) {
+        saveText(response.filename + ".test" + ".bml", response.testCode);
       }
     });
   });
