@@ -39,17 +39,20 @@ injectJs(chrome.extension.getURL('injected.js'));
 
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
+        let filename = document.getElementById('variableName').value;
+        if (!filename) {
+            filename = "nofilename";
+        }
         console.log(sender.tab ?
             "from a content script:" + sender.tab.url :
             "from the extension");
+        console.log(request.greeting ?
+            "greeting: " + request.greeting :
+            "nogreeting");
         if (request.greeting == "unload") {
             // chrome.tabs.executeScript({
             //     file: 'jsonPath-0.8.0.js'
             // });
-            let filename = document.getElementById('variableName').value;
-            if (!filename) {
-                filename = "nofilename";
-            }
             // console.log(jsonRespStr);
             // const windowData = new ExtractPageVariable('jsonRespStr').data;
             // windowData.then(console.log);
