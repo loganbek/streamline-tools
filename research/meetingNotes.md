@@ -96,7 +96,7 @@ jsonPath(jsonRespStr, "$.[?(@.componentId=='bmlCodeEditor')].data");
 1) - [x] chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) { <- size limit
 There does not appear to be a limit or atleast there isn't one mentioned in the docs: <https://developer.chrome.com/extensions/runtime#event-onMessage>
-works fine for pricing in devMcnichols 
+works fine for pricing in devMcnichols - 3972 loc
 
 2) - [x] use $.widget.items[1].component.widget.items[1].component.widget.items[0].component.data" for now
 - [ ] json path lib that supports query
@@ -106,21 +106,28 @@ works fine for pricing in devMcnichols
 
 - [ ] LOAD BML
 - [ ] Test Scripts
-    - [ ] UNLOAD
+    - [ ] id="useScript", inputType="checkbox"
+    - [ ] UNLOAD - WIP
+        - [ ] jsonpath to testscript
 - [ ] Options/Bells + Whistles
-    - [ ] chrome data sync api
+    - [ ] chrome data sync api - https://developer.chrome.com/extensions/storage
 - [ ] Comment Headers
+    - [ ] username
+    - [ ] date
 - [ ] Other Commerce Pages besides library functions
 
 ####
 
 Next Verison:
-    - [ ] add LOAD
+    - [ ] finish LOAD BML
         - [ ] READ + pass from content.js -> inject.js
         - [ ] update DOM in inject.js   
+        - [ ] Assuming we "loaded" from local can we inject back into DOM.
 
 #### BACK_BURNER
 
+- [ ] json path lib that supports query
+    - [ ] maybe jsonpath-1.0.2.js
 - [ ] Dark Mode
 - [ ] Directory Structure <- Pull Req
 - [ ] Multi OS Support (Linux/Windows)
@@ -129,6 +136,8 @@ Next Verison:
 - [ ] Icon lock badge (when unloaded)
 
 ### TODO:
+
+- [ ] add file overwrite instead of `pricing (1).bml` and `pricing.test (1).bml`. 
 - [ ] cleanup
 - [ ] isolate save dialog setting
 

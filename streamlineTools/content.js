@@ -18,13 +18,22 @@
 let code = "nocode";
 let testCode = "PLACEHOLDER TEST CODE";
 
-//Listen for the event
+//Listen for the code event
 window.addEventListener("PassToBackground", function (evt) {
     // alert(evt);
     // chrome.runtime.sendMessage(evt.detail);
     code = evt.detail;
     // alert(code);
 }, false);
+
+//Listen for the test code event
+window.addEventListener("PassTestToBackground", function (evt) {
+    // alert(evt);
+    // chrome.runtime.sendMessage(evt.detail);
+    testCode = evt.detail;
+    // alert(code);
+}, false);
+
 
 
 function injectJs(link) {

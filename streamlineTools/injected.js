@@ -117,9 +117,12 @@ function main() {
     // ChromeRequest.getData("jsonRespStr").then(function (data) { alert(data) });
     // Page context
     var message = jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data")
+    var message2 = "TEST SCRIPT FROM INJECT.JS";
     // alert(message);
     var event = new CustomEvent("PassToBackground", { detail: message });
+    var event2 = new CustomEvent("PassTestToBackground", { detail: message2 });
     window.dispatchEvent(event);
+    window.dispatchEvent(event2);
 }
 
 main();
