@@ -146,6 +146,10 @@ Next Verison (Working POC) v0.1.0 alpha:
 
 ### DELIVERABLES 4
 
+- POC 
+- extend to util and config
+- big tools additonal features
+
 ## 9/9/20
 
 ## 9/13/20
