@@ -146,6 +146,12 @@ Next Verison (Working POC) v0.1.0 alpha:
 
 ### DELIVERABLES 4
 
+- LOAD - 
+
+```html
+<textarea id="textarea" wrap="off" onchange="editArea.execCommand(&quot;onchange&quot;);" onfocus="javascript:editArea.textareaFocused=true;" onblur="javascript:editArea.textareaFocused=false;" style="width: 5919px; height: 2355px; font-family: monospace; font-size: 10pt; line-height: 15px; margin-left: 0px; margin-top: 0px;" classname="null hidden" class="null hidden" spellcheck="false"> </textarea>
+```
+
 - POC 
 - extend to util and config
 - big tools additonal features
