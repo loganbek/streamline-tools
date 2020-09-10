@@ -98,12 +98,12 @@ chrome.runtime.onMessage.addListener(
                 testCode: testCode
             });
         }
-        else if (request.greeting == "load") {
-            alert(request.code);
-            sendResponse({
-                success = true
-            });
-        }
+        // else if (request.greeting == "load") {
+        //     alert(request.code);
+        //     sendResponse({
+        //         success = "true"
+        //     });
+        // }
     });
 
 // class ExtractPageVariable {

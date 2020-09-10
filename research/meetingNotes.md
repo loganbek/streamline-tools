@@ -148,13 +148,30 @@ Next Verison (Working POC) v0.1.0 alpha:
 
 - LOAD - 
 
+TEXT AREA onchange JS
 ```html
 <textarea id="textarea" wrap="off" onchange="editArea.execCommand(&quot;onchange&quot;);" onfocus="javascript:editArea.textareaFocused=true;" onblur="javascript:editArea.textareaFocused=false;" style="width: 5919px; height: 2355px; font-family: monospace; font-size: 10pt; line-height: 15px; margin-left: 0px; margin-top: 0px;" classname="null hidden" class="null hidden" spellcheck="false"> </textarea>
 ```
 
+UPDATE jsonRespStr - don't think will work
+UPDATE text area innerHTML
+
+
+
+
+
+
 - POC 
-- extend to util and config
-- big tools additonal features
+- extend to util and config and finish commerce
+    - [ ] commerce quote actions
+        - [ ] comm vs config rules
+        - [ ] 3 diff page types - 
+            - rules
+            - commerce advanced function - before and after
+            - comm lib + util
+    - [x] util
+    - [ ] config - THIS IS GOING TO BE A BEAST
+- [ ] big tools additonal features
 
 ## 9/9/20
 

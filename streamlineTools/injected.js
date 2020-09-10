@@ -119,6 +119,14 @@ function main() {
     // alert(code);
     // ChromeRequest.getData("jsonRespStr").then(function (data) { alert(data) });
     // Page context
+    alert(editAreas);
+    console.log(editAreas);
+    // bm_script.textarea.value
+    // var message4 = jsonPath(editAreas, "x.bm_script.textarea.value");
+    var message4 = editAreas.bm_script.textarea.value;
+    alert(message4);
+
+
     var message = jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data");
     var message1 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[0].value");
     var message3 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[1].value");
