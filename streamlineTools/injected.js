@@ -121,6 +121,8 @@ function main() {
     // Page context
     alert(editAreas);
     console.log(editAreas);
+    alert(editArea);
+    console.log(editArea);
     // bm_script.textarea.value
     // var message4 = jsonPath(editAreas, "x.bm_script.textarea.value");
     var message4 = editAreas.bm_script.textarea.value;

@@ -162,6 +162,9 @@ UPDATE text area innerHTML
 
 
 - POC 
+    - comment header (no footer)
+    - finish load
+    - maybe test scripts
 - extend to util and config and finish commerce
     - [ ] commerce quote actions
         - [ ] comm vs config rules
