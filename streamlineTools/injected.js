@@ -121,12 +121,13 @@ function main() {
     // Page context
     alert(editAreas);
     console.log(editAreas);
-    alert(editArea);
-    console.log(editArea);
+    // alert(editArea);
+    // console.log(editArea);
     // bm_script.textarea.value
     // var message4 = jsonPath(editAreas, "x.bm_script.textarea.value");
-    var message4 = editAreas.bm_script.textarea.value;
+    var message4 = editAreas.bm_script;
     alert(message4);
+    console.log(editAreas.bm_script);
 
 
     var message = jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data");
