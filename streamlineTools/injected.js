@@ -119,15 +119,35 @@ function main() {
     // alert(code);
     // ChromeRequest.getData("jsonRespStr").then(function (data) { alert(data) });
     // Page context
-    alert(editAreas);
-    console.log(editAreas);
-    // alert(editArea);
-    // console.log(editArea);
-    // bm_script.textarea.value
-    // var message4 = jsonPath(editAreas, "x.bm_script.textarea.value");
-    var message4 = editAreas.bm_script;
-    alert(message4);
-    console.log(editAreas.bm_script);
+    // alert(editAreas);
+    // console.log(editAreas);
+    // // alert(editArea);
+    // // console.log(editArea);
+    // // bm_script.textarea.value
+    // // var message4 = jsonPath(editAreas, "x.bm_script.textarea.value");
+    // var message4 = editAreas.bm_script;
+    // alert(message4);
+    // console.log(editAreas.bm_script);
+
+    // alert(editArea.textarea.value);
+
+    // editArea.textarea.value = "";
+    // editArea.execCommand("onchange")
+    // editAreas.bm_script.textarea.getValue
+
+    // REMOVE/REPLACE TEXT FROM CONSOLE
+    // ISOLATE how to load editArea (not present in DOM to start)
+    // editArea.textarea.value = "";
+    // editArea.execCommand("onchange");
+    // click in textarea
+
+    // javasript:editArea.textarea.value = "REPLACED";
+    // "REPLACED"
+    // javascript:editArea.execCommand('onchange');
+    // undefined
+    // javascript:editArea.textareaFocused="true";
+    // javascript:editArea.textareaFocused=false;
+    // "true"
 
 
     var message = jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data");
