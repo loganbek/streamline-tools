@@ -143,13 +143,20 @@ function main() {
 
     // javasript:editArea.textarea.value = "REPLACED";
     // "REPLACED"
-    // javascript:editArea.execCommand('onchange');
+    // javascript:editArea.execCommand('onchange'); - DON'T NEED
     // undefined
-    // javascript:editArea.textareaFocused="true";
+    // javascript:editArea.textareaFocused=true;
     // javascript:editArea.textareaFocused=false;
     // "true"
 
+    // frame_bm_script
+    // frame_bm_script.editArea.textarea.value = "REPLACED"; <- Just need this.
+    // frame_bm_script.textareaFocused = true;
 
+    // var replaced = window.location.href;
+    var replaced = window.frames;
+    // frame_bm_script.editArea.textarea.value = "REPLACED";
+    alert(replaced);
     var message = jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data");
     var message1 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[0].value");
     var message3 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[1].value");

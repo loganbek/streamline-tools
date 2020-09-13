@@ -180,6 +180,12 @@ UPDATE text area innerHTML
 
 ## 9/13/20
 
+TODO:
+
+- [ ] frame_bm_script.editArea.textarea.value = "REPLACED"; <- Just need this.
+- [ ] load code pass
+- [ ] frame nav
+
 ## 9/16/20
 
 ## 9/23/20
