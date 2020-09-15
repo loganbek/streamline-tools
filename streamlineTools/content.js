@@ -105,7 +105,7 @@ chrome.runtime.onMessage.addListener(
             var event = new CustomEvent("loadCode", { detail: request.code });
             window.dispatchEvent(event);
             sendResponse({
-                success: true
+               filename: filename,
             });
         }
     });

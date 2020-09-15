@@ -77,9 +77,9 @@ unloadButton.onclick = function (params) {
   //TODO: Send to local VSCode
 }
 
-let fileHandle;
+let fileHandle = "getVolumePricing.bml";
 loadButton.addEventListener('click', async (e) => {
-  fileHandle = await window.chooseFileSystemEntries();
+  // fileHandle = await window.chooseFileSystemEntries();
   const file = await fileHandle.getFile();
   const contents = await file.text();
   // textArea.value = contents;
