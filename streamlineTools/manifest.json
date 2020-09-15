@@ -5,7 +5,8 @@
   "permissions": [
     "activeTab",
     "declarativeContent",
-    "storage"
+    "storage",
+    "file://*"
   ],
   "options_ui": {
     "page": "options.html",

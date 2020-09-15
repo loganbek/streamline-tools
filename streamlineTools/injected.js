@@ -169,9 +169,9 @@ function main() {
     // alert(message1);
     // alert(message3);
     var event = new CustomEvent("PassToBackground", { detail: message });
-    var event2 = new CustomEvent("PassTestToBackground", { detail: message2 });
+    // var event2 = new CustomEvent("PassTestToBackground", { detail: message2 });
     window.dispatchEvent(event);
-    window.dispatchEvent(event2);
+    // window.dispatchEvent(event2);
 }
 
 // main();

@@ -16,7 +16,7 @@
 // }, false);
 
 let code = "nocode";
-let testCode = "PLACEHOLDER TEST CODE";
+// let testCode = "PLACEHOLDER TEST CODE";
 
 //Listen for the code event
 window.addEventListener("PassToBackground", function (evt) {
@@ -26,13 +26,13 @@ window.addEventListener("PassToBackground", function (evt) {
     // alert(code);
 }, false);
 
-//Listen for the test code event
-window.addEventListener("PassTestToBackground", function (evt) {
-    // alert(evt);
-    // chrome.runtime.sendMessage(evt.detail);
-    testCode = evt.detail;
-    // alert(code);
-}, false);
+// //Listen for the test code event
+// window.addEventListener("PassTestToBackground", function (evt) {
+//     // alert(evt);
+//     // chrome.runtime.sendMessage(evt.detail);
+//     testCode = evt.detail;
+//     // alert(code);
+// }, false);
 
 
 
@@ -104,9 +104,13 @@ chrome.runtime.onMessage.addListener(
             // injectJs(chrome.extension.getURL('loadInjected.js'));
             var event = new CustomEvent("loadCode", { detail: request.code });
             window.dispatchEvent(event);
+            // sendResponse({
+            //     filename: filename,
+            // });
+        } else if (request.greeting == "filename") {
             sendResponse({
-               filename: filename,
-            });
+                filename: filename
+            })
         }
     });
 

@@ -10,7 +10,7 @@ Streamline Tools for Oracle CPQ Cloud
 
 2) Unzip the file into a streamLineTools folder.
 
-3) Go to "brave://extensions/" or "chrome://extensions/" in your favorite browser.
+3) Go to "chrome://extensions/" in your browser.
 
 4) Enable Developer Mode.
 
@@ -22,7 +22,9 @@ Streamline Tools for Oracle CPQ Cloud
 
 8) Install the "CPQ DevKit" Extension for VSCode found [here](https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-o).
 
-9) Congratulations you've successfully installed Streamline Tools!
+9) Enable the Native File System API via chrome://flags#native-file-system-api flag.
+
+10) Congratulations you've successfully installed Streamline Tools!
 
 <!-- 
 ### Additional

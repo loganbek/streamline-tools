@@ -10,6 +10,16 @@
 // const head = document.head || document.getElementsByTagName("head")[0] || document.documentElement;
 // head.insertBefore(script, head.lastChild);
 
+let fileName;
+
+chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+  chrome.tabs.sendMessage(tabs[0].id, { greeting: "filename" }, function (response) {
+    console.log(response.filename);
+    fileName = response.filename;
+  });
+});
+
+
 let unloaded = false;
 let unloadedTest = false;
 
@@ -77,9 +87,10 @@ unloadButton.onclick = function (params) {
   //TODO: Send to local VSCode
 }
 
-let fileHandle = "getVolumePricing.bml";
+// let fileHandle = "file:///Users/loganbek/Downloads/getVolumePricing.bml";
+let fileHandle;
 loadButton.addEventListener('click', async (e) => {
-  // fileHandle = await window.chooseFileSystemEntries();
+  fileHandle = await window.chooseFileSystemEntries();
   const file = await fileHandle.getFile();
   const contents = await file.text();
   // textArea.value = contents;
