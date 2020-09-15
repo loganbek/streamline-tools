@@ -1,5 +1,5 @@
 window.addEventListener('load', function () {
-    alert("It's loaded!");
+    // alert("It's loaded!");
     main();
 })
 
@@ -13,4 +13,6 @@ window.addEventListener("loadCode", function (evt) {
     // chrome.runtime.sendMessage(evt.detail);
     code = evt.detail;
     alert(code);
+    frame_bm_script.editArea.textarea.value = code;
+    frame_bm_script.editArea.textareaFocused = true;
 }, false);

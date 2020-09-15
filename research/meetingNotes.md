@@ -199,6 +199,10 @@ TODO:
 <!-- 
 TODO: Streamline Tools v0.1.0-alpha Release
 
+Functioning LOAD/UNLOAD BML for Commerce Library Functions + Util Library Functions
+
+Please keep in mind this is an alpha release and subject to change. There is no error handling so please be careful when selecting which file to load and unload.
+
 High Level User Flow
 
 1) Install Extension.
@@ -207,6 +211,7 @@ High Level User Flow
 3) User goes to BM pricing function.
 4) User presses "Unload BML" in popup.
 5) pricing.bml opens in VSCode.
-6) User saves file.
-7) User presses "Loal BML" in popup.
+6) user makes changes to pricing.bml
+7) User saves file.
+8) User presses "Loal BML" in popup.
 -->
