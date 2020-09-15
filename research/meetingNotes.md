@@ -186,6 +186,8 @@ TODO:
 - [ ] load code pass
 - [ ] frame nav
 
+- test in chrome + mozilla firefox browsers
+
 ## 9/16/20
 
 ## 9/23/20
