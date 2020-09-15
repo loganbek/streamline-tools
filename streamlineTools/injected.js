@@ -112,6 +112,7 @@ window.addEventListener('load', function () {
     main();
 })
 
+
 function main() {
     // alert(jsonRespStr);
     // console.log(jsonRespStr);
@@ -135,7 +136,6 @@ function main() {
     // editArea.execCommand("onchange")
     // editAreas.bm_script.textarea.getValue
 
-    // REMOVE/REPLACE TEXT FROM CONSOLE
     // ISOLATE how to load editArea (not present in DOM to start)
     // editArea.textarea.value = "";
     // editArea.execCommand("onchange");
@@ -150,13 +150,15 @@ function main() {
     // "true"
 
     // frame_bm_script
-    // frame_bm_script.editArea.textarea.value = "REPLACED"; <- Just need this.
-    // frame_bm_script.textareaFocused = true;
+
+    // WORKING REMOVE/REPLACE TEXT FROM CONSOLE
+    // frame_bm_script.editArea.textarea.value = "REPLACED";
+    // frame_bm_script.editArea.textareaFocused=true;
 
     // var replaced = window.location.href;
-    var replaced = window.frames;
+    // var replaced = window.frames;
     // frame_bm_script.editArea.textarea.value = "REPLACED";
-    alert(replaced);
+    // alert(replaced);
     var message = jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data");
     var message1 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[0].value");
     var message3 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[1].value");

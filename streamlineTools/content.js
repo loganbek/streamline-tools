@@ -40,11 +40,12 @@ function injectJs(link) {
     var scr = document.createElement('script');
     scr.type = "text/javascript";
     scr.src = link;
-    document.getElementsByTagName('head')[0].appendChild(scr)
+    document.getElementsByTagName('head')[0].appendChild(scr);
     //document.body.appendChild(scr);
 }
 
 injectJs(chrome.extension.getURL('injected.js'));
+injectJs(chrome.extension.getURL('loadInjected.js'));
 
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
@@ -92,18 +93,21 @@ chrome.runtime.onMessage.addListener(
                 // footer: footer
             });
         }
-        else if (request.greeting == "unloadTest") {
-            sendResponse({
-                filename: filename,
-                testCode: testCode
-            });
-        }
-        // else if (request.greeting == "load") {
-        //     alert(request.code);
+        // else if (request.greeting == "unloadTest") {
         //     sendResponse({
-        //         success = "true"
+        //         filename: filename,
+        //         testCode: testCode
         //     });
         // }
+        else if (request.greeting == "load") {
+            console.log(request.code);
+            // injectJs(chrome.extension.getURL('loadInjected.js'));
+            var event = new CustomEvent("loadCode", { detail: request.code });
+            window.dispatchEvent(event);
+            sendResponse({
+                success: true
+            });
+        }
     });
 
 // class ExtractPageVariable {
