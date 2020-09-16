@@ -6,7 +6,7 @@ Streamline Tools for Oracle CPQ Cloud
 
 ## Installation Instructions
 
-1) Download the latest version of Streamline Tools [here](https://github.com/loganbek/streamlineTools/releases/tag/v0.0.1-alpha).
+1) Download the latest version of Streamline Tools [here](https://github.com/loganbek/streamlineTools/releases).
 
 2) Unzip the file into a streamLineTools folder.
 
@@ -25,13 +25,3 @@ Streamline Tools for Oracle CPQ Cloud
 9) Enable the Native File System API via chrome://flags#native-file-system-api flag.
 
 10) Congratulations you've successfully installed Streamline Tools!
-
-<!-- 
-### Additional
-
-brave://flags/ 
-
-If you want to experiment with the Native File System API locally, enable the #native-file-system-api flag in chrome://flags
-
-WARNING: CAUSES MOST EXTENSIONS TO CRASH
--->
