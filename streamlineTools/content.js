@@ -16,13 +16,23 @@
 // }, false);
 
 let code = "nocode";
+let fileName = "";
+// let filename = document.getElementById('variableName').value;
 // let testCode = "PLACEHOLDER TEST CODE";
 
 //Listen for the code event
-window.addEventListener("PassToBackground", function (evt) {
+window.addEventListener("PassToCodeBackground", function (evt) {
     // alert(evt);
     // chrome.runtime.sendMessage(evt.detail);
     code = evt.detail;
+    // alert(code);
+}, false);
+
+//Listen for the code event
+window.addEventListener("PassVariableNameBackground", function (evt) {
+    // alert(evt);
+    // chrome.runtime.sendMessage(evt.detail);
+    fileName = evt.detail;
     // alert(code);
 }, false);
 
@@ -49,9 +59,8 @@ injectJs(chrome.extension.getURL('loadInjected.js'));
 
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
-        let filename = document.getElementById('variableName').value;
-        if (!filename) {
-            filename = "nofilename";
+        if (!fileName) {
+            fileName = "nofilename";
         }
         console.log(sender.tab ?
             "from a content script:" + sender.tab.url :
@@ -87,7 +96,7 @@ chrome.runtime.onMessage.addListener(
             // chrome.tabs.executeScript(tabId, {code:'var w = window; console.log(w);'});
             // jsonPath(window.jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data");
             sendResponse({
-                filename: filename,
+                fileName: fileName,
                 code: code
                 // header: header,
                 // footer: footer
@@ -109,7 +118,7 @@ chrome.runtime.onMessage.addListener(
             // });
         } else if (request.greeting == "filename") {
             sendResponse({
-                filename: filename
+                fileName: fileName
             })
         }
     });

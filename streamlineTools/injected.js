@@ -159,18 +159,21 @@ function main() {
     // var replaced = window.frames;
     // frame_bm_script.editArea.textarea.value = "REPLACED";
     // alert(replaced);
-    var message = jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data");
-    var message1 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[0].value");
-    var message3 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[1].value");
-    var message2 = "TEST SCRIPT FROM INJECT.JS";
+    let code = jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data");
+    let variableName = document.getElementById('variableName').value;
+    // var message1 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[0].value");
+    // var message3 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[1].value");
+    // var message2 = "TEST SCRIPT FROM INJECT.JS";
 
-    var messages = message + message1 + message3;
+    // var messages = message + message1 + message3;
 
     // alert(message1);
     // alert(message3);
-    var event = new CustomEvent("PassToBackground", { detail: message });
+    let pc2b = new CustomEvent("PassCodeToBackground", { detail: code });
+    let pvn2b = new CustomEvent("PassVariableNameToBrackground", { detail: variableName })
     // var event2 = new CustomEvent("PassTestToBackground", { detail: message2 });
-    window.dispatchEvent(event);
+    window.dispatchEvent(pc2b);
+    window.dispatchEvent(pvn2b);
     // window.dispatchEvent(event2);
 }
 

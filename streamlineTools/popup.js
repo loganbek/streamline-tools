@@ -14,8 +14,8 @@ let fileName;
 
 chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
   chrome.tabs.sendMessage(tabs[0].id, { greeting: "filename" }, function (response) {
-    console.log(response.filename);
-    fileName = response.filename;
+    console.log(response.fileName);
+    fileName = response.fileName;
   });
 });
 
@@ -47,7 +47,7 @@ unloadButton.onclick = function (params) {
       console.log(response.filename);
       console.log(response.code);
       if (response.code && response.filename) {
-        saveText(response.filename + ".bml", response.code);
+        saveText(response.fileName + ".bml", response.code);
       }
     });
   });
@@ -61,7 +61,7 @@ unloadButton.onclick = function (params) {
   function saveText(filename, text) {
     var tempElem = document.createElement('a');
     tempElem.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-    tempElem.setAttribute('download', filename);
+    tempElem.setAttribute('download', fileName);
     tempElem.click();
   }
 

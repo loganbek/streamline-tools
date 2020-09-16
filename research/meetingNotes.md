@@ -182,13 +182,16 @@ UPDATE text area innerHTML
 
 TODO:
 
-- [ ] frame_bm_script.editArea.textarea.value = "REPLACED"; <- Just need this.
-- [ ] load code pass
-- [ ] frame nav
+- [x] frame_bm_script.editArea.textarea.value = "REPLACED"; <- Just need this.
+- [x] load code pass
+- [x] frame nav
 
-- test in chrome + mozilla firefox browsers
+- [x]test in chrome + mozilla firefox browsers from now on
 
 ## 9/16/20
+
+- [ ] would prefer to use project board to track TODO, bugs, issues, etc.
+- [ ] 
 
 ## 9/23/20
 
@@ -197,23 +200,3 @@ TODO:
 ## 9/30/20
 
 ## 10/4/20
-
-<!-- 
-TODO: Streamline Tools v0.1.0-alpha Release
-
-Functioning LOAD/UNLOAD BML for Commerce Library Functions + Util Library Functions
-
-Please keep in mind this is an alpha release and subject to change. There is no error handling so please be careful when selecting which file to load and unload.
-
-High Level User Flow
-
-1) Install Extension.
-2) Install VSCode + BML extension (CPQ Consultatnt).
-2) Extension correctly detects whether it is looking @ BM (color) or another Page (transparent).
-3) User goes to BM pricing function.
-4) User presses "Unload BML" in popup.
-5) pricing.bml opens in VSCode.
-6) user makes changes to pricing.bml
-7) User saves file.
-8) User presses "Loal BML" in popup.
--->

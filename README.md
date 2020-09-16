@@ -29,8 +29,6 @@ Streamline Tools for Oracle CPQ Cloud
 <!-- 
 ### Additional
 
-brave://flags/ 
-
 If you want to experiment with the Native File System API locally, enable the #native-file-system-api flag in chrome://flags
 
 WARNING: CAUSES MOST EXTENSIONS TO CRASH
