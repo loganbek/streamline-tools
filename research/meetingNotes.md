@@ -47,7 +47,7 @@ jsonPath(jsonRespStr, "$..[?(@.componentId=='bmlCodeEditor')].data");
 <https://googlechromelabs.github.io/text-editor/>
 <https://groups.google.com/a/chromium.org/g/chromium-extensions/c/R80PmfqEI6k?pli=1>
 
-### DISCUSSION
+### DISCUSSION 1
 
 - [x] grab fs from laptop
 - [ ] define initial file structure -> Chris pull req
@@ -64,7 +64,7 @@ jsonPath(jsonRespStr, "$..[?(@.componentId=='bmlCodeEditor')].data");
 - [ ] test script functionality
     maybe $..[?(@.componentId=='mainScriptForm')].data")
 
-### EXTRA CREDIT
+### EXTRA CREDIT 1
 
 - [ ] loading bml
 - [ ] looking for 1st version of big tools - ON HOLD
@@ -102,7 +102,7 @@ works fine for pricing in devMcnichols - 3972 loc
 - [ ] json path lib that supports query
 - maybe jsonpath-1.0.2.js
 
-### DISCUSSION
+### DISCUSSION 3
 
 - [x] UNLOAD E2E
 - [ ] LOAD BML - approach update jsonRespStr via injected.js or a write version
@@ -182,13 +182,39 @@ UPDATE text area innerHTML
 
 TODO:
 
-- [ ] frame_bm_script.editArea.textarea.value = "REPLACED"; <- Just need this.
-- [ ] load code pass
-- [ ] frame nav
+- [x] frame_bm_script.editArea.textarea.value = "REPLACED"; <- Just need this.
+- [x] load code pass
+- [x] frame nav
 
-- test in chrome + mozilla firefox browsers
+- [x] test in chrome
+- [ ] mozilla firefox browsers
 
 ## 9/16/20
+
+- DISCUSSION
+
+- v0.1.0-alpha release
+- Bugs/Issues/Feature Requests + Tracking!
+- [ ] Comment Header - Format I'm thinking
+
+```javascript
+/*
+@param 
+	- partNumList (String[]) 
+	- partNumDict (String[] Dictionary)
+	- qtyDict (Integer Dictionary)
+	- priceDict (Float Dictionary)
+	- accumulate (String)
+@return 
+	- priceDict (Float Dictionary) 
+*/ 
+```
+
+Next Release:
+- Bug fixes
+- Comment Header
+    - [ ] inject.js should grab paramters
+    - [ ] inject.js should pass parameters + return type to content.js
 
 ## 9/23/20
 
@@ -198,22 +224,4 @@ TODO:
 
 ## 10/4/20
 
-<!-- 
-TODO: Streamline Tools v0.1.0-alpha Release
 
-Functioning LOAD/UNLOAD BML for Commerce Library Functions + Util Library Functions
-
-Please keep in mind this is an alpha release and subject to change. There is no error handling so please be careful when selecting which file to load and unload.
-
-High Level User Flow
-
-1) Install Extension.
-2) Install VSCode + BML extension (CPQ Consultatnt).
-2) Extension correctly detects whether it is looking @ BM (color) or another Page (transparent).
-3) User goes to BM pricing function.
-4) User presses "Unload BML" in popup.
-5) pricing.bml opens in VSCode.
-6) user makes changes to pricing.bml
-7) User saves file.
-8) User presses "Loal BML" in popup.
--->

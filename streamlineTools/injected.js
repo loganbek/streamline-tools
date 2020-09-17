@@ -164,6 +164,8 @@ function main() {
     var message3 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[1].value");
     var message2 = "TEST SCRIPT FROM INJECT.JS";
 
+    // var x = document.getElementsByName("fname");
+
     var messages = message + message1 + message3;
 
     // alert(message1);
