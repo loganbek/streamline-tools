@@ -1,54 +1,53 @@
 {
-  "name": "Streamline Tools",
-  "version": "0.0.1",
-  "description": "Streamline Tools for Oracle CPQ Cloud!",
-  "permissions": [
-    "activeTab",
-    "declarativeContent",
-    "storage",
-    "file://*"
-  ],
-  "options_ui": {
-    "page": "options.html",
-    "open_in_tab": true
-  },
-  "background": {
-    "scripts": [
-      "background.js"
+    "name": "Streamline Tools",
+    "version": "0.0.1",
+    "description": "Streamline Tools for Oracle CPQ Cloud!",
+    "permissions": [
+        "downloads",
+        "activeTab",
+        "declarativeContent",
+        "storage",
+        "file://*"
     ],
-    "persistent": false
-  },
-  "content_scripts": [
-    {
-      "matches": [
-        "*://*.bigmachines.com/*"
-      ],
-      "js": [
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": true
+    },
+    "background": {
+        "scripts": [
+            "background.js"
+        ],
+        "persistent": false
+    },
+    "content_scripts": [{
+        "matches": [
+            "*://*.bigmachines.com/*"
+        ],
+        "js": [
+            "jsonpath-1.0.2.js",
+            "content.js"
+        ],
+        "all_frames": true
+    }],
+    "web_accessible_resources": [
         "jsonpath-1.0.2.js",
-        "content.js"
-      ],
-      "all_frames": true
-    }
-  ],
-  "web_accessible_resources": [
-    "jsonpath-1.0.2.js",
-    "injected.js",
-    "loadInjected.js"
-  ],
-  "browser_action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "images/stream_line16.png",
-      "32": "images/stream_line32.png",
-      "48": "images/stream_line48.png",
-      "128": "images/stream_line128.png"
-    }
-  },
-  "icons": {
-    "16": "images/stream_line16.png",
-    "32": "images/stream_line32.png",
-    "48": "images/stream_line48.png",
-    "128": "images/stream_line128.png"
-  },
-  "manifest_version": 2
+        "injected.js",
+        "loadInjected.js"
+    ],
+    "browser_action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "images/stream_line16.png",
+            "32": "images/stream_line32.png",
+            "48": "images/stream_line48.png",
+            "128": "images/stream_line128.png"
+        }
+    },
+    "icons": {
+        "16": "images/stream_line16.png",
+        "32": "images/stream_line32.png",
+        "48": "images/stream_line48.png",
+        "128": "images/stream_line128.png"
+    },
+    "manifest_version": 2
 }
