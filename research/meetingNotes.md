@@ -210,6 +210,9 @@ TODO:
 */ 
 ```
 
+- spoof filesystemhandle to fix load: https://wicg.github.io/native-file-system/#filesystemhandle
+- https://github.com/excalidraw/excalidraw/issues/169
+
 Next Release:
 - Bug fixes
 - Comment Header

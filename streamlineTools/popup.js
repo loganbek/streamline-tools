@@ -90,6 +90,8 @@ unloadButton.onclick = function(params) {
 let fileHandle;
 loadButton.addEventListener('click', async(e) => {
     fileHandle = await window.chooseFileSystemEntries();
+    console.log(fileHandle)
+        // fileHandle2 = new FileSystemFileHandle();
     const file = await fileHandle.getFile();
     const contents = await file.text();
     // textArea.value = contents;
