@@ -34,7 +34,7 @@
         "injected.js",
         "loadInjected.js"
     ],
-    "browser_action": {
+    "page_action": {
         "default_popup": "popup.html",
         "default_icon": {
             "16": "images/stream_line16.png",

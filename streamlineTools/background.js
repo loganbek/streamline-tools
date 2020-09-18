@@ -4,19 +4,19 @@
 
 'use strict';
 
-// chrome.runtime.onInstalled.addListener(function () {
-//   // chrome.storage.sync.set({ color: '#3aa757' }, function () {
-//   //   console.log('The color is green.');
-//   // });
-//   chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
-//     chrome.declarativeContent.onPageChanged.addRules([{
-//       conditions: [new chrome.declarativeContent.PageStateMatcher({
-//         pageUrl: { hostSuffix: 'bigmachines.com' },
-//       })],
-//       actions: [new chrome.declarativeContent.ShowPageAction()]
-//     }]);
-//   });
-// });
+chrome.runtime.onInstalled.addListener(function() {
+    //   // chrome.storage.sync.set({ color: '#3aa757' }, function () {
+    //   //   console.log('The color is green.');
+    //   // });
+    chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+        chrome.declarativeContent.onPageChanged.addRules([{
+            conditions: [new chrome.declarativeContent.PageStateMatcher({
+                pageUrl: { hostSuffix: 'bigmachines.com' },
+            })],
+            actions: [new chrome.declarativeContent.ShowPageAction()]
+        }]);
+    });
+});
 
 // // Regex-pattern to check URLs against. 
 // // It matches URLs like: http[s]://[...]stackoverflow.com[...]
@@ -43,3 +43,6 @@
 //     console.log(response.farewell);
 //   });
 // });
+
+// chrome.browserAction.setBadgeText({text: 'ON'});
+// chrome.browserAction.setBadgeBackgroundColor({color: '#4688F1'});
