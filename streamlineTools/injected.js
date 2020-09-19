@@ -163,20 +163,41 @@ function main() {
     // var replaced = window.frames;
     // frame_bm_script.editArea.textarea.value = "REPLACED";
     // alert(replaced);
-    var message = jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data");
-    var message1 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[0].value");
-    var message3 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[1].value");
-    var message2 = "TEST SCRIPT FROM INJECT.JS";
+    let message = jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data");
+    let message1 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[0].value");
+    let message3 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[1].value");
+    let message2 = "TEST SCRIPT FROM INJECT.JS";
 
-    // var x = document.getElementsByName("fname");
+    // let x = document.getElementsByName("fname");
     // let message = Window.frame_bm_script.editArea.textarea.value;
     // alert(message);
-    var messages = message + message1 + message3;
+    let messages = message + message1 + message3;
 
+    // TEST SCRIPT
+    let useTestScript = document.getElementById('useScript');
+    alert(useScript);
+    let testScript = document.getElementsById('ext-comp-1040');
+    alert(testScript);
+
+    // PROPERTIES
+    // NAME - <input type="text" size="20" autocomplete="off" id="name" name="name" class=" x-form-text x-form-field " style="width: 217px; cursor: auto;">
+    // VARIABLE NAME - <input type="text" size="20" autocomplete="off" id="variableName" name="variableName" class=" x-form-text x-form-field disabledField" readonly="" style="width: 217px;">
+    // DESCRIPTION - <textarea style="width: 217px; height: 60px;" autocomplete="off" id="ext-comp-1006" name="description" class=" x-form-textarea x-form-field"></textarea>
+    // RETURN TYPE - <input type="text" size="20" autocomplete="off" id="ext-comp-1009" name="returnType" class=" x-form-text x-form-field disabledField" readonly="" style="width: 217px;"></input>
+
+    // PARAMETERS
+    // COLUMN NUMBER - <div class="x-grid3-cell-inner x-grid3-col-numberer" unselectable="on">1</div>
+    // PARAMETER NAME - <div class="x-grid3-cell-inner x-grid3-col-paramName" unselectable="on">partNumList</div>
+    // PARAMETER TYPE - <div class="x-grid3-cell-inner x-grid3-col-paramType" unselectable="on">String[]</div>
+    // PARAMETER ID? - <div class="x-grid3-cell-inner x-grid3-col-id" unselectable="on">4196831</div>
+
+
+
+    // id="ext-comp-1040"
     // alert(message1);
     // alert(message3);
-    var event = new CustomEvent("PassToBackground", { detail: message });
-    // var event2 = new CustomEvent("PassTestToBackground", { detail: message2 });
+    let event = new CustomEvent("PassToBackground", { detail: message });
+    // let event2 = new CustomEvent("PassTestToBackground", { detail: message2 });
     window.dispatchEvent(event);
     // window.dispatchEvent(event2);
 }
