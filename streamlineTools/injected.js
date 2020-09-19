@@ -236,7 +236,7 @@ function main() {
 }
 
 window.addEventListener('unloadCode', function(evt) {
-        alert("frame_bm_script.editArea.textarea.value: " + frame_bm_script.editArea.textarea.value);
+        // alert("frame_bm_script.editArea.textarea.value: " + frame_bm_script.editArea.textarea.value);
         let event = new CustomEvent("PassCodeToBackground", { detail: frame_bm_script.editArea.textarea.value });
         window.dispatchEvent(event);
     })
