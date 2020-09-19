@@ -99,7 +99,7 @@ loadButton.addEventListener('click', async(e) => {
 
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { greeting: "load", code: contents }, function(response) {
-            console.log(response.success);
+            // console.log(response.success);
             // console.log(response.filename);
             // console.log(response.code);
             // if (response.code && response.filename) {

@@ -37,7 +37,7 @@ window.addEventListener("PassToBackground", function(evt) {
 // alert(frame_bm_script.editArea.textarea.value);
 
 function injectJs(link) {
-    var scr = document.createElement('script');
+    let scr = document.createElement('script');
     scr.type = "text/javascript";
     scr.src = link;
     document.getElementsByTagName('head')[0].appendChild(scr);
@@ -76,7 +76,7 @@ chrome.runtime.onMessage.addListener(
         else if (request.greeting == "load") {
             console.log(request.code);
             // injectJs(chrome.extension.getURL('loadInjected.js'));
-            var event = new CustomEvent("loadCode", { detail: request.code });
+            let event = new CustomEvent("loadCode", { detail: request.code });
             window.dispatchEvent(event);
             // sendResponse({
             //     filename: filename,
