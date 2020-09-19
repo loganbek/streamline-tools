@@ -18,8 +18,25 @@
 let code = "nocode";
 // let testCode = "PLACEHOLDER TEST CODE";
 
-//Listen for the code event
+//Listen for the PassToBackground event
 window.addEventListener("PassToBackground", function(evt) {
+    // alert(evt);
+    // chrome.runtime.sendMessage(evt.detail);
+    code = evt.detail;
+    // alert(code);
+}, false);
+
+//Listen for the code event
+window.addEventListener("PassCodeToBackground", function(evt) {
+    // alert(evt);
+    // chrome.runtime.sendMessage(evt.detail);
+    code = evt.detail;
+    // alert(code);
+}, false);
+
+
+//Listen for the unloadCode event
+window.addEventListener("unloadCode", function(evt) {
     // alert(evt);
     // chrome.runtime.sendMessage(evt.detail);
     code = evt.detail;
@@ -45,7 +62,7 @@ function injectJs(link) {
 }
 
 injectJs(chrome.extension.getURL('injected.js'));
-injectJs(chrome.extension.getURL('loadInjected.js'));
+// injectJs(chrome.extension.getURL('loadInjected.js'));
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
@@ -60,6 +77,8 @@ chrome.runtime.onMessage.addListener(
             "greeting: " + request.greeting :
             "nogreeting");
         if (request.greeting == "unload") {
+            let unloadEvent = new CustomEvent("unloadCode", { detail: request.code });
+            window.dispatchEvent(unloadEvent);
             sendResponse({
                 filename: filename,
                 code: code

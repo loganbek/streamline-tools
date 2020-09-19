@@ -213,12 +213,30 @@ TODO:
 - spoof filesystemhandle to fix load: https://wicg.github.io/native-file-system/#filesystemhandle
 - https://github.com/excalidraw/excalidraw/issues/169
 
-Next Release:
+Streamline Tools v0.1.1-alpha Release:
 - Bug fixes
-- Comment Header
-    - [ ] inject.js should grab paramters
-    - [ ] inject.js should pass parameters + return type to content.js
+    - [x] file unload now correctly overwrites local file instead of creating a new one.
 
+- Feature
+    - [x] spruced up UI
+    - [x] LOAD auto validation
+
+Streamline Tools v0.2.0-alpha Release:
+- Bug Fixes:
+    - [ ] no longer request file dialog on LOAD (spoof fileSystemFileHandle).
+
+-Features:    
+- Comment Header
+    - [x] inject.js should grab paramters.
+    - [ ] inject.js should pass parameters + return type to content.js.
+- Test Scripts
+    - [ ] UNLOAD
+    - [ ] LOAD
+
+FUTURE:
+Other page types
+config - rules
+- commerce advanced function - before and after
 ## 9/23/20
 
 ## 9/27/20
