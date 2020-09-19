@@ -164,19 +164,19 @@ loadButton.addEventListener('click', async(e) => {
 //   let unloaded = false;
 // }
 
-// unloadTestButton.onclick = function (params) {
-//   console.log("unloadTest clicked");
-//   let unloadedTest = true;
+// unloadTestButton.onclick = function(params) {
+//     console.log("unloadTest clicked");
+//     let unloadedTest = true;
 
-//   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-//     chrome.tabs.sendMessage(tabs[0].id, { greeting: "unloadTest" }, function (response) {
-//       console.log(response.filename);
-//       console.log(response.testCode);
-//       if (response.testCode && response.filename) {
-//         saveText(response.filename + ".test" + ".bml", response.testCode);
-//       }
+//     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+//         chrome.tabs.sendMessage(tabs[0].id, { greeting: "unloadTest" }, function(response) {
+//             console.log(response.filename);
+//             console.log(response.testCode);
+//             if (response.testCode && response.filename) {
+//                 saveText(response.filename + ".test" + ".bml", response.testCode);
+//             }
+//         });
 //     });
-//   });
 // }
 
 // loadTestButton.onclick = function (params) {
