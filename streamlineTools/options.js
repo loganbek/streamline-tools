@@ -46,6 +46,7 @@ function restore_options() {
     chrome.storage.sync.get({
         // favoriteColor: 'red',
         // likesColor: true
+        includeCommentHeader: false
     }, function(items) {
         // document.getElementById('color').value = items.favoriteColor;
         // document.getElementById('like').checked = items.likesColor;
@@ -53,6 +54,16 @@ function restore_options() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', restore_options);
+if (document.readyState !== 'loading') {
+    console.log('document is already ready, just execute code here');
+    restore_options();
+} else {
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('document was not ready, place code here');
+        restore_options();
+    });
+}
+
+// document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById('save').addEventListener('click',
     save_options);
