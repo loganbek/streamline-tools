@@ -216,6 +216,7 @@ TODO:
 Streamline Tools v0.1.1-alpha Release:
 - Bug fixes
     - [x] file unload now correctly overwrites local file instead of creating a new one.
+    - [x] subsequent LOADS now correctly pull code from editArea
 
 - Feature
     - [x] spruced up UI

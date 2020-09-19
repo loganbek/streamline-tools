@@ -25,8 +25,8 @@ let unloadedTest = false;
 
 let unloadButton = document.getElementById('unload');
 let loadButton = document.getElementById('load');
-let unloadTestButton = document.getElementById('unloadTest');
-let loadTestButton = document.getElementById('loadTest');
+// let unloadTestButton = document.getElementById('unloadTest');
+// let loadTestButton = document.getElementById('loadTest');
 
 // function saveText(filename, text) {
 //     let tempElem = document.createElement('a');
