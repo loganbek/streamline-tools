@@ -193,7 +193,7 @@ TODO:
 
 - DISCUSSION
 
-- v0.1.0-alpha release
+- v0.1.0-alpha release -> v1.1.0-alpha release
 - Bugs/Issues/Feature Requests + Tracking!
 - [ ] Comment Header - Format I'm thinking
 
@@ -213,31 +213,25 @@ TODO:
 - spoof filesystemhandle to fix load: https://wicg.github.io/native-file-system/#filesystemhandle
 - https://github.com/excalidraw/excalidraw/issues/169
 
-Streamline Tools v0.1.1-alpha Release:
-- Bug fixes
-    - [x] file unload now correctly overwrites local file instead of creating a new one.
-    - [x] subsequent LOADS now correctly pull code from editArea
-
-- Feature
-    - [x] spruced up UI
-    - [x] LOAD auto validation
 
 Streamline Tools v0.2.0-alpha Release:
 - Bug Fixes:
     - [ ] no longer request file dialog on LOAD (spoof fileSystemFileHandle).
 
 -Features:    
-- Comment Header
+- Comment Header - WIP
     - [x] inject.js should grab paramters.
     - [ ] inject.js should pass parameters + return type to content.js.
-- Test Scripts
+- Test Scripts - WIP
     - [ ] UNLOAD
     - [ ] LOAD
 
 FUTURE:
 Other page types
-config - rules
+- config - rules
 - commerce advanced function - before and after
+
+
 ## 9/23/20
 
 ## 9/27/20
