@@ -189,12 +189,19 @@ TODO:
 - [x] test in chrome
 - [ ] mozilla firefox browsers
 
-## 9/16/20
+## 9/30/20
 
-- DISCUSSION
+### DISCUSSION
 
 - v0.1.0-alpha release -> v1.1.0-alpha release
-- Bugs/Issues/Feature Requests + Tracking!
+
+### TESTING/FEEDBACK
+
+- Install Instructions
+- Bugs
+- Feature Requests
+
+
 - [ ] Comment Header - Format I'm thinking
 
 ```javascript
@@ -212,18 +219,19 @@ TODO:
 
 - spoof filesystemhandle to fix load: https://wicg.github.io/native-file-system/#filesystemhandle
 - https://github.com/excalidraw/excalidraw/issues/169
+- https://www.html5rocks.com/en/tutorials/file/filesystem/
 
 
 Streamline Tools v0.2.0-alpha Release:
 - Bug Fixes:
-    - [ ] no longer request file dialog on LOAD (spoof fileSystemFileHandle).
+    - [ ] no longer request file dialog on LOAD (spoof fileSystemFileHandle). - WIP branch fileSystemFileHandle
 
 -Features:    
 - Comment Header - WIP
     - [x] inject.js should grab paramters.
     - [ ] inject.js should pass parameters + return type to content.js.
 - Test Scripts - WIP
-    - [ ] UNLOAD
+    - [x] UNLOAD
     - [ ] LOAD
 
 FUTURE:

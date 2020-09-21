@@ -1,6 +1,6 @@
 {
     "name": "Streamline Tools",
-    "version": "0.0.1",
+    "version": "0.1.1",
     "description": "Streamline Tools for Oracle CPQ Cloud!",
     "permissions": [
         "downloads",

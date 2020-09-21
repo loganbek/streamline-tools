@@ -89,9 +89,23 @@ unloadButton.onclick = function(params) {
 // let fileHandle = "file:///Users/loganbek/Downloads/getVolumePricing.bml";
 let fileHandle;
 loadButton.addEventListener('click', async(e) => {
+    // fileHandle = getFileHandle("pricing.bml");
     fileHandle = await window.chooseFileSystemEntries();
-    console.log(fileHandle)
-        // fileHandle2 = new FileSystemFileHandle();
+    // console.log(fileHandle)
+    //     // fileHandle2 = new FileSystemFileHandle("pricing.bml");
+    //     // Promise<FileSystemFileHandle> getFileHandle(USVString name, optional FileSystemGetFileOptions options = {});
+    //     // filehandle2 = { isDirectory: false, isFile: true, name: "addCutSizesToSheetCalTable.bml" };
+    //     // console.log(fileHandle2);
+    // directoryHandle = await navigator.storage.getDirectory()
+    // console.log(directoryHandle);
+
+    // 
+    // Note: The file system has been prefixed as of Google Chrome 12:
+    // window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+
+    // window.requestFileSystem(type, size, successCallback, opt_errorCallback)
+
+
     const file = await fileHandle.getFile();
     const contents = await file.text();
     // textArea.value = contents;
