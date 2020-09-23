@@ -28,6 +28,8 @@ asynch js call to local file system - <https://web.dev/native-file-system/>
 
 <https://developer.chrome.com/extensions/options#:~:text=A%20user%20can%20view%20an,then%20selection%20the%20options%20link.>
 
+<https://developer.chrome.com/extensions/declare_permissions#unlimitedStorage>
+
 You are going to need to write a Chrome extension that exposes an API to your website. This is the easy part. You inject a content script to your website, and then use `chrome.extension.sendMessage` to communicate back to your extension.
 
 The hard part is to actually open the bat file from your extension. With NPAPI, this would have been easy, since you could just write a C++ plugin that calls CreateProcess or something. Contrary to what you said, it's a pretty good solution. But unfortunately, NPAPI isn't an option, since it's being deprecated.

@@ -239,6 +239,8 @@ Other page types
 - config - rules
 - commerce advanced function - before and after
 
+RELEASE DRAFTER:
+https://github.com/release-drafter/release-drafter#readme
 
 ## 9/23/20
 

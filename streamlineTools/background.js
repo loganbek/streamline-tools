@@ -46,3 +46,17 @@ chrome.runtime.onInstalled.addListener(function() {
 
 // chrome.browserAction.setBadgeText({text: 'ON'});
 // chrome.browserAction.setBadgeBackgroundColor({color: '#4688F1'});
+
+// chrome.runtime.onMessage.addListener(
+//     function(request, sender, sendResponse) {
+//         if (request.contentScriptQuery == 'fetchUrl') {
+//             // WARNING: SECURITY PROBLEM - a malicious web page may abuse
+//             // the message handler to get access to arbitrary cross-origin
+//             // resources.
+//             fetch(request.url)
+//                 .then(response => response.text())
+//                 .then(text => sendResponse(text))
+//                 .catch(error => ...)
+//             return true; // Will respond asynchronously.
+//         }
+//     });

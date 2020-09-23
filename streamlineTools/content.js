@@ -15,6 +15,47 @@
 //     window.dispatchEvent(new CustomEvent("sendChromeData", { detail: response }));
 // }, false);
 
+function fetchLocal(url) {
+    return new Promise(function(resolve, reject) {
+        var xhr = new XMLHttpRequest
+        xhr.onload = function() {
+            resolve(new Response(xhr.responseText, { status: xhr.status }))
+        }
+        xhr.onerror = function() {
+            reject(new TypeError('Local request failed'))
+        }
+        xhr.open('GET', url)
+        xhr.send(null)
+    })
+}
+
+function readTextFile(file) {
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, true);
+    rawFile.onreadystatechange = function() {
+        if (rawFile.readyState === 4) {
+            if (rawFile.status === 200 || rawFile.status == 0) {
+                var allText = rawFile.responseText;
+                // alert(rawFile.status);
+                // alert(rawFile);
+                alert(allText);
+
+            }
+        }
+    }
+    rawFile.send(null);
+}
+
+let fileURL = "file:/Users/loganbek/Downloads/getVolumePricing.bml";
+let url = chrome.runtime.getURL(fileURL);
+// alert(url);
+
+// let localFile = fetchLocal(fileURL);
+// alert(localFile);
+
+localFile2 = readTextFile(fileURL);
+// alert(localFile2);
+
 let code = "nocode";
 let testCode = "PLACEHOLDER TEST CODE";
 

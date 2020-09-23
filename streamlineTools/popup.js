@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-'use strict';
+// 'use strict';
 
 // const script = document.createElement('script');
 // script.setAttribute("type", "module");
@@ -11,6 +11,7 @@
 // head.insertBefore(script, head.lastChild);
 
 let fileName;
+let contents;
 
 chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, { greeting: "filename" }, function(response) {
@@ -86,12 +87,94 @@ unloadButton.onclick = function(params) {
     //TODO: Send to local VSCode
 }
 
+// Page.setInterceptFileChooserDialog();
+// window.setInterceptFileChooserDialog();
+
+
 // let fileHandle = "file:///Users/loganbek/Downloads/getVolumePricing.bml";
 let fileHandle;
 loadButton.addEventListener('click', async(e) => {
+
+    let fileURL = "http://127.0.0.1:8887/" + fileName + ".bml";
+    let url = chrome.runtime.getURL(fileURL);
+    // alert(url);
+
+    // fetch(fileURL.then(r => r.text()).then(result => {
+    //     // Result now contains the response text, do what you want...
+    //     alert(result);
+    // }));
+
+    function fetchLocal(url) {
+        return new Promise(function(resolve, reject) {
+            var xhr = new XMLHttpRequest
+            xhr.onload = function() {
+                resolve(new Response(xhr.responseText, { status: xhr.status }))
+                alert(xhr.responseText)
+                contents = xhr.responseText
+            }
+            xhr.onerror = function() {
+                reject(new TypeError('Local request failed'))
+            }
+            xhr.open('GET', url)
+            xhr.send(null)
+        })
+    }
+
+    let localFile = fetchLocal(fileURL);
+    alert(localFile);
+    console.log(localFile);
+
+    // alert(fetchLocal(url).status);
+
+
+    // alert(readTextFile(url));
+
+    // function readTextFile(file) {
+    //     var rawFile = new XMLHttpRequest();
+    //     rawFile.open("GET", file, false);
+    //     rawFile.onreadystatechange = function() {
+    //         if (rawFile.readyState === 4) {
+    //             if (rawFile.status === 200 || rawFile.status == 0) {
+    //                 var allText = rawFile.responseText;
+    //                 alert(allText);
+    //             }
+    //         }
+    //     }
+    //     rawFile.send(null);
+    // }
+    // function callback() {
+    //     if (xhr.readyState === XMLHttpRequest.DONE) {
+    //         if (xhr.status === 200) {
+    //             result = xhr.responseText;
+    //             alert(result);
+    //         }
+    //     } else {
+    //         alert(xhr.status)
+    //     }
+    // };
+
+    // var xhr = new XMLHttpRequest();
+    // xhr.open("GET", URL, true);
+    // xhr.onreadystatechange = callback;
+    // xhr.send();
+
+    // FIRST OPTION
+
     // fileHandle = getFileHandle("pricing.bml");
-    fileHandle = await window.chooseFileSystemEntries();
-    // console.log(fileHandle)
+    // fileHandle = await window.chooseFileSystemEntries();
+    // console.log(fileHandle);
+
+    // chrome.fileSystem.chooseEntry({
+    //         type: ' openWritableFile',
+    //         accepts: [{
+    //             extensions: ['bml']
+    //         }]
+    //     },
+    //     function(fileEntry) {
+    //         //... You can call both fileEntry.file() to read or
+    //         //... fileEntry.createWriter() to write
+    //     }
+
     //     // fileHandle2 = new FileSystemFileHandle("pricing.bml");
     //     // Promise<FileSystemFileHandle> getFileHandle(USVString name, optional FileSystemGetFileOptions options = {});
     //     // filehandle2 = { isDirectory: false, isFile: true, name: "addCutSizesToSheetCalTable.bml" };
@@ -99,17 +182,52 @@ loadButton.addEventListener('click', async(e) => {
     // directoryHandle = await navigator.storage.getDirectory()
     // console.log(directoryHandle);
 
-    // 
+    // function getNewFileHandle() {
+    //     const opts = {
+    //         type: 'saveFile',
+    //         accepts: [{
+    //             description: 'Text file',
+    //             extensions: ['txt'],
+    //             mimeTypes: ['text/plain'],
+    //         }],
+    //     };
+    //     const handle = window.chooseFileSystemEntries(opts);
+    //     return handle;
+    // }
+
+    // enable file chooser interception with |page.setInterceptFileChooserDialog| command
+    // subscribe to the |page.fileChooserOpened| event
+    // handle file choosers with |page.handleFileChooser| command
+
+    // https://wicg.github.io/native-file-system/#sandboxed-filesystem
+    // fileHandle2 = FileSystemDirectoryHandle.getSystemDirectory({ type: "sandbox" });
+    // console.log(fileHandle2);
+    // FileSystemDirectoryHandle.getSystemDirectory({ type: "local" });
+
+    // https://www.w3.org/TR/2012/WD-file-system-api-20120417/#idl-def-Entry
+
+    // interface Entry {
+    //     readonly attribute boolean isFile;
+    //     readonly attribute boolean isDirectory;
+    //     void getMetadata(MetadataCallback successCallback, optional ErrorCallback errorCallback);
+    //     readonly attribute DOMString name;
+    //     readonly attribute DOMString fullPath;
+    //     readonly attribute FileSystem filesystem;
+    //     void moveTo(DirectoryEntry parent, optional DOMString newName, optional EntryCallback successCallback, optional ErrorCallback errorCallback);
+    //     void copyTo(DirectoryEntry parent, optional DOMString newName, optional EntryCallback successCallback, optional ErrorCallback errorCallback);
+    //     DOMString toURL();
+    //     void remove(VoidCallback successCallback, optional ErrorCallback errorCallback);
+    //     void getParent(EntryCallback successCallback, optional ErrorCallback errorCallback);
+    // };
+
+    // const file = await fileHandle.getFile();
+    // const contents = await file.text();
+
+    // SECOND OPTION
     // Note: The file system has been prefixed as of Google Chrome 12:
     // window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
 
     // window.requestFileSystem(type, size, successCallback, opt_errorCallback)
-
-
-    const file = await fileHandle.getFile();
-    const contents = await file.text();
-    // textArea.value = contents;
-    // alert(contents);
 
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { greeting: "load", code: contents }, function(response) {
