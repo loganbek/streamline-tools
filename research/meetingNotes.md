@@ -222,10 +222,11 @@ TODO:
 - https://www.html5rocks.com/en/tutorials/file/filesystem/
 
 
-Streamline Tools v0.2.0-alpha Release:
+Streamline Tools v0.1.2-alpha Release:
 - Bug Fixes:
     - [ ] no longer request file dialog on LOAD (spoof fileSystemFileHandle). - WIP branch fileSystemFileHandle
 
+Streamline Tools v0.2.00-alpha Release:
 -Features:    
 - Comment Header - WIP
     - [x] inject.js should grab paramters.
