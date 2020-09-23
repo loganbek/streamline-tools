@@ -109,8 +109,9 @@ loadButton.addEventListener('click', async(e) => {
             var xhr = new XMLHttpRequest
             xhr.onload = function() {
                 resolve(new Response(xhr.responseText, { status: xhr.status }))
-                alert(xhr.responseText)
+                    // alert(xhr.responseText)
                 contents = xhr.responseText
+                    // alert(contents);
             }
             xhr.onerror = function() {
                 reject(new TypeError('Local request failed'))
@@ -121,8 +122,8 @@ loadButton.addEventListener('click', async(e) => {
     }
 
     let localFile = fetchLocal(fileURL);
-    alert(localFile);
-    console.log(localFile);
+    // alert(localFile);
+    // console.log(localFile);
 
     // alert(fetchLocal(url).status);
 
@@ -229,6 +230,7 @@ loadButton.addEventListener('click', async(e) => {
 
     // window.requestFileSystem(type, size, successCallback, opt_errorCallback)
 
+    alert(contents);
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { greeting: "load", code: contents }, function(response) {
             // console.log(response.success);
