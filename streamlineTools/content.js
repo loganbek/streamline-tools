@@ -15,8 +15,8 @@
 //     window.dispatchEvent(new CustomEvent("sendChromeData", { detail: response }));
 // }, false);
 
-let code = "nocode";
-let testCode = "PLACEHOLDER TEST CODE";
+let code = "";
+let testCode = "";
 
 //Listen for the PassToBackground event
 window.addEventListener("PassToBackground", function(evt) {
@@ -93,6 +93,7 @@ chrome.runtime.onMessage.addListener(
                     // header: header,
                     // footer: footer
             });
+            // return true;
         } else if (request.greeting == "unloadTest") {
             let unloadTestEvent = new CustomEvent("unloadTestCode", { detail: request.code });
             window.dispatchEvent(unloadTestEvent);
@@ -100,17 +101,23 @@ chrome.runtime.onMessage.addListener(
                 filename: filename,
                 testCode: testCode
             });
+            // return true;
         } else if (request.greeting == "load") {
             console.log(request.code);
             // injectJs(chrome.extension.getURL('loadInjected.js'));
-            let event = new CustomEvent("loadCode", { detail: request.code });
-            window.dispatchEvent(event);
+            let loadEvent = new CustomEvent("loadCode", { detail: request.code });
+            window.dispatchEvent(loadEvent);
             // sendResponse({
             //     filename: filename,
             // });
+        } else if (request.greeting == "loadTest") {
+            console.log(request.code);
+            let loadTestEvent = new CustomEvent("loadTestCode", { detail: request.code });
+            window.dispatchEvent(loadTestEvent);
         } else if (request.greeting == "filename") {
             sendResponse({
                 filename: filename
-            })
+            });
+            // return true;
         }
     });

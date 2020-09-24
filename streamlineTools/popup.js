@@ -43,10 +43,8 @@ chrome.downloads.onDeterminingFilename.addListener(function(item, suggest) {
 
 unloadButton.onclick = function(params) {
     console.log("unload clicked");
-    //TODO: BML code selector
+
     let unloaded = true;
-    // let filename = document.getElementById('variableName').value;
-    // console.log(jsonRespStr);
 
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { greeting: "unload" }, function(response) {
@@ -99,6 +97,7 @@ loadButton.addEventListener('click', async(e) => {
             // if (response.code && response.filename) {
             //   saveText(response.filename + ".bml", response.code);
             // }
+            console.log(response);
         });
     });
 
@@ -173,11 +172,32 @@ unloadTestButton.onclick = function(params) {
     });
 }
 
-loadTestButton.onclick = function(params) {
-    console.log("loadTest clicked");
+let fileHandle2;
+loadTestButton.addEventListener('click', async(e) => {
+    // console.log("loadTest clicked");
 
-    let unloadedTest = false;
-}
+    // let unloadedTest = false;
+    fileHandle2 = await window.chooseFileSystemEntries();
+    console.log(fileHandle2)
+        // fileHandle2 = new FileSystemFileHandle();
+    const file = await fileHandle2.getFile();
+    const contents = await file.text();
+    // textArea.value = contents;
+    // alert(contents);
+
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, { greeting: "loadTest", code: contents }, function(response) {
+            // console.log(response.success);
+            // console.log(response.filename);
+            // console.log(response.code);
+            // if (response.code && response.filename) {
+            //   saveText(response.filename + ".bml", response.code);
+            // }
+            // console.log(response);
+            console.log(response);
+        });
+    });
+});
 
 
 

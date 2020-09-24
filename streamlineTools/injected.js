@@ -256,19 +256,34 @@ window.addEventListener("loadCode", function(evt) {
     document.getElementsByClassName('bmx-spellcheck')[0].click();
 }, false);
 
+//Listen for the load test code event
+window.addEventListener("loadTestCode",
+    function(evt) {
+        // alert(evt);
+        // chrome.runtime.sendMessage(evt.detail);
+        code = evt.detail;
+        // alert(code);
+        // frame_bm_script.editArea.textarea.value = code;
+        // frame_bm_script.editArea.textareaFocused = true;
+
+        document.getElementById('ext-comp-1080').value = code;
+        //Perform Validation
+        // document.getElementById('ext-gen22').click();
+        // document.getElementsByClassName('bmx-spellcheck')[0].click();
+    }, false);
+
 window.addEventListener("unloadTestCode",
     function(evt) {
         let useTestScript = document.getElementById('useScript').checked;
-        alert(useTestScript);
+        // alert(useTestScript);
         if (useTestScript) {
-
+            // let testScript = document.getElementById('ext-comp-1040').value;
+            // alert(testScript);
+            let testScript2 = document.getElementById('ext-comp-1080').value;
+            // alert(testScript2);
+            let event = new CustomEvent("PassTestCodeToBackground", { detail: testScript2 });
+            window.dispatchEvent(event);
         } else {
             alert("no test script!");
         }
-        // let testScript = document.getElementById('ext-comp-1040').value;
-        // alert(testScript);
-        let testScript2 = document.getElementById('ext-comp-1080').value;
-        alert(testScript2);
-        let event = new CustomEvent("PassTestCodeToBackground", { detail: testScript2 });
-        window.dispatchEvent(event);
     }, false);
