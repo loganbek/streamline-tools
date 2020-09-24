@@ -25,8 +25,8 @@ let unloadedTest = false;
 
 let unloadButton = document.getElementById('unload');
 let loadButton = document.getElementById('load');
-// let unloadTestButton = document.getElementById('unloadTest');
-// let loadTestButton = document.getElementById('loadTest');
+let unloadTestButton = document.getElementById('unloadTest');
+let loadTestButton = document.getElementById('loadTest');
 
 // function saveText(filename, text) {
 //     let tempElem = document.createElement('a');
@@ -64,12 +64,6 @@ unloadButton.onclick = function(params) {
 
     // saveText("pricing.bml", myStrText);
 
-    function saveText(filename, text) {
-        let tempElem = document.createElement('a');
-        tempElem.setAttribute('href', 'data:bml/plain;charset=utf-8,' + encodeURIComponent(text));
-        tempElem.setAttribute('download', filename);
-        tempElem.click();
-    }
     // innerhtml
     //*[@id="selection_field_text"]/strong/text()[1]
     // let code = document.getElementsByClassName('bml');
@@ -164,26 +158,26 @@ loadButton.addEventListener('click', async(e) => {
 //   let unloaded = false;
 // }
 
-// unloadTestButton.onclick = function(params) {
-//     console.log("unloadTest clicked");
-//     let unloadedTest = true;
+unloadTestButton.onclick = function(params) {
+    console.log("unloadTest clicked");
+    let unloadedTest = true;
 
-//     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-//         chrome.tabs.sendMessage(tabs[0].id, { greeting: "unloadTest" }, function(response) {
-//             console.log(response.filename);
-//             console.log(response.testCode);
-//             if (response.testCode && response.filename) {
-//                 saveText(response.filename + ".test" + ".bml", response.testCode);
-//             }
-//         });
-//     });
-// }
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, { greeting: "unloadTest" }, function(response) {
+            console.log(response.filename);
+            console.log(response.testCode);
+            if (response.testCode && response.filename) {
+                saveText(response.filename + ".test" + ".bml", response.testCode);
+            }
+        });
+    });
+}
 
-// loadTestButton.onclick = function (params) {
-//   console.log("loadTest clicked");
+loadTestButton.onclick = function(params) {
+    console.log("loadTest clicked");
 
-//   let unloadedTest = false;
-// }
+    let unloadedTest = false;
+}
 
 
 
@@ -202,3 +196,10 @@ loadButton.addEventListener('click', async(e) => {
 //         {code: 'document.body.style.backgroundColor = "' + color + '";'});
 //   });
 // };
+
+function saveText(filename, text) {
+    let tempElem = document.createElement('a');
+    tempElem.setAttribute('href', 'data:bml/plain;charset=utf-8,' + encodeURIComponent(text));
+    tempElem.setAttribute('download', filename);
+    tempElem.click();
+}

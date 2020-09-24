@@ -34,6 +34,14 @@ window.addEventListener("PassCodeToBackground", function(evt) {
     // alert(code);
 }, false);
 
+//Listen for the testcode event
+window.addEventListener("PassTestCodeToBackground", function(evt) {
+    // alert(evt);
+    // chrome.runtime.sendMessage(evt.detail);
+    testCode = evt.detail;
+    // alert(code);
+}, false);
+
 
 //Listen for the unloadCode event
 window.addEventListener("unloadCode", function(evt) {
@@ -85,11 +93,13 @@ chrome.runtime.onMessage.addListener(
                     // header: header,
                     // footer: footer
             });
-            // } else if (request.greeting == "unloadTest") {
-            //     sendResponse({
-            //         filename: filename,
-            //         testCode: testCode
-            //     });
+        } else if (request.greeting == "unloadTest") {
+            let unloadTestEvent = new CustomEvent("unloadTestCode", { detail: request.code });
+            window.dispatchEvent(unloadTestEvent);
+            sendResponse({
+                filename: filename,
+                testCode: testCode
+            });
         } else if (request.greeting == "load") {
             console.log(request.code);
             // injectJs(chrome.extension.getURL('loadInjected.js'));

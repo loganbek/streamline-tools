@@ -212,12 +212,14 @@ function main() {
 
     // TEST SCRIPT - DONE
     // USE TEST SCRIPT - <input type="checkbox" autocomplete="off" id="useScript" name="useScript" class=" x-form-checkbox x-form-field" checked="">
-    // TEST SCRIPT - <textarea style="width: 242px; height: 44px;" autocomplete="off" id="ext-comp-1040" name="testScript" class=" x-form-textarea x-form-field"></textarea>
+    // TEST SCRIPT CODE - <textarea style="width: 242px; height: 44px;" autocomplete="off" id="ext-comp-1040" name="testScript" class=" x-form-textarea x-form-field"></textarea>
 
     // let useTestScript = document.getElementById('useScript').checked;
     // alert(useTestScript);
-    // let testScript = document.getElementById('ext-comp-1040').value;
-    // alert(testScript);
+    // // let testScript = document.getElementById('ext-comp-1040').value;
+    // // alert(testScript);
+    // let testScript2 = document.getElementById('ext-comp-1080').value;
+    // alert(testScript2);
 
     // MAIN SCRIPT
     // <textarea id="textarea" wrap="off" onchange="editArea.execCommand(&quot;onchange&quot;);" onfocus="javascript:editArea.textareaFocused=true;" onblur="javascript:editArea.textareaFocused=false;" style="width: 960px; height: 1800px; font-family: monospace; font-size: 10pt; line-height: 15px; margin-left: 0px; margin-top: 0px;" classname="null hidden" class="null hidden" spellcheck="false"> </textarea>
@@ -253,3 +255,20 @@ window.addEventListener("loadCode", function(evt) {
     // document.getElementById('ext-gen22').click();
     document.getElementsByClassName('bmx-spellcheck')[0].click();
 }, false);
+
+window.addEventListener("unloadTestCode",
+    function(evt) {
+        let useTestScript = document.getElementById('useScript').checked;
+        alert(useTestScript);
+        if (useTestScript) {
+
+        } else {
+            alert("no test script!");
+        }
+        // let testScript = document.getElementById('ext-comp-1040').value;
+        // alert(testScript);
+        let testScript2 = document.getElementById('ext-comp-1080').value;
+        alert(testScript2);
+        let event = new CustomEvent("PassTestCodeToBackground", { detail: testScript2 });
+        window.dispatchEvent(event);
+    }, false);
