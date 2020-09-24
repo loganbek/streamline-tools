@@ -37,10 +37,14 @@ let loadButton = document.getElementById('load');
 // }
 chrome.downloads.onDeterminingFilename.addListener(function(item, suggest) {
     suggest({
-        filename: item.filename,
+        filename: "BigMachines/" + item.filename,
         conflictAction: 'overwrite'
     });
 });
+
+// chrome.downloads.onDeterminingFilename.addListener(function(item, suggest) {
+//     suggest({ filename: "mysubdirectory/" + item.filename });
+// });
 
 unloadButton.onclick = function(params) {
     console.log("unload clicked");
@@ -108,20 +112,42 @@ loadButton.addEventListener('click', async(e) => {
         return new Promise(function(resolve, reject) {
             var xhr = new XMLHttpRequest
             xhr.onload = function() {
-                resolve(new Response(xhr.responseText, { status: xhr.status }))
-                    // alert(xhr.responseText)
-                contents = xhr.responseText
-                    // alert(contents);
+                contents = xhr.responseText;
+                resolve(new Response(xhr.responseText, { status: xhr.status }));
+                // alert(xhr.responseText)
+                // contents = xhr.responseText;
+                // alert(contents);
             }
             xhr.onerror = function() {
-                reject(new TypeError('Local request failed'))
+                reject(new TypeError('Local request failed'));
             }
-            xhr.open('GET', url)
-            xhr.send(null)
+            xhr.open('GET', url);
+            xhr.send(null);
         })
     }
 
-    let localFile = fetchLocal(fileURL);
+    // let localFile = fetchLocal(fileURL);
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            contents = xhttp.responseText;
+            chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, { greeting: "load", code: contents }, function(response) {
+                    // console.log(response.success);
+                    // console.log(response.filename);
+                    // console.log(response.code);
+                    // if (response.code && response.filename) {
+                    //   saveText(response.filename + ".bml", response.code);
+                    // }
+                });
+            });
+            // Typical action to be performed when the document is ready:
+            // document.getElementById("demo").innerHTML = xhttp.responseText;
+        }
+    };
+    xhttp.open("GET", fileURL, true);
+    xhttp.send();
     // alert(localFile);
     // console.log(localFile);
 
@@ -230,17 +256,7 @@ loadButton.addEventListener('click', async(e) => {
 
     // window.requestFileSystem(type, size, successCallback, opt_errorCallback)
 
-    alert(contents);
-    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, { greeting: "load", code: contents }, function(response) {
-            // console.log(response.success);
-            // console.log(response.filename);
-            // console.log(response.code);
-            // if (response.code && response.filename) {
-            //   saveText(response.filename + ".bml", response.code);
-            // }
-        });
-    });
+    // alert(contents);
 
 });
 // loadButton.onclick = function (params) {
