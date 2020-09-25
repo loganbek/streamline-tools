@@ -15,6 +15,7 @@
 //     window.dispatchEvent(new CustomEvent("sendChromeData", { detail: response }));
 // }, false);
 
+let commentHeader = "";
 let code = "";
 let testCode = "";
 
@@ -23,6 +24,15 @@ window.addEventListener("PassToBackground", function(evt) {
     // alert(evt);
     // chrome.runtime.sendMessage(evt.detail);
     code = evt.detail;
+    // alert(code);
+}, false);
+
+//Listen for the PassCommentHeader event
+window.addEventListener("PassCommentHeader", function(evt) {
+    // alert(evt);
+    // chrome.runtime.sendMessage(evt.detail);
+    // code = evt.detail;
+    commentHeader = evt.detail;
     // alert(code);
 }, false);
 
@@ -87,6 +97,9 @@ chrome.runtime.onMessage.addListener(
         if (request.greeting == "unload") {
             let unloadEvent = new CustomEvent("unloadCode", { detail: request.code });
             window.dispatchEvent(unloadEvent);
+            if (!code.startsWith("/*\n@param")) {
+                code = commentHeader + "\n\n" + code;
+            }
             sendResponse({
                 filename: filename,
                 code: code

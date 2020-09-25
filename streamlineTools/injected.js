@@ -185,7 +185,7 @@ function main() {
     // alert(propertyVariableName);
     // let propertyDescription = document.getElementById('ext-comp-1006').value;
     // alert(propertyDescription);
-    // let propertyReturnType = document.getElementById('ext-comp-1009').value;
+    let propertyReturnType = document.getElementById('ext-comp-1009').value;
     // alert(propertyReturnType);
 
     // PARAMETERS - DONE
@@ -194,21 +194,37 @@ function main() {
     // PARAMETER TYPE - <div class="x-grid3-cell-inner x-grid3-col-paramType" unselectable="on">String[]</div>
     // PARAMETER ID? - <div class="x-grid3-cell-inner x-grid3-col-id" unselectable="on">4196831</div>
 
-    // parameterColumnNumber = document.getElementsByClassName('x-grid3-col-numberer');
-    // parameterName = document.getElementsByClassName('x-grid3-col-paramName');
-    // parameterType = document.getElementsByClassName('x-grid3-col-paramType');
+    // let parameterColumnNumber = document.getElementsByClassName('x-grid3-col-numberer');
+    let parameterName = document.getElementsByClassName('x-grid3-col-paramName');
+    let parameterType = document.getElementsByClassName('x-grid3-col-paramType');
     // parameterID = document.getElementsByClassName('x-grid3-col-id');
 
-    // for (let i = 0; i < parameterColumnNumber.length; i++) {
-    //     if (parameterColumnNumber[i]) {
-    //         alert("PARAMETER COLUMN NUMBER: " + parameterColumnNumber[i].innerHTML + "\n" +
-    //             "PARAMETER NAME: " + parameterName[i].innerHTML + "\n" +
-    //             "PARAMETER TYPE: " + parameterType[i].innerHTML + "\n" +
-    //             "PARAMETER ID: " + parameterID[i].innerHTML + "\n");
-    //     } else {
-    //         alert("none");
-    //     }
-    // }
+    let params = "";
+    // alert(parameterName.length);
+    for (let i = 0; i < parameterName.length; i++) {
+        // if (parameterColumnNumber[i]) {
+        // alert("PARAMETER COLUMN NUMBER: " + parameterColumnNumber[i].innerHTML + "\n" +
+        //     "PARAMETER NAME: " + parameterName[i].innerHTML + "\n" +
+        //     "PARAMETER TYPE: " + parameterType[i].innerHTML + "\n" +
+        //     "PARAMETER ID: " + parameterID[i].innerHTML + "\n");
+        // alert(parameterName[i].innerHTML);
+        params += "- " + parameterName[i].innerHTML + "(" + parameterType[i].innerHTML + ")\n";
+        // alert(params);
+        // }
+    }
+    // alert(params);
+    let returnType = "- " + propertyReturnType + "\n";
+    // alert(returnType);
+
+    //     let commentHeader = `/*
+    // @param
+    // ${params}@return
+    // ${returnType}*/ `;
+
+    let commentHeader2 = "/*\n" + "@param\n" + params + "@return\n" + returnType + "*/ ";
+
+    // alert(commentHeader);
+    // alert(commentHeader2);
 
     // TEST SCRIPT - DONE
     // USE TEST SCRIPT - <input type="checkbox" autocomplete="off" id="useScript" name="useScript" class=" x-form-checkbox x-form-field" checked="">
@@ -230,10 +246,11 @@ function main() {
     // document.querySelector("#textarea")
 
     // var mainScript = document.getElementById("iframeid").contentWindow.a;
-
+    let commentHeaderEvent = new CustomEvent("PassCommentHeader", { detail: commentHeader2 });
     let event = new CustomEvent("PassToBackground", { detail: message });
     // let event2 = new CustomEvent("PassTestToBackground", { detail: message2 });
     window.dispatchEvent(event);
+    window.dispatchEvent(commentHeaderEvent);
     // window.dispatchEvent(event2);
 }
 
@@ -284,6 +301,6 @@ window.addEventListener("unloadTestCode",
             let event = new CustomEvent("PassTestCodeToBackground", { detail: testScript2 });
             window.dispatchEvent(event);
         } else {
-            alert("no test script!");
+            alert("Please Check - Use Test Script");
         }
     }, false);
