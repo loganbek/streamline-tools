@@ -85,186 +85,42 @@ function jsonPath(obj, expr, arg) {
     }
 }
 
-// var ChromeRequest = (function () {
-//     var requestId = 0;
-
-//     function getData(data) {
-//         var id = requestId++;
-
-//         return new Promise(function (resolve, reject) {
-//             var listener = function (evt) {
-//                 if (evt.detail.requestId == id) {
-//                     // Deregister self
-//                     window.removeEventListener("sendChromeData", listener);
-//                     resolve(evt.detail.data);
-//                 }
-//             }
-
-//             window.addEventListener("sendChromeData", listener);
-
-//             var payload = { data: data, id: id };
-
-//             window.dispatchEvent(new CustomEvent("getChromeData", { detail: payload }));
-//         });
-//     }
-
-//     return { getData: getData };
-// })();
-
 window.addEventListener('load', function() {
-    // alert("It's loaded!");
     main();
 })
 
 
 function main() {
-    // alert(jsonRespStr);
-    // console.log(jsonRespStr);
-    // code = jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data");
-    // alert(code);
-    // ChromeRequest.getData("jsonRespStr").then(function (data) { alert(data) });
-    // Page context
-    // alert(editAreas);
-    // console.log(editAreas);
-    // // alert(editArea);
-    // // console.log(editArea);
-    // // bm_script.textarea.value
-    // // var message4 = jsonPath(editAreas, "x.bm_script.textarea.value");
-    // var message4 = editAreas.bm_script;
-    // alert(message4);
-    // console.log(editAreas.bm_script);
 
-    // alert(editArea.textarea.value);
-
-    // editArea.textarea.value = "";
-    // editArea.execCommand("onchange")
-    // editAreas.bm_script.textarea.getValue
-
-    // ISOLATE how to load editArea (not present in DOM to start)
-    // editArea.textarea.value = "";
-    // editArea.execCommand("onchange");
-    // click in textarea
-
-    // javasript:editArea.textarea.value = "REPLACED";
-    // "REPLACED"
-    // javascript:editArea.execCommand('onchange'); - DON'T NEED
-    // undefined
-    // javascript:editArea.textareaFocused=true;
-    // javascript:editArea.textareaFocused=false;
-    // "true"
-
-    // frame_bm_script
-
-    // WORKING REMOVE/REPLACE TEXT FROM CONSOLE
-    // frame_bm_script.editArea.textarea.value = "REPLACED";
-    // frame_bm_script.editArea.textareaFocused=true;
-
-    // var replaced = window.location.href;
-    // var replaced = window.frames;
-    // frame_bm_script.editArea.textarea.value = "REPLACED";
-    // alert(replaced);
     let message = jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data");
     let message1 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[0].value");
     let message3 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[1].value");
     let message2 = "TEST SCRIPT FROM INJECT.JS";
-
-    // let x = document.getElementsByName("fname");
-    // let message = Window.frame_bm_script.editArea.textarea.value;
-    // alert(message);
     let messages = message + message1 + message3;
-
-    // PROPERTIES - DONE
-    // NAME - <input type="text" size="20" autocomplete="off" id="name" name="name" class=" x-form-text x-form-field " style="width: 217px; cursor: auto;">
-    // VARIABLE NAME - <input type="text" size="20" autocomplete="off" id="variableName" name="variableName" class=" x-form-text x-form-field disabledField" readonly="" style="width: 217px;">
-    // DESCRIPTION - <textarea style="width: 217px; height: 60px;" autocomplete="off" id="ext-comp-1006" name="description" class=" x-form-textarea x-form-field"></textarea>
-    // RETURN TYPE - <input type="text" size="20" autocomplete="off" id="ext-comp-1009" name="returnType" class=" x-form-text x-form-field disabledField" readonly="" style="width: 217px;"></input>
-
-    // let propertyName = document.getElementById('name').value;
-    // alert(propertyName);
-    // let propertyVariableName = document.getElementById('variableName').value;
-    // alert(propertyVariableName);
-    // let propertyDescription = document.getElementById('ext-comp-1006').value;
-    // alert(propertyDescription);
     let propertyReturnType = document.getElementById('ext-comp-1009').value;
-    // alert(propertyReturnType);
-
-    // PARAMETERS - DONE
-    // COLUMN NUMBER - <div class="x-grid3-cell-inner x-grid3-col-numberer" unselectable="on">1</div>
-    // PARAMETER NAME - <div class="x-grid3-cell-inner x-grid3-col-paramName" unselectable="on">partNumList</div>
-    // PARAMETER TYPE - <div class="x-grid3-cell-inner x-grid3-col-paramType" unselectable="on">String[]</div>
-    // PARAMETER ID? - <div class="x-grid3-cell-inner x-grid3-col-id" unselectable="on">4196831</div>
-
-    // let parameterColumnNumber = document.getElementsByClassName('x-grid3-col-numberer');
     let parameterName = document.getElementsByClassName('x-grid3-col-paramName');
     let parameterType = document.getElementsByClassName('x-grid3-col-paramType');
-    // parameterID = document.getElementsByClassName('x-grid3-col-id');
 
     let params = "";
-    // alert(parameterName.length);
     for (let i = 0; i < parameterName.length; i++) {
-        // if (parameterColumnNumber[i]) {
-        // alert("PARAMETER COLUMN NUMBER: " + parameterColumnNumber[i].innerHTML + "\n" +
-        //     "PARAMETER NAME: " + parameterName[i].innerHTML + "\n" +
-        //     "PARAMETER TYPE: " + parameterType[i].innerHTML + "\n" +
-        //     "PARAMETER ID: " + parameterID[i].innerHTML + "\n");
-        // alert(parameterName[i].innerHTML);
         params += "- " + parameterName[i].innerHTML + "(" + parameterType[i].innerHTML + ")\n";
-        // alert(params);
-        // }
     }
-    // alert(params);
     let returnType = "- " + propertyReturnType + "\n";
-    // alert(returnType);
-
-    //     let commentHeader = `/*
-    // @param
-    // ${params}@return
-    // ${returnType}*/ `;
 
     let commentHeader2 = "/*\n" + "@param\n" + params + "@return\n" + returnType + "*/ ";
-
-    // alert(commentHeader);
-    // alert(commentHeader2);
-
-    // TEST SCRIPT - DONE
-    // USE TEST SCRIPT - <input type="checkbox" autocomplete="off" id="useScript" name="useScript" class=" x-form-checkbox x-form-field" checked="">
-    // TEST SCRIPT CODE - <textarea style="width: 242px; height: 44px;" autocomplete="off" id="ext-comp-1040" name="testScript" class=" x-form-textarea x-form-field"></textarea>
-
-    // let useTestScript = document.getElementById('useScript').checked;
-    // alert(useTestScript);
-    // // let testScript = document.getElementById('ext-comp-1040').value;
-    // // alert(testScript);
-    // let testScript2 = document.getElementById('ext-comp-1080').value;
-    // alert(testScript2);
-
-    // MAIN SCRIPT
-    // <textarea id="textarea" wrap="off" onchange="editArea.execCommand(&quot;onchange&quot;);" onfocus="javascript:editArea.textareaFocused=true;" onblur="javascript:editArea.textareaFocused=false;" style="width: 960px; height: 1800px; font-family: monospace; font-size: 10pt; line-height: 15px; margin-left: 0px; margin-top: 0px;" classname="null hidden" class="null hidden" spellcheck="false"> </textarea>
-    // let mainScript = document.getElementById('textarea');
-    // alert(mainScript);
-
-    // alert("frame_bm_script.editArea.textarea.value: " + contentWindow.getElementById("textarea").value);
-    // document.querySelector("#textarea")
-
-    // var mainScript = document.getElementById("iframeid").contentWindow.a;
     let commentHeaderEvent = new CustomEvent("PassCommentHeader", { detail: commentHeader2 });
     let event = new CustomEvent("PassToBackground", { detail: message });
-    // let event2 = new CustomEvent("PassTestToBackground", { detail: message2 });
     window.dispatchEvent(event);
     window.dispatchEvent(commentHeaderEvent);
-    // window.dispatchEvent(event2);
 }
 
 window.addEventListener('unloadCode', function(evt) {
-        // alert("frame_bm_script.editArea.textarea.value: " + frame_bm_script.editArea.textarea.value);
         let event = new CustomEvent("PassCodeToBackground", { detail: frame_bm_script.editArea.textarea.value });
         window.dispatchEvent(event);
     })
     //Listen for the load code event
 window.addEventListener("loadCode", function(evt) {
-    // alert(evt);
-    // chrome.runtime.sendMessage(evt.detail);
     code = evt.detail;
-    // alert(code);
     frame_bm_script.editArea.textarea.value = code;
     frame_bm_script.editArea.textareaFocused = true;
 
@@ -276,28 +132,15 @@ window.addEventListener("loadCode", function(evt) {
 //Listen for the load test code event
 window.addEventListener("loadTestCode",
     function(evt) {
-        // alert(evt);
-        // chrome.runtime.sendMessage(evt.detail);
         code = evt.detail;
-        // alert(code);
-        // frame_bm_script.editArea.textarea.value = code;
-        // frame_bm_script.editArea.textareaFocused = true;
-
         document.getElementById('ext-comp-1080').value = code;
-        //Perform Validation
-        // document.getElementById('ext-gen22').click();
-        // document.getElementsByClassName('bmx-spellcheck')[0].click();
     }, false);
 
 window.addEventListener("unloadTestCode",
     function(evt) {
         let useTestScript = document.getElementById('useScript').checked;
-        // alert(useTestScript);
         if (useTestScript) {
-            // let testScript = document.getElementById('ext-comp-1040').value;
-            // alert(testScript);
             let testScript2 = document.getElementById('ext-comp-1080').value;
-            // alert(testScript2);
             let event = new CustomEvent("PassTestCodeToBackground", { detail: testScript2 });
             window.dispatchEvent(event);
         } else {
