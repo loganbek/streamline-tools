@@ -210,31 +210,28 @@ TODO:
 */ 
 ```
 
-- spoof filesystemhandle to fix load: https://wicg.github.io/native-file-system/#filesystemhandle
-- https://github.com/excalidraw/excalidraw/issues/169
-
-
-Streamline Tools v0.2.0-alpha Release:
-- Bug Fixes:
-    - [ ] no longer request file dialog on LOAD (spoof fileSystemFileHandle).
-
--Features:    
-- Comment Header - WIP
-    - [x] inject.js should grab paramters.
-    - [ ] inject.js should pass parameters + return type to content.js.
-- Test Scripts - WIP
-    - [ ] UNLOAD
-    - [ ] LOAD
+- spoof filesystemhandle to fix load: <https://wicg.github.io/native-file-system/#filesystemhandle>
+- <https://github.com/excalidraw/excalidraw/issues/169>
 
 FUTURE:
 Other page types
+
 - config - rules
 - commerce advanced function - before and after
 
 
-## 9/23/20
-
 ## 9/27/20
+
+### DISCUSSION
+
+- v0.2.0-alpha
+- Do you want auto "run" on TEST SCRIPT LOAD? Should function similiar to valide on BML LOAD
+- <https://wicg.github.io/file-system-access/#process-accept-types>
+- <https://www.intego.com/mac-security-blog/master-the-macos-open-and-save-dialogs/> - OPEN hotkeys
+
+SUGGESTED USAGE
+alt-tab between chrome and vscode
+hotkeys for load
 
 ## 9/30/20
 
