@@ -227,7 +227,7 @@ Other page types
 - v0.2.0-alpha
 - Do you want auto "run" on TEST SCRIPT LOAD? Should function similiar to valide on BML LOAD
 - <https://wicg.github.io/file-system-access/#process-accept-types>
-- https://www.intego.com/mac-security-blog/master-the-macos-open-and-save-dialogs/ - OPEN hotkeys
+- <https://www.intego.com/mac-security-blog/master-the-macos-open-and-save-dialogs/> - OPEN hotkeys
 
 SUGGESTED USAGE
 alt-tab between chrome and vscode
