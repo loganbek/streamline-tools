@@ -51,7 +51,7 @@ chrome.runtime.onMessage.addListener(
         if (request.greeting == "unload") {
             let unloadEvent = new CustomEvent("unloadCode", { detail: request.code });
             window.dispatchEvent(unloadEvent);
-            if (!code.startsWith("/*\n@param")) {
+            if (!code.startsWith(commentHeader)) {
                 code = commentHeader + "\n\n" + code;
             }
             sendResponse({

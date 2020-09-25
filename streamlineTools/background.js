@@ -18,6 +18,9 @@ chrome.runtime.onInstalled.addListener(function() {
     });
 });
 
+chrome.browserAction.setBadgeText({ text: 'ON' });
+// chrome.browserAction.setBadgeBackgroundColor({ color: '#4688F1' })
+
 // // Regex-pattern to check URLs against. 
 // // It matches URLs like: http[s]://[...]stackoverflow.com[...]
 // var urlRegex = /^https?:\/\/(?:[^./?#]+\.)?bigmachines\.com/;
@@ -46,3 +49,6 @@ chrome.runtime.onInstalled.addListener(function() {
 
 // chrome.browserAction.setBadgeText({text: 'ON'});
 // chrome.browserAction.setBadgeBackgroundColor({color: '#4688F1'});
+
+Commerce Functions - "https://devmcnichols.bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:%274658213%27,folder_id:%27-1%27,process_id:%274653759%27,doc_id:%274653823%27}&inputdata={appid:%27sampleApp%27,service:%27bmllibraryservice%27,operation:%27getLibPageData%27,version:%271.0%27,header:%27%27,params:%20{componentid:%27libraryEditorPage%27,uicmd:%27defineComponent%27,%20id:%274658213%27,folder_id:%27-1%27,process_id:%274653759%27,doc_id:%274653823%27}}&token=cplHV3EHCvzBzOvLBAgOhoKF4m8";
+Util Functions - "https://devmcnichols.bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:%274172483%27,folder_id:%274133367%27,process_id:%27-1%27,doc_id:%27-1%27}&inputdata={appid:%27sampleApp%27,service:%27bmllibraryservice%27,operation:%27getLibPageData%27,version:%271.0%27,header:%27%27,params:%20{componentid:%27libraryEditorPage%27,uicmd:%27defineComponent%27,%20id:%274172483%27,folder_id:%274133367%27,process_id:%27-1%27,doc_id:%27-1%27}}&token=cplHV3EHCvzBzOvLBAgOhoKF4m8";

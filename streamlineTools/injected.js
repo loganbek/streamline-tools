@@ -138,10 +138,19 @@ window.addEventListener("loadTestCode",
 
 window.addEventListener("unloadTestCode",
     function(evt) {
+        let testScript;
         let useTestScript = document.getElementById('useScript').checked;
         if (useTestScript) {
-            let testScript2 = document.getElementById('ext-comp-1080').value;
-            let event = new CustomEvent("PassTestCodeToBackground", { detail: testScript2 });
+            let commTestScript = document.getElementById('ext-comp-1080');
+            let utilTestScript = document.getElementById('ext-comp-1040');
+            if (commTestScript) {
+                testScript = commTestScript.value;
+            } else if (utilTestScript) {
+                testScript = utilTestScript.value;
+            }
+            alert("commTestScript: " + commTestScript);
+            alert("utilTestScript: " + utilTestScript);
+            let event = new CustomEvent("PassTestCodeToBackground", { detail: testScript });
             window.dispatchEvent(event);
         } else {
             alert("Please Check - Use Test Script");
