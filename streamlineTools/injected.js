@@ -185,7 +185,7 @@ function main() {
     // alert(propertyVariableName);
     // let propertyDescription = document.getElementById('ext-comp-1006').value;
     // alert(propertyDescription);
-    // let propertyReturnType = document.getElementById('ext-comp-1009').value;
+    let propertyReturnType = document.getElementById('ext-comp-1009').value;
     // alert(propertyReturnType);
 
     // PARAMETERS - DONE
@@ -194,30 +194,48 @@ function main() {
     // PARAMETER TYPE - <div class="x-grid3-cell-inner x-grid3-col-paramType" unselectable="on">String[]</div>
     // PARAMETER ID? - <div class="x-grid3-cell-inner x-grid3-col-id" unselectable="on">4196831</div>
 
-    // parameterColumnNumber = document.getElementsByClassName('x-grid3-col-numberer');
-    // parameterName = document.getElementsByClassName('x-grid3-col-paramName');
-    // parameterType = document.getElementsByClassName('x-grid3-col-paramType');
+    // let parameterColumnNumber = document.getElementsByClassName('x-grid3-col-numberer');
+    let parameterName = document.getElementsByClassName('x-grid3-col-paramName');
+    let parameterType = document.getElementsByClassName('x-grid3-col-paramType');
     // parameterID = document.getElementsByClassName('x-grid3-col-id');
 
-    // for (let i = 0; i < parameterColumnNumber.length; i++) {
-    //     if (parameterColumnNumber[i]) {
-    //         alert("PARAMETER COLUMN NUMBER: " + parameterColumnNumber[i].innerHTML + "\n" +
-    //             "PARAMETER NAME: " + parameterName[i].innerHTML + "\n" +
-    //             "PARAMETER TYPE: " + parameterType[i].innerHTML + "\n" +
-    //             "PARAMETER ID: " + parameterID[i].innerHTML + "\n");
-    //     } else {
-    //         alert("none");
-    //     }
-    // }
+    let params = "";
+    // alert(parameterName.length);
+    for (let i = 0; i < parameterName.length; i++) {
+        // if (parameterColumnNumber[i]) {
+        // alert("PARAMETER COLUMN NUMBER: " + parameterColumnNumber[i].innerHTML + "\n" +
+        //     "PARAMETER NAME: " + parameterName[i].innerHTML + "\n" +
+        //     "PARAMETER TYPE: " + parameterType[i].innerHTML + "\n" +
+        //     "PARAMETER ID: " + parameterID[i].innerHTML + "\n");
+        // alert(parameterName[i].innerHTML);
+        params += "- " + parameterName[i].innerHTML + "(" + parameterType[i].innerHTML + ")\n";
+        // alert(params);
+        // }
+    }
+    // alert(params);
+    let returnType = "- " + propertyReturnType + "\n";
+    // alert(returnType);
+
+    //     let commentHeader = `/*
+    // @param
+    // ${params}@return
+    // ${returnType}*/ `;
+
+    let commentHeader2 = "/*\n" + "@param\n" + params + "@return\n" + returnType + "*/ ";
+
+    // alert(commentHeader);
+    // alert(commentHeader2);
 
     // TEST SCRIPT - DONE
     // USE TEST SCRIPT - <input type="checkbox" autocomplete="off" id="useScript" name="useScript" class=" x-form-checkbox x-form-field" checked="">
-    // TEST SCRIPT - <textarea style="width: 242px; height: 44px;" autocomplete="off" id="ext-comp-1040" name="testScript" class=" x-form-textarea x-form-field"></textarea>
+    // TEST SCRIPT CODE - <textarea style="width: 242px; height: 44px;" autocomplete="off" id="ext-comp-1040" name="testScript" class=" x-form-textarea x-form-field"></textarea>
 
     // let useTestScript = document.getElementById('useScript').checked;
     // alert(useTestScript);
-    // let testScript = document.getElementById('ext-comp-1040').value;
-    // alert(testScript);
+    // // let testScript = document.getElementById('ext-comp-1040').value;
+    // // alert(testScript);
+    // let testScript2 = document.getElementById('ext-comp-1080').value;
+    // alert(testScript2);
 
     // MAIN SCRIPT
     // <textarea id="textarea" wrap="off" onchange="editArea.execCommand(&quot;onchange&quot;);" onfocus="javascript:editArea.textareaFocused=true;" onblur="javascript:editArea.textareaFocused=false;" style="width: 960px; height: 1800px; font-family: monospace; font-size: 10pt; line-height: 15px; margin-left: 0px; margin-top: 0px;" classname="null hidden" class="null hidden" spellcheck="false"> </textarea>
@@ -228,10 +246,11 @@ function main() {
     // document.querySelector("#textarea")
 
     // var mainScript = document.getElementById("iframeid").contentWindow.a;
-
+    let commentHeaderEvent = new CustomEvent("PassCommentHeader", { detail: commentHeader2 });
     let event = new CustomEvent("PassToBackground", { detail: message });
     // let event2 = new CustomEvent("PassTestToBackground", { detail: message2 });
     window.dispatchEvent(event);
+    window.dispatchEvent(commentHeaderEvent);
     // window.dispatchEvent(event2);
 }
 
@@ -253,3 +272,35 @@ window.addEventListener("loadCode", function(evt) {
     // document.getElementById('ext-gen22').click();
     document.getElementsByClassName('bmx-spellcheck')[0].click();
 }, false);
+
+//Listen for the load test code event
+window.addEventListener("loadTestCode",
+    function(evt) {
+        // alert(evt);
+        // chrome.runtime.sendMessage(evt.detail);
+        code = evt.detail;
+        // alert(code);
+        // frame_bm_script.editArea.textarea.value = code;
+        // frame_bm_script.editArea.textareaFocused = true;
+
+        document.getElementById('ext-comp-1080').value = code;
+        //Perform Validation
+        // document.getElementById('ext-gen22').click();
+        // document.getElementsByClassName('bmx-spellcheck')[0].click();
+    }, false);
+
+window.addEventListener("unloadTestCode",
+    function(evt) {
+        let useTestScript = document.getElementById('useScript').checked;
+        // alert(useTestScript);
+        if (useTestScript) {
+            // let testScript = document.getElementById('ext-comp-1040').value;
+            // alert(testScript);
+            let testScript2 = document.getElementById('ext-comp-1080').value;
+            // alert(testScript2);
+            let event = new CustomEvent("PassTestCodeToBackground", { detail: testScript2 });
+            window.dispatchEvent(event);
+        } else {
+            alert("Please Check - Use Test Script");
+        }
+    }, false);
