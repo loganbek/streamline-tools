@@ -242,3 +242,5 @@ Other page types
 
 
 https://developer.chrome.com/apps/commands
+
+https://developer.chrome.com/extensions/declarativeContent
