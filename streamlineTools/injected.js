@@ -134,7 +134,15 @@ window.addEventListener("loadTestCode",
     function(evt) {
         code = evt.detail;
         document.getElementById('ext-comp-1080').value = code;
-        document.getElementById('ext-comp-1040').value = code;
+        if (document.getElementById('ext-comp-1040')) {
+            document.getElementById('ext-comp-1040').value = code;
+        }
+
+        //RUN DEBUGGER
+        // <button class="x-btn-text bmx-debug" type="button" id="ext-gen268">Run</button>
+        // document.getElementById('ext-gen268').click();
+        document.getElementsByClassName('bmx-debug')[1].click();
+        // alert(document.getElementsByClassName('bmx-debug'));
     }, false);
 
 window.addEventListener("unloadTestCode",
