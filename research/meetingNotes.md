@@ -246,5 +246,11 @@ https://developer.chrome.com/apps/commands
 https://developer.chrome.com/extensions/declarativeContent
 
 
-- add variableName of function to comment header
-- auto run on test script load
+- [x] add variableName of function to comment header
+- [x] auto run on test script load
+- options 2filesystemhandler load
+
+- page state matcher -
+- directory
+
+- repository on options page

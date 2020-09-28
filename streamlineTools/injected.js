@@ -100,14 +100,14 @@ function main() {
     let propertyReturnType = document.getElementById('ext-comp-1009').value;
     let parameterName = document.getElementsByClassName('x-grid3-col-paramName');
     let parameterType = document.getElementsByClassName('x-grid3-col-paramType');
-
+    let variableName = document.getElementById('variableName').value;
     let params = "";
     for (let i = 0; i < parameterName.length; i++) {
         params += "- " + parameterName[i].innerHTML + "(" + parameterType[i].innerHTML + ")\n";
     }
     let returnType = "- " + propertyReturnType + "\n";
 
-    let commentHeader2 = "/*\n" + "@param\n" + params + "@return\n" + returnType + "*/ ";
+    let commentHeader2 = "/*\n" + variableName + "\n@param\n" + params + "@return\n" + returnType + "*/ ";
     let commentHeaderEvent = new CustomEvent("PassCommentHeader", { detail: commentHeader2 });
     let event = new CustomEvent("PassToBackground", { detail: message });
     window.dispatchEvent(event);
