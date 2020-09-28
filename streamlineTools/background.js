@@ -11,6 +11,7 @@ chrome.runtime.onInstalled.addListener(function() {
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
         chrome.declarativeContent.onPageChanged.addRules([{
             conditions: [new chrome.declarativeContent.PageStateMatcher({
+                // pageUrl: { hostSuffix: 'bigmachines.com' },
                 pageUrl: { hostSuffix: 'bigmachines.com' },
             })],
             actions: [new chrome.declarativeContent.ShowPageAction()]
@@ -18,7 +19,69 @@ chrome.runtime.onInstalled.addListener(function() {
     });
 });
 
-chrome.browserAction.setBadgeText({ text: 'ON' });
+// Matches if the conditions of the UrlFilter are fulfilled for the top-level URL of the page.
+
+// string	(optional) hostContains	
+// Matches if the host name of the URL contains a specified string. To test whether a host name component has a prefix 'foo', use hostContains: '.foo'. This matches 'www.foobar.com' and 'foo.com', because an implicit dot is added at the beginning of the host name. Similarly, hostContains can be used to match against component suffix ('foo.') and to exactly match against components ('.foo.'). Suffix- and exact-matching for the last components need to be done separately using hostSuffix, because no implicit dot is added at the end of the host name.
+
+// string	(optional) hostEquals	
+// Matches if the host name of the URL is equal to a specified string.
+
+// string	(optional) hostPrefix	
+// Matches if the host name of the URL starts with a specified string.
+
+// string	(optional) hostSuffix	
+// Matches if the host name of the URL ends with a specified string.
+
+// string	(optional) pathContains	
+// Matches if the path segment of the URL contains a specified string.
+
+// string	(optional) pathEquals	
+// Matches if the path segment of the URL is equal to a specified string.
+
+// string	(optional) pathPrefix	
+// Matches if the path segment of the URL starts with a specified string.
+
+// string	(optional) pathSuffix	
+// Matches if the path segment of the URL ends with a specified string.
+
+// string	(optional) queryContains	
+// Matches if the query segment of the URL contains a specified string.
+
+// string	(optional) queryEquals	
+// Matches if the query segment of the URL is equal to a specified string.
+
+// string	(optional) queryPrefix	
+// Matches if the query segment of the URL starts with a specified string.
+
+// string	(optional) querySuffix	
+// Matches if the query segment of the URL ends with a specified string.
+
+// string	(optional) urlContains	
+// Matches if the URL (without fragment identifier) contains a specified string. Port numbers are stripped from the URL if they match the default port number.
+
+// string	(optional) urlEquals	
+// Matches if the URL (without fragment identifier) is equal to a specified string. Port numbers are stripped from the URL if they match the default port number.
+
+// string	(optional) urlMatches	
+// Matches if the URL (without fragment identifier) matches a specified regular expression. Port numbers are stripped from the URL if they match the default port number. The regular expressions use the RE2 syntax.
+
+// string	(optional) originAndPathMatches	
+// Matches if the URL without query segment and fragment identifier matches a specified regular expression. Port numbers are stripped from the URL if they match the default port number. The regular expressions use the RE2 syntax.
+
+// string	(optional) urlPrefix	
+// Matches if the URL (without fragment identifier) starts with a specified string. Port numbers are stripped from the URL if they match the default port number.
+
+// string	(optional) urlSuffix	
+// Matches if the URL (without fragment identifier) ends with a specified string. Port numbers are stripped from the URL if they match the default port number.
+
+// array of string	(optional) schemes	
+// Matches if the scheme of the URL is equal to any of the schemes specified in the array.
+
+// array of integer or array of integer	(optional) ports	
+// Matches if the port of the URL is contained in any of the specified port lists. For example [80, 443, [1000, 1200]] matches all requests on port 80, 443 and in the range 1000-1200.
+
+// chrome.browserAction.setBadgeText({ text: 'ON' });
 // chrome.browserAction.setBadgeBackgroundColor({ color: '#4688F1' })
 
 // // Regex-pattern to check URLs against. 
@@ -50,5 +113,5 @@ chrome.browserAction.setBadgeText({ text: 'ON' });
 // chrome.browserAction.setBadgeText({text: 'ON'});
 // chrome.browserAction.setBadgeBackgroundColor({color: '#4688F1'});
 
-Commerce Functions - "https://devmcnichols.bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:%274658213%27,folder_id:%27-1%27,process_id:%274653759%27,doc_id:%274653823%27}&inputdata={appid:%27sampleApp%27,service:%27bmllibraryservice%27,operation:%27getLibPageData%27,version:%271.0%27,header:%27%27,params:%20{componentid:%27libraryEditorPage%27,uicmd:%27defineComponent%27,%20id:%274658213%27,folder_id:%27-1%27,process_id:%274653759%27,doc_id:%274653823%27}}&token=cplHV3EHCvzBzOvLBAgOhoKF4m8";
-Util Functions - "https://devmcnichols.bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:%274172483%27,folder_id:%274133367%27,process_id:%27-1%27,doc_id:%27-1%27}&inputdata={appid:%27sampleApp%27,service:%27bmllibraryservice%27,operation:%27getLibPageData%27,version:%271.0%27,header:%27%27,params:%20{componentid:%27libraryEditorPage%27,uicmd:%27defineComponent%27,%20id:%274172483%27,folder_id:%274133367%27,process_id:%27-1%27,doc_id:%27-1%27}}&token=cplHV3EHCvzBzOvLBAgOhoKF4m8";
+// Commerce Functions - "https://devmcnichols.bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:%274658213%27,folder_id:%27-1%27,process_id:%274653759%27,doc_id:%274653823%27}&inputdata={appid:%27sampleApp%27,service:%27bmllibraryservice%27,operation:%27getLibPageData%27,version:%271.0%27,header:%27%27,params:%20{componentid:%27libraryEditorPage%27,uicmd:%27defineComponent%27,%20id:%274658213%27,folder_id:%27-1%27,process_id:%274653759%27,doc_id:%274653823%27}}&token=cplHV3EHCvzBzOvLBAgOhoKF4m8";
+// Util Functions - "https://devmcnichols.bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:%274172483%27,folder_id:%274133367%27,process_id:%27-1%27,doc_id:%27-1%27}&inputdata={appid:%27sampleApp%27,service:%27bmllibraryservice%27,operation:%27getLibPageData%27,version:%271.0%27,header:%27%27,params:%20{componentid:%27libraryEditorPage%27,uicmd:%27defineComponent%27,%20id:%274172483%27,folder_id:%274133367%27,process_id:%27-1%27,doc_id:%27-1%27}}&token=cplHV3EHCvzBzOvLBAgOhoKF4m8";

@@ -76,7 +76,15 @@ unloadTestButton.onclick = function(params) {
 
 let fileHandle2;
 loadTestButton.addEventListener('click', async(e) => {
-    fileHandle2 = await window.chooseFileSystemEntries();
+    const options = {
+        types: [{
+            accept: {
+                'text/plain': '.bml'
+            }
+        }, ],
+        excludeAcceptAllOption: true
+    };
+    fileHandle2 = await window.chooseFileSystemEntries(options);
     console.log(fileHandle2)
     const file = await fileHandle2.getFile();
     const contents = await file.text();
@@ -95,3 +103,32 @@ function saveText(filename, text) {
     tempElem.setAttribute('download', filename);
     tempElem.click();
 }
+
+
+// const options = {
+//     types: [
+//       {
+//         description: 'Text Files',
+//         accept: {
+//           'text/plain': ['.txt', '.text'],
+//           'text/html': ['.html', '.htm']
+//         }
+//       },
+//       {
+//         description: 'Images',
+//         accept: {
+//           'image/*': ['.png', '.gif', '.jpeg', '.jpg']
+//         }
+//       }
+//     ],
+
+// const options = {
+//     types: [
+//       {
+//         accept: {
+//           'image/svg+xml': '.svg'
+//         }
+//       },
+//     ],
+//     excludeAcceptAllOption: true
+//   };

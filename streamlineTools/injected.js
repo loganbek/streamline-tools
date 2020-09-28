@@ -134,6 +134,7 @@ window.addEventListener("loadTestCode",
     function(evt) {
         code = evt.detail;
         document.getElementById('ext-comp-1080').value = code;
+        document.getElementById('ext-comp-1040').value = code;
     }, false);
 
 window.addEventListener("unloadTestCode",
@@ -148,8 +149,11 @@ window.addEventListener("unloadTestCode",
             } else if (utilTestScript) {
                 testScript = utilTestScript.value;
             }
-            alert("commTestScript: " + commTestScript);
-            alert("utilTestScript: " + utilTestScript);
+            if (testScript == "") {
+                testScript = "\n";
+            }
+            // alert("commTestScript: " + commTestScript);
+            // alert("utilTestScript: " + utilTestScript);
             let event = new CustomEvent("PassTestCodeToBackground", { detail: testScript });
             window.dispatchEvent(event);
         } else {

@@ -244,3 +244,7 @@ Other page types
 https://developer.chrome.com/apps/commands
 
 https://developer.chrome.com/extensions/declarativeContent
+
+
+- add variableName of function to comment header
+- auto run on test script load
