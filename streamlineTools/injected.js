@@ -152,6 +152,8 @@ window.addEventListener("unloadTestCode",
         if (useTestScript) {
             let commTestScript = document.getElementById('ext-comp-1080');
             let utilTestScript = document.getElementById('ext-comp-1040');
+            //ext-comp-1095
+            // let commTestScript2 = document.getElementById('ext-comp-1095');
             if (commTestScript) {
                 testScript = commTestScript.value;
             } else if (utilTestScript) {
