@@ -133,11 +133,16 @@ window.addEventListener("loadCode", function(evt) {
 window.addEventListener("loadTestCode",
     function(evt) {
         code = evt.detail;
-        document.getElementById('ext-comp-1080').value = code;
-        if (document.getElementById('ext-comp-1040')) {
-            document.getElementById('ext-comp-1040').value = code;
+        let commTestScript = document.getElementById('ext-comp-1080');
+        let utilTestScript = document.getElementById('ext-comp-1040');
+        let commTestScript2 = document.getElementById('ext-comp-1095');
+        if (commTestScript) {
+            commTestScript.value = code;
+        } else if (commTestScript2) {
+            commTestScript2.value = code;
+        } else if (utilTestScirpt) {
+            utilTestScript.value = code;
         }
-
         //RUN DEBUGGER
         // <button class="x-btn-text bmx-debug" type="button" id="ext-gen268">Run</button>
         // document.getElementById('ext-gen268').click();
@@ -153,9 +158,11 @@ window.addEventListener("unloadTestCode",
             let commTestScript = document.getElementById('ext-comp-1080');
             let utilTestScript = document.getElementById('ext-comp-1040');
             //ext-comp-1095
-            // let commTestScript2 = document.getElementById('ext-comp-1095');
+            let commTestScript2 = document.getElementById('ext-comp-1095');
             if (commTestScript) {
                 testScript = commTestScript.value;
+            } else if (commTestScript2) {
+                testScript = commTestScript2.value;
             } else if (utilTestScript) {
                 testScript = utilTestScript.value;
             }
