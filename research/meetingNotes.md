@@ -39,9 +39,9 @@ var response = jsonPath(jsonRespStr.toJSON() , "$..[?(@.componentId=='bmlCodeEdi
 jsonPath(jsonRespStr, "$..[?(@.componentId=='bmlCodeEditor')].data");
 
 - [ ] message passing
-    - [x] branch - messagePassing - WIP - <https://stackoverflow.com/questions/20019958/chrome-extension-how-to-send-data-from-content-script-to-popup-html>
+  - [x] branch - messagePassing - WIP - <https://stackoverflow.com/questions/20019958/chrome-extension-how-to-send-data-from-content-script-to-popup-html>
 - [ ] saving blank/bml file or passing into text editor
-    - [] save code
+  - [] save code
 
 <https://github.com/loganbek/text-editor>
 <https://googlechromelabs.github.io/text-editor/>
@@ -99,6 +99,7 @@ There does not appear to be a limit or atleast there isn't one mentioned in the 
 works fine for pricing in devMcnichols - 3972 loc
 
 2) - [x] use $.widget.items[1].component.widget.items[1].component.widget.items[0].component.data" for now
+
 - [ ] json path lib that supports query
 - maybe jsonpath-1.0.2.js
 
@@ -107,15 +108,15 @@ works fine for pricing in devMcnichols - 3972 loc
 - [x] UNLOAD E2E
 - [ ] LOAD BML - approach update jsonRespStr via injected.js or a write version
 - [ ] Test Scripts
-    - [ ] can i get a few samples
-    - [ ] id="useScript", inputType="checkbox"
-    - [ ] UNLOAD - WIP
-        - [ ] jsonpath to testscript
+  - [ ] can i get a few samples
+  - [ ] id="useScript", inputType="checkbox"
+  - [ ] UNLOAD - WIP
+    - [ ] jsonpath to testscript
 - [ ] Options/Bells + Whistles
-    - [ ] chrome data sync api - https://developer.chrome.com/extensions/storage
+  - [ ] chrome data sync api - <https://developer.chrome.com/extensions/storage>
 - [ ] Comment Headers
-    - [ ] username
-    - [ ] date
+  - [ ] username
+  - [ ] date
 - [ ] Other Commerce Pages besides library functions
 
 ####
@@ -124,13 +125,13 @@ Next Verison (Working POC) v0.1.0 alpha:
     - [ ] finish LOAD BML
         - [x] READ
         - [ ] pass from content.js -> inject.js
-        - [ ] update DOM in inject.js   
+        - [ ] update DOM in inject.js
     - [ ] hide functionality besides LOAD BML/UNLOAD BML
 
 #### BACK_BURNER
 
 - [ ] json path lib that supports query
-    - [ ] maybe jsonpath-1.0.2.js
+  - [ ] maybe jsonpath-1.0.2.js
 - [ ] Directory Structure <- Pull Req
 - [ ] Multi OS Support (Linux/Windows)
 - [ ] Multi Editor Support
@@ -138,17 +139,18 @@ Next Verison (Working POC) v0.1.0 alpha:
 - [ ] Icon lock badge (when unloaded)
 - [ ] Dark Mode
 
-### TODO:
+### TODO
 
-- [ ] file should overwrite instead of `pricing (1).bml` and `pricing.test (1).bml`. 
+- [ ] file should overwrite instead of `pricing (1).bml` and `pricing.test (1).bml`.
 - [ ] cleanup
 - [ ] isolate save dialog setting - WIP
 
 ### DELIVERABLES 4
 
-- LOAD - 
+- LOAD -
 
 TEXT AREA onchange JS
+
 ```html
 <textarea id="textarea" wrap="off" onchange="editArea.execCommand(&quot;onchange&quot;);" onfocus="javascript:editArea.textareaFocused=true;" onblur="javascript:editArea.textareaFocused=false;" style="width: 5919px; height: 2355px; font-family: monospace; font-size: 10pt; line-height: 15px; margin-left: 0px; margin-top: 0px;" classname="null hidden" class="null hidden" spellcheck="false"> </textarea>
 ```
@@ -156,24 +158,19 @@ TEXT AREA onchange JS
 UPDATE jsonRespStr - don't think will work
 UPDATE text area innerHTML
 
-
-
-
-
-
-- POC 
-    - comment header (no footer)
-    - finish load
-    - maybe test scripts
+- POC
+  - comment header (no footer)
+  - finish load
+  - maybe test scripts
 - extend to util and config and finish commerce
-    - [ ] commerce quote actions
-        - [ ] comm vs config rules
-        - [ ] 3 diff page types - 
-            - rules
-            - commerce advanced function - before and after
-            - comm lib + util
-    - [x] util
-    - [ ] config - THIS IS GOING TO BE A BEAST
+  - [ ] commerce quote actions
+    - [ ] comm vs config rules
+    - [ ] 3 diff page types -
+      - rules
+      - commerce advanced function - before and after
+      - comm lib + util
+  - [x] util
+  - [ ] config - THIS IS GOING TO BE A BEAST
 - [ ] big tools additonal features
 
 ## 9/9/20
@@ -199,38 +196,39 @@ TODO:
 
 ```javascript
 /*
-@param 
-	- partNumList (String[]) 
-	- partNumDict (String[] Dictionary)
-	- qtyDict (Integer Dictionary)
-	- priceDict (Float Dictionary)
-	- accumulate (String)
-@return 
-	- priceDict (Float Dictionary) 
-*/ 
+@param
+ - partNumList (String[])
+ - partNumDict (String[] Dictionary)
+ - qtyDict (Integer Dictionary)
+ - priceDict (Float Dictionary)
+ - accumulate (String)
+@return
+ - priceDict (Float Dictionary)
+*/
 ```
 
-- spoof filesystemhandle to fix load: https://wicg.github.io/native-file-system/#filesystemhandle
-- https://github.com/excalidraw/excalidraw/issues/169
-
+- spoof filesystemhandle to fix load: <https://wicg.github.io/native-file-system/#filesystemhandle>
+- <https://github.com/excalidraw/excalidraw/issues/169>
 
 Streamline Tools v0.2.0-alpha Release:
-- Bug Fixes:
-    - [ ] no longer request file dialog on LOAD (spoof fileSystemFileHandle).
 
--Features:    
+- Bug Fixes:
+  - [ ] no longer request file dialog on LOAD (spoof fileSystemFileHandle).
+
+-Features:
+
 - Comment Header - WIP
-    - [x] inject.js should grab paramters.
-    - [ ] inject.js should pass parameters + return type to content.js.
+  - [x] inject.js should grab paramters.
+  - [ ] inject.js should pass parameters + return type to content.js.
 - Test Scripts - WIP
-    - [ ] UNLOAD
-    - [ ] LOAD
+  - [ ] UNLOAD
+  - [ ] LOAD
 
 FUTURE:
 Other page types
+
 - config - rules
 - commerce advanced function - before and after
-
 
 ## 9/23/20
 
@@ -240,11 +238,9 @@ Other page types
 
 ## 10/4/20
 
+<https://developer.chrome.com/apps/commands>
 
-https://developer.chrome.com/apps/commands
-
-https://developer.chrome.com/extensions/declarativeContent
-
+<https://developer.chrome.com/extensions/declarativeContent>
 
 - [x] add variableName of function to comment header
 - [x] auto run on test script load
@@ -253,4 +249,108 @@ https://developer.chrome.com/extensions/declarativeContent
 - page state matcher -
 - directory
 
-- repository on options page
+- [x] repository on options page mock
+- [ ] LOAD TEST CODE all commerce functions
+  - [x] pricing
+  - [x] emailNotificationGenerator
+  - [ ] printing
+  - [ ] createMasterGroupString
+  - [ ] checkAdHocLineItems
+  - [ ] resetIntegrationIDsForSFDC
+  - [ ] ensurePrimaryForOracle
+  - [ ] actionValidations
+  - [ ] setAttributeABasedOnAttributeB
+  - [ ] populateLineData
+  - [ ] checkLineItemsAvailability
+  - [ ] getItemAvailabilityPerSOAP
+  - [ ] calculateFreight
+  - [ ] validateTaxAreaID
+  - [ ] getParentModelNumber
+  - [ ] validateShipToAddress
+  - [ ] getFormattedAddressDetailsOfVendorShipTo
+  - [ ] thresholdInitialisation
+  - [ ] changeQuoteOwnerForCPSQuote
+  - [ ] cPSPricing
+  - [ ] test
+  - [ ] getFreightSoapCall
+  - [ ] attachmentDateModified
+  - [ ] getCPSStatus
+  - [ ] cPSDataString
+  - [ ] getVendorDict
+  - [ ] getOpsInstructionsData
+  - [ ] getConversionRate
+  - [ ] updateApprovalsData
+  - [ ] getTotalTax
+  - [ ] getCarrierData
+  - [ ] setModelTotal
+  - [ ] prepareViewAllRFQData
+
+- [ ] LOAD TEST CODE all util functions
+
+- [ ] getVolumePricing
+- [ ] getMaxDiscount
+- [ ] sortCutSizesBasedonArea
+- [ ] addCalculationRelatedColumns
+- [ ] addCutSizesToSheetCalTable
+- [ ] updateCRWithNewQuantity
+- [ ] getAllBranchesFromAvailableSheets
+- [ ] getSheetsFromSpecifiedBranch
+- [ ] updateBranchSpecificSheetsInAllAvailableSheets
+- [ ] getPartInformation
+- [ ] etXMLNodesByTag
+- [ ] convertExponentialNumbersToRealValue
+- [ ] translateExponentials
+- [ ] getAvailQtyValueForPart
+- [ ] getAvailableQuanityInBranch
+- [ ] getSelectedSheetOrCount
+- [ ] calculateLaborCharges
+- [ ] getProcessesResultInformation
+- [ ] getLaborChargesOfSpecificStrategy
+- [ ] resetCutSizeReductions
+- [ ] updateUserEnteredQuantitiesInSelectedSheetsArray
+- [ ] getBranchNameFromBranchCode
+- [ ] updateSelectedStockItemsArray
+- [ ] calculateGYFromLaborChargesString
+- [ ] addProcessedItemsToSelectedItemsArray
+- [ ] getApplicalbeBranchesAndUpdateQuantitiesBasedOnStrategy
+- [ ] processCalculations 
+- [ ] getEfficientSheetIndex
+- [ ] addDropSheetsToAvailableSheets
+- [ ] GetBarWidth
+- [ ] recommendAccessoriesForSelectedItems
+- [ ] recommendItemsStockProcessed
+- [ ] getSelectedKitItemsInAvailabilityArray
+- [ ] recommendItemsStockProcessed2
+- [ ] updateSelectedStockItemsInformation
+- [ ] getSelectedItemsFromAvailabilityArray
+- [ ] prepareFreightRequest
+- [ ] calculateLaborAndItemWeight
+- [ ] getTotalChargeOfItems
+- [ ] calculatePercentageOfLengthUsed
+- [ ] calculateProcessedItemUtilizationYieldAndPrice
+- [ ] updateSelectedStockItemsData
+- [ ] sortingBasedOnPrice
+- [ ] selectItemsFromAvailabilityArray
+- [ ] getXMLNodesByTagV2
+- [ ] processedItemsApprovalCheck
+- [ ] getItemsAvailabilityInformation
+- [ ] getSelectedItemsAvailabileQuantityInBranch
+- [ ] getSubstringBasedOnCriteria
+- [ ] lookupWorkCenterExclusions
+- [ ] buildCPSDataString
+- [ ] getCPSVendorDict
+- [ ] calculateExternalProcessingFreight
+- [ ] setRFQResponseVideData
+- [ ] advancedCommerceRule
+- [ ] getNumberOfUnits
+- [ ] setCPSAttributes
+- [ ] getOpsInstructionsData
+- [ ] removeDimensions
+- [ ] getProcessedDiscounts
+- [ ] getProcessedDiscountsTableData
+- [ ] iSValidCustomPartNumber
+- [ ] updateRFQViewPricesOnReconfigure
+- [ ] updateTransactionUsingSOAP
+- [ ] saveTransactionUsingRest
+- [ ] setEfficientSheetIndex
+- [ ] getEfficientSheetIndex_2
