@@ -11,13 +11,32 @@ chrome.runtime.onInstalled.addListener(function() {
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
         chrome.declarativeContent.onPageChanged.addRules([{
             conditions: [new chrome.declarativeContent.PageStateMatcher({
-                // pageUrl: { hostSuffix: 'bigmachines.com' },
                 pageUrl: { hostSuffix: 'bigmachines.com' },
+                // pageUrl: { pathContains: 'bigmachines.com/spring' }, - DOESNT WORK
+                // pageUrl: { hostSuffix: 'bigmachines.com' },
             })],
             actions: [new chrome.declarativeContent.ShowPageAction()]
         }]);
     });
 });
+
+// chrome.runtime.onInstalled.addListener(function(details) {
+//     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+//       chrome.declarativeContent.onPageChanged.addRules([rule2]);
+//     });
+//   });
+
+// CSS Matching
+// PageStateMatcher.css conditions must be compound selectors, meaning that you can't include combinators like whitespace or ">" in your selectors. This helps Chrome match the selectors more efficiently.
+
+// Compound Selectors (OK)	Complex Selectors (Not OK)
+// a	div p
+// iframe.special[src^='http']	p>span.highlight
+// ns|*	p + ol
+// #abcd:checked	p::first-line
+// CSS conditions only match displayed elements: if an element that matches your selector is display:none or one of its parent elements is display:none, it doesn't cause the condition to match. Elements styled with visibility:hidden, positioned off-screen, or hidden by other elements can still make your condition match.
+
+
 
 // Matches if the conditions of the UrlFilter are fulfilled for the top-level URL of the page.
 

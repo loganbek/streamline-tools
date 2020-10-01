@@ -258,7 +258,7 @@ Other page types
   - [x] checkAdHocLineItems
   - [x] resetIntegrationIDsForSFDC
   - [x] ensurePrimaryForOracle
-  - [ ] actionValidations
+  - [x] actionValidations
   - [ ] setAttributeABasedOnAttributeB
   - [ ] populateLineData
   - [ ] checkLineItemsAvailability
