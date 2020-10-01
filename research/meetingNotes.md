@@ -255,9 +255,9 @@ Other page types
   - [x] emailNotificationGenerator
   - [x] printing
   - [x] createMasterGroupString
-  - [ ] checkAdHocLineItems
-  - [ ] resetIntegrationIDsForSFDC
-  - [ ] ensurePrimaryForOracle
+  - [x] checkAdHocLineItems
+  - [x] resetIntegrationIDsForSFDC
+  - [x] ensurePrimaryForOracle
   - [ ] actionValidations
   - [ ] setAttributeABasedOnAttributeB
   - [ ] populateLineData
