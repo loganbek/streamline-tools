@@ -253,8 +253,8 @@ Other page types
 - [ ] LOAD TEST CODE all commerce functions
   - [x] pricing
   - [x] emailNotificationGenerator
-  - [ ] printing
-  - [ ] createMasterGroupString
+  - [x] printing
+  - [x] createMasterGroupString
   - [ ] checkAdHocLineItems
   - [ ] resetIntegrationIDsForSFDC
   - [ ] ensurePrimaryForOracle
@@ -287,7 +287,7 @@ Other page types
 
 - [ ] LOAD TEST CODE all util functions
 
-- [ ] getVolumePricing
+- [x] getVolumePricing
 - [ ] getMaxDiscount
 - [ ] sortCutSizesBasedonArea
 - [ ] addCalculationRelatedColumns

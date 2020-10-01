@@ -79,7 +79,7 @@ loadTestButton.addEventListener('click', async(e) => {
     const options = {
         types: [{
             accept: {
-                'text/plain': '.bml'
+                'bml/plain': '.bml'
             }
         }, ],
         excludeAcceptAllOption: true
