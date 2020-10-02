@@ -244,9 +244,9 @@ Other page types
 
 - [x] add variableName of function to comment header
 - [x] auto run on test script load
-- options 2filesystemhandler load
+- options 2filesystemhandler load - WIP, maybe not possible
 
-- page state matcher -
+- [x] page state matcher improved
 - directory
 
 - [x] repository on options page mock
@@ -277,7 +277,7 @@ Other page types
   - [ ] getCPSStatus
   - [ ] cPSDataString
   - [ ] getVendorDict
-  - [ ] getOpsInstructionsData
+  - [x] getOpsInstructionsData
   - [ ] getConversionRate
   - [ ] updateApprovalsData
   - [ ] getTotalTax

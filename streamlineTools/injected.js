@@ -143,6 +143,7 @@ window.addEventListener("loadTestCode",
         } else if (utilTestScirpt) {
             utilTestScript.value = code;
         }
+        // alert(commTestScript, commTestScript2, utilTestScript);
         //RUN DEBUGGER
         // <button class="x-btn-text bmx-debug" type="button" id="ext-gen268">Run</button>
         // document.getElementById('ext-gen268').click();
@@ -174,6 +175,6 @@ window.addEventListener("unloadTestCode",
             let event = new CustomEvent("PassTestCodeToBackground", { detail: testScript });
             window.dispatchEvent(event);
         } else {
-            alert("Please Check - Use Test Script");
+            alert("Please Check - Use Test Script.");
         }
     }, false);
