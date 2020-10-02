@@ -12,13 +12,43 @@ chrome.runtime.onInstalled.addListener(function() {
         chrome.declarativeContent.onPageChanged.addRules([{
             conditions: [new chrome.declarativeContent.PageStateMatcher({
                 pageUrl: { hostSuffix: 'bigmachines.com' },
-                // pageUrl: { pathContains: 'bigmachines.com/spring' }, - DOESNT WORK
+                // pageUrl: { pathContains: 'bigmachines.com/spring' },
+                pageUrl: { urlContains: 'bigmachines.com/spring' },
                 // pageUrl: { hostSuffix: 'bigmachines.com' },
             })],
             actions: [new chrome.declarativeContent.ShowPageAction()]
         }]);
     });
 });
+
+// var rule1 = {
+//     conditions: [
+//         new chrome.declarativeContent.PageStateMatcher({
+//             pageUrl: { hostEquals: 'www.google.com', schemes: ['https'] },
+//             css: ["input[type='password']"]
+//         })
+//     ],
+//     actions: [new chrome.declarativeContent.ShowPageAction()]
+// };
+
+// var rule2 = {
+//     conditions: [
+//         new chrome.declarativeContent.PageStateMatcher({
+//             pageUrl: { hostEquals: 'www.google.com', schemes: ['https'] },
+//             css: ["input[type='password']"]
+//         }),
+//         new chrome.declarativeContent.PageStateMatcher({
+//             css: ["video"]
+//         })
+//     ],
+//     actions: [new chrome.declarativeContent.ShowPageAction()]
+// };
+
+// chrome.runtime.onInstalled.addListener(function(details) {
+//     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+//         chrome.declarativeContent.onPageChanged.addRules([rule2]);
+//     });
+// });
 
 // chrome.runtime.onInstalled.addListener(function(details) {
 //     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
