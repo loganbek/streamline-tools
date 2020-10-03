@@ -14,6 +14,7 @@ chrome.runtime.onInstalled.addListener(function() {
                 pageUrl: { hostSuffix: 'bigmachines.com' },
                 // pageUrl: { pathContains: 'bigmachines.com/spring' },
                 pageUrl: { urlContains: 'bigmachines.com/spring' },
+                pageUrl: { urlContains: 'bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp' },
                 // pageUrl: { hostSuffix: 'bigmachines.com' },
             })],
             actions: [new chrome.declarativeContent.ShowPageAction()]

@@ -227,6 +227,9 @@ Streamline Tools v0.2.0-alpha Release:
 FUTURE:
 Other page types
 
+Open a link in a new window - Hold Shift and click the link
+Put a cursor in the search bar - Hold Command and press L
+
 ### COMMERCE
 - commerce advanced function - before and after
 - <https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=54983795&doc_id=4653823>
@@ -275,12 +278,14 @@ APPLY
 
 <https://developer.chrome.com/extensions/declarativeContent>
 
+<https://developers.chrome.com/extensions/windows>
+
 - [x] add variableName of function to comment header
 - [x] auto run on test script load
 - options 2filesystemhandler load - WIP, maybe not possible
 
 - [x] page state matcher improved
-- big machines directory
+- [ ] big machines directory
 
 - [x] repository on options page mock
 - [ ] LOAD TEST CODE all commerce functions
@@ -392,8 +397,25 @@ APPLY
 ### DISCUSSION
 
 - [ ] expected git repo functionality in options vs. local git management
-- [ ] walk through remaining pages and verify functioanity
+- [ ] walk through remaining pages and verify functionality
 - [ ] file naming for non commerce + util functions (email)
-
+- [x] research remaining page types  
 - [ ] work on POC and research for all page types
 - [ ] 
+
+Yes that's correct.  I believe you tested before and confirmed the Extension runs even when you open the BML Editor in a new window versus another tab.  We need the Load and Unload to run on the BML Editor window but ideally we can find a way to Load either the Before Formulas or After Formulas from the "General" tab on the Attribute page.  I think Tat even had separate buttons in the extention to handle this but I may be making that up.
+
+TODO:
+
+- [ ] page state matcher for commerce action
+- [ ] addVendor_quote as example
+- [x] code for launching from console - [Define Function]
+- [ ] BML EDITOR AREA
+
+- ADVANCED MODIFY BEFORE
+
+- ADVANCED MODIFY AFTER
+
+- ADVANCED VALIDATION
+
+
