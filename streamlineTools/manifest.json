@@ -7,7 +7,8 @@
         "activeTab",
         "declarativeContent",
         "storage",
-        "file://*"
+        "file://*",
+        "tabs"
     ],
     "options_ui": {
         "page": "options.html",

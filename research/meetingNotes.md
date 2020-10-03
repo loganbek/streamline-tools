@@ -269,12 +269,6 @@ APPLY
 - config rules
 
 
-## 9/23/20
-
-## 9/27/20
-
-## 9/30/20
-
 ## 10/4/20
 
 <https://developer.chrome.com/apps/commands>
@@ -286,7 +280,7 @@ APPLY
 - options 2filesystemhandler load - WIP, maybe not possible
 
 - [x] page state matcher improved
-- directory
+- big machines directory
 
 - [x] repository on options page mock
 - [ ] LOAD TEST CODE all commerce functions
@@ -393,3 +387,13 @@ APPLY
 - [ ] saveTransactionUsingRest
 - [ ] setEfficientSheetIndex
 - [ ] getEfficientSheetIndex_2 - WIP
+
+
+### DISCUSSION
+
+- [ ] expected git repo functionality in options vs. local git management
+- [ ] walk through remaining pages and verify functioanity
+- [ ] file naming for non commerce + util functions (email)
+
+- [ ] work on POC and research for all page types
+- [ ] 
