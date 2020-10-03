@@ -227,8 +227,47 @@ Streamline Tools v0.2.0-alpha Release:
 FUTURE:
 Other page types
 
-- config - rules
+### COMMERCE
 - commerce advanced function - before and after
+- <https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=54983795&doc_id=4653823>
+- <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=54983795>
+- Define Function - editPreModifyFunction();
+- Define Function - editModifyFunction();
+- Define Function - editValidation();
+
+- Apply
+- Update
+- Update and New
+- Clone
+- Back
+
+APPLY
+```html
+<table onclick="javascript:bmSubmitForm('edit_action.jsp', document.bmForm, bmValidateForm0, 'addCmAction', false, false, false);bmCancelBubble(event)" onmouseover="bmButtonMouseOver(this,'javascript:bmSubmitForm(\'edit_action.jsp\', document.bmForm, bmValidateForm0, \'addCmAction\', false, false, false)')" onmousedown="bmButtonMouseDown(this,'javascript:bmSubmitForm(\'edit_action.jsp\', document.bmForm, bmValidateForm0, \'addCmAction\', false, false, false)')" onmouseup="bmButtonMouseUp(this,'javascript:bmSubmitForm(\'edit_action.jsp\', document.bmForm, bmValidateForm0, \'addCmAction\', false, false, false)')" onmouseout="bmButtonMouseOut(this,'javascript:bmSubmitForm(\'edit_action.jsp\', document.bmForm, bmValidateForm0, \'addCmAction\', false, false, false)')" class="plain-button" cellspacing="0" cellpadding="0" role="button" aria-label="Apply" style="cursor: pointer;">
+	<tbody><tr>
+		<td class="button-left"><img class="button-left" src="/img/button10.gif"></td>
+		<td class="button-middle" nowrap="true"><div style="margin: 0px 0px 1px;"><a class="button-text" name="apply" id="apply" href="#">Apply</a></div></td>		<td class="button-right"><img class="button-right" src="/img/button10.gif"></td>
+	</tr>
+</tbody></table>
+```
+
+```html
+<table onclick="javascript:editPreModifyFunction();bmCancelBubble(event)" onmouseover="bmButtonMouseOver(this,'javascript:editPreModifyFunction()')" onmousedown="bmButtonMouseDown(this,'javascript:editPreModifyFunction()')" onmouseup="bmButtonMouseUp(this,'javascript:editPreModifyFunction()')" onmouseout="bmButtonMouseOut(this,'javascript:editPreModifyFunction()')" class="plain-button" cellspacing="0" cellpadding="0" role="button" aria-label="Define Function" style="cursor: pointer;">
+ <tbody><tr>
+  <td class="button-left"><img class="button-left" src="/img/button10.gif"></td>
+  <td class="button-middle" nowrap="true"><div style="margin: 0px 0px 1px;"><a class="button-text" name="define_function" id="define_function" href="#">Define Function</a></div></td>  <td class="button-right"><img class="button-right" src="/img/button10.gif"></td>
+ </tr>
+</tbody></table>
+```
+
+- commerce rules - constraint, hiding, etc.
+- <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?document_id=4653823&process_id=4653759>
+- <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_function.jsp>
+- <a class="button-text" name="save_and_close" id="save_and_close" href="#">Save and Close</a>
+
+### CONFIG
+- config rules
+
 
 ## 9/23/20
 
@@ -288,7 +327,7 @@ Other page types
 - [ ] LOAD TEST CODE all util functions
 
 - [x] getVolumePricing
-- [ ] getMaxDiscount
+- [ ] getMaxDiscount - WIP
 - [ ] sortCutSizesBasedonArea
 - [ ] addCalculationRelatedColumns
 - [ ] addCutSizesToSheetCalTable
@@ -353,4 +392,4 @@ Other page types
 - [ ] updateTransactionUsingSOAP
 - [ ] saveTransactionUsingRest
 - [ ] setEfficientSheetIndex
-- [ ] getEfficientSheetIndex_2
+- [ ] getEfficientSheetIndex_2 - WIP
