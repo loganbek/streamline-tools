@@ -13,7 +13,7 @@ chrome.runtime.onInstalled.addListener(function() {
             conditions: [new chrome.declarativeContent.PageStateMatcher({
                 pageUrl: { hostSuffix: 'bigmachines.com' },
                 // pageUrl: { pathContains: 'bigmachines.com/spring' },
-                pageUrl: { urlMatches: 'bigmachines.com/spring|bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp' },
+                pageUrl: { urlMatches: 'bigmachines.com/spring|bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp|bigmachines.com/admin/configuration/rules/edit_rule.jsp' },
                 // pageUrl: { urlContains: 'bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp' },
                 // pageUrl: { hostSuffix: 'bigmachines.com' },
             })],

@@ -276,7 +276,7 @@ APPLY
 
 ### CONFIG
 - config rules
-
+<https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5268044&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true>
 
 ## 9/27/20
 
@@ -439,5 +439,3 @@ TODO:
 - ADVANCED MODIFY AFTER
 
 - ADVANCED VALIDATION
-
-
