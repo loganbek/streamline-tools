@@ -407,7 +407,7 @@ Yes that's correct.  I believe you tested before and confirmed the Extension run
 
 TODO:
 
-- [ ] page state matcher for commerce action
+- [x] page state matcher for commerce action
 - [ ] addVendor_quote as example
 - [x] code for launching from console - [Define Function]
 - [ ] BML EDITOR AREA
