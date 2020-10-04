@@ -5,22 +5,26 @@ let commentHeader;
 let url;
 
 chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+    let tab = tabs[0];
+    url = tab.url;
     chrome.tabs.sendMessage(tabs[0].id, { greeting: "filename" }, function(response) {
-        console.log(response.filename);
-        fileName = response.filename;
+        if (response.filename) {
+            console.log(response.filename);
+            fileName = response.filename;
+        }
     });
 });
 
-chrome.tabs.query({
-    active: true,
-    lastFocusedWindow: true
-}, function(tabs) {
-    // and use that tab to fill in out title and url
-    var tab = tabs[0];
-    console.log("url :", tab.url);
-    // alert(tab.url);
-    url = tab.url;
-});
+// chrome.tabs.query({
+//     active: true,
+//     lastFocusedWindow: true
+// }, function(tabs) {
+//     // and use that tab to fill in out title and url
+//     var tab = tabs[0];
+//     console.log("url :", tab.url);
+//     // alert(tab.url);
+//     url = tab.url;
+// });
 
 
 let unloaded = false;
@@ -32,7 +36,8 @@ let unloadTestButton = document.getElementById('unloadTest');
 let loadTestButton = document.getElementById('loadTest');
 
 // TEST BUTTON HIDING
-if (url) {
+if (url !== undefined) {
+    alert(url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp"));
     if (url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp")) {
         unloadTestButton.style.visibility = "hidden";
         loadTestButton.style.visibility = "hidden";
@@ -62,7 +67,6 @@ unloadButton.onclick = function(params) {
     });
 
 }
-
 
 let fileHandle;
 loadButton.addEventListener('click', async(e) => {

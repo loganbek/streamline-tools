@@ -92,13 +92,14 @@ window.addEventListener('load', function() {
 
 function main() {
 
-    if (jsonRespStr) {
-        let message = jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data");
-        let message1 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[0].value");
-        let message3 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[1].value");
-    }
+    // if (typeof jsonRespStr !== undefined) {
+    //         alert(typeof jsonRespStr);
+    let message = jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data");
+    let message1 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[0].value");
+    let message3 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[1].value");
+    // }
     let message2 = "TEST SCRIPT FROM INJECT.JS";
-    let messages = message + message1 + message3;
+    //     let messages = message + message1 + message3;
     let propertyReturnType = document.getElementById('ext-comp-1009').value;
     let parameterName = document.getElementsByClassName('x-grid3-col-paramName');
     let parameterType = document.getElementsByClassName('x-grid3-col-paramType');

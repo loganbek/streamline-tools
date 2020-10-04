@@ -39,7 +39,7 @@ injectJs(chrome.extension.getURL('injected.js'));
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         let filename = document.getElementById('variableName').value;
-        if (!filename) {
+        if (filename === "") {
             filename = "nofilename";
         }
         console.log(sender.tab ?
