@@ -210,6 +210,7 @@ TODO:
 - spoof filesystemhandle to fix load: <https://wicg.github.io/native-file-system/#filesystemhandle>
 - <https://github.com/excalidraw/excalidraw/issues/169>
 
+
 Streamline Tools v0.2.0-alpha Release:
 
 - Bug Fixes:
@@ -224,6 +225,7 @@ Streamline Tools v0.2.0-alpha Release:
   - [ ] UNLOAD
   - [ ] LOAD
 
+
 FUTURE:
 Other page types
 
@@ -231,6 +233,9 @@ Open a link in a new window - Hold Shift and click the link
 Put a cursor in the search bar - Hold Command and press L
 
 ### COMMERCE
+
+- config - rules
+
 - commerce advanced function - before and after
 - <https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=54983795&doc_id=4653823>
 - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=54983795>
@@ -263,6 +268,7 @@ APPLY
 </tbody></table>
 ```
 
+
 - commerce rules - constraint, hiding, etc.
 - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?document_id=4653823&process_id=4653759>
 - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_function.jsp>
@@ -270,6 +276,22 @@ APPLY
 
 ### CONFIG
 - config rules
+
+
+## 9/27/20
+
+### DISCUSSION
+
+- v0.2.0-alpha
+- Do you want auto "run" on TEST SCRIPT LOAD? Should function similiar to valide on BML LOAD
+- <https://wicg.github.io/file-system-access/#process-accept-types>
+- <https://www.intego.com/mac-security-blog/master-the-macos-open-and-save-dialogs/> - OPEN hotkeys
+
+SUGGESTED USAGE
+alt-tab between chrome and vscode
+hotkeys for load
+
+## 9/30/20
 
 
 ## 10/4/20
