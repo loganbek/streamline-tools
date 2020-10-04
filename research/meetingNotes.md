@@ -39,9 +39,9 @@ var response = jsonPath(jsonRespStr.toJSON() , "$..[?(@.componentId=='bmlCodeEdi
 jsonPath(jsonRespStr, "$..[?(@.componentId=='bmlCodeEditor')].data");
 
 - [ ] message passing
-    - [x] branch - messagePassing - WIP - <https://stackoverflow.com/questions/20019958/chrome-extension-how-to-send-data-from-content-script-to-popup-html>
+  - [x] branch - messagePassing - WIP - <https://stackoverflow.com/questions/20019958/chrome-extension-how-to-send-data-from-content-script-to-popup-html>
 - [ ] saving blank/bml file or passing into text editor
-    - [] save code
+  - [] save code
 
 <https://github.com/loganbek/text-editor>
 <https://googlechromelabs.github.io/text-editor/>
@@ -99,6 +99,7 @@ There does not appear to be a limit or atleast there isn't one mentioned in the 
 works fine for pricing in devMcnichols - 3972 loc
 
 2) - [x] use $.widget.items[1].component.widget.items[1].component.widget.items[0].component.data" for now
+
 - [ ] json path lib that supports query
 - maybe jsonpath-1.0.2.js
 
@@ -107,15 +108,15 @@ works fine for pricing in devMcnichols - 3972 loc
 - [x] UNLOAD E2E
 - [ ] LOAD BML - approach update jsonRespStr via injected.js or a write version
 - [ ] Test Scripts
-    - [ ] can i get a few samples
-    - [ ] id="useScript", inputType="checkbox"
-    - [ ] UNLOAD - WIP
-        - [ ] jsonpath to testscript
+  - [ ] can i get a few samples
+  - [ ] id="useScript", inputType="checkbox"
+  - [ ] UNLOAD - WIP
+    - [ ] jsonpath to testscript
 - [ ] Options/Bells + Whistles
-    - [ ] chrome data sync api - https://developer.chrome.com/extensions/storage
+  - [ ] chrome data sync api - <https://developer.chrome.com/extensions/storage>
 - [ ] Comment Headers
-    - [ ] username
-    - [ ] date
+  - [ ] username
+  - [ ] date
 - [ ] Other Commerce Pages besides library functions
 
 ####
@@ -124,13 +125,13 @@ Next Verison (Working POC) v0.1.0 alpha:
     - [ ] finish LOAD BML
         - [x] READ
         - [ ] pass from content.js -> inject.js
-        - [ ] update DOM in inject.js   
+        - [ ] update DOM in inject.js
     - [ ] hide functionality besides LOAD BML/UNLOAD BML
 
 #### BACK_BURNER
 
 - [ ] json path lib that supports query
-    - [ ] maybe jsonpath-1.0.2.js
+  - [ ] maybe jsonpath-1.0.2.js
 - [ ] Directory Structure <- Pull Req
 - [ ] Multi OS Support (Linux/Windows)
 - [ ] Multi Editor Support
@@ -138,17 +139,18 @@ Next Verison (Working POC) v0.1.0 alpha:
 - [ ] Icon lock badge (when unloaded)
 - [ ] Dark Mode
 
-### TODO:
+### TODO
 
-- [ ] file should overwrite instead of `pricing (1).bml` and `pricing.test (1).bml`. 
+- [ ] file should overwrite instead of `pricing (1).bml` and `pricing.test (1).bml`.
 - [ ] cleanup
 - [ ] isolate save dialog setting - WIP
 
 ### DELIVERABLES 4
 
-- LOAD - 
+- LOAD -
 
 TEXT AREA onchange JS
+
 ```html
 <textarea id="textarea" wrap="off" onchange="editArea.execCommand(&quot;onchange&quot;);" onfocus="javascript:editArea.textareaFocused=true;" onblur="javascript:editArea.textareaFocused=false;" style="width: 5919px; height: 2355px; font-family: monospace; font-size: 10pt; line-height: 15px; margin-left: 0px; margin-top: 0px;" classname="null hidden" class="null hidden" spellcheck="false"> </textarea>
 ```
@@ -156,24 +158,19 @@ TEXT AREA onchange JS
 UPDATE jsonRespStr - don't think will work
 UPDATE text area innerHTML
 
-
-
-
-
-
-- POC 
-    - comment header (no footer)
-    - finish load
-    - maybe test scripts
+- POC
+  - comment header (no footer)
+  - finish load
+  - maybe test scripts
 - extend to util and config and finish commerce
-    - [ ] commerce quote actions
-        - [ ] comm vs config rules
-        - [ ] 3 diff page types - 
-            - rules
-            - commerce advanced function - before and after
-            - comm lib + util
-    - [x] util
-    - [ ] config - THIS IS GOING TO BE A BEAST
+  - [ ] commerce quote actions
+    - [ ] comm vs config rules
+    - [ ] 3 diff page types -
+      - rules
+      - commerce advanced function - before and after
+      - comm lib + util
+  - [x] util
+  - [ ] config - THIS IS GOING TO BE A BEAST
 - [ ] big tools additonal features
 
 ## 9/9/20
@@ -199,25 +196,86 @@ TODO:
 
 ```javascript
 /*
-@param 
-	- partNumList (String[]) 
-	- partNumDict (String[] Dictionary)
-	- qtyDict (Integer Dictionary)
-	- priceDict (Float Dictionary)
-	- accumulate (String)
-@return 
-	- priceDict (Float Dictionary) 
-*/ 
+@param
+ - partNumList (String[])
+ - partNumDict (String[] Dictionary)
+ - qtyDict (Integer Dictionary)
+ - priceDict (Float Dictionary)
+ - accumulate (String)
+@return
+ - priceDict (Float Dictionary)
+*/
 ```
 
 - spoof filesystemhandle to fix load: <https://wicg.github.io/native-file-system/#filesystemhandle>
 - <https://github.com/excalidraw/excalidraw/issues/169>
 
+
+Streamline Tools v0.2.0-alpha Release:
+
+- Bug Fixes:
+  - [ ] no longer request file dialog on LOAD (spoof fileSystemFileHandle).
+
+-Features:
+
+- Comment Header - WIP
+  - [x] inject.js should grab paramters.
+  - [ ] inject.js should pass parameters + return type to content.js.
+- Test Scripts - WIP
+  - [ ] UNLOAD
+  - [ ] LOAD
+
+
 FUTURE:
 Other page types
 
+Open a link in a new window - Hold Shift and click the link
+Put a cursor in the search bar - Hold Command and press L
+
+### COMMERCE
+
 - config - rules
+
 - commerce advanced function - before and after
+- <https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=54983795&doc_id=4653823>
+- <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=54983795>
+- Define Function - editPreModifyFunction();
+- Define Function - editModifyFunction();
+- Define Function - editValidation();
+
+- Apply
+- Update
+- Update and New
+- Clone
+- Back
+
+APPLY
+```html
+<table onclick="javascript:bmSubmitForm('edit_action.jsp', document.bmForm, bmValidateForm0, 'addCmAction', false, false, false);bmCancelBubble(event)" onmouseover="bmButtonMouseOver(this,'javascript:bmSubmitForm(\'edit_action.jsp\', document.bmForm, bmValidateForm0, \'addCmAction\', false, false, false)')" onmousedown="bmButtonMouseDown(this,'javascript:bmSubmitForm(\'edit_action.jsp\', document.bmForm, bmValidateForm0, \'addCmAction\', false, false, false)')" onmouseup="bmButtonMouseUp(this,'javascript:bmSubmitForm(\'edit_action.jsp\', document.bmForm, bmValidateForm0, \'addCmAction\', false, false, false)')" onmouseout="bmButtonMouseOut(this,'javascript:bmSubmitForm(\'edit_action.jsp\', document.bmForm, bmValidateForm0, \'addCmAction\', false, false, false)')" class="plain-button" cellspacing="0" cellpadding="0" role="button" aria-label="Apply" style="cursor: pointer;">
+	<tbody><tr>
+		<td class="button-left"><img class="button-left" src="/img/button10.gif"></td>
+		<td class="button-middle" nowrap="true"><div style="margin: 0px 0px 1px;"><a class="button-text" name="apply" id="apply" href="#">Apply</a></div></td>		<td class="button-right"><img class="button-right" src="/img/button10.gif"></td>
+	</tr>
+</tbody></table>
+```
+
+```html
+<table onclick="javascript:editPreModifyFunction();bmCancelBubble(event)" onmouseover="bmButtonMouseOver(this,'javascript:editPreModifyFunction()')" onmousedown="bmButtonMouseDown(this,'javascript:editPreModifyFunction()')" onmouseup="bmButtonMouseUp(this,'javascript:editPreModifyFunction()')" onmouseout="bmButtonMouseOut(this,'javascript:editPreModifyFunction()')" class="plain-button" cellspacing="0" cellpadding="0" role="button" aria-label="Define Function" style="cursor: pointer;">
+ <tbody><tr>
+  <td class="button-left"><img class="button-left" src="/img/button10.gif"></td>
+  <td class="button-middle" nowrap="true"><div style="margin: 0px 0px 1px;"><a class="button-text" name="define_function" id="define_function" href="#">Define Function</a></div></td>  <td class="button-right"><img class="button-right" src="/img/button10.gif"></td>
+ </tr>
+</tbody></table>
+```
+
+
+- commerce rules - constraint, hiding, etc.
+- <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?document_id=4653823&process_id=4653759>
+- <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_function.jsp>
+- <a class="button-text" name="save_and_close" id="save_and_close" href="#">Save and Close</a>
+
+### CONFIG
+- config rules
 
 
 ## 9/27/20
@@ -235,6 +293,151 @@ hotkeys for load
 
 ## 9/30/20
 
+
 ## 10/4/20
+
+<https://developer.chrome.com/apps/commands>
+
+<https://developer.chrome.com/extensions/declarativeContent>
+
+<https://developers.chrome.com/extensions/windows>
+
+- [x] add variableName of function to comment header
+- [x] auto run on test script load
+- options 2filesystemhandler load - WIP, maybe not possible
+
+- [x] page state matcher improved
+- [ ] big machines directory
+
+- [x] repository on options page mock
+- [ ] LOAD TEST CODE all commerce functions
+  - [x] pricing
+  - [x] emailNotificationGenerator
+  - [x] printing
+  - [x] createMasterGroupString
+  - [x] checkAdHocLineItems
+  - [x] resetIntegrationIDsForSFDC
+  - [x] ensurePrimaryForOracle
+  - [x] actionValidations
+  - [ ] setAttributeABasedOnAttributeB
+  - [ ] populateLineData
+  - [ ] checkLineItemsAvailability
+  - [ ] getItemAvailabilityPerSOAP
+  - [ ] calculateFreight
+  - [ ] validateTaxAreaID
+  - [ ] getParentModelNumber
+  - [ ] validateShipToAddress
+  - [ ] getFormattedAddressDetailsOfVendorShipTo
+  - [ ] thresholdInitialisation
+  - [ ] changeQuoteOwnerForCPSQuote
+  - [ ] cPSPricing
+  - [ ] test
+  - [ ] getFreightSoapCall
+  - [ ] attachmentDateModified
+  - [ ] getCPSStatus
+  - [ ] cPSDataString
+  - [ ] getVendorDict
+  - [x] getOpsInstructionsData
+  - [ ] getConversionRate
+  - [ ] updateApprovalsData
+  - [ ] getTotalTax
+  - [ ] getCarrierData
+  - [ ] setModelTotal
+  - [ ] prepareViewAllRFQData
+
+- [ ] LOAD TEST CODE all util functions
+
+- [x] getVolumePricing
+- [ ] getMaxDiscount - WIP
+- [ ] sortCutSizesBasedonArea
+- [ ] addCalculationRelatedColumns
+- [ ] addCutSizesToSheetCalTable
+- [ ] updateCRWithNewQuantity
+- [ ] getAllBranchesFromAvailableSheets
+- [ ] getSheetsFromSpecifiedBranch
+- [ ] updateBranchSpecificSheetsInAllAvailableSheets
+- [ ] getPartInformation
+- [ ] etXMLNodesByTag
+- [ ] convertExponentialNumbersToRealValue
+- [ ] translateExponentials
+- [ ] getAvailQtyValueForPart
+- [ ] getAvailableQuanityInBranch
+- [ ] getSelectedSheetOrCount
+- [ ] calculateLaborCharges
+- [ ] getProcessesResultInformation
+- [ ] getLaborChargesOfSpecificStrategy
+- [ ] resetCutSizeReductions
+- [ ] updateUserEnteredQuantitiesInSelectedSheetsArray
+- [ ] getBranchNameFromBranchCode
+- [ ] updateSelectedStockItemsArray
+- [ ] calculateGYFromLaborChargesString
+- [ ] addProcessedItemsToSelectedItemsArray
+- [ ] getApplicalbeBranchesAndUpdateQuantitiesBasedOnStrategy
+- [ ] processCalculations 
+- [ ] getEfficientSheetIndex
+- [ ] addDropSheetsToAvailableSheets
+- [ ] GetBarWidth
+- [ ] recommendAccessoriesForSelectedItems
+- [ ] recommendItemsStockProcessed
+- [ ] getSelectedKitItemsInAvailabilityArray
+- [ ] recommendItemsStockProcessed2
+- [ ] updateSelectedStockItemsInformation
+- [ ] getSelectedItemsFromAvailabilityArray
+- [ ] prepareFreightRequest
+- [ ] calculateLaborAndItemWeight
+- [ ] getTotalChargeOfItems
+- [ ] calculatePercentageOfLengthUsed
+- [ ] calculateProcessedItemUtilizationYieldAndPrice
+- [ ] updateSelectedStockItemsData
+- [ ] sortingBasedOnPrice
+- [ ] selectItemsFromAvailabilityArray
+- [ ] getXMLNodesByTagV2
+- [ ] processedItemsApprovalCheck
+- [ ] getItemsAvailabilityInformation
+- [ ] getSelectedItemsAvailabileQuantityInBranch
+- [ ] getSubstringBasedOnCriteria
+- [ ] lookupWorkCenterExclusions
+- [ ] buildCPSDataString
+- [ ] getCPSVendorDict
+- [ ] calculateExternalProcessingFreight
+- [ ] setRFQResponseVideData
+- [ ] advancedCommerceRule
+- [ ] getNumberOfUnits
+- [ ] setCPSAttributes
+- [ ] getOpsInstructionsData
+- [ ] removeDimensions
+- [ ] getProcessedDiscounts
+- [ ] getProcessedDiscountsTableData
+- [ ] iSValidCustomPartNumber
+- [ ] updateRFQViewPricesOnReconfigure
+- [ ] updateTransactionUsingSOAP
+- [ ] saveTransactionUsingRest
+- [ ] setEfficientSheetIndex
+- [ ] getEfficientSheetIndex_2 - WIP
+
+
+### DISCUSSION
+
+- [ ] expected git repo functionality in options vs. local git management
+- [ ] walk through remaining pages and verify functionality
+- [ ] file naming for non commerce + util functions (email)
+- [x] research remaining page types  
+- [ ] work on POC and research for all page types
+- [ ] 
+
+Yes that's correct.  I believe you tested before and confirmed the Extension runs even when you open the BML Editor in a new window versus another tab.  We need the Load and Unload to run on the BML Editor window but ideally we can find a way to Load either the Before Formulas or After Formulas from the "General" tab on the Attribute page.  I think Tat even had separate buttons in the extention to handle this but I may be making that up.
+
+TODO:
+
+- [x] page state matcher for commerce action
+- [ ] addVendor_quote as example
+- [x] code for launching from console - [Define Function]
+- [ ] BML EDITOR AREA
+
+- ADVANCED MODIFY BEFORE
+
+- ADVANCED MODIFY AFTER
+
+- ADVANCED VALIDATION
 
 
