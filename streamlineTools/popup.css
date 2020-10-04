@@ -32,42 +32,61 @@ button:active {
 }
 
 #load {
-    border-color: #0C5FA8;
-    color: #0C5FA8;
+    border-color: #00A0C6;
+    color: #00A0C6;
 }
 
 #load:hover {
     color: #FFFFFF;
-    background-color: #0C5FA8;
+    background-color: #00A0C6;
 }
 
 #unloadTest {
-    border-color: #60017C;
-    color: #60017C;
+    border-color: #0C5FA8;
+    color: #0C5FA8;
 }
 
 #unloadTest:hover {
     color: #FFFFFF;
-    background-color: #60017C;
+    background-color: #0C5FA8;
 }
 
 #loadTest {
-    border-color: #F0037F;
-    color: #F0037F;
+    border-color: #60017C;
+    color: #60017C;
 }
 
 #loadTest:hover {
+    color: #FFFFFF;
+    background-color: #60017C;
+}
+
+#options {
+    color: #AD047E;
+    border-color: #AD047E;
+}
+
+#options:hover {
+    color: #FFFFFF;
+    background-color: #AD047E;
+}
+
+#logs {
+    color: #F0037F;
+    border-color: #F0037F;
+}
+
+#logs:hover {
     color: #FFFFFF;
     background-color: #F0037F;
 }
 
 
 /* Streamline Colors
-- [ ] #80CFE2 - lightest blue
-- [ ] #00A0C6 - lighter blue
-- [ ] #0C5FA8 - light blue
-- [ ] #60017C - purple
-- [ ] #AC057E - pink
-- [ ] #F0037F - hot pink
-- [ ] #4F1E72 - purp2 
+- [ ] #80CFE2 - lightest blue - UNLOAD BML
+- [ ] #00A0C6 - lighter blue - LOAD BML
+- [ ] #0C5FA8 - light blue - UNLOAD TEST BML
+- [ ] #60017C - purple - LOAD TEST BML
+- [ ] #AD047E- pink - options
+- [ ] #F0037F - hot pink - logs
 */

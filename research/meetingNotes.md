@@ -413,7 +413,7 @@ hotkeys for load
 - [ ] updateTransactionUsingSOAP
 - [ ] saveTransactionUsingRest
 - [ ] setEfficientSheetIndex
-- [ ] getEfficientSheetIndex_2 - WIP
+- [ ] getEfficientSheetIndex_2
 
 
 ### DISCUSSION
