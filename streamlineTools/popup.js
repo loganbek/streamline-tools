@@ -8,7 +8,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     let tab = tabs[0];
     url = tab.url;
     chrome.tabs.sendMessage(tabs[0].id, { greeting: "filename" }, function(response) {
-        if (response.filename) {
+        if (response !== undefined) {
             console.log(response.filename);
             fileName = response.filename;
         }

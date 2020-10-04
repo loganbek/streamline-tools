@@ -76,5 +76,7 @@ chrome.runtime.onMessage.addListener(
             sendResponse({
                 filename: filename
             });
+            // return true;
         }
+        // return true;
     });
