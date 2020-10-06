@@ -422,9 +422,9 @@ hotkeys for load
 - [ ] walk through remaining pages and verify functionality
 - [ ] file naming for non commerce + util functions (email)
 - [x] research remaining page types  
-- [ ] work on POC and research for all page types
 - [ ] 
 
+TALK ABOUT
 Yes that's correct.  I believe you tested before and confirmed the Extension runs even when you open the BML Editor in a new window versus another tab.  We need the Load and Unload to run on the BML Editor window but ideally we can find a way to Load either the Before Formulas or After Formulas from the "General" tab on the Attribute page.  I think Tat even had separate buttons in the extention to handle this but I may be making that up.
 
 TODO:
