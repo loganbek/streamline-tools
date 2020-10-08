@@ -2,23 +2,6 @@ body {
     background-color: #EEEEEE;
 }
 
-button {
-    min-width: 175px;
-    margin: 5px;
-    padding: 1px;
-    text-align: center;
-    cursor: pointer;
-    outline: none;
-    color: #EEEEEE;
-    background-color: #FFFFFF;
-    border: 1px;
-    border-radius: 7px;
-    box-shadow: 0 5px #999;
-    font-size: 16px;
-    min-height: 24px;
-    vertical-align: middle;
-}
-
 i {
     vertical-align: text-top;
 }
@@ -144,3 +127,30 @@ button:active {
 .material-icons.md-light.md-inactive {
     color: rgba(255, 255, 255, 0.3);
 }
+
+button {
+    min-width: 175px;
+    margin: 5px;
+    padding: 1px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #EEEEEE;
+    background-color: #FFFFFF;
+    border: 1px;
+    border-radius: 7px;
+    box-shadow: 0 5px #999;
+    font-size: 16px;
+    min-height: 24px;
+    vertical-align: middle;
+}
+
+button:disabled {
+    /* color: #EEEEEE; */
+    cursor: no-drop;
+}
+
+
+/* button:hover:disabled {
+    background-color: #FFFFFF;
+} */
