@@ -418,24 +418,34 @@ hotkeys for load
 
 ### DISCUSSION
 
-- [ ] expected git repo functionality in options vs. local git management
 - [ ] walk through remaining pages and verify functionality
+  - [ ] commerce rules auto check or auto run??
 - [ ] file naming for non commerce + util functions (email)
 - [x] research remaining page types  
 - [ ] 
+
+- [ ] expected git repo functionality in options vs. local git management
+- [ ] LOGGING
 
 TALK ABOUT
 Yes that's correct.  I believe you tested before and confirmed the Extension runs even when you open the BML Editor in a new window versus another tab.  We need the Load and Unload to run on the BML Editor window but ideally we can find a way to Load either the Before Formulas or After Formulas from the "General" tab on the Attribute page.  I think Tat even had separate buttons in the extention to handle this but I may be making that up.
 
 TODO:
 
+### SRS BUSINESS
 - [x] page state matcher for commerce action
 - [ ] addVendor_quote as example
 - [x] code for launching from console - [Define Function]
 - [ ] BML EDITOR AREA
+- [ ] add page specific injectors to content.js
+### GUI
+- [ ] add cute options and logging icon
+- [ ] page spectific button disabling
 
 - ADVANCED MODIFY BEFORE
 
 - ADVANCED MODIFY AFTER
 
 - ADVANCED VALIDATION
+
+- addVendor_quote.beforeFormulas.bml
