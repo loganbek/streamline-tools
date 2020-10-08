@@ -130,7 +130,7 @@ button:active {
 
 button {
     min-width: 175px;
-    margin: 5px;
+    margin: 7px;
     padding: 1px;
     text-align: center;
     cursor: pointer;
