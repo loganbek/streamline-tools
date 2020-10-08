@@ -131,7 +131,7 @@ function saveText(filename, text) {
 
 // OPTIONS HANDLER
 optionsButton.onclick = function(params) {
-    alert("optionsClicked");
+    // alert("optionsClicked");
     window.location = '/options.html';
 }
 
