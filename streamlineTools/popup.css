@@ -3,9 +3,9 @@ body {
 }
 
 button {
-    min-width: 150px;
-    margin: 7px;
-    padding: 5px;
+    min-width: 175px;
+    margin: 5px;
+    padding: 1px;
     text-align: center;
     cursor: pointer;
     outline: none;
@@ -14,6 +14,13 @@ button {
     border: 1px;
     border-radius: 7px;
     box-shadow: 0 5px #999;
+    font-size: 16px;
+    min-height: 24px;
+    vertical-align: middle;
+}
+
+i {
+    vertical-align: text-top;
 }
 
 button:active {
@@ -64,6 +71,8 @@ button:active {
 #options {
     color: #AD047E;
     border-color: #AD047E;
+    /* min-width: 75px; */
+    display: inline-block;
 }
 
 #options:hover {
@@ -74,6 +83,9 @@ button:active {
 #logs {
     color: #F0037F;
     border-color: #F0037F;
+    /* min-width: 75px; */
+    /* float: right; */
+    display: inline-block;
 }
 
 #logs:hover {
@@ -90,3 +102,44 @@ button:active {
 - [ ] #AD047E- pink - options
 - [ ] #F0037F - hot pink - logs
 */
+
+
+/* Rules for sizing the icon. */
+
+.material-icons.md-18 {
+    font-size: 18px;
+}
+
+.material-icons.md-24 {
+    font-size: 24px;
+}
+
+.material-icons.md-36 {
+    font-size: 36px;
+}
+
+.material-icons.md-48 {
+    font-size: 48px;
+}
+
+
+/* Rules for using icons as black on a light background. */
+
+.material-icons.md-dark {
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.material-icons.md-dark.md-inactive {
+    color: rgba(0, 0, 0, 0.26);
+}
+
+
+/* Rules for using icons as white on a dark background. */
+
+.material-icons.md-light {
+    color: rgba(255, 255, 255, 1);
+}
+
+.material-icons.md-light.md-inactive {
+    color: rgba(255, 255, 255, 0.3);
+}
