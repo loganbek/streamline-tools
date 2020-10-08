@@ -34,6 +34,7 @@ let unloadButton = document.getElementById('unload');
 let loadButton = document.getElementById('load');
 let unloadTestButton = document.getElementById('unloadTest');
 let loadTestButton = document.getElementById('loadTest');
+let optionsButton = document.getElementById('options');
 
 // TEST BUTTON HIDING
 if (url !== undefined) {
@@ -126,6 +127,12 @@ function saveText(filename, text) {
     tempElem.setAttribute('href', 'data:bml/plain;charset=utf-8,' + encodeURIComponent(text));
     tempElem.setAttribute('download', filename);
     tempElem.click();
+}
+
+// OPTIONS HANDLER
+optionsButton.onclick = function(params) {
+    alert("optionsClicked");
+    window.location = '/options.html';
 }
 
 

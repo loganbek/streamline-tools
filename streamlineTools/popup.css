@@ -73,6 +73,7 @@ button:active {
     border-color: #AD047E;
     /* min-width: 75px; */
     display: inline-block;
+    /* text-decoration: none !important; */
 }
 
 #options:hover {
