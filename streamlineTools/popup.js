@@ -4,9 +4,27 @@ let fileName;
 let commentHeader;
 let url;
 
+let unloaded = false;
+let unloadedTest = false;
+
+let unloadButton = document.getElementById('unload');
+let loadButton = document.getElementById('load');
+let unloadTestButton = document.getElementById('unloadTest');
+let loadTestButton = document.getElementById('loadTest');
+let optionsButton = document.getElementById('options');
+
 chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     let tab = tabs[0];
     url = tab.url;
+    if (url !== undefined) {
+        // alert(url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp"));
+        if (url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp")) {
+            // unloadTestButton.style.visibility = "hidden";
+            // loadTestButton.style.visibility = "hidden";
+            unloadTestButton.disabled = true;
+            loadTestButton.disabled = true;
+        }
+    }
     chrome.tabs.sendMessage(tabs[0].id, { greeting: "filename" }, function(response) {
         if (response !== undefined) {
             console.log(response.filename);
@@ -26,15 +44,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
 //     url = tab.url;
 // });
 
-
-let unloaded = false;
-let unloadedTest = false;
-
-let unloadButton = document.getElementById('unload');
-let loadButton = document.getElementById('load');
-let unloadTestButton = document.getElementById('unloadTest');
-let loadTestButton = document.getElementById('loadTest');
-let optionsButton = document.getElementById('options');
+// alert(url);
 
 // TEST BUTTON HIDING
 if (url !== undefined) {
@@ -42,8 +52,13 @@ if (url !== undefined) {
     if (url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp")) {
         unloadTestButton.style.visibility = "hidden";
         loadTestButton.style.visibility = "hidden";
+        unloadTestButton.disabled = true;
+        loadTestButton.disabled = true;
     }
 }
+
+// unloadTestButton.disabled = true;
+// loadTestButton.disabled = true;
 
 chrome.downloads.onDeterminingFilename.addListener(function(item, suggest) {
     suggest({
