@@ -12,6 +12,7 @@ let loadButton = document.getElementById('load');
 let unloadTestButton = document.getElementById('unloadTest');
 let loadTestButton = document.getElementById('loadTest');
 let optionsButton = document.getElementById('options');
+let logsButton = document.getElementById('logs');
 
 chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     let tab = tabs[0];
@@ -32,6 +33,8 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
         }
     });
 });
+
+logsButton.disabled = true;
 
 // chrome.tabs.query({
 //     active: true,
