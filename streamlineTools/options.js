@@ -43,3 +43,9 @@ if (document.readyState !== 'loading') {
 // document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById('save').addEventListener('click',
     save_options);
+
+// BACK HANDLER
+document.getElementById('back').onclick = function(params) {
+    // alert("optionsClicked");
+    window.location = '/popup.html';
+}
