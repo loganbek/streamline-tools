@@ -34,6 +34,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     });
 });
 
+// TODO: LOG LINKING
 logsButton.disabled = true;
 
 // chrome.tabs.query({

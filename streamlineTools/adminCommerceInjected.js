@@ -4,7 +4,7 @@ window.addEventListener('load', function() {
     main();
 })
 
-
+//Listen for unload code event
 window.addEventListener('unloadCode', function(evt) {
     alert(frame_bm_script.editArea.textarea.value);
     let event = new CustomEvent("PassCodeToBackground", { detail: frame_bm_script.editArea.textarea.value });
