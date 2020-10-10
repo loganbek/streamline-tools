@@ -5,13 +5,19 @@ window.addEventListener('load', function() {
 })
 
 
-// //Listen for the load code event
-// window.addEventListener("loadCode", function(evt) {
-//     code = evt.detail;
-//     frame_bm_script.editArea.textarea.value = code;
-//     frame_bm_script.editArea.textareaFocused = true;
+window.addEventListener('unloadCode', function(evt) {
+    alert(frame_bm_script.editArea.textarea.value);
+    let event = new CustomEvent("PassCodeToBackground", { detail: frame_bm_script.editArea.textarea.value });
+    window.dispatchEvent(event);
+});
 
-//     //     //Perform Validation
-//     //     // document.getElementById('ext-gen22').click();
-//     //     document.getElementsByClassName('bmx-spellcheck')[0].click();
-// }, false);
+//Listen for the load code event
+window.addEventListener("loadCode", function(evt) {
+    code = evt.detail;
+    frame_bm_script.editArea.textarea.value = code;
+    frame_bm_script.editArea.textareaFocused = true;
+
+    //Perform Validation
+    // document.getElementById('ext-gen22').click();
+    // document.getElementsByClassName('bmx-spellcheck')[0].click();
+}, false);
