@@ -34,8 +34,6 @@ function injectJs(link) {
     document.getElementsByTagName('head')[0].appendChild(scr);
 }
 
-//TODO js injection handler
-alert("location.href " + location.href);
 injectJs(chrome.extension.getURL('injected.js'));
 
 chrome.runtime.onMessage.addListener(

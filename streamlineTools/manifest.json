@@ -26,31 +26,33 @@
         },
         {
             "matches": ["*://*.bigmachines.com/admin/commerce/rules/*"],
-            "js": ["adminCommerceContent"]
+            "js": ["adminCommerceContent.js"]
         },
         {
             "matches": ["*://*.bigmachines.com/admin/configuration/rules/*"],
-            "js": ["adminConfigContent"]
-        },
-        "web_accessible_resources": [
-            "jsonpath-1.0.2.js",
-            "injected.js",
-            "loadInjected.js"
-        ],
-        "page_action": {
-            "default_popup": "popup.html",
-            "default_icon": {
-                "16": "images/stream_line16.png",
-                "32": "images/stream_line32.png",
-                "48": "images/stream_line48.png",
-                "128": "images/stream_line128.png"
-            }
-        },
-        "icons": {
+            "js": ["adminConfigContent.js"]
+        }
+    ],
+    "web_accessible_resources": [
+        "jsonpath-1.0.2.js",
+        "injected.js",
+        "adminCommerceInjected.js",
+        "adminConfigInjected.js"
+    ],
+    "page_action": {
+        "default_popup": "popup.html",
+        "default_icon": {
             "16": "images/stream_line16.png",
             "32": "images/stream_line32.png",
             "48": "images/stream_line48.png",
             "128": "images/stream_line128.png"
-        },
-        "manifest_version": 2
-    }
+        }
+    },
+    "icons": {
+        "16": "images/stream_line16.png",
+        "32": "images/stream_line32.png",
+        "48": "images/stream_line48.png",
+        "128": "images/stream_line128.png"
+    },
+    "manifest_version": 2
+}
