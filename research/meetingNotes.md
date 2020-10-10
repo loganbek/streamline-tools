@@ -432,6 +432,19 @@ Yes that's correct.  I believe you tested before and confirmed the Extension run
 
 TODO:
 
+- [ ] multiple content scripts in manifest
+  - [ ] create content script for each page
+    - [ ] adminCommerceContent.js
+    - [ ] adminConfigContent.js
+    - [ ] adminRulesContent.js
+    - [ ] content.js
+  - [ ] create injected.js for each page
+    - [ ] adminCommerceInjected.js
+    - [ ] admintConfigInjected.js
+    - [ ] adminRulesInjected.js
+    - [ ] injected.js
+
+
 ### SRS BUSINESS
 - [x] page state matcher for commerce action
 - [ ] addVendor_quote as example
