@@ -82,3 +82,16 @@ chrome.runtime.onMessage.addListener(
         }
         // return true;
     });
+
+
+//OLD CONTENT SCRIPT MANIFEST
+// "content_scripts": [{
+//     "matches": [
+//         "*://*.bigmachines.com/*"
+//     ],
+//     "js": [
+//         "jsonpath-1.0.2.js",
+//         "content.js"
+//     ],
+//     "all_frames": true
+// }],

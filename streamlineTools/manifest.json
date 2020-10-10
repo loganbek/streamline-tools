@@ -20,46 +20,37 @@
         ],
         "persistent": false
     },
-    // "content_scripts": [{
-    //     "matches": [
-    //         "*://*.bigmachines.com/*"
-    //     ],
-    //     "js": [
-    //         "jsonpath-1.0.2.js",
-    //         "content.js"
-    //     ],
-    //     "all_frames": true
-    // }],
     "content_scripts": [{
-            "matches": ["http://www.google.com/*"],
-            "css": ["mygooglestyles.css"],
-            "js": ["jquery.js", "mygooglescript.js"]
+            "matches": ["*://*.bigmachines.com/spring/*"],
+            "js": ["content.js"]
         },
         {
-            "matches": ["http://www.yahoo.com/*"],
-            "css": ["myyahoostyles.css"],
-            "js": ["jquery.js", "myyahooscript.js"]
-        }
-    ],
-    "web_accessible_resources": [
-        "jsonpath-1.0.2.js",
-        "injected.js",
-        "loadInjected.js"
-    ],
-    "page_action": {
-        "default_popup": "popup.html",
-        "default_icon": {
+            "matches": ["*://*.bigmachines.com/admin/commerce/rules/*"],
+            "js": ["adminCommerceContent"]
+        },
+        {
+            "matches": ["*://*.bigmachines.com/admin/configuration/rules/*"],
+            "js": ["adminConfigContent"]
+        },
+        "web_accessible_resources": [
+            "jsonpath-1.0.2.js",
+            "injected.js",
+            "loadInjected.js"
+        ],
+        "page_action": {
+            "default_popup": "popup.html",
+            "default_icon": {
+                "16": "images/stream_line16.png",
+                "32": "images/stream_line32.png",
+                "48": "images/stream_line48.png",
+                "128": "images/stream_line128.png"
+            }
+        },
+        "icons": {
             "16": "images/stream_line16.png",
             "32": "images/stream_line32.png",
             "48": "images/stream_line48.png",
             "128": "images/stream_line128.png"
-        }
-    },
-    "icons": {
-        "16": "images/stream_line16.png",
-        "32": "images/stream_line32.png",
-        "48": "images/stream_line48.png",
-        "128": "images/stream_line128.png"
-    },
-    "manifest_version": 2
-}
+        },
+        "manifest_version": 2
+    }
