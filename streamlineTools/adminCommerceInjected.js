@@ -20,10 +20,15 @@ window.addEventListener("loadCode", function(evt) {
     //Perform Validation
     // document.getElementById('ext-gen22').click();
     // document.getElementsByClassName('bmx-spellcheck')[0].click();
+    document.getElementById('check').click();
 }, false);
 
 function main() {
+    let textArea = document.getElementById('textarea');
     if (document.title) {
         alert(document.title);
+    }
+    if (textArea) {
+        alert(textArea);
     }
 }
