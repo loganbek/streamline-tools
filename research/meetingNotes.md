@@ -432,17 +432,17 @@ Yes that's correct.  I believe you tested before and confirmed the Extension run
 
 TODO:
 
-- [ ] multiple content scripts in manifest
+- [x] multiple content scripts in manifest
   - [ ] create content script for each page
     - [ ] adminCommerceContent.js
     - [ ] adminConfigContent.js
     - [ ] adminRulesContent.js
-    - [ ] content.js
+    - [x] content.js
   - [ ] create injected.js for each page
     - [ ] adminCommerceInjected.js
     - [ ] admintConfigInjected.js
     - [ ] adminRulesInjected.js
-    - [ ] injected.js
+    - [x] injected.js
 
 
 ### SRS BUSINESS
