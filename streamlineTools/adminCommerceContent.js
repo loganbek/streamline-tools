@@ -23,10 +23,10 @@ chrome.runtime.onMessage.addListener(
             "nogreeting");
         if (request.greeting == "unload") {
             let unloadEvent = new CustomEvent("unloadCode", { detail: request.code });
-            window.dispatchEvent(unloadEvent);
-            if (!code.startsWith(commentHeader)) {
-                code = commentHeader + "\n\n" + code;
-            }
+            // window.dispatchEvent(unloadEvent);
+            // if (!code.startsWith(commentHeader)) {
+            //     code = commentHeader + "\n\n" + code;
+            // }
             sendResponse({
                 filename: filename,
                 code: code

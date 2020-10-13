@@ -51,15 +51,15 @@ logsButton.disabled = true;
 // alert(url);
 
 // TEST BUTTON HIDING
-if (url !== undefined) {
-    alert(url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp"));
-    if (url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp")) {
-        unloadTestButton.style.visibility = "hidden";
-        loadTestButton.style.visibility = "hidden";
-        unloadTestButton.disabled = true;
-        loadTestButton.disabled = true;
-    }
-}
+// if (url !== undefined) {
+//     alert(url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp"));
+//     if (url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp")) {
+//         unloadTestButton.style.visibility = "hidden";
+//         loadTestButton.style.visibility = "hidden";
+//         unloadTestButton.disabled = true;
+//         loadTestButton.disabled = true;
+//     }
+// }
 
 // unloadTestButton.disabled = true;
 // loadTestButton.disabled = true;

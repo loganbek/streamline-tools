@@ -4,10 +4,17 @@ window.addEventListener('load', function() {
     main();
 })
 
+//Listen for the code event
+window.addEventListener("PassCodeToBackground", function(evt) {
+    code = evt.detail;
+}, false);
+
 //Listen for unload code event
 window.addEventListener('unloadCode', function(evt) {
-    alert(frame_bm_script.editArea.textarea.value);
-    let event = new CustomEvent("PassCodeToBackground", { detail: frame_bm_script.editArea.textarea.value });
+    //     alert(frame_bm_script.editArea.textarea.value);
+    let code = document.getElementById('textarea');
+    alert(code);
+    let event = new CustomEvent("PassCodeToBackground", { detail: code });
     window.dispatchEvent(event);
 });
 
@@ -25,9 +32,9 @@ window.addEventListener("loadCode", function(evt) {
 
 function main() {
     let textArea = document.getElementById('textarea');
-    if (document.title) {
-        alert(document.title);
-    }
+    // if (document.title) {
+    //     alert(document.title);
+    // }
     if (textArea) {
         alert(textArea);
     }
