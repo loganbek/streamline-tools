@@ -30,7 +30,7 @@
         },
         {
             "matches": ["*://*.bigmachines.com/admin/configuration/rules/*"],
-            "js": ["adminConfigContent.js"]
+            "js": ["content.js"]
         }
     ],
     "web_accessible_resources": [
