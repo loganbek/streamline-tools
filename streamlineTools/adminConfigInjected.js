@@ -18,3 +18,7 @@ window.addEventListener('load', function() {
 //     // document.getElementById('ext-gen22').click();
 //     document.getElementsByClassName('bmx-spellcheck')[0].click();
 // }, false);
+
+function main() {
+    console.log("placeholdermain");
+}

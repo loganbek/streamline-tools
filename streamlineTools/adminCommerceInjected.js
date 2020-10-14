@@ -16,7 +16,7 @@ window.addEventListener('unloadCode', function(evt) {
     alert(code);
     let event = new CustomEvent("PassCodeToBackground", { detail: code });
     window.dispatchEvent(event);
-});
+}, false);
 
 //Listen for the load code event
 window.addEventListener("loadCode", function(evt) {
@@ -38,4 +38,7 @@ function main() {
     if (textArea) {
         alert(textArea);
     }
+
+    let event = new CustomEvent("PassToBackground", { detail: frame_bm_script.editArea.textarea.value });
+    window.dispatchEvent(event);
 }
