@@ -450,10 +450,10 @@ TODO:
 - [ ] addVendor_quote as example
 - [x] code for launching from console - [Define Function]
 - [ ] BML EDITOR AREA
-- [ ] add page specific injectors to content.js
+- [x] add page specific injectors to content.js
 ### GUI
-- [ ] add cute options and logging icon
-- [ ] page spectific button disabling
+- [x] add cute options and logging icon
+- [x] page spectific button disabling
 
 - ADVANCED MODIFY BEFORE
 
@@ -462,3 +462,16 @@ TODO:
 - ADVANCED VALIDATION
 
 - addVendor_quote.beforeFormulas.bml
+
+
+### DISCUSSION
+
+- [z] page specific button disable
+- [ ] Unchecked runtime.lastError: The message port closed before a response was received. -- DEBUG
+
+
+### NEXT TIME
+
+### LOW PRIORITY/NEXT TIME
+
+- [ ] think through logging

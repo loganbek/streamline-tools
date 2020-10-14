@@ -15,6 +15,7 @@ chrome.runtime.onMessage.addListener(
         // if (filename === "") {
         //     filename = "nofilename";
         // }
+        let filename = "addVendor_quote.beforeModify";
         console.log(sender.tab ?
             "from a content script:" + sender.tab.url :
             "from the extension");
