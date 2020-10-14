@@ -19,7 +19,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     url = tab.url;
     if (url !== undefined) {
         // alert(url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp"));
-        if (url.includes("bigmachines.com/admin/commerce/rules" || url.includes("bigmachines.com/admin/config/rules"))) {
+        if (url.includes("bigmachines.com/admin/commerce/rules") || url.includes("bigmachines.com/admin/configuration/rules")) {
             // unloadTestButton.style.visibility = "hidden";
             // loadTestButton.style.visibility = "hidden";
             unloadTestButton.disabled = true;
