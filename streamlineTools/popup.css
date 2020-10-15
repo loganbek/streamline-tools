@@ -16,7 +16,7 @@ button:active {
     color: #80CFE2;
 }
 
-#unload:hover {
+#unload:hover:enabled {
     color: #FFFFFF;
     background-color: #80CFE2;
 }
@@ -26,7 +26,7 @@ button:active {
     color: #00A0C6;
 }
 
-#load:hover {
+#load:hover:enabled {
     color: #FFFFFF;
     background-color: #00A0C6;
 }
@@ -36,7 +36,7 @@ button:active {
     color: #0C5FA8;
 }
 
-#unloadTest:hover {
+#unloadTest:hover:enabled {
     color: #FFFFFF;
     background-color: #0C5FA8;
 }
@@ -46,7 +46,7 @@ button:active {
     color: #60017C;
 }
 
-#loadTest:hover {
+#loadTest:hover:enabled {
     color: #FFFFFF;
     background-color: #60017C;
 }
@@ -59,7 +59,7 @@ button:active {
     /* text-decoration: none !important; */
 }
 
-#options:hover {
+#options:hover:enabled {
     color: #FFFFFF;
     background-color: #AD047E;
 }
@@ -72,7 +72,7 @@ button:active {
     display: inline-block;
 }
 
-#logs:hover {
+#logs:hover:enabled {
     color: #FFFFFF;
     background-color: #F0037F;
 }
