@@ -465,8 +465,9 @@ TODO:
 ### DISCUSSION
 
 - [x] page specific button disable
-- [ ] code from console functionality
-  - [ ] 
+- [ ] code from console functionality (COMMERCE)
+  - [x] document.querySelector("#textarea").value = "test";
+  - [x] document.querySelector("#textarea").textareaFocused = true;
 - [ ] Unchecked runtime.lastError: The message port closed before a response was received. -- DEBUG
   - [z] comment out adminCommerceContent.js + try with content.js -- STILL FAILS
   <https://stackoverflow.com/questions/59913934/chrome-extension-error-unchecked-runtime-lasterror-the-message-port-closed-bef>
@@ -477,7 +478,11 @@ TODO:
 
 - [ ] new release this weekend
 - [ ] thourough testing -> maybe move to BETA
+- [ ] gray on disable (non color) button
 
-### LOW PRIORITY/NEXT TIME
+### LOW PRIORITY
 
+- [ ] research admin action functionality + POC
 - [ ] think through logging
+- [ ] think through options github integration 
+

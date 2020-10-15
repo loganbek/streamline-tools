@@ -26,8 +26,11 @@ window.addEventListener('unloadCode', function(evt) {
 //Listen for the load code event
 window.addEventListener("loadCode", function(evt) {
     code = evt.detail;
-    frame_bm_script.editArea.textarea.value = code;
-    frame_bm_script.editArea.textareaFocused = true;
+    // frame_bm_script.editArea.textarea.value = code;
+    // frame_bm_script.editArea.textareaFocused = true;
+
+    document.querySelector("#textarea").value = "test";
+    document.querySelector("#textarea").textareaFocused = true;
 
     //Perform Validation
     // document.getElementById('ext-gen22').click();

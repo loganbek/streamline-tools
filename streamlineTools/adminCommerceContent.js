@@ -79,7 +79,7 @@ function injectJs(link) {
     document.getElementsByTagName('head')[0].appendChild(scr);
 }
 
-injectJs(chrome.extension.getURL('injected.js'));
+injectJs(chrome.extension.getURL('adminCommerceInjected.js'));
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
