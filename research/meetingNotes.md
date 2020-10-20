@@ -489,4 +489,6 @@ TODO:
 - [ ] research admin action functionality + POC
 - [ ] think through logging
 - [ ] think through options github integration 
+- [ ] rm research + unnecessary files
+
 
