@@ -474,6 +474,7 @@ TODO:
     - [ ] implement executeScript Trials
 
   <https://stackoverflow.com/questions/59913934/chrome-extension-error-unchecked-runtime-lasterror-the-message-port-closed-bef>
+  <https://hackr.io/blog/how-to-make-a-chrome-extension>
 - [ ] query previous tab for variable name
   - [ ] write code
 - [ ]
