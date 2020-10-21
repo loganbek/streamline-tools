@@ -26,7 +26,7 @@
         },
         {
             "matches": ["*://*.bigmachines.com/admin/commerce/rules/*"],
-            "js": ["adminCommerceContent.js"]
+            "js": ["content.js"]
         },
         {
             "matches": ["*://*.bigmachines.com/admin/configuration/rules/*"],

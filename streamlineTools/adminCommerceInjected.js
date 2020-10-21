@@ -5,9 +5,9 @@ window.addEventListener('load', function() {
 })
 
 //Listen for the code event
-window.addEventListener("PassCodeToBackground", function(evt) {
-    code = evt.detail;
-}, false);
+// window.addEventListener("PassCodeToBackground", function(evt) {
+//     code = evt.detail;
+// }, false);
 
 //Listen for unload code event
 // window.addEventListener('unloadCode', function(evt) {
