@@ -491,5 +491,5 @@ TODO:
 - [ ] think through logging
 - [ ] think through options github integration 
 - [ ] rm research + unnecessary files
-
+- [ ] gitpod functionality
 
