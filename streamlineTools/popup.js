@@ -66,7 +66,7 @@ logsButton.disabled = true;
 
 chrome.downloads.onDeterminingFilename.addListener(function(item, suggest) {
     suggest({
-        filename: item.filename,
+        filename: "bigmachines/" + item.filename,
         conflictAction: 'overwrite'
     });
 });
