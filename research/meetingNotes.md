@@ -305,7 +305,7 @@ hotkeys for load
 - options 2filesystemhandler load - WIP, maybe not possible
 
 - [x] page state matcher improved
-- [ ] big machines directory
+- [x] bigmachines directory
 
 - [x] repository on options page mock
 - [ ] LOAD TEST CODE all commerce functions
