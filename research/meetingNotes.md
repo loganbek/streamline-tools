@@ -481,7 +481,7 @@ TODO:
 
 ### NEXT TIME
 
-- [ ] new release
+- [x] new release
 - [ ] thourough testing -> maybe move to BETA
 - [x] gray on disable (non color) button
 
@@ -493,3 +493,9 @@ TODO:
 - [ ] rm research + unnecessary files
 - [ ] gitpod functionality
 
+
+### v0.5.0-alpha
+- [ ] add before after modify - no validate
+  - [ ] new cs arch
+- [ ] chrome docs
+- [ ] executeScript Trials
