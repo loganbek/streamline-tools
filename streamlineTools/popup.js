@@ -4,16 +4,38 @@ let fileName;
 let commentHeader;
 let url;
 
+let unloaded = false;
+let unloadedTest = false;
+
+let unloadButton = document.getElementById('unload');
+let loadButton = document.getElementById('load');
+let unloadTestButton = document.getElementById('unloadTest');
+let loadTestButton = document.getElementById('loadTest');
+let optionsButton = document.getElementById('options');
+let logsButton = document.getElementById('logs');
+
 chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     let tab = tabs[0];
     url = tab.url;
+    if (url !== undefined) {
+        // alert(url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp"));
+        if (url.includes("bigmachines.com/admin/commerce/rules") || url.includes("bigmachines.com/admin/configuration/rules")) {
+            // unloadTestButton.style.visibility = "hidden";
+            // loadTestButton.style.visibility = "hidden";
+            unloadTestButton.disabled = true;
+            loadTestButton.disabled = true;
+        }
+    }
     chrome.tabs.sendMessage(tabs[0].id, { greeting: "filename" }, function(response) {
-        if (response.filename) {
+        if (response !== undefined) {
             console.log(response.filename);
             fileName = response.filename;
         }
     });
 });
+
+// TODO: LOG LINKING
+logsButton.disabled = true;
 
 // chrome.tabs.query({
 //     active: true,
@@ -26,27 +48,25 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
 //     url = tab.url;
 // });
 
-
-let unloaded = false;
-let unloadedTest = false;
-
-let unloadButton = document.getElementById('unload');
-let loadButton = document.getElementById('load');
-let unloadTestButton = document.getElementById('unloadTest');
-let loadTestButton = document.getElementById('loadTest');
+// alert(url);
 
 // TEST BUTTON HIDING
-if (url !== undefined) {
-    alert(url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp"));
-    if (url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp")) {
-        unloadTestButton.style.visibility = "hidden";
-        loadTestButton.style.visibility = "hidden";
-    }
-}
+// if (url !== undefined) {
+//     alert(url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp"));
+//     if (url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp")) {
+//         unloadTestButton.style.visibility = "hidden";
+//         loadTestButton.style.visibility = "hidden";
+//         unloadTestButton.disabled = true;
+//         loadTestButton.disabled = true;
+//     }
+// }
+
+// unloadTestButton.disabled = true;
+// loadTestButton.disabled = true;
 
 chrome.downloads.onDeterminingFilename.addListener(function(item, suggest) {
     suggest({
-        filename: item.filename,
+        filename: "bigmachines/" + item.filename,
         conflictAction: 'overwrite'
     });
 });
@@ -126,6 +146,12 @@ function saveText(filename, text) {
     tempElem.setAttribute('href', 'data:bml/plain;charset=utf-8,' + encodeURIComponent(text));
     tempElem.setAttribute('download', filename);
     tempElem.click();
+}
+
+// OPTIONS HANDLER
+optionsButton.onclick = function(params) {
+    // alert("optionsClicked");
+    window.location = '/options.html';
 }
 
 

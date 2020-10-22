@@ -2,18 +2,8 @@ body {
     background-color: #EEEEEE;
 }
 
-button {
-    min-width: 150px;
-    margin: 7px;
-    padding: 5px;
-    text-align: center;
-    cursor: pointer;
-    outline: none;
-    color: #EEEEEE;
-    background-color: #FFFFFF;
-    border: 1px;
-    border-radius: 7px;
-    box-shadow: 0 5px #999;
+i {
+    vertical-align: text-top;
 }
 
 button:active {
@@ -26,48 +16,141 @@ button:active {
     color: #80CFE2;
 }
 
-#unload:hover {
+#unload:hover:enabled {
     color: #FFFFFF;
     background-color: #80CFE2;
 }
 
 #load {
+    border-color: #00A0C6;
+    color: #00A0C6;
+}
+
+#load:hover:enabled {
+    color: #FFFFFF;
+    background-color: #00A0C6;
+}
+
+#unloadTest {
     border-color: #0C5FA8;
     color: #0C5FA8;
 }
 
-#load:hover {
+#unloadTest:hover:enabled {
     color: #FFFFFF;
     background-color: #0C5FA8;
 }
 
-#unloadTest {
+#loadTest {
     border-color: #60017C;
     color: #60017C;
 }
 
-#unloadTest:hover {
+#loadTest:hover:enabled {
     color: #FFFFFF;
     background-color: #60017C;
 }
 
-#loadTest {
-    border-color: #F0037F;
-    color: #F0037F;
+#options {
+    color: #AD047E;
+    border-color: #AD047E;
+    /* min-width: 75px; */
+    display: inline-block;
+    /* text-decoration: none !important; */
 }
 
-#loadTest:hover {
+#options:hover:enabled {
+    color: #FFFFFF;
+    background-color: #AD047E;
+}
+
+#logs {
+    color: #F0037F;
+    border-color: #F0037F;
+    /* min-width: 75px; */
+    /* float: right; */
+    display: inline-block;
+}
+
+#logs:hover:enabled {
     color: #FFFFFF;
     background-color: #F0037F;
 }
 
 
 /* Streamline Colors
-- [ ] #80CFE2 - lightest blue
-- [ ] #00A0C6 - lighter blue
-- [ ] #0C5FA8 - light blue
-- [ ] #60017C - purple
-- [ ] #AC057E - pink
-- [ ] #F0037F - hot pink
-- [ ] #4F1E72 - purp2 
+- [ ] #80CFE2 - lightest blue - UNLOAD BML
+- [ ] #00A0C6 - lighter blue - LOAD BML
+- [ ] #0C5FA8 - light blue - UNLOAD TEST BML
+- [ ] #60017C - purple - LOAD TEST BML
+- [ ] #AD047E- pink - options
+- [ ] #F0037F - hot pink - logs
 */
+
+
+/* Rules for sizing the icon. */
+
+.material-icons.md-18 {
+    font-size: 18px;
+}
+
+.material-icons.md-24 {
+    font-size: 24px;
+}
+
+.material-icons.md-36 {
+    font-size: 36px;
+}
+
+.material-icons.md-48 {
+    font-size: 48px;
+}
+
+
+/* Rules for using icons as black on a light background. */
+
+.material-icons.md-dark {
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.material-icons.md-dark.md-inactive {
+    color: rgba(0, 0, 0, 0.26);
+}
+
+
+/* Rules for using icons as white on a dark background. */
+
+.material-icons.md-light {
+    color: rgba(255, 255, 255, 1);
+}
+
+.material-icons.md-light.md-inactive {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+button {
+    min-width: 175px;
+    margin: 7px;
+    padding: 1px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #EEEEEE;
+    background-color: #FFFFFF;
+    border: 1px;
+    border-radius: 7px;
+    box-shadow: 0 5px #999;
+    font-size: 16px;
+    min-height: 24px;
+    vertical-align: middle;
+}
+
+button:disabled {
+    /* color: #EEEEEE; */
+    cursor: no-drop;
+}
+
+
+/* button:hover:disabled {
+    background-color: #FFFFFF;
+} */

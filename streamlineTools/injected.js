@@ -106,7 +106,7 @@ function main() {
     let variableName = document.getElementById('variableName').value;
     let params = "";
     for (let i = 0; i < parameterName.length; i++) {
-        params += "- " + parameterName[i].innerHTML + "(" + parameterType[i].innerHTML + ")\n";
+        params += "- " + parameterName[i].innerHTML + " (" + parameterType[i].innerHTML + ")\n";
     }
     let returnType = "- " + propertyReturnType + "\n";
 

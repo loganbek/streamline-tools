@@ -210,7 +210,6 @@ TODO:
 - spoof filesystemhandle to fix load: <https://wicg.github.io/native-file-system/#filesystemhandle>
 - <https://github.com/excalidraw/excalidraw/issues/169>
 
-
 Streamline Tools v0.2.0-alpha Release:
 
 - Bug Fixes:
@@ -224,7 +223,6 @@ Streamline Tools v0.2.0-alpha Release:
 - Test Scripts - WIP
   - [ ] UNLOAD
   - [ ] LOAD
-
 
 FUTURE:
 Other page types
@@ -250,12 +248,13 @@ Put a cursor in the search bar - Hold Command and press L
 - Back
 
 APPLY
+
 ```html
 <table onclick="javascript:bmSubmitForm('edit_action.jsp', document.bmForm, bmValidateForm0, 'addCmAction', false, false, false);bmCancelBubble(event)" onmouseover="bmButtonMouseOver(this,'javascript:bmSubmitForm(\'edit_action.jsp\', document.bmForm, bmValidateForm0, \'addCmAction\', false, false, false)')" onmousedown="bmButtonMouseDown(this,'javascript:bmSubmitForm(\'edit_action.jsp\', document.bmForm, bmValidateForm0, \'addCmAction\', false, false, false)')" onmouseup="bmButtonMouseUp(this,'javascript:bmSubmitForm(\'edit_action.jsp\', document.bmForm, bmValidateForm0, \'addCmAction\', false, false, false)')" onmouseout="bmButtonMouseOut(this,'javascript:bmSubmitForm(\'edit_action.jsp\', document.bmForm, bmValidateForm0, \'addCmAction\', false, false, false)')" class="plain-button" cellspacing="0" cellpadding="0" role="button" aria-label="Apply" style="cursor: pointer;">
-	<tbody><tr>
-		<td class="button-left"><img class="button-left" src="/img/button10.gif"></td>
-		<td class="button-middle" nowrap="true"><div style="margin: 0px 0px 1px;"><a class="button-text" name="apply" id="apply" href="#">Apply</a></div></td>		<td class="button-right"><img class="button-right" src="/img/button10.gif"></td>
-	</tr>
+ <tbody><tr>
+  <td class="button-left"><img class="button-left" src="/img/button10.gif"></td>
+  <td class="button-middle" nowrap="true"><div style="margin: 0px 0px 1px;"><a class="button-text" name="apply" id="apply" href="#">Apply</a></div></td>  <td class="button-right"><img class="button-right" src="/img/button10.gif"></td>
+ </tr>
 </tbody></table>
 ```
 
@@ -268,15 +267,15 @@ APPLY
 </tbody></table>
 ```
 
-
 - commerce rules - constraint, hiding, etc.
 - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?document_id=4653823&process_id=4653759>
 - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_function.jsp>
 - <a class="button-text" name="save_and_close" id="save_and_close" href="#">Save and Close</a>
 
 ### CONFIG
-- config rules
 
+- config rules
+<https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5268044&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true>
 
 ## 9/27/20
 
@@ -293,7 +292,6 @@ hotkeys for load
 
 ## 9/30/20
 
-
 ## 10/4/20
 
 <https://developer.chrome.com/apps/commands>
@@ -307,7 +305,7 @@ hotkeys for load
 - options 2filesystemhandler load - WIP, maybe not possible
 
 - [x] page state matcher improved
-- [ ] big machines directory
+- [x] bigmachines directory
 
 - [x] repository on options page mock
 - [ ] LOAD TEST CODE all commerce functions
@@ -373,7 +371,7 @@ hotkeys for load
 - [ ] calculateGYFromLaborChargesString
 - [ ] addProcessedItemsToSelectedItemsArray
 - [ ] getApplicalbeBranchesAndUpdateQuantitiesBasedOnStrategy
-- [ ] processCalculations 
+- [ ] processCalculations
 - [ ] getEfficientSheetIndex
 - [ ] addDropSheetsToAvailableSheets
 - [ ] GetBarWidth
@@ -413,26 +411,48 @@ hotkeys for load
 - [ ] updateTransactionUsingSOAP
 - [ ] saveTransactionUsingRest
 - [ ] setEfficientSheetIndex
-- [ ] getEfficientSheetIndex_2 - WIP
-
+- [ ] getEfficientSheetIndex_2
 
 ### DISCUSSION
 
-- [ ] expected git repo functionality in options vs. local git management
 - [ ] walk through remaining pages and verify functionality
+  - [ ] commerce rules auto check or auto run??
 - [ ] file naming for non commerce + util functions (email)
 - [x] research remaining page types  
-- [ ] work on POC and research for all page types
-- [ ] 
+- [ ]
 
+- [ ] expected git repo functionality in options vs. local git management
+- [ ] LOGGING
+
+TALK ABOUT
 Yes that's correct.  I believe you tested before and confirmed the Extension runs even when you open the BML Editor in a new window versus another tab.  We need the Load and Unload to run on the BML Editor window but ideally we can find a way to Load either the Before Formulas or After Formulas from the "General" tab on the Attribute page.  I think Tat even had separate buttons in the extention to handle this but I may be making that up.
 
 TODO:
+
+- [x] multiple content scripts in manifest
+  - [ ] create content script for each page
+    - [ ] adminCommerceContent.js
+    - [ ] adminConfigContent.js
+    - [ ] adminRulesContent.js
+    - [x] content.js
+  - [ ] create injected.js for each page
+    - [ ] adminCommerceInjected.js
+    - [ ] admintConfigInjected.js
+    - [ ] adminRulesInjected.js
+    - [x] injected.js
+
+### SRS BUSINESS
 
 - [x] page state matcher for commerce action
 - [ ] addVendor_quote as example
 - [x] code for launching from console - [Define Function]
 - [ ] BML EDITOR AREA
+- [x] add page specific injectors to content.js
+
+### GUI
+
+- [x] add cute options and logging icon
+- [x] page spectific button disabling
 
 - ADVANCED MODIFY BEFORE
 
@@ -440,4 +460,36 @@ TODO:
 
 - ADVANCED VALIDATION
 
+- addVendor_quote.beforeFormulas.bml
+
+### DISCUSSION
+
+- [x] page specific button disable
+- [x] code from console functionality (COMMERCE)
+  - [x] document.querySelector("#textarea").value = "test";
+  - [x] document.querySelector("#textarea").textareaFocused = true;
+- [ ] Unchecked runtime.lastError: The message port closed before a response was received. -- DEBUG
+  - [z] comment out adminCommerceContent.js + try with content.js -- STILL FAILS
+  - [ ] look into executeScript
+    - [ ] implement executeScript Trials
+
+  <https://stackoverflow.com/questions/59913934/chrome-extension-error-unchecked-runtime-lasterror-the-message-port-closed-bef>
+  <https://hackr.io/blog/how-to-make-a-chrome-extension>
+- [ ] query previous tab for variable name
+  - [ ] write code
+- [ ]
+
+### NEXT TIME
+
+- [ ] new release
+- [ ] thourough testing -> maybe move to BETA
+- [x] gray on disable (non color) button
+
+### LOW PRIORITY
+
+- [ ] research admin action functionality + POC
+- [ ] think through logging
+- [ ] think through options github integration 
+- [ ] rm research + unnecessary files
+- [ ] gitpod functionality
 
