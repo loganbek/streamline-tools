@@ -119,8 +119,6 @@ works fine for pricing in devMcnichols - 3972 loc
   - [ ] date
 - [ ] Other Commerce Pages besides library functions
 
-####
-
 Next Verison (Working POC) v0.1.0 alpha:
     - [ ] finish LOAD BML
         - [x] READ
@@ -270,7 +268,7 @@ APPLY
 - commerce rules - constraint, hiding, etc.
 - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?document_id=4653823&process_id=4653759>
 - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_function.jsp>
-- <a class="button-text" name="save_and_close" id="save_and_close" href="#">Save and Close</a>
+- `<a class="button-text" name="save_and_close" id="save_and_close" href="#">`"Save and Close</a>
 
 ### CONFIG
 
@@ -413,7 +411,7 @@ hotkeys for load
 - [ ] setEfficientSheetIndex
 - [ ] getEfficientSheetIndex_2
 
-### DISCUSSION
+### DISCUSSION 2
 
 - [ ] walk through remaining pages and verify functionality
   - [ ] commerce rules auto check or auto run??
@@ -462,7 +460,7 @@ TODO:
 
 - addVendor_quote.beforeFormulas.bml
 
-### DISCUSSION
+### DISCUSSION 4
 
 - [x] page specific button disable
 - [x] code from console functionality (COMMERCE)
@@ -489,13 +487,13 @@ TODO:
 
 - [ ] research admin action functionality + POC
 - [ ] think through logging
-- [ ] think through options github integration 
+- [ ] think through options github integration
 - [ ] rm research + unnecessary files
 - [ ] gitpod functionality
 - [ ] VR functionality
   - [ ] via parrallels desktop
   - [ ] via Chrome andriod app sidequest?
-
+<https://developer.chrome.com/extensions/content_scripts#pi>
 <https://stackoverflow.com/questions/20764517/execute-script-after-click-in-popup-html-chrome-extension>
 
 ### v0.5.0-alpha
@@ -507,8 +505,7 @@ TODO:
 - [ ] multi es popup
 - [ ] try creating new message passing listener from scratch
 
-
-
 ### trial
+
 - [x] rm manifest content scripts
 - [ ] call exectue script independently based on url from tab query
