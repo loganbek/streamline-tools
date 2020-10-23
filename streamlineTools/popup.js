@@ -80,6 +80,7 @@ chrome.downloads.onDeterminingFilename.addListener(function(item, suggest) {
     });
 });
 
+// UNLOAD
 unloadButton.onclick = function(params) {
     console.log("unload clicked");
 
@@ -97,6 +98,7 @@ unloadButton.onclick = function(params) {
 
 }
 
+// LOAD
 let fileHandle;
 loadButton.addEventListener('click', async(e) => {
     fileHandle = await window.chooseFileSystemEntries();
@@ -112,6 +114,7 @@ loadButton.addEventListener('click', async(e) => {
 
 });
 
+// UNLOAD TEST
 unloadTestButton.onclick = function(params) {
     console.log("unloadTest clicked");
     let unloadedTest = true;
@@ -127,6 +130,7 @@ unloadTestButton.onclick = function(params) {
     });
 }
 
+// LOAD TEST
 let fileHandle2;
 loadTestButton.addEventListener('click', async(e) => {
     const options = {
@@ -150,6 +154,7 @@ loadTestButton.addEventListener('click', async(e) => {
     });
 });
 
+// SAVE
 function saveText(filename, text) {
     let tempElem = document.createElement('a');
     tempElem.setAttribute('href', 'data:bml/plain;charset=utf-8,' + encodeURIComponent(text));

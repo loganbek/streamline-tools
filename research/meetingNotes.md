@@ -509,3 +509,8 @@ TODO:
 
 - [x] rm manifest content scripts
 - [ ] call exectue script independently based on url from tab query
+
+
+## DAT DA DAH NEW ERROR on load and test load
+Uncaught (in promise) TypeError: window.chooseFileSystemEntries is not a function
+    at HTMLButtonElement.<anonymous> (popup.js:140)
