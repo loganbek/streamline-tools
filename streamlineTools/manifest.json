@@ -20,19 +20,6 @@
         ],
         "persistent": false
     },
-    "content_scripts": [{
-            "matches": ["*://*.bigmachines.com/spring/*"],
-            "js": ["content.js"]
-        },
-        {
-            "matches": ["*://*.bigmachines.com/admin/commerce/rules/*"],
-            "js": ["content.js"]
-        },
-        {
-            "matches": ["*://*.bigmachines.com/admin/configuration/rules/*"],
-            "js": ["content.js"]
-        }
-    ],
     "web_accessible_resources": [
         "jsonpath-1.0.2.js",
         "injected.js",

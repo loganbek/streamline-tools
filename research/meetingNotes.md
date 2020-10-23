@@ -485,7 +485,7 @@ TODO:
 - [ ] thourough testing -> maybe move to BETA
 - [x] gray on disable (non color) button
 
-### LOW PRIORITY
+### LOW PRIORITY/LONG TERM
 
 - [ ] research admin action functionality + POC
 - [ ] think through logging
@@ -501,3 +501,9 @@ TODO:
 - [ ] executeScript Trials
 - [ ] multi es popup
 - [ ] try creating new message passing listener from scratch
+
+
+
+### trial
+- [x] rm manifest content scripts
+- [ ] call exectue script independently based on url from tab query

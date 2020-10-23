@@ -19,6 +19,9 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     url = tab.url;
     if (url !== undefined) {
         // alert(url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp"));
+        // INITIAL content.js LOADING
+        executeContentScript();
+        //TEST DISABLING
         if (url.includes("bigmachines.com/admin/commerce/rules") || url.includes("bigmachines.com/admin/configuration/rules")) {
             // unloadTestButton.style.visibility = "hidden";
             // loadTestButton.style.visibility = "hidden";
@@ -33,6 +36,12 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
         }
     });
 });
+
+function executeContentScript() {
+    chrome.tabs.executeScript({
+        file: 'content.js'
+    });
+}
 
 // TODO: LOG LINKING
 logsButton.disabled = true;

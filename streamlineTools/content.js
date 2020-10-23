@@ -82,6 +82,21 @@ chrome.runtime.onMessage.addListener(
     });
 
 
+//MORE TECENT CONTENT SCRIPT MANIFEST
+// "content_scripts": [{
+//     "matches": ["*://*.bigmachines.com/spring/*"],
+//     "js": ["content.js"]
+// },
+// {
+//     "matches": ["*://*.bigmachines.com/admin/commerce/rules/*"],
+//     "js": ["content.js"]
+// },
+// {
+//     "matches": ["*://*.bigmachines.com/admin/configuration/rules/*"],
+//     "js": ["content.js"]
+// }
+// ],
+
 //OLD CONTENT SCRIPT MANIFEST
 // "content_scripts": [{
 //     "matches": [
