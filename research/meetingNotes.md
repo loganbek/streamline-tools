@@ -492,6 +492,9 @@ TODO:
 - [ ] think through options github integration 
 - [ ] rm research + unnecessary files
 - [ ] gitpod functionality
+- [ ] VR functionality
+  - [ ] via parrallels desktop
+  - [ ] via Chrome andriod app sidequest?
 
 <https://stackoverflow.com/questions/20764517/execute-script-after-click-in-popup-html-chrome-extension>
 
