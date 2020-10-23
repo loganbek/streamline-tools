@@ -493,8 +493,10 @@ TODO:
 - [ ] rm research + unnecessary files
 - [ ] gitpod functionality
 
+<https://stackoverflow.com/questions/20764517/execute-script-after-click-in-popup-html-chrome-extension>
 
 ### v0.5.0-alpha
+
 - [ ] add before after modify - no validate
   - [ ] new cs arch
 - [ ] chrome docs
