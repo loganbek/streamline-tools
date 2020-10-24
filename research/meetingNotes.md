@@ -544,10 +544,10 @@ TODO:
 
 ##### Util Libraries
 
-- [ ] UNLOAD
-- [ ] LOAD
-- [ ] UNLOAD TEST
-- [ ] LOAD TEST
+- [x] UNLOAD
+- [x] LOAD
+- [x] UNLOAD TEST
+- [x] LOAD TEST
 
 ##### Commerce Rules
 
