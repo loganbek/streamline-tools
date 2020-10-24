@@ -456,8 +456,6 @@ TODO:
 
 - ADVANCED MODIFY AFTER
 
-- ADVANCED VALIDATION
-
 - addVendor_quote.beforeFormulas.bml
 
 ### DISCUSSION 4
@@ -504,6 +502,34 @@ TODO:
 - [ ] executeScript Trials
 - [ ] multi es popup
 - [ ] try creating new message passing listener from scratch
+
+#### ACTIONS
+
+- [ ] Actions Naming
+- Pre Page w/ Define Function button - <https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=54983795&doc_id=4653823>
+- Post Page w/ Editor - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=54983795>
+- addVendor_quote.beforeFormulas.bml
+- addVendor_quote.afterForumulas.bml
+
+#### RULES
+
+- [ ] Rule Naming
+- [ ] COVERS - CONSTRAINT - HIDING - VALIDATION
+- COMMERCE rules - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?document_id=4653823&process_id=4653759>
+- EDIT FUNCTION - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_function.jsp>
+
+- CONFIG rules 
+- RECOMMENDATIONS <https://devmcnichols.bigmachines.com/admin/configuration/rules/list_rules.jsp?rule_type=1&segment_id=11&ref_type=2&ref_category=1&ref_id=11&attribute_category=2&_fromQlink=0>
+  - INDIVIDUAL CONFIG
+
+- CONSTRAINTS <https://devmcnichols.bigmachines.com/admin/configuration/rules/list_rules.jsp?rule_type=2&segment_id=11&ref_type=2&ref_category=1&ref_id=11&attribute_category=2&_fromQlink=0>
+  - INDIVIDUAL CONSTRAINT
+
+- HIDING ATTRIBUTE <https://devmcnichols.bigmachines.com/admin/configuration/rules/list_rules.jsp?rule_type=11&segment_id=11&ref_type=2&ref_category=1&ref_id=11&attribute_category=2&_fromQlink=0>
+  - INDIVIDUAL HIDING -
+
+- RECOMMENDED ITEMS - <https://devmcnichols.bigmachines.com/admin/configuration/rules/list_rules.jsp?rule_type=9&segment_id=11&ref_type=2&ref_category=1&ref_id=11&attribute_category=2&_fromQlink=0>
+  - INDIVIDUAL REC - <https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=9605806&rule_type=9&pline_id=-1&segment_id=11&model_id=-1&fromList=true?>
 
 ### trial
 

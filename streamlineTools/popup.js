@@ -109,6 +109,7 @@ loadButton.addEventListener('click', async(e) => {
     console.log(fileHandle);
     const file = await fileHandle.getFile();
     const contents = await file.text();
+    console.log(contents);
 
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { greeting: "load", code: contents }, function(response) {
