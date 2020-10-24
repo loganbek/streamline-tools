@@ -520,7 +520,7 @@ TODO:
 - COMMERCE rules - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?document_id=4653823&process_id=4653759>
 - EDIT FUNCTION - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_function.jsp>
 
-- CONFIG rules 
+- CONFIG rules
 - RECOMMENDATIONS <https://devmcnichols.bigmachines.com/admin/configuration/rules/list_rules.jsp?rule_type=1&segment_id=11&ref_type=2&ref_category=1&ref_id=11&attribute_category=2&_fromQlink=0>
   - INDIVIDUAL CONFIG
 
@@ -533,7 +533,28 @@ TODO:
 - RECOMMENDED ITEMS - <https://devmcnichols.bigmachines.com/admin/configuration/rules/list_rules.jsp?rule_type=9&segment_id=11&ref_type=2&ref_category=1&ref_id=11&attribute_category=2&_fromQlink=0>
   - INDIVIDUAL REC - <https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=9605806&rule_type=9&pline_id=-1&segment_id=11&model_id=-1&fromList=true?>
 
-### trial
+#### SMOKE TEST
 
-- [x] rm manifest content scripts
-- [ ] call exectue script independently based on url from tab query
+##### Commerce Libraries
+
+- [x] UNLOAD
+- [x] LOAD
+- [x] UNLOAD TEST
+- [x] LOAD TEST
+
+##### Util Libraries
+
+- [ ] UNLOAD
+- [ ] LOAD
+- [ ] UNLOAD TEST
+- [ ] LOAD TEST
+
+##### Commerce Rules
+
+- [ ] UNLOAD
+- [x] LOAD TEST
+
+##### Configuration Rules
+
+- [ ] UNLOAD
+- [ ] LOAD

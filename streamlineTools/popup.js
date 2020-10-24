@@ -22,11 +22,13 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     let tab = tabs[0];
     url = tab.url;
     if (url !== undefined) {
-        // alert(url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp"));
-        // INITIAL content.js LOADING
-        executeContentScript("adminCommerceContent.js");
+
         //TEST BML DISABLING
         if (url.includes("bigmachines.com/admin/commerce/rules") || url.includes("bigmachines.com/admin/configuration/rules")) {
+
+            // alert(url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp"));
+            // INITIAL content.js LOADING
+            executeContentScript("adminCommerceContent.js");
             // unloadTestButton.style.visibility = "hidden";
             // loadTestButton.style.visibility = "hidden";
             unloadTestButton.disabled = true;

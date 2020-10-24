@@ -33,8 +33,8 @@ window.addEventListener("loadCode", function(evt) {
 
 //     document.querySelector("#textarea").value = "test";
 //     document.querySelector("#textarea").textareaFocused = true;
-    document.getElementById("textarea").value = code;
-    document.getElementById("textarea").textareaFocused = true;
+//     document.getElementById("textarea").value = code;
+//     document.getElementById("textarea").textareaFocused = true;
     //Perform Validation
     // document.getElementById('ext-gen22').click();
     // document.getElementsByClassName('bmx-spellcheck')[0].click();
