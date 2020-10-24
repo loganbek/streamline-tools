@@ -136,15 +136,16 @@ window.addEventListener("loadCode", function(evt) {
 window.addEventListener("loadTestCode",
     function(evt) {
         code = evt.detail;
+        //need to rewrite these if's
         let commTestScript = document.getElementById('ext-comp-1080');
         let utilTestScript = document.getElementById('ext-comp-1040');
         let commTestScript2 = document.getElementById('ext-comp-1095');
-        if (commTestScript) {
+        if (utilTestScript) {
+            utilTestScript.value = code;
+        } else if (commTestScript) {
             commTestScript.value = code;
         } else if (commTestScript2) {
             commTestScript2.value = code;
-        } else if (utilTestScirpt) {
-            utilTestScript.value = code;
         }
         // alert(commTestScript, commTestScript2, utilTestScript);
         //RUN DEBUGGER
@@ -163,12 +164,12 @@ window.addEventListener("unloadTestCode",
             let utilTestScript = document.getElementById('ext-comp-1040');
             //ext-comp-1095
             let commTestScript2 = document.getElementById('ext-comp-1095');
-            if (commTestScript) {
+            if (utilTestScript) {
+                testScript = utilTestScript.value;
+            } else if (commTestScript) {
                 testScript = commTestScript.value;
             } else if (commTestScript2) {
                 testScript = commTestScript2.value;
-            } else if (utilTestScript) {
-                testScript = utilTestScript.value;
             }
             if (testScript == "") {
                 testScript = "\n";
