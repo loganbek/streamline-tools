@@ -1,12 +1,15 @@
 'use strict';
 
+// VARS
 let fileName;
 let commentHeader;
 let url;
 
+// FLAGS
 let unloaded = false;
 let unloadedTest = false;
 
+// BUTTONS
 let unloadButton = document.getElementById('unload');
 let loadButton = document.getElementById('load');
 let unloadTestButton = document.getElementById('unloadTest');
