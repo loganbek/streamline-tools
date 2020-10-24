@@ -34,6 +34,12 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
             unloadTestButton.disabled = true;
             loadTestButton.disabled = true;
         }
+        if (url.includes("bigmachines.com/admin/commerce/rules")) {
+            executeContentScript("adminCommerceContent.js");
+        }
+        if (url.includes("bigmachines.com/admin/configuration/rules")) {
+            executeContentScript("adminConfigContent.js");
+        }
     }
     if (url.includes("bigmachines.com/spring/")) {
         chrome.tabs.sendMessage(tabs[0].id, { greeting: "filename" }, function(response) {
