@@ -104,8 +104,9 @@ unloadButton.onclick = function(params) {
 // LOAD
 let fileHandle;
 loadButton.addEventListener('click', async(e) => {
-    fileHandle = await window.chooseFileSystemEntries();
-    console.log(fileHandle)
+    // fileHandle = await window.chooseFileSystemEntries();
+    [fileHandle] = await window.showOpenFilePicker();
+    console.log(fileHandle);
     const file = await fileHandle.getFile();
     const contents = await file.text();
 
@@ -116,6 +117,14 @@ loadButton.addEventListener('click', async(e) => {
     });
 
 });
+
+// let fileHandle;
+// butOpenFile.addEventListener('click', async () => {
+//   [fileHandle] = await window.showOpenFilePicker();
+//   const file = await fileHandle.getFile();
+//   const contents = await file.text();
+//   textArea.value = contents;
+// });
 
 // UNLOAD TEST
 unloadTestButton.onclick = function(params) {
@@ -144,8 +153,9 @@ loadTestButton.addEventListener('click', async(e) => {
         }, ],
         excludeAcceptAllOption: true
     };
-    fileHandle2 = await window.chooseFileSystemEntries(options);
-    console.log(fileHandle2)
+    //    [fileHandle2] = await window.showOpenFilePicker(options);
+    [fileHandle2] = await window.showOpenFilePicker();
+    console.log(fileHandle2);
     const file = await fileHandle2.getFile();
     const contents = await file.text();
 
