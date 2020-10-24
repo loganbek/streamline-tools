@@ -17,14 +17,15 @@ let loadTestButton = document.getElementById('loadTest');
 let optionsButton = document.getElementById('options');
 let logsButton = document.getElementById('logs');
 
+// CHROME TABS
 chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     let tab = tabs[0];
     url = tab.url;
     if (url !== undefined) {
         // alert(url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp"));
         // INITIAL content.js LOADING
-        executeContentScript();
-        //TEST DISABLING
+        executeContentScript("adminCommerceContent.js");
+        //TEST BML DISABLING
         if (url.includes("bigmachines.com/admin/commerce/rules") || url.includes("bigmachines.com/admin/configuration/rules")) {
             // unloadTestButton.style.visibility = "hidden";
             // loadTestButton.style.visibility = "hidden";
@@ -32,17 +33,20 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
             loadTestButton.disabled = true;
         }
     }
-    chrome.tabs.sendMessage(tabs[0].id, { greeting: "filename" }, function(response) {
-        if (response !== undefined) {
-            console.log(response.filename);
-            fileName = response.filename;
-        }
-    });
+    if (url.includes("bigmachines.com/spring/")) {
+        chrome.tabs.sendMessage(tabs[0].id, { greeting: "filename" }, function(response) {
+            if (response !== undefined) {
+                console.log(response.filename);
+                fileName = response.filename;
+            }
+        });
+        executeContentScript("content.js");
+    }
 });
 
-function executeContentScript() {
+function executeContentScript(contentScriptName) {
     chrome.tabs.executeScript({
-        file: 'content.js'
+        file: contentScriptName
     });
 }
 

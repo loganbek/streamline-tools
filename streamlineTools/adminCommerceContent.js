@@ -83,10 +83,12 @@ injectJs(chrome.extension.getURL('adminCommerceInjected.js'));
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        let filename = document.getElementById('variableName').value;
-        if (filename === "") {
-            filename = "nofilename";
-        }
+        // let filename = document.getElementById('variableName').value;
+        // if (filename === "") {
+        //     filename = "nofilename";
+        // }
+        let filename = window.name;
+        // alert(filename);
         console.log(sender.tab ?
             "from a content script:" + sender.tab.url :
             "from the extension");

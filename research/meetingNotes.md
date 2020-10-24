@@ -508,8 +508,10 @@ TODO:
 - [ ] Actions Naming
 - Pre Page w/ Define Function button - <https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=54983795&doc_id=4653823>
 - Post Page w/ Editor - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=54983795>
-- addVendor_quote.beforeFormulas.bml
-- addVendor_quote.afterForumulas.bml
+- addVendor_quote.beforeFormulas.bml - window.name
+"advancedPreModify"
+- addVendor_quote.afterForumulas.bml - window.name
+"advancedModify"
 
 #### RULES
 
