@@ -593,7 +593,10 @@ EX) addVendor_quote
     - [ ] problem scoping
   - auto validate button naming
     - [ ] problem scoping
-- discuss future focus
+- discuss future focus post feature complete
+  - [ ] logging
+    - [ ] beegtoo UI
+    - [ ] bm util function - need to search 
 
 ##### POST MEET
 
