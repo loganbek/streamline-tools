@@ -570,7 +570,7 @@ EX) addVendor_quote
 - [ ] UNLOAD
 - [ ] LOAD + Auto Validate
 
-##### 3/35/20
+##### 10/25/20
 
 - successful execute script fix
 - demo commerce rules + actions
