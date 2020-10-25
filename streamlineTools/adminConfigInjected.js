@@ -19,7 +19,7 @@ window.addEventListener('load', function() {
 // }, false);
 
 window.addEventListener('unloadCode', function(evt) {
-    let event = new CustomEvent("PassCodeToBackground", { detail: editArea.textarea.value });
+    let event = new CustomEvent("PassCodeToBackground", { detail: document.getElementById("textarea").value });
     window.dispatchEvent(event);
 })
 
@@ -30,18 +30,19 @@ window.addEventListener("loadCode", function(evt) {
     // frame_bm_script.editArea.textareaFocused = true;
     // frame_bm_script_id.editArea.textarea.value = code;
     // frame_bm_script_id.editArea.textareaFocused = true;
-    window.editArea.textarea.value = code;
-    window.editArea.textareaFocused = true;
-    console.log(window.editArea)
+    // window.editArea.textarea.value = code;
+    // window.editArea.textareaFocused = true;
+    // console.log(window.editArea)
 
     //     document.querySelector("#textarea").value = "test";
     //     document.querySelector("#textarea").textareaFocused = true;
-    //     document.getElementById("textarea").value = code;
-    //     document.getElementById("textarea").textareaFocused = true;
+    document.getElementById("textarea").value = code;
+    document.getElementById("textarea").textareaFocused = true;
     //Perform Validation
+    document.getElementsByClassName('x-btn-text ')[16].click();
     // document.getElementById('ext-gen22').click();
     // document.getElementsByClassName('bmx-spellcheck')[0].click();
-    document.getElementById('check').click();
+    // document.getElementById('check').click();
 }, false);
 
 function main() {

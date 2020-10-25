@@ -538,16 +538,16 @@ TODO:
 ##### Commerce Libraries
 
 - [x] UNLOAD
-- [x] LOAD
+- [x] LOAD - Auto Verify
 - [x] UNLOAD TEST
-- [x] LOAD TEST
+- [x] LOAD TEST - Auto Run
 
 ##### Util Libraries
 
 - [x] UNLOAD
-- [x] LOAD
+- [x] LOAD - Auto Verify
 - [x] UNLOAD TEST
-- [x] LOAD TEST
+- [x] LOAD TEST - Auto Run
 
 ##### Commerce Rules
 
@@ -555,17 +555,17 @@ EX) constrainMultipleFreightGridSelects
 
 - [x] UNLOAD
   - incorrect naming
-- [x] LOAD
+- [x] LOAD + Auto Check
 
 ##### Commerce Actions
 
 EX) addVendor_quote
 
-- [X] UNLOAD w/ hardcoding + check
+- [X] UNLOAD w/ hardcoding
   - [ ] (needs filenaming fix)
-- [x] LOAD
+- [x] LOAD + Auto Check
 
 ##### Configuration Rules
 
 - [ ] UNLOAD
-- [ ] LOAD
+- [ ] LOAD - Auto Validate

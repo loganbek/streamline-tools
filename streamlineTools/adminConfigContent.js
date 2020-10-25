@@ -38,7 +38,7 @@ injectJs(chrome.extension.getURL('adminConfigInjected.js'));
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        let filename = document.getElementById('variableName').value;
+        let filename = document.getElementById('x-auto-3-input').value;
         if (filename === "") {
             filename = "nofilename";
         }
