@@ -594,9 +594,10 @@ EX) addVendor_quote
   - auto validate button naming
     - [ ] problem scoping
 - discuss future focus post feature complete
-  - [ ] logging
+  - [ ] logging - would prob need to architect this together
     - [ ] beegtoo UI
     - [ ] bm util function - need to search 
+    - [ ] sever
 
 ##### POST MEET
 
