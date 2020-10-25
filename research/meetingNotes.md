@@ -568,4 +568,17 @@ EX) addVendor_quote
 ##### Configuration Rules
 
 - [ ] UNLOAD
-- [ ] LOAD - Auto Validate
+- [ ] LOAD + Auto Validate
+
+##### 3/35/20
+
+- successful execute script fix
+- demo commerce rules + actions
+- configuration issues
+  - bm frame naming
+  - auto validate button naming
+
+##### POST MEET
+
+- [ ] Code hardening + move to BETA
+- [ ] config work
