@@ -553,14 +553,15 @@ TODO:
 
 EX) constrainMultipleFreightGridSelects
 
-- [ ] UNLOAD
+- [x] UNLOAD
+  - incorrect naming
 - [x] LOAD
 
 ##### Commerce Actions
 
 EX) addVendor_quote
 
-- [X] UNLOAD w/ hardcoding 
+- [X] UNLOAD w/ hardcoding + check
   - [ ] (needs filenaming fix)
 - [x] LOAD
 
