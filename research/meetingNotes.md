@@ -483,7 +483,7 @@ TODO:
 
 ### LOW PRIORITY/LONG TERM
 
-- [ ] research admin action functionality + POC
+- [x] research admin action functionality + POC
 - [ ] think through logging
 - [ ] think through options github integration
 - [ ] rm research + unnecessary files
@@ -493,15 +493,6 @@ TODO:
   - [ ] via Chrome andriod app sidequest?
 <https://developer.chrome.com/extensions/content_scripts#pi>
 <https://stackoverflow.com/questions/20764517/execute-script-after-click-in-popup-html-chrome-extension>
-
-### v0.5.0-alpha
-
-- [ ] add before after modify - no validate
-  - [ ] new cs arch
-- [ ] chrome docs
-- [ ] executeScript Trials
-- [ ] multi es popup
-- [ ] try creating new message passing listener from scratch
 
 #### ACTIONS
 
@@ -535,21 +526,23 @@ TODO:
 
 #### SMOKE TEST
 
-##### Commerce Libraries
+##### Commerce Libraries - COMPLETE
 
 - [x] UNLOAD
 - [x] LOAD - Auto Verify
 - [x] UNLOAD TEST
 - [x] LOAD TEST - Auto Run
 
-##### Util Libraries
+##### Util Libraries - COMPLETE
 
 - [x] UNLOAD
 - [x] LOAD - Auto Verify
 - [x] UNLOAD TEST
 - [x] LOAD TEST - Auto Run
 
-##### Commerce Rules
+##### Commerce Rules - WIP (filenaming)
+
+ADD EX) for constraint, hiding, + validation
 
 EX) constrainMultipleFreightGridSelects
 
@@ -561,7 +554,7 @@ EX) constrainMultipleFreightGridSelects
   - constrainMultipleFreightGridSelects
 - [x] LOAD + Auto Check
 
-##### Commerce Actions
+##### Commerce Actions - WIP (varname/filenaming)
 
 EX) addVendor_quote
 
@@ -576,10 +569,34 @@ EX) addVendor_quote
     - document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]") to maybe store var before hand, or use tab query
 - [x] LOAD + Auto Check
 
-##### Configuration Rules
+##### Configuration Rules - HEAVY WIP
 
 - [ ] UNLOAD
 - [ ] LOAD + Auto Validate
+
+EX) Recommendation - sortBranchBasedOnZipCode
+  - input id for var name - x-auto-3-input
+  - weird editor frame naming - frame_x-auto-143-area
+  - validate button
+  //Perform Validation
+    document.getElementsByClassName('x-btn-text ')[16].click();
+
+
+EX) Constraint - constraintProductTypesWhenProductAccessories
+- input id for var name - x-auto-3-input
+  - weird editor frame naming - 
+  - frame_x-auto-166-area
+  - validate button - x-btn-text (maybe look at filter elements post getElementsByClassName)
+
+EX) Hiding Attribute - hidingAdvancedOptions
+- input id for var name - x-auto-3-input
+  - weird editor frame naming - frame_x-auto-110-area
+  - validate button
+
+EX) Recommended Items - recommendStockItems
+- input id for var name - x-auto-3-input
+  - weird editor frame naming - frame_x-auto-116-area
+  - validate button - x-btn-text 
 
 ##### 10/25/20
 
@@ -596,8 +613,8 @@ EX) addVendor_quote
 - discuss future focus post feature complete
   - [ ] logging - would prob need to architect this together
     - [ ] beegtoo UI
-    - [ ] bm util function - need to search 
-    - [ ] sever
+    - [ ] bm util function - need to search
+    - [ ] server
 
 ##### POST MEET
 
