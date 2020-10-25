@@ -601,10 +601,11 @@ EX) Recommended Items - recommendStockItems
 ##### 10/25/20
 
 - successful execute script fix 🥳 - no longer blocking 🚫🛡️
-- demo commerce rules + actions
+- demo commerce actions
   - filename issue
     - partially functioning w/ using window.name either "advancedModify" or "advancedPreModify"
-    - query previous tab code to get variableName - WIP
+      - store variable name in injected
+    - if not query previous tab code to get variableName - WIP
 - configuration issues
   - bm frame naming
     - [ ] problem scoping
