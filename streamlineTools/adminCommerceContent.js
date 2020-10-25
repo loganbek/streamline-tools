@@ -43,9 +43,9 @@
 //         // return true; - DOESNT FIX
 //     });
 
-let commentHeader = "";
-let code = "";
-let testCode = "";
+// let commentHeader = "";
+// let code = "";
+// let testCode = "";
 
 //Listen for the PassToBackground event
 window.addEventListener("PassToBackground", function(evt) {
@@ -87,7 +87,7 @@ chrome.runtime.onMessage.addListener(
         // if (filename === "") {
         //     filename = "nofilename";
         // }
-        let filename = window.name;
+        let filename = "addVendor_quote." + window.name;
         // alert(filename);
         console.log(sender.tab ?
             "from a content script:" + sender.tab.url :
@@ -98,9 +98,9 @@ chrome.runtime.onMessage.addListener(
         if (request.greeting == "unload") {
             let unloadEvent = new CustomEvent("unloadCode", { detail: request.code });
             window.dispatchEvent(unloadEvent);
-            if (!code.startsWith(commentHeader)) {
-                code = commentHeader + "\n\n" + code;
-            }
+            // if (!code.startsWith(commentHeader)) {
+            //     code = commentHeader + "\n\n" + code;
+            // }
             sendResponse({
                 filename: filename,
                 code: code

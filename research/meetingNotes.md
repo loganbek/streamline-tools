@@ -560,7 +560,8 @@ EX) constrainMultipleFreightGridSelects
 
 EX) addVendor_quote
 
-- [ ] UNLOAD
+- [X] UNLOAD w/ hardcoding 
+  - [ ] (needs filenaming fix)
 - [x] LOAD
 
 ##### Configuration Rules
