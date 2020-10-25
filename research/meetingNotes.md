@@ -555,6 +555,7 @@ EX) constrainMultipleFreightGridSelects
 
 - [x] UNLOAD
   - incorrect naming
+  - problem scoping
 - [x] LOAD + Auto Check
 
 ##### Commerce Actions
@@ -563,6 +564,13 @@ EX) addVendor_quote
 
 - [X] UNLOAD w/ hardcoding
   - [ ] (needs filenaming fix)
+  - problem scoping
+    - Pre Page w/ Define Function button - <https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=54983795&doc_id=4653823>
+  - Post Page w/ Editor - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=54983795>
+  - addVendor_quote.beforeFormulas.bml - window.name "advancedPreModify"
+  - addVendor_quote.afterForumulas.bml - window.name "advancedModify"
+    - don't have access to variablename on editor page
+    - document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]") to maybe store var before hand, or use tab query
 - [x] LOAD + Auto Check
 
 ##### Configuration Rules
@@ -572,13 +580,20 @@ EX) addVendor_quote
 
 ##### 10/25/20
 
-- successful execute script fix
+- successful execute script fix 🥳 - no longer blocking 🚫🛡️
 - demo commerce rules + actions
+  - filename issue
+    - partially functioning w/ using window.name either "advancedModify" or "advancedPreModify"
+    - query previous tab code to get variableName - WIP
 - configuration issues
   - bm frame naming
+    - [ ] problem scoping
   - auto validate button naming
+    - [ ] problem scoping
+- discuss future focus
 
 ##### POST MEET
 
-- [ ] Code hardening + move to BETA
+- [ ] comm rules + actions file name + polish
 - [ ] config work
+- [ ] Code hardening + move to BETA
