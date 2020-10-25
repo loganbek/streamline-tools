@@ -28,8 +28,11 @@ window.addEventListener("loadCode", function(evt) {
     code = evt.detail;
     // frame_bm_script.editArea.textarea.value = code;
     // frame_bm_script.editArea.textareaFocused = true;
-    frame_bm_script_id.editArea.textarea.value = code;
-    frame_bm_script_id.editArea.textareaFocused = true;
+    // frame_bm_script_id.editArea.textarea.value = code;
+    // frame_bm_script_id.editArea.textareaFocused = true;
+    window.editArea.textarea.value = code;
+    window.editArea.textareaFocused = true;
+    console.log(window.editArea)
 
     //     document.querySelector("#textarea").value = "test";
     //     document.querySelector("#textarea").textareaFocused = true;

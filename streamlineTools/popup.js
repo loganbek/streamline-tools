@@ -28,7 +28,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
 
             // alert(url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp"));
             // INITIAL content.js LOADING
-            executeContentScript("adminCommerceContent.js");
+            // executeContentScript("adminCommerceContent.js");
             // unloadTestButton.style.visibility = "hidden";
             // loadTestButton.style.visibility = "hidden";
             unloadTestButton.disabled = true;
