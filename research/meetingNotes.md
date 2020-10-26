@@ -618,7 +618,8 @@ EX) Recommended Items - recommendStockItems
     - [ ] server
 
 ##### POST MEET
-
+- [ ] swap addVendor_quote.beforeFormulas.bml - window.name "advancedPreModify"
+- [ ] swap addVendor_quote.afterForumulas.bml - window.name "advancedModify"
 - [ ] comm rules + actions file name + polish
 - [ ] config work
 - [ ] Code hardening + move to BETA
