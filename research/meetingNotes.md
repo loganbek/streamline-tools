@@ -575,28 +575,31 @@ EX) addVendor_quote
 - [ ] LOAD + Auto Validate
 
 EX) Recommendation - sortBranchBasedOnZipCode
-  - input id for var name - x-auto-3-input
+
+- input id for var name - x-auto-3-input
   - weird editor frame naming - frame_x-auto-143-area
   - validate button
   //Perform Validation
-    document.getElementsByClassName('x-btn-text ')[16].click();
-
+    `document.getElementsByClassName('x-btn-text ')[16].click();`
 
 EX) Constraint - constraintProductTypesWhenProductAccessories
+
 - input id for var name - x-auto-3-input
-  - weird editor frame naming - 
+  - weird editor frame naming -
   - frame_x-auto-166-area
   - validate button - x-btn-text (maybe look at filter elements post getElementsByClassName)
 
 EX) Hiding Attribute - hidingAdvancedOptions
+
 - input id for var name - x-auto-3-input
   - weird editor frame naming - frame_x-auto-110-area
   - validate button
 
 EX) Recommended Items - recommendStockItems
+
 - input id for var name - x-auto-3-input
   - weird editor frame naming - frame_x-auto-116-area
-  - validate button - x-btn-text 
+  - validate button - x-btn-text
 
 ##### 10/25/20
 
@@ -618,8 +621,11 @@ EX) Recommended Items - recommendStockItems
     - [ ] server
 
 ##### POST MEET
+
 - [ ] swap addVendor_quote.beforeFormulas.bml - window.name "advancedPreModify"
 - [ ] swap addVendor_quote.afterForumulas.bml - window.name "advancedModify"
 - [ ] comm rules + actions file name + polish
 - [ ] config work
 - [ ] Code hardening + move to BETA
+
+<https://stackoverflow.com/questions/4275071/getelementbyid-wildcard>
