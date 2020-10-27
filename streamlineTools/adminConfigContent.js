@@ -38,6 +38,9 @@ injectJs(chrome.extension.getURL('adminConfigInjected.js'));
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
+        // comm rules var name
+        // document.getElementById('x-auto-214-input').value;
+        //TODO WILD CARD
         let filename = document.getElementById('x-auto-3-input').value;
         if (filename === "") {
             filename = "nofilename";
