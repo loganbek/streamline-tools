@@ -629,3 +629,12 @@ EX) Recommended Items - recommendStockItems
 - [ ] Code hardening + move to BETA
 
 <https://stackoverflow.com/questions/4275071/getelementbyid-wildcard>
+
+```javascript
+if (typeof filename == "undefined") {
+    if (document.querySelectorAll("input[id^=x-auto]")[1].value) {
+        let filename = document.querySelectorAll("input[id^=x-auto]")[1].value;
+        alert(filename);
+    }
+}
+```
