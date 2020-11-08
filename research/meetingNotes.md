@@ -659,20 +659,31 @@ Smoke Testing to see where we are at
   - [x] load
   - [x] unload test
   - [x] load test
-- [ ] commerce rules actions - addVendor_quote
-advanced modify before
+- [ ] commerce actions - addVendor_quote - MEH
+  advanced modify before
+  - [ ] unload - ERRORS - message port closed
+  - popup.html:1 Error handling response: TypeError: Cannot read property 'filename' of undefined
+    at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/popup.js:106:34
+  - [x] load - WORKS but Unchecked runtime.lastError: The message port closed before a response was received in console.
+  advanced modify after - Same as before
+  - [ ] unload
+  - [x] load
+- [ ] commerce rules - FAILS - Unchecked runtime.lastError: The message port closed before a response was received.
+popup.html:1 Error handling response: TypeError: Cannot read property 'filename' of undefined
+    at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/popup.js:106:34
   - [ ] unload
   - [ ] load
-advanced modify after
-  - [ ] unload
-  - [ ] load
-- [ ] config rules
+- [ ] config rules - sortBranchBasedOnZipCode NOTHING WORKING
   - [ ] unload
   - [ ] load
 
 ###### CONVO TOPICS for next meeting
 
 - file structure for config/commerce/util - right now all contained in bigmachines folder
-- You mentioned you had ideas for a github integration. I would like to see how you see this working (to me it still makes more sense to do this locally for the command line). I can't yet envision how you see this working.
-- Maybe a github UI options mockup.
+- You mentioned you had ideas for a github integration. I would like to see how you see this working (to me it still makes more sense to do this locally from the command line). I can't yet envision how you see this working. - Maybe a github UI options mockup.
 - Button disabling/hiding looks good across the board.
+
+- filenaming still not working for comm actions, comm rules, or congfig rules
+  - need to play with this more
+
+- Unchecked runtime.lastError: The message port closed before a response was received - I may need to take a couple days and reunderstand the chrome message passing arch better to understand why these keep failing.
