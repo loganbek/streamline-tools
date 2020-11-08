@@ -638,3 +638,41 @@ if (typeof filename == "undefined") {
     }
 }
 ```
+
+##### 11/8/20
+
+- [ ] swap addVendor_quote.beforeFormulas.bml - window.name "advancedPreModify"
+- [ ] swap addVendor_quote.afterForumulas.bml - window.name "advancedModify"
+- [ ] comm rules + actions file name + polish
+- [ ] config work
+- [ ] Code hardening + move to BETA
+
+Smoke Testing to see where we are at
+
+- [x] commerce libs - PRICING
+  - [x] unload
+  - [x] load
+  - [x] unload test
+  - [x] load test
+- [x] util libs - GET VOLUME PRICING
+  - [x] unload
+  - [x] load
+  - [x] unload test
+  - [x] load test
+- [ ] commerce rules actions - addVendor_quote
+advanced modify before
+  - [ ] unload
+  - [ ] load
+advanced modify after
+  - [ ] unload
+  - [ ] load
+- [ ] config rules
+  - [ ] unload
+  - [ ] load
+
+###### CONVO TOPICS for next meeting
+
+- file structure for config/commerce/util - right now all contained in bigmachines folder
+- You mentioned you had ideas for a github integration. I would like to see how you see this working (to me it still makes more sense to do this locally for the command line). I can't yet envision how you see this working.
+- Maybe a github UI options mockup.
+- Button disabling/hiding looks good across the board.
