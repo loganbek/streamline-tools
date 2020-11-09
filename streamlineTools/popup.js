@@ -5,6 +5,7 @@ let fileName;
 let commentHeader;
 let url;
 let bmSiteSubDomain;
+let bmSiteType;
 
 // FLAGS
 let unloaded = false;
@@ -26,15 +27,16 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     let full = url;
     let parts = full.split('.');
     let sub = parts[0];
-    // let domain = parts[1];
-    // let type = parts[2];
+    let domain = parts[1];
+    let type = parts[2];
     console.log(sub);
     let bmSiteParts = sub.split('//');
     let bmSite = bmSiteParts[1];
     console.log(bmSite);
     bmSiteSubDomain = bmSite;
-    // console.log(domain);
-    // console.log(type);
+    console.log(domain);
+    console.log(type);
+    bmSiteType = type;
     if (url !== undefined) {
 
         //TEST BML DISABLING
