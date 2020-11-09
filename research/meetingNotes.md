@@ -698,6 +698,7 @@ popup.html:1 Error handling response: TypeError: Cannot read property 'filename'
 
 - filenaming still not working for comm actions, comm rules, or congfig rules
   - need to play with this more
-
+  - Error in event handler: ReferenceError: filename is not defined
+    at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/adminCommerceContent.js:115:27
 
 - [x] add in (site) folder - devmcnichols, etc.
