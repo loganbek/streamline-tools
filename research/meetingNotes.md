@@ -674,6 +674,10 @@ popup.html:1 Error handling response: TypeError: Cannot read property 'filename'
   - [ ] unload
   - [ ] load
 - [ ] config rules - sortBranchBasedOnZipCode NOTHING WORKING
+<input type="text" class=" x-form-field x-form-text" id="x-auto-3-input" name="varName" tabindex="0" style="width: 340px;" readonly="" disabled="">
+ contains value for config filenames (previous tab);
+ How to grab and pass?
+ https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5268044&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true
   - [ ] unload
   - [ ] load
 
