@@ -39,9 +39,7 @@ injectJs(chrome.extension.getURL('injected.js'));
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         let filename = document.getElementById('variableName').value;
-        if (filename === "") {
-            filename = "nofilename";
-        }
+        filename = newFunction(filename);
         console.log(sender.tab ?
             "from a content script:" + sender.tab.url :
             "from the extension");
@@ -82,6 +80,13 @@ chrome.runtime.onMessage.addListener(
     });
 
 
+
+function newFunction(filename) {
+    if (filename === "") {
+        filename = "nofilename";
+    }
+    return filename;
+}
 //MORE TECENT CONTENT SCRIPT MANIFEST
 // "content_scripts": [{
 //     "matches": ["*://*.bigmachines.com/spring/*"],
