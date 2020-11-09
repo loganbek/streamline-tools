@@ -677,6 +677,13 @@ popup.html:1 Error handling response: TypeError: Cannot read property 'filename'
   - [ ] unload
   - [ ] load
 
+### 11/8/20
+
+- [ ] Review popup.js
+- [ ] Review content.js, injected.js
+- [ ] Review adminCommerceInjected.js, adminCommerceContent.js, 
+- [ ] Review adminConfigInjected.js, adminConfigInjected.js
+
 ###### CONVO TOPICS for next meeting
 
 - file structure for config/commerce/util - right now all contained in bigmachines folder
