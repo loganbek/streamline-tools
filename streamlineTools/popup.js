@@ -4,6 +4,7 @@
 let fileName;
 let commentHeader;
 let url;
+let bmSiteSubDomain;
 
 // FLAGS
 let unloaded = false;
@@ -20,7 +21,20 @@ let logsButton = document.getElementById('logs');
 // CHROME TABS
 chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     let tab = tabs[0];
-    url = tab.url;
+    let url = tab.url;
+    // console.log(tab.url);
+    let full = url;
+    let parts = full.split('.');
+    let sub = parts[0];
+    // let domain = parts[1];
+    // let type = parts[2];
+    console.log(sub);
+    let bmSiteParts = sub.split('//');
+    let bmSite = bmSiteParts[1];
+    console.log(bmSite);
+    bmSiteSubDomain = bmSite;
+    // console.log(domain);
+    // console.log(type);
     if (url !== undefined) {
 
         //TEST BML DISABLING
@@ -90,12 +104,12 @@ logsButton.disabled = true;
 
 chrome.downloads.onDeterminingFilename.addListener(function(item, suggest) {
     suggest({
-        filename: "bigmachines/" + item.filename,
+        filename: "bigmachines/" + bmSiteSubDomain + "/" + item.filename,
         conflictAction: 'overwrite'
     });
 });
 
-// UNLOAD
+// UNLOAD ONCLICK
 unloadButton.onclick = function(params) {
     console.log("unload clicked");
 
@@ -113,7 +127,7 @@ unloadButton.onclick = function(params) {
 
 }
 
-// LOAD
+// LOAD ONCLICK
 let fileHandle;
 loadButton.addEventListener('click', async(e) => {
     // fileHandle = await window.chooseFileSystemEntries();
@@ -139,7 +153,7 @@ loadButton.addEventListener('click', async(e) => {
 //   textArea.value = contents;
 // });
 
-// UNLOAD TEST
+// UNLOAD TEST ONCLICK
 unloadTestButton.onclick = function(params) {
     console.log("unloadTest clicked");
     let unloadedTest = true;
@@ -155,7 +169,7 @@ unloadTestButton.onclick = function(params) {
     });
 }
 
-// LOAD TEST
+// LOAD TEST ONCLICK
 let fileHandle2;
 loadTestButton.addEventListener('click', async(e) => {
     const options = {
@@ -180,7 +194,7 @@ loadTestButton.addEventListener('click', async(e) => {
     });
 });
 
-// SAVE
+// FILE SAVE
 function saveText(filename, text) {
     let tempElem = document.createElement('a');
     tempElem.setAttribute('href', 'data:bml/plain;charset=utf-8,' + encodeURIComponent(text));

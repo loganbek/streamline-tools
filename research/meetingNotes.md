@@ -677,20 +677,27 @@ popup.html:1 Error handling response: TypeError: Cannot read property 'filename'
   - [ ] unload
   - [ ] load
 
-### 11/8/20
+### 11/9/20
 
-- [ ] Review popup.js
-- [ ] Review content.js, injected.js
-- [ ] Review adminCommerceInjected.js, adminCommerceContent.js, 
+- [x] Review popup.js
+- [x] Review background.js
+- [ ] Review content.js
+- [ ] Review injected.js
+- [ ] Review adminCommerceInjected.js, adminCommerceContent.js
 - [ ] Review adminConfigInjected.js, adminConfigInjected.js
 
-###### CONVO TOPICS for next meeting
+- [ ] Compare chrome.runtime.onMessage.addListener's between content scripts.
 
-- file structure for config/commerce/util - right now all contained in bigmachines folder
+- [x] add in (site) folder - devmcnichols, etc.
+
+### CONVO TOPICS for next meeting
+
+- file structure for config/commerce/util - right now all contained in bigmachines/sitedomain folder
 - You mentioned you had ideas for a github integration. I would like to see how you see this working (to me it still makes more sense to do this locally from the command line). I can't yet envision how you see this working. - Maybe a github UI options mockup.
 - Button disabling/hiding looks good across the board.
 
 - filenaming still not working for comm actions, comm rules, or congfig rules
   - need to play with this more
 
-- Unchecked runtime.lastError: The message port closed before a response was received - I may need to take a couple days and reunderstand the chrome message passing arch better to understand why these keep failing.
+
+- [x] add in (site) folder - devmcnichols, etc.
