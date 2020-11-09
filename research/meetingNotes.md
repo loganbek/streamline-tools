@@ -693,6 +693,7 @@ popup.html:1 Error handling response: TypeError: Cannot read property 'filename'
 - [ ] Compare chrome.runtime.onMessage.addListener's between content scripts.
 
 - [x] add in (site) folder - devmcnichols, etc.
+- [ ] go for walk then finish config/commerce/util folder piece in popup.js
 
 ### CONVO TOPICS for next meeting
 

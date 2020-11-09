@@ -37,6 +37,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     console.log(domain);
     console.log(type);
     bmSiteType = type;
+    console.log(bmSiteType);
     if (url !== undefined) {
 
         //TEST BML DISABLING
