@@ -696,7 +696,8 @@ popup.html:1 Error handling response: TypeError: Cannot read property 'filename'
 - You mentioned you had ideas for a github integration. I would like to see how you see this working (to me it still makes more sense to do this locally from the command line). I can't yet envision how you see this working. - Maybe a github UI options mockup.
 - Button disabling/hiding looks good across the board.
 
-- filenaming still not working for comm actions, comm rules, or congfig rules
+- filenaming still not working for comm actions, comm rules, or congfig rules - WIP
+  - sent email regarding action id associate with action var name
   - need to play with this more
   - Error in event handler: ReferenceError: filename is not defined
     at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/adminCommerceContent.js:115:27
