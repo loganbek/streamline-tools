@@ -19,7 +19,23 @@ window.addEventListener('load', function() {
 // }, false);
 
 window.addEventListener('unloadCode', function(evt) {
-    let event = new CustomEvent("PassCodeToBackground", { detail: document.getElementById("textarea").value });
+    frameList = window.frames;
+    console.log("frameList ->" + frameList);
+    console.log("frameList.editAreas.value -> " + frameList.editAreas.value);
+    console.log("frameList.editAreas -> " + frameList.editAreas);
+    console.log("frameList.textArea -> " + frameList.textArea);
+    // console.log("frameList.textArea.value -> " + frameList.textArea.value);
+    console.log("frameList" + frameList.value);
+    // console.log("frameList.querySelector" + frameList.querySelector("#textarea"));
+    // #textarea
+    console.log(frameList.contentWindow);
+    console.log(document.getElementsByTagName("iframe")[0].contentWindow); // <- build on this
+    console.log(document.querySelector("#frame_x-auto-143-area"));
+    // detail: frame_bm_script.editArea.textarea.value
+    // /html/body/div[1]/div[3]/div[2]/textarea
+    // document.querySelector("#textarea")
+    // [attribute*="value"]
+    let event = new CustomEvent("PassCodeToBackground", { detail: frame_bm_script.editArea.textarea.value });
     window.dispatchEvent(event);
 })
 

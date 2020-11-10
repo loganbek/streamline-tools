@@ -685,10 +685,10 @@ popup.html:1 Error handling response: TypeError: Cannot read property 'filename'
 
 - [x] Review popup.js
 - [x] Review background.js
-- [ ] Review content.js
+- [x] Review content.js
 - [ ] Review injected.js
 - [ ] Review adminCommerceInjected.js, adminCommerceContent.js
-- [ ] Review adminConfigInjected.js, adminConfigInjected.js
+- [x] Review adminConfigInjected.js, adminConfigInjected.js
 
 - [ ] Compare chrome.runtime.onMessage.addListener's between content scripts.
 
@@ -697,8 +697,8 @@ popup.html:1 Error handling response: TypeError: Cannot read property 'filename'
 
 ### 11/10/20
 
-- [ ] walk
-- [ ] continue review
+- [x] walk
+- [x] continue review
 - [ ] config/commerce rules hacking
   - [ ] CONFIG
   hidingAdvancedOptions - Advanced Condition
@@ -711,6 +711,7 @@ popup.html:1 Error handling response: TypeError: Cannot read property 'filename'
       Uncaught TypeError: Cannot read property 'value' of null
     at adminConfigInjected.js:22
 (anonymous) @ adminConfigInjected.js:22
+
   - [ ] maybe hardcode config and start working backwards
   
 populateAvailabilityInformationInToAvailabilityArray
@@ -726,5 +727,5 @@ populateAvailabilityInformationInToAvailabilityArray
     ß- need to play with this more
   - Error in event handler: ReferenceError: filename is not defined
     at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/adminCommerceContent.js:115:27
-
+- editAreas
 - [x] add in (site) folder - devmcnichols, etc.
