@@ -705,7 +705,15 @@ popup.html:1 Error handling response: TypeError: Cannot read property 'filename'
   - [ ] <https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=4951171&rule_type=11&pline_id=-1&segment_id=11&model_id=-1&fromList=true>
   constrainEPCostValue - Advanced Condition
   - [ ] <https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5387754&rule_type=2&pline_id=-1&segment_id=11&model_id=-1&fromList=true>
-  - [ ]maybe hardcode config and start working backwards
+  - [ ] adminconfigContent chrome.runtime.onMessage.addListener vs. content chrome.runtime.onMessage.addListener
+    - [ ] filename var
+    - [ ] make the addlisteners code match around filename var check if works + go for walk.
+      Uncaught TypeError: Cannot read property 'value' of null
+    at adminConfigInjected.js:22
+(anonymous) @ adminConfigInjected.js:22
+  - [ ] maybe hardcode config and start working backwards
+  
+populateAvailabilityInformationInToAvailabilityArray
 
 ### CONVO TOPICS for next meeting
 

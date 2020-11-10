@@ -41,7 +41,10 @@ chrome.runtime.onMessage.addListener(
         // comm rules var name
         // document.getElementById('x-auto-214-input').value;
         //TODO WILD CARD
-        let filename = document.getElementById('x-auto-3-input').value;
+        // let filename = document.getElementById('x-auto-3-input').value;
+        // let filename = document.querySelectorAll("input[id*=x-auto-]");
+        let filename = document.getElementsByName("varName").value;
+        console.log(filename);
         if (filename === "") {
             filename = "nofilename";
         }
