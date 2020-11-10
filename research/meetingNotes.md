@@ -705,8 +705,8 @@ popup.html:1 Error handling response: TypeError: Cannot read property 'filename'
   - [ ] <https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=4951171&rule_type=11&pline_id=-1&segment_id=11&model_id=-1&fromList=true>
   constrainEPCostValue - Advanced Condition
   - [ ] <https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5387754&rule_type=2&pline_id=-1&segment_id=11&model_id=-1&fromList=true>
- - [ ]maybe hardcode config and start working backwards
- 
+  - [ ]maybe hardcode config and start working backwards
+
 ### CONVO TOPICS for next meeting
 
 - file structure for config/commerce/util - right now all contained in bigmachines/sitedomain folder
