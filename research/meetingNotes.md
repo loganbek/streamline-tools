@@ -695,6 +695,18 @@ popup.html:1 Error handling response: TypeError: Cannot read property 'filename'
 - [x] add in (site) folder - devmcnichols, etc.
 - [ ] go for walk then finish config/commerce/util folder piece in popup.js
 
+### 11/10/20
+
+- [ ] walk
+- [ ] continue review
+- [ ] config/commerce rules hacking
+  - [ ] CONFIG
+  hidingAdvancedOptions - Advanced Condition
+  - [ ] <https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=4951171&rule_type=11&pline_id=-1&segment_id=11&model_id=-1&fromList=true>
+  constrainEPCostValue - Advanced Condition
+  - [ ] <https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5387754&rule_type=2&pline_id=-1&segment_id=11&model_id=-1&fromList=true>
+ - [ ]maybe hardcode config and start working backwards
+ 
 ### CONVO TOPICS for next meeting
 
 - file structure for config/commerce/util - right now all contained in bigmachines/sitedomain folder
@@ -703,7 +715,7 @@ popup.html:1 Error handling response: TypeError: Cannot read property 'filename'
 
 - filenaming still not working for comm actions, comm rules, or congfig rules - WIP
   - sent email regarding action id associate with action var name
-  - need to play with this more
+    ß- need to play with this more
   - Error in event handler: ReferenceError: filename is not defined
     at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/adminCommerceContent.js:115:27
 
