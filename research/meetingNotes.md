@@ -725,6 +725,7 @@ populateAvailabilityInformationInToAvailabilityArray
 - filenaming still not working for comm actions, comm rules, or congfig rules - WIP
   - sent email regarding action id associate with action var name
     ß- need to play with this more
+    - <https://www.geeksforgeeks.org/wildcard-selectors-and-in-css-for-classes/?ref=rp>
   - Error in event handler: ReferenceError: filename is not defined
     at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/adminCommerceContent.js:115:27
 - editAreas
