@@ -716,6 +716,20 @@ popup.html:1 Error handling response: TypeError: Cannot read property 'filename'
   
 populateAvailabilityInformationInToAvailabilityArray
 
+### 11/11/20
+
+- [ ] wildcard selector brain storm
+  - [ ] multi start + end css selector
+  - [ ] maybe 
+- [ ] wildcard selector trials in adminConfigInjected.js vs. adminConfigContent.js <- try from both contexts
+- [ ] walk
+
+### 11/12/20
+
+- [ ] wildcard selector brain storm
+- [ ] wildcard selector trials in adminCommerceInjected.js vs. adminCommerceContent.js <- try from both contexts
+- [ ] walk
+
 ### CONVO TOPICS for next meeting
 
 - file structure for config/commerce/util - right now all contained in bigmachines/sitedomain folder
