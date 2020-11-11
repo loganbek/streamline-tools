@@ -724,8 +724,18 @@ populateAvailabilityInformationInToAvailabilityArray
 
 - filenaming still not working for comm actions, comm rules, or congfig rules - WIP
   - sent email regarding action id associate with action var name
-    ß- need to play with this more
+    - need to play with this more
     - <https://www.geeksforgeeks.org/wildcard-selectors-and-in-css-for-classes/?ref=rp>
+    - <input[name="varName"]>
+    - <>
+    [attribute^=”str”] Selector: The [attribute^=”value”] selector is used to select those elements whose attribute value begins with a specified value str.
+    [attribute$=”str”] Selector: The [attribute$=”value”] selector is used to select those elements whose attribute value ends with a specified value str.
+    [attribute*=”str”] Selector: The [attribute*=”str”] selector is used to select that elements whose attribute value contains the specified sub string str. This example shows how to use a wildcard to select all div with a class that contains str. This could be at the start, the end or in the middle of the class.
+
+    multi contains selector?
+    div[class^="tocolor-"], div[class*=" tocolor-"] { <- something like this maybe
+}
+
   - Error in event handler: ReferenceError: filename is not defined
     at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/adminCommerceContent.js:115:27
 - editAreas
