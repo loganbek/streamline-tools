@@ -693,7 +693,7 @@ popup.html:1 Error handling response: TypeError: Cannot read property 'filename'
 - [ ] Compare chrome.runtime.onMessage.addListener's between content scripts.
 
 - [x] add in (site) folder - devmcnichols, etc.
-- [ ] go for walk then finish config/commerce/util folder piece in popup.js
+- [ ] finish config/commerce/util folder piece in popup.js
 
 ### 11/10/20
 
@@ -720,15 +720,62 @@ populateAvailabilityInformationInToAvailabilityArray
 
 - [ ] wildcard selector brain storm
   - [ ] multi start + end css selector
-  - [ ] maybe 
-- [ ] wildcard selector trials in adminConfigInjected.js vs. adminConfigContent.js <- try from both contexts
-- [ ] walk
+  - [ ] try using multi contains selector as well
+  - [ ] don't think I can do with a single selector
+- [ ] wildcard selector trials in adminConfigInjected.js vs. adminConfigContent.js <- try from both contexts --
+
+- moving unload code listener between the 2 looks promising (configInjected + ConfigContent);
+  - [ ] unload code
+    <https://stackoverflow.com/questions/26630519/queryselector-for-web-elements-inside-iframe>
+    Edit: New title. What I'm looking for is a document.querySelector for elements inside an iframe.
+
+I've done quite a bit of Googling for an answer and finally I'm stumped.
+
+I'm trying to query inside an iframe. I'm building string selectors to be used in Selenium and usually I just inspect the element with Firebug, and use document.querySelectorAll("theStringIBuid");
+
+But it doesn't work with elements inside iframes. I've tried all of the below to get an element "radiobutton1" inside the "page-iframe" iframe.
+
+var elem1 = ".page-iframe";
+console.log(elem1);
+var elem2 = ".radiobutton1";
+console.log(elem2);
+document.querySelectorAll(elem1+elem2+"");
+
+document.querySelectorAll('.page-iframe').contentWindow.document.body.querySelectorAll('.radiobutton1')
+document.getElementById('.page-iframe').contentWindow.document.body.innerHTML;
+
+[].forEach.call( document.querySelectorAll('.page-iframe'), 
+function  fn(elem){ 
+console.log(elem.contentWindow.document.body.querySelectorAll('.radiobutton1')); });
+
+var contentWindow = document.getElementById('.page-iframe').contentWindow 
+var contentWindow = document.querySelectorAll('.page-iframe') 
+var contentWindow = document.querySelectorAll('.page-iframe')[0].contentWindow
+    - maybe useful second resource - <https://stackoverflow.com/questions/25098021/securityerror-blocked-a-frame-with-origin-from-accessing-a-cross-origin-frame>
+    <https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy>
+    - maybe useful third resource - <https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy>
+    <- [ ] finish config/commerce/util folder piece in popup.js>
+  - [ ] try iframe query selector - 
+   maybe
+
+   ```javascript 
+   
+   document.querySelectorAll('iframe').forEach( item =>
+    console.log(item.contentWindow.document.body.querySelectorAll('a'))
+
+)
+
+```
+
+
+- window.addEventListener('unloadCode', function(evt)
+
+
 
 ### 11/12/20
 
 - [ ] wildcard selector brain storm
 - [ ] wildcard selector trials in adminCommerceInjected.js vs. adminCommerceContent.js <- try from both contexts
-- [ ] walk
 
 ### CONVO TOPICS for next meeting
 
