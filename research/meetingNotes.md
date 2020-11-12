@@ -776,6 +776,21 @@ var contentWindow = document.querySelectorAll('.page-iframe')[0].contentWindow
 
 - [ ] wildcard selector brain storm
 - [ ] wildcard selector trials in adminCommerceInjected.js vs. adminCommerceContent.js <- try from both contexts
+- [x] test on laptop
+  - TODO error fix: options.js:29 (anonymous function);
+- 
+options.js:29 (anonymous function)
+
+pricing smoke test
+- [ ] comm load
+Uncaught (in promise) TypeError: window.showOpenFilePicker is not a function
+    at HTMLButtonElement.<anonymous> (popup.js:137)
+- [x] comm unload
+- [ ] comm load test
+- [ ] comm unload test
+
+- [ ] config load
+- [ ] config unload
 
 ### CONVO TOPICS for next meeting
 
