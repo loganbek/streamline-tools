@@ -777,14 +777,15 @@ var contentWindow = document.querySelectorAll('.page-iframe')[0].contentWindow
 - [ ] wildcard selector brain storm
 - [ ] wildcard selector trials in adminCommerceInjected.js vs. adminCommerceContent.js <- try from both contexts
 - [x] test on laptop
-  - TODO error fix: options.js:29 (anonymous function);
+  - Unchecked runtime.lastError: Could not establish connection. Receiving end does not exist.
 - 
 options.js:29 (anonymous function)
 
 pricing smoke test
 - [ ] comm load
 Uncaught (in promise) TypeError: window.showOpenFilePicker is not a function
-    at HTMLButtonElement.<anonymous> (popup.js:137)
+    at HTMLButtonElement.<anonymous> (popup.js:137) <- fixed on laptop
+    New load error -> Unchecked runtime.lastError: Could not establish connection. Receiving end does not exist.
 - [x] comm unload
 - [ ] comm load test
 - [ ] comm unload test
@@ -816,3 +817,6 @@ Uncaught (in promise) TypeError: window.showOpenFilePicker is not a function
     at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/adminCommerceContent.js:115:27
 - editAreas
 - [x] add in (site) folder - devmcnichols, etc.
+
+### 11/13/20
+https://developer.mozilla.org/en-US/docs/Web/API/Window/parent
