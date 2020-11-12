@@ -820,3 +820,6 @@ Uncaught (in promise) TypeError: window.showOpenFilePicker is not a function
 
 ### 11/13/20
 https://developer.mozilla.org/en-US/docs/Web/API/Window/parent
+
+Updating Google Chrome - Laptop Version
+Version 86.0.4240.193 (Official Build) (x86_64)
