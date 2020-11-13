@@ -782,9 +782,9 @@ var contentWindow = document.querySelectorAll('.page-iframe')[0].contentWindow
 options.js:29 (anonymous function)
 
 pricing smoke test
-- [ ] comm load
+- [x] comm load (work Desktop).
 Uncaught (in promise) TypeError: window.showOpenFilePicker is not a function
-    at HTMLButtonElement.<anonymous> (popup.js:137)
+    at HTMLButtonElement.<anonymous> (popup.js:137) <- Looks fine on Desktop - Verify Experimental Flag is set on laptop (pretty sure it's not).
 - [x] comm unload
 - [ ] comm load test
 - [ ] comm unload test
@@ -792,11 +792,13 @@ Uncaught (in promise) TypeError: window.showOpenFilePicker is not a function
 - [ ] config load
 - [ ] config unload
 
+**textarea element w/ id "textarea"** .value() <- inside iframe>
+
 ### CONVO TOPICS for next meeting
 
 - file structure for config/commerce/util - right now all contained in bigmachines/sitedomain folder
 - You mentioned you had ideas for a github integration. I would like to see how you see this working (to me it still makes more sense to do this locally from the command line). I can't yet envision how you see this working. - Maybe a github UI options mockup.
-- Button disabling/hiding looks good across the board.
+- Button disabling/hiding looks good/consistent across the board.
 
 - filenaming still not working for comm actions, comm rules, or congfig rules - WIP
   - sent email regarding action id associate with action var name
