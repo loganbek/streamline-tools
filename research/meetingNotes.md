@@ -811,8 +811,22 @@ Uncaught (in promise) TypeError: window.showOpenFilePicker is not a function
 Uncaught SyntaxError: Identifier 'commentHeader' has already been declared content.js:1 - post unload, post unload test
   - var defineMe = window.defineMe || 'I will define you now';
   - var SomeVar = SomeVar || 'Default Value';
-
 - Use var for cs
+
+- previous tab for filename
+<https://stackoverflow.com/questions/8688887/chrome-extension-get-last-used-tab>
+
+```js
+chrome.tabs.query({
+    active: false
+  }, (tabs) => {
+    let tab = tabs.reduce((previous, current) => {
+      return previous.lastAccessed > current.lastAccessed ? previous : current;
+    });
+    // previous tab
+    console.log(tab);
+  });
+```
 
 <https://developer.mozilla.org/en-US/docs/Web/API/Window/parent>
 
@@ -850,4 +864,12 @@ Version 86.0.4240.193 (Official Build) (x86_64)
     at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/adminCommerceContent.js:115:27
 - editAreas
 - [x] add in (site) folder - devmcnichols, etc.
-- Chrome Vers Confirmation - Build for Chrome 86
+- [ ]
+
+```js
+document.querySelectorAll('iframe').forEach( item =>
+    console.log(item.contentWindow.document.body.querySelectorAll('a'))
+)
+```
+
+- [ ] Chrome Vers Confirmation - Build for Chrome 86
