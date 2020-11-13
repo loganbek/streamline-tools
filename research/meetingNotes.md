@@ -784,7 +784,7 @@ options.js:29 (anonymous function)
 pricing smoke test
 - [x] comm load (work Desktop).
 Uncaught (in promise) TypeError: window.showOpenFilePicker is not a function
-    at HTMLButtonElement.<anonymous> (popup.js:137) <- Looks fine on Desktop - Verify Experimental Flag is set on laptop (pretty sure it's not).
+    at HTMLButtonElement.<anonymous> (popup.js:137) <- Looks fine on Desktop - Verify Experimental Flag is set on laptop (pretty sure it's not - This was problem).
 - [x] comm unload
 - [ ] comm load test
 - [ ] comm unload test
