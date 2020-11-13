@@ -26,7 +26,7 @@ function restore_options() {
     }, function(items) {
         // document.getElementById('color').value = items.favoriteColor;
         // document.getElementById('like').checked = items.likesColor;
-        document.getElementById('includeCommentHeader').checked = items.includeCommentHeader;
+        // document.getElementById('includeCommentHeader').checked = items.includeCommentHeader;
     });
 }
 

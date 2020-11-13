@@ -823,7 +823,17 @@ Uncaught (in promise) TypeError: window.showOpenFilePicker is not a function
 - [x] add in (site) folder - devmcnichols, etc.
 
 ### 11/13/20
-https://developer.mozilla.org/en-US/docs/Web/API/Window/parent
 
-Updating Google Chrome - Laptop Version
+- [ ] fix Uncaught SyntaxError: Identifier 'commentHeader' has already been declared content.js:1 - post unload, post unload test
+
+<https://developer.mozilla.org/en-US/docs/Web/API/Window/parent>
+
+Updating Google Chrome 
+
+- Desktop Version
 Version 86.0.4240.193 (Official Build) (x86_64)
+
+- Laptop Version
+Version 86.0.4240.193 (Official Build) (x86_64)
+
+- Build for Chrome 86
