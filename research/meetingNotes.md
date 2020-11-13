@@ -674,10 +674,10 @@ popup.html:1 Error handling response: TypeError: Cannot read property 'filename'
   - [ ] unload
   - [ ] load
 - [ ] config rules - sortBranchBasedOnZipCode NOTHING WORKING
-<input type="text" class=" x-form-field x-form-text" id="x-auto-3-input" name="varName" tabindex="0" style="width: 340px;" readonly="" disabled="">
+```<input type="text" class=" x-form-field x-form-text" id="x-auto-3-input" name="varName" tabindex="0" style="width: 340px;" readonly="" disabled="">```
  contains value for config filenames (previous tab);
  How to grab and pass?
- https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5268044&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true
+ <https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5268044&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true>
   - [ ] unload
   - [ ] load
 
@@ -744,25 +744,28 @@ document.querySelectorAll(elem1+elem2+"");
 document.querySelectorAll('.page-iframe').contentWindow.document.body.querySelectorAll('.radiobutton1')
 document.getElementById('.page-iframe').contentWindow.document.body.innerHTML;
 
-[].forEach.call( document.querySelectorAll('.page-iframe'), 
-function  fn(elem){ 
+[].forEach.call( document.querySelectorAll('.page-iframe'),
+function  fn(elem){
 console.log(elem.contentWindow.document.body.querySelectorAll('.radiobutton1')); });
 
+```js
 var wldCardStrSelector = " " + "*" + " ";
 var document.querySelectorAll(wldCardStrSelector);
 
-var contentWindow = document.getElementById('.page-iframe').contentWindow 
-var contentWindow = document.querySelectorAll('.page-iframe') 
-var contentWindow = document.querySelectorAll('.page-iframe')[0].contentWindow
-    - maybe useful second resource - <https://stackoverflow.com/questions/25098021/securityerror-blocked-a-frame-with-origin-from-accessing-a-cross-origin-frame>
-    <https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy>
-    - maybe useful third resource - <https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy>
-    <- [ ] finish config/commerce/util folder piece in popup.js>
-  - [ ] try iframe query selector - 
+var contentWindow = document.getElementById('.page-iframe').contentWindow
+var contentWindow = document.querySelectorAll('.page-iframe')
+```
+
+- maybe useful second resource -
+  <https://stackoverflow.com/questions/25098021/securityerror-blocked-a-frame-with-origin-from-accessing-a-cross-origin-frame>
+  <https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy>
+- maybe useful third resource - <https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy>
+  <- [ ] finish config/commerce/util folder piece in popup.js>
+- [ ] try iframe query selector -
    maybe
 
-   ```javascript 
-   
+```js
+
    document.querySelectorAll('iframe').forEach( item =>
     console.log(item.contentWindow.document.body.querySelectorAll('a'))
 
@@ -770,10 +773,7 @@ var contentWindow = document.querySelectorAll('.page-iframe')[0].contentWindow
 
 ```
 
-
 - window.addEventListener('unloadCode', function(evt)
-
-
 
 ### 11/12/20
 
@@ -781,13 +781,18 @@ var contentWindow = document.querySelectorAll('.page-iframe')[0].contentWindow
 - [ ] wildcard selector trials in adminCommerceInjected.js vs. adminCommerceContent.js <- try from both contexts
 - [x] test on laptop
   - Unchecked runtime.lastError: Could not establish connection. Receiving end does not exist.
-- 
-options.js:29 (anonymous function)
+-
+- [x] options.js:29 (anonymous function)
 
 pricing smoke test
+
 - [x] comm load (work Desktop).
+
+```js
 Uncaught (in promise) TypeError: window.showOpenFilePicker is not a function
     at HTMLButtonElement.<anonymous> (popup.js:137) <- Looks fine on Desktop - Verify Experimental Flag is set on laptop (pretty sure it's not - This was problem).
+```
+
 - [x] comm unload
 - [ ] comm load test
 - [ ] comm unload test
@@ -796,6 +801,22 @@ Uncaught (in promise) TypeError: window.showOpenFilePicker is not a function
 - [ ] config unload
 
 **textarea element w/ id "textarea"** .value() <- inside iframe>
+
+### 11/13/20
+
+- [ ] continue wild card config work
+- [ ] fix console error (doesn't effect functionality) -
+Uncaught SyntaxError: Identifier 'commentHeader' has already been declared content.js:1 - post unload, post unload test
+
+<https://developer.mozilla.org/en-US/docs/Web/API/Window/parent>
+
+Updating Google Chrome
+
+- Desktop Version
+Version 86.0.4240.193 (Official Build) (x86_64)
+
+- Laptop Version
+Version 86.0.4240.193 (Official Build) (x86_64)
 
 ### CONVO TOPICS for next meeting
 
@@ -821,19 +842,4 @@ Uncaught (in promise) TypeError: window.showOpenFilePicker is not a function
     at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/adminCommerceContent.js:115:27
 - editAreas
 - [x] add in (site) folder - devmcnichols, etc.
-
-### 11/13/20
-
-- [ ] fix Uncaught SyntaxError: Identifier 'commentHeader' has already been declared content.js:1 - post unload, post unload test
-
-<https://developer.mozilla.org/en-US/docs/Web/API/Window/parent>
-
-Updating Google Chrome 
-
-- Desktop Version
-Version 86.0.4240.193 (Official Build) (x86_64)
-
-- Laptop Version
-Version 86.0.4240.193 (Official Build) (x86_64)
-
-- Build for Chrome 86
+- Chrome Vers Confirmation - Build for Chrome 86
