@@ -777,8 +777,6 @@ var contentWindow = document.querySelectorAll('.page-iframe')
 
 ### 11/12/20
 
-- [ ] wildcard selector brain storm
-- [ ] wildcard selector trials in adminCommerceInjected.js vs. adminCommerceContent.js <- try from both contexts
 - [x] test on laptop
   - Unchecked runtime.lastError: Could not establish connection. Receiving end does not exist.
 -
@@ -787,6 +785,7 @@ var contentWindow = document.querySelectorAll('.page-iframe')
 pricing smoke test
 
 - [x] comm load (work Desktop).
+- [x]
 
 ```js
 Uncaught (in promise) TypeError: window.showOpenFilePicker is not a function
@@ -806,8 +805,14 @@ Uncaught (in promise) TypeError: window.showOpenFilePicker is not a function
 ### 11/13/20
 
 - [ ] continue wild card config work
-- [ ] fix console error (doesn't effect functionality) -
+- [ ] wildcard selector brain storm
+- [ ] wildcard selector trials in adminCommerceInjected.js vs. adminCommerceContent.js <- try from both contexts
+- [x] fix console error (doesn't effect functionality) -
 Uncaught SyntaxError: Identifier 'commentHeader' has already been declared content.js:1 - post unload, post unload test
+  - var defineMe = window.defineMe || 'I will define you now';
+  - var SomeVar = SomeVar || 'Default Value';
+
+- Use var for cs
 
 <https://developer.mozilla.org/en-US/docs/Web/API/Window/parent>
 
@@ -820,6 +825,8 @@ Version 86.0.4240.193 (Official Build) (x86_64)
 Version 86.0.4240.193 (Official Build) (x86_64)
 
 ### CONVO TOPICS for next meeting
+
+## WORK REMAINING
 
 - file structure for config/commerce/util - right now all contained in bigmachines/sitedomain folder
 - You mentioned you had ideas for a github integration. I would like to see how you see this working (to me it still makes more sense to do this locally from the command line). I can't yet envision how you see this working. - Maybe a github UI options mockup.

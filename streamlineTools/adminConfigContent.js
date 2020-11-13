@@ -1,6 +1,8 @@
 // let commentHeader = "";
 // let code = "";
 // let testCode = "";
+var code = "";
+var testCode = "";
 
 window.addEventListener('unloadCode', function(evt) {
     frameList = window.frames;

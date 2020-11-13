@@ -46,6 +46,8 @@
 // let commentHeader = "";
 // let code = "";
 // let testCode = "";
+var code = "";
+var testCode = "";
 
 //Listen for the PassToBackground event
 window.addEventListener("PassToBackground", function(evt) {

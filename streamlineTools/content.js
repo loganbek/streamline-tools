@@ -1,6 +1,10 @@
-let commentHeader = "";
-let code = "";
-let testCode = "";
+// let commentHeader = commentHeader || "";
+// if(typeof commentHeader !== 'undefined'){
+//     alert("Variable x is defined.");
+//   }
+var commentHeader = "";
+var code = "";
+var testCode = "";
 
 //Listen for the PassToBackground event
 window.addEventListener("PassToBackground", function(evt) {
