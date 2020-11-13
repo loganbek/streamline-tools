@@ -748,6 +748,9 @@ document.getElementById('.page-iframe').contentWindow.document.body.innerHTML;
 function  fn(elem){ 
 console.log(elem.contentWindow.document.body.querySelectorAll('.radiobutton1')); });
 
+var wldCardStrSelector = " " + "*" + " ";
+var document.querySelectorAll(wldCardStrSelector);
+
 var contentWindow = document.getElementById('.page-iframe').contentWindow 
 var contentWindow = document.querySelectorAll('.page-iframe') 
 var contentWindow = document.querySelectorAll('.page-iframe')[0].contentWindow

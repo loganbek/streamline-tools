@@ -65,6 +65,9 @@ chrome.runtime.onMessage.addListener(
         // let filename = document.getElementById('x-auto-3-input').value;
         // let filename = document.querySelectorAll("input[id*=x-auto-]");
         let filename = document.getElementsByName("varName").value;
+        // var wldCardStrSelector = "x-auto-" + "*" + "-input";
+        // var contentWindow = document.querySelectorAll(wldCardStrSelector);
+        // var contentWindow = document.querySelectorAll('.page-iframe');
         console.log(filename);
         if (filename === "") {
             filename = "nofilename";

@@ -22,6 +22,6 @@ Streamline Tools for Oracle CPQ Cloud
 
 8) Install the "CPQ DevKit" Extension for VSCode found [here](https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-o).
 
-9) Enable the Native File System API via chrome://flags#native-file-system-api flag.
+9) Enable the Native File System API via [chrome://flags#native-file-system-api](chrome://flags#native-file-system-api) flag.
 
 10) Congratulations you've successfully installed Streamline Tools!
