@@ -793,9 +793,10 @@ Uncaught (in promise) TypeError: window.showOpenFilePicker is not a function
     at HTMLButtonElement.<anonymous> (popup.js:137) <- Looks fine on Desktop - Verify Experimental Flag is set on laptop (pretty sure it's not - This was problem).
 ```
 
-- [x] comm unload
-- [ ] comm load test
-- [ ] comm unload test
+- [x] comm/util load
+- [x] comm/util unload
+- [x] comm/util load test
+- [x] comm/util unload test
 
 - [ ] config load
 - [ ] config unload
