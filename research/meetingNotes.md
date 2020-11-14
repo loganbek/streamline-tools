@@ -838,6 +838,12 @@ Version 86.0.4240.193 (Official Build) (x86_64)
 - Laptop Version
 Version 86.0.4240.193 (Official Build) (x86_64)
 
+#### 11/14/20
+
+- [ ] continue adminConfigInjected work
+  - [ ] storing filename
+  - [ ] fix code grab to use wildcard
+
 ### CONVO TOPICS for next meeting
 
 ## WORK REMAINING

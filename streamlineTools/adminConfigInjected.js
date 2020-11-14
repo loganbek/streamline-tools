@@ -28,14 +28,17 @@ window.addEventListener('unloadCode', function(evt) {
     console.log("frameList" + frameList.value);
     // console.log("frameList.querySelector" + frameList.querySelector("#textarea"));
     // #textarea
+    console.log("frameList.contentWindow");
     console.log(frameList.contentWindow);
+    console.log("frameList.contentWindow.querySelector('#frame_x-auto-143-area')")
+    console.log(frameList.contentWindow.querySelector("#frame_x-auto-143-area"));
     console.log(document.getElementsByTagName("iframe")[0].contentWindow); // <- build on this
     console.log(document.querySelector("#frame_x-auto-143-area"));
     // detail: frame_bm_script.editArea.textarea.value
     // /html/body/div[1]/div[3]/div[2]/textarea
     // document.querySelector("#textarea")
     // [attribute*="value"]
-    let event = new CustomEvent("PassCodeToBackground", { detail: frame_bm_script.editArea.textarea.value });
+    // let event = new CustomEvent("PassCodeToBackground", { detail: frame_bm_script.editArea.textarea.value });
     window.dispatchEvent(event);
 })
 
