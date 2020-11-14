@@ -38,7 +38,12 @@ window.addEventListener('unloadCode', function(evt) {
     // /html/body/div[1]/div[3]/div[2]/textarea
     // document.querySelector("#textarea")
     // [attribute*="value"]
-    // let event = new CustomEvent("PassCodeToBackground", { detail: frame_bm_script.editArea.textarea.value });
+    // var wldCardStrSelector = " " + "*" + " ";
+    // var document.querySelectorAll(wldCardStrSelector);
+
+    // var contentWindow = document.getElementById('.page-iframe').contentWindow
+    // var contentWindow = document.querySelectorAll('.page-iframe')
+    let event = new CustomEvent("PassCodeToBackground", { detail: frame_bm_script.editArea.textarea.value });
     window.dispatchEvent(event);
 })
 
