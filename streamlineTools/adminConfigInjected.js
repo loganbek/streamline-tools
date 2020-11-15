@@ -44,34 +44,47 @@ window.addEventListener('unloadCode', function(evt) {
     };
 
 
-    frameList = window.frames;
-    console.log("frameList ->" + frameList);
-    console.log("frameList.editAreas.value -> " + frameList.editAreas.value);
-    console.log("frameList.editAreas -> " + frameList.editAreas);
-    console.log("frameList.textArea -> " + frameList.textArea);
-    // console.log("frameList.textArea.value -> " + frameList.textArea.value);
-    console.log("frameList" + frameList.value);
-    // console.log("frameList.querySelector" + frameList.querySelector("#textarea"));
-    // #textarea
-    console.log("frameList.contentWindow");
-    console.log(frameList.contentWindow);
-    console.log("frameList.contentWindow.querySelector('#frame_x-auto-*-area')")
-        //     console.log(frameList.contentWindow.querySelector("#frame_x-auto-*-area"));
-    console.log("document.getElementsByRegex('frame_x-auto-*-area')");
-    console.log(document.getElementsByRegex('frame_x-auto-*-area')); // doesn't work
-    console.log(document.getElementsByTagName("iframe")[0].contentWindow); // <- build on this
-    console.log("document.querySelector('#frame_x-auto-143-area'");
-    console.log(document.querySelector("#frame_x-auto-143-area"));
-    document.querySelectorAll('iframe').forEach(item =>
-        // console.log(item.contentWindow.document)
-        textAreaReference = item.contentWindow.document.querySelector('#textarea'),
-        // console.log(textAreaReference)
-    );
-    console.log(frameList.contentWindow);
-    console.log(document.querySelectorAll('iframe').contentWindow);
-    console.log(document.querySelector('iframe').querySelector('#textarea'));
-
-
+    //     frameList = window.frames;
+    //     console.log("frameList ->" + frameList);
+    //     console.log("frameList.editAreas.value -> " + frameList.editAreas.value);
+    //     console.log("frameList.editAreas -> " + frameList.editAreas);
+    //     console.log("frameList.textArea -> " + frameList.textArea);
+    //     // console.log("frameList.textArea.value -> " + frameList.textArea.value);
+    //     console.log("frameList" + frameList.value);
+    //     // console.log("frameList.querySelector" + frameList.querySelector("#textarea"));
+    //     // #textarea
+    //     console.log("frameList.contentWindow");
+    //     console.log(frameList.contentWindow);
+    //     console.log("frameList.contentWindow.querySelector('#frame_x-auto-*-area')")
+    //         //     console.log(frameList.contentWindow.querySelector("#frame_x-auto-*-area"));
+    //     console.log("document.getElementsByRegex('frame_x-auto-*-area')");
+    //     console.log(document.getElementsByRegex('frame_x-auto-*-area')); // doesn't work
+    //     console.log(document.getElementsByTagName("iframe")[0].contentWindow); // <- build on this
+    console.log(document.getElementsByTagName("iframe")[1]); // <- build on this
+    // console.log(document.getElementsByTagName("iframe")[1].editArea.textarea.value);
+    // console.log(document.getElementsByTagName("iframe").getElementById("textarea"));
+    console.log(document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").value);
+    // document.querySelector("#textarea")
+    // document.querySelector("#textarea")
+    // document.querySelector("#textarea");
+    //     console.log(document.getElementsByTagName("iframe")[2].contentWindow);
+    //     console.log(document.getElementsByTagName("iframe")[3].contentWindow);
+    //     console.log("document.querySelector('#frame_x-auto-143-area'");
+    //     console.log(document.querySelector("#frame_x-auto-143-area"));
+    //     document.querySelectorAll('iframe').forEach(item =>
+    //         // console.log(item.contentWindow.document)
+    //         textAreaReference = item.contentWindow.document.querySelector('#textarea'),
+    //         // console.log(textAreaReference)
+    //     );
+    //     console.log(frameList.contentWindow);
+    //     console.log(document.querySelectorAll('iframe').contentWindow);
+    //     console.log(document.querySelector('iframe').querySelector('#textarea'));
+    textAreaCode = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").value;
+    if (textAreaCode) {
+        testConfigCode = textAreaCode;
+    } else {
+        testConfigCode = "\n\n";
+    }
     // detail: frame_bm_script.editArea.textarea.value
     // /html/body/div[1]/div[3]/div[2]/textarea
     // document.querySelector("#textarea")
@@ -82,7 +95,7 @@ window.addEventListener('unloadCode', function(evt) {
     // var contentWindow = document.getElementById('.page-iframe').contentWindow
     // var contentWindow = document.querySelectorAll('.page-iframe')
     //     let event = new CustomEvent("PassCodeToBackground", { detail: frame_bm_script.editArea.textarea.value });
-    let event = new CustomEvent("PassCodeToBackground", { detail: "testConfigCode" });
+    let event = new CustomEvent("PassCodeToBackground", { detail: testConfigCode });
     window.dispatchEvent(event);
 })
 
