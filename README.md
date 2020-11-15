@@ -25,3 +25,10 @@ Streamline Tools for Oracle CPQ Cloud
 9) Enable the Native File System API via [chrome://flags#native-file-system-api](chrome://flags#native-file-system-api) flag.
 
 10) Congratulations you've successfully installed Streamline Tools!
+
+<!-- ## TroublShooting Steps
+
+1) Hard Refresh/Clear Cache
+
+Ctrl + Shift + R
+Cmd + Shift + R -->
