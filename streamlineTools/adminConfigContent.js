@@ -7,7 +7,7 @@ var testCode = "";
 window.addEventListener('unloadCode', function(evt) {
     frameList = window.frames;
     console.log("frameList ->" + frameList);
-    console.log("frameList.editAreas.value -> " + frameList.editAreas.value);
+    // console.log("frameList.editAreas.value -> " + frameList.editAreas.value);
     console.log("frameList.editAreas -> " + frameList.editAreas);
     console.log("frameList.textArea -> " + frameList.textArea);
     // console.log("frameList.textArea.value -> " + frameList.textArea.value);
@@ -21,7 +21,8 @@ window.addEventListener('unloadCode', function(evt) {
     // /html/body/div[1]/div[3]/div[2]/textarea
     // document.querySelector("#textarea")
     // [attribute*="value"]
-    let event = new CustomEvent("PassCodeToBackground", { detail: frame_bm_script.editArea.textarea.value });
+    detail1 = "@#$@#";
+    let event = new CustomEvent("PassCodeToBackground", { detail: detail1 });
     window.dispatchEvent(event);
 })
 

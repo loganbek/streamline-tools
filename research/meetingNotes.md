@@ -802,7 +802,7 @@ Uncaught (in promise) TypeError: window.showOpenFilePicker is not a function
 
 **textarea element w/ id "textarea"** .value() <- inside iframe>
 
-### 11/13/20
+#### 11/13/20
 
 - [ ] continue wild card config work
 - [ ] wildcard selector brain storm
@@ -840,9 +840,9 @@ Version 86.0.4240.193 (Official Build) (x86_64)
 
 #### 11/14/20
 
-- [ ] continue adminConfigInjected work
-  - [ ] storing filename
-  - [ ] fix code grab to use wildcard
+- [x] continue adminConfigInjected work
+  - [ ] storing filename - WIP
+  - [ ] fix code grab to use wildcard - WIP
 
 ### CONVO TOPICS for next meeting
 

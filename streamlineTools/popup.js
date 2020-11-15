@@ -19,6 +19,15 @@ let loadTestButton = document.getElementById('loadTest');
 let optionsButton = document.getElementById('options');
 let logsButton = document.getElementById('logs');
 
+// chrome.tabs.query({windowId: chrome.windows.WINDOW_ID_CURRENT}, (tabs) => {
+//     document.write(`<h3>The tabs you're on are:</h3>`);
+//     document.write('<ul>');
+//     for (let i = 0; i < tabs.length; i++) {
+//       document.write(`<li>${tabs[i].url}</li>`);
+//     }
+//     document.write('</ul>');
+//   });
+
 // CHROME TABS
 chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     let tab = tabs[0];
