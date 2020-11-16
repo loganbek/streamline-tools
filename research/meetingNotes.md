@@ -569,10 +569,12 @@ EX) addVendor_quote
     - document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]") to maybe store var before hand, or use tab query
 - [x] LOAD + Auto Check
 
-##### Configuration Rules - HEAVY WIP
+##### Configuration Rules
 
-- [ ] UNLOAD
-- [ ] LOAD + Auto Validate
+- [x] WIP - UNLOAD 
+  [ ] - need to store varname on previous page or query for it
+- [ ] WIP - LOAD + Auto Validate
+  - [ ] 
 
 EX) Recommendation - sortBranchBasedOnZipCode
 
@@ -843,6 +845,29 @@ Version 86.0.4240.193 (Official Build) (x86_64)
   - [ ] storing filename - WIP
   
 #### 11/15/20
+
+#### 11/16/20
+
+Continue config work 
+  - finish unload ( can success fully save file w/ code but needs fn)
+  - figure out load frame
+
+##### Configuration Rules - WIP
+
+- [x] WIP - UNLOAD 
+  [ ] - need to store varname on previous page or query for it
+- [ ] WIP - LOAD + Auto Validate
+  - [ ] 
+
+EX) Recommendation - sortBranchBasedOnZipCode
+
+- input id for var name - x-auto-3-input
+  - weird editor frame naming - frame_x-auto-143-area
+  - validate button
+  //Perform Validation
+    `document.getElementsByClassName('x-btn-text ')[16].click();`
+
+
 
 ### CONVO TOPICS for next meeting
 
