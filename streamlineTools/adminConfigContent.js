@@ -5,22 +5,23 @@ var code = "";
 var testCode = "";
 
 window.addEventListener('unloadCode', function(evt) {
-    frameList = window.frames;
-    console.log("frameList ->" + frameList);
-    // console.log("frameList.editAreas.value -> " + frameList.editAreas.value);
-    console.log("frameList.editAreas -> " + frameList.editAreas);
-    console.log("frameList.textArea -> " + frameList.textArea);
-    // console.log("frameList.textArea.value -> " + frameList.textArea.value);
-    console.log("frameList" + frameList.value);
-    // console.log("frameList.querySelector" + frameList.querySelector("#textarea"));
-    // #textarea
-    console.log(frameList.contentWindow);
-    console.log(document.getElementsByTagName("iframe")[0].contentWindow); // <- build on this
-    console.log(document.querySelector("#frame_x-auto-143-area"));
+    // frameList = window.frames;
+    // console.log("frameList ->" + frameList);
+    // // console.log("frameList.editAreas.value -> " + frameList.editAreas.value);
+    // console.log("frameList.editAreas -> " + frameList.editAreas);
+    // console.log("frameList.textArea -> " + frameList.textArea);
+    // // console.log("frameList.textArea.value -> " + frameList.textArea.value);
+    // console.log("frameList" + frameList.value);
+    // // console.log("frameList.querySelector" + frameList.querySelector("#textarea"));
+    // // #textarea
+    // console.log(frameList.contentWindow);
+    // console.log(document.getElementsByTagName("iframe")[0].contentWindow); // <- build on this
+    // console.log(document.querySelector("#frame_x-auto-143-area"));
     // detail: frame_bm_script.editArea.textarea.value
     // /html/body/div[1]/div[3]/div[2]/textarea
     // document.querySelector("#textarea")
     // [attribute*="value"]
+    // console.log()
     detail1 = "@#$@#";
     let event = new CustomEvent("PassCodeToBackground", { detail: detail1 });
     window.dispatchEvent(event);
@@ -67,7 +68,8 @@ chrome.runtime.onMessage.addListener(
         //TODO WILD CARD
         // let filename = document.getElementById('x-auto-3-input').value;
         // let filename = document.querySelectorAll("input[id*=x-auto-]");
-        let filename = document.getElementsByName("varName").value;
+        // let filename = document.getElementsByName("varName").value;
+        let filename = document.getElementById("#x-auto-3-input").value;
         // var wldCardStrSelector = "x-auto-" + "*" + "-input";
         // var contentWindow = document.querySelectorAll(wldCardStrSelector);
         // var contentWindow = document.querySelectorAll('.page-iframe');

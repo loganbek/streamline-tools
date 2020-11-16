@@ -759,7 +759,6 @@ var contentWindow = document.querySelectorAll('.page-iframe')
 - maybe useful second resource -
   <https://stackoverflow.com/questions/25098021/securityerror-blocked-a-frame-with-origin-from-accessing-a-cross-origin-frame>
   <https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy>
-- maybe useful third resource - <https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy>
   <- [ ] finish config/commerce/util folder piece in popup.js>
 - [ ] try iframe query selector -
    maybe
@@ -842,7 +841,8 @@ Version 86.0.4240.193 (Official Build) (x86_64)
 
 - [x] continue adminConfigInjected work
   - [ ] storing filename - WIP
-  - [ ] fix code grab to use wildcard - WIP
+  
+#### 11/15/20
 
 ### CONVO TOPICS for next meeting
 

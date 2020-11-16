@@ -60,7 +60,26 @@ window.addEventListener('unloadCode', function(evt) {
     //     console.log("document.getElementsByRegex('frame_x-auto-*-area')");
     //     console.log(document.getElementsByRegex('frame_x-auto-*-area')); // doesn't work
     //     console.log(document.getElementsByTagName("iframe")[0].contentWindow); // <- build on this
-    console.log(document.getElementsByTagName("iframe")[1]); // <- build on this
+    // frame_x-auto-*-rea
+    // <iframe name="frame_x-auto-175-area" id="frame_x-auto-175-area" frameborder="0" style="border-width: 0px; overflow: hidden; display: inline; width: 989px; height: 643px;"></iframe>
+    console.log(document.getElementsByTagName("iframe")[1]);
+    console.log("CONTENT DOCUMENT");
+    //     /html/body / div[1] / div[3] / div[2] / textarea
+    // /html/body/div[1]/div[3]/div[2]/textarea
+    console.log(document.getElementsByTagName("iframe")[1].contentDocument);
+    console.log(document.getElementsByTagName("iframe")[1].contentDocument.innerHTML);
+    console.log(document.getElementsByTagName("iframe")[1].contentDocument.html);
+    console.log(document.getElementsByTagName("iframe")[1].contentDocument.body.querySelector("#textarea").parent);
+    // editArea.textarea.value
+    // .editArea.textarea.value
+    // .div[1].div[3].div[2].textArea
+    console.log("CONTENT WINDOW");
+    console.log(document.getElementsByTagName("iframe")[1].contentWindow);
+    console.log(document.getElementsByTagName("iframe")[1].contentWindow.innerHTML);
+    console.log(document.getElementsByTagName("iframe")[1].contentWindow.html);
+    // document.querySelector("#textarea")
+    // console.log(document.getElementsByTagName("iframe")[1]).contentDocument; // <- build on this
+    // document.querySelector("#textarea")
     // console.log(document.getElementsByTagName("iframe")[1].editArea.textarea.value);
     // console.log(document.getElementsByTagName("iframe").getElementById("textarea"));
     console.log(document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").value);
@@ -79,12 +98,16 @@ window.addEventListener('unloadCode', function(evt) {
     //     console.log(frameList.contentWindow);
     //     console.log(document.querySelectorAll('iframe').contentWindow);
     //     console.log(document.querySelector('iframe').querySelector('#textarea'));
+    // document.querySelector("#textarea")
     textAreaCode = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").value;
+    console.log(textAreaCode);
     if (textAreaCode) {
         testConfigCode = textAreaCode;
     } else {
         testConfigCode = "\n\n";
     }
+    console.log(textAreaCode);
+    console.log(testConfigCode);
     // detail: frame_bm_script.editArea.textarea.value
     // /html/body/div[1]/div[3]/div[2]/textarea
     // document.querySelector("#textarea")
@@ -118,7 +141,7 @@ window.addEventListener("loadCode", function(evt) {
     // id="x-auto-3-input" for varname
     console.log(document.getElementById("x-auto-3-input"));
 
-    // TODO: LOAD TRIALS
+    // WIP: LOAD TRIALS
     console.log("parent.editArea.textarea.value = code;" + "parent.editArea.textareaFocused = true");
     parent.editArea.textarea.value = code;
     parent.editArea.textareaFocused = true;
