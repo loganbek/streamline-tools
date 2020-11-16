@@ -104,6 +104,7 @@ chrome.runtime.onMessage.addListener(
         // alert(ruleType);
         // let filename = ruleName + "." + ruleType;
         // alert(filename);
+        let filename = "commercePlaceHolderRuleName";
         console.log(sender.tab ?
             "from a content script:" + sender.tab.url :
             "from the extension");

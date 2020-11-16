@@ -793,14 +793,19 @@ Uncaught (in promise) TypeError: window.showOpenFilePicker is not a function
     at HTMLButtonElement.<anonymous> (popup.js:137) <- Looks fine on Desktop - Verify Experimental Flag is set on laptop (pretty sure it's not - This was problem).
 ```
 
-- [x] comm/util load
-- [x] comm/util unload
-- [x] comm/util load test
-- [x] comm/util unload test
+- [x] comm/util lib load
+- [x] comm/util lib unload
+- [x] comm/util lib load test
+- [x] comm/util lib unload test
 
-- [ ] config load
-- [ ] config unload
+- [x] config rule unload - WIP - filenaming
+- [x] config rule load
 
+- [x] comm rule unload - WIP - filenaming
+- [x] comm rule load
+
+- [ ] comm action before/after unload
+- [ ] comm action before/after load
 **textarea element w/ id "textarea"** .value() <- inside iframe>
 
 #### 11/13/20
@@ -853,7 +858,7 @@ Continue config work
 - finish unload ( can success fully save file w/ code but needs fn)
   - figure out load frame
 
-##### Configuration Rules - WIP Done except filenaming piece.
+##### Configuration Rules - WIP - (TODO: Use tab query) Done except filenaming piece.
 
 - [x] WIP - UNLOAD
   [ ] - need to store varname on previous page or query for it
