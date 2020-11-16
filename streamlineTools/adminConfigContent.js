@@ -69,7 +69,8 @@ chrome.runtime.onMessage.addListener(
         // let filename = document.getElementById('x-auto-3-input').value;
         // let filename = document.querySelectorAll("input[id*=x-auto-]");
         // let filename = document.getElementsByName("varName").value;
-        let filename = document.getElementById("#x-auto-3-input").value;
+        // let filename = document.getElementById("#x-auto-3-input").value;
+        let filename = "configHardCodeFileName";
         // var wldCardStrSelector = "x-auto-" + "*" + "-input";
         // var contentWindow = document.querySelectorAll(wldCardStrSelector);
         // var contentWindow = document.querySelectorAll('.page-iframe');
