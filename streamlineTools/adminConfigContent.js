@@ -3,6 +3,18 @@
 // let testCode = "";
 var code = "";
 var testCode = "";
+var filename = filename || "";
+
+if (document.getElementById("#x-auto-3-input")) {
+    filename = document.getElementById("#x-auto-3-input").value;
+    // document.querySelector("#x-auto-3-input")
+    console.log(filename);
+}
+
+if (window.document.getElementById("#x-auto-3-input")) {
+    filename = window.document.getElementById("#x-auto-3-input").value;
+    console.log(filename)
+}
 
 window.addEventListener('unloadCode', function(evt) {
     // frameList = window.frames;
@@ -69,14 +81,18 @@ chrome.runtime.onMessage.addListener(
         // let filename = document.getElementById('x-auto-3-input').value;
         // let filename = document.querySelectorAll("input[id*=x-auto-]");
         // let filename = document.getElementsByName("varName").value;
-        // let filename = document.getElementById("#x-auto-3-input").value;
-        let filename = "configHardCodeFileName";
+        // console.log(document.getElementById("#x-auto-3-input").value);
+        // if (document.getElementById("#x-auto-3-input")) {
+        //     filename = document.getElementById("#x-auto-3-input").value;
+        //     console.log(filename);
+        // }
+        // let filename = "configHardCodeFileName";
         // var wldCardStrSelector = "x-auto-" + "*" + "-input";
         // var contentWindow = document.querySelectorAll(wldCardStrSelector);
         // var contentWindow = document.querySelectorAll('.page-iframe');
         console.log(filename);
         if (filename === "") {
-            filename = "nofilename";
+            filename = "setSupplierDescriptionBeforeReady";
         }
         console.log(sender.tab ?
             "from a content script:" + sender.tab.url :
@@ -128,7 +144,6 @@ function getElementsStartsWithId(id) {
     }
     return elements;
 }
-
 
 //OLD CONTENT SCRIPT MANIFEST
 // "content_scripts": [{

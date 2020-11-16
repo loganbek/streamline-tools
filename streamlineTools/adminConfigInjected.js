@@ -104,7 +104,7 @@ window.addEventListener('unloadCode', function(evt) {
     if (textAreaCode) {
         testConfigCode = textAreaCode;
     } else {
-        testConfigCode = "\n\n";
+        testConfigCode = "\n";
     }
     console.log(textAreaCode);
     console.log(testConfigCode);
@@ -142,9 +142,11 @@ window.addEventListener("loadCode", function(evt) {
     console.log(document.getElementById("x-auto-3-input"));
 
     // WIP: LOAD TRIALS
-    console.log("parent.editArea.textarea.value = code;" + "parent.editArea.textareaFocused = true");
-    parent.editArea.textarea.value = code;
-    parent.editArea.textareaFocused = true;
+    // console.log("parent.editArea.textarea.value = code;" + "parent.editArea.textareaFocused = true");
+    textarea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
+    textarea.value = code;
+    // textarea.execCommand("onchange");
+    // textarea.editArea.textareaFocused = true;
 
 
     //Perform Validation

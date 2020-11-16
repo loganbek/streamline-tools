@@ -571,10 +571,10 @@ EX) addVendor_quote
 
 ##### Configuration Rules
 
-- [x] WIP - UNLOAD 
+- [x] WIP - UNLOAD
   [ ] - need to store varname on previous page or query for it
 - [ ] WIP - LOAD + Auto Validate
-  - [ ] 
+  - [ ]
 
 EX) Recommendation - sortBranchBasedOnZipCode
 
@@ -848,16 +848,18 @@ Version 86.0.4240.193 (Official Build) (x86_64)
 
 #### 11/16/20
 
-Continue config work 
-  - finish unload ( can success fully save file w/ code but needs fn)
+Continue config work
+
+- finish unload ( can success fully save file w/ code but needs fn)
   - figure out load frame
 
-##### Configuration Rules - WIP
+##### Configuration Rules - WIP Done except filenaming piece.
 
-- [x] WIP - UNLOAD 
+- [x] WIP - UNLOAD
   [ ] - need to store varname on previous page or query for it
-- [ ] WIP - LOAD + Auto Validate
-  - [ ] 
+  [ ] - setSupplierDescriptionBeforeReady has advanced condition for testing
+- [x] WIP - LOAD + Auto Validate ( may have bug)
+  - [ ]
 
 EX) Recommendation - sortBranchBasedOnZipCode
 
@@ -866,8 +868,6 @@ EX) Recommendation - sortBranchBasedOnZipCode
   - validate button
   //Perform Validation
     `document.getElementsByClassName('x-btn-text ')[16].click();`
-
-
 
 ### CONVO TOPICS for next meeting
 
@@ -904,5 +904,3 @@ document.querySelectorAll('iframe').forEach( item =>
 ```
 
 - [ ] Chrome Vers Confirmation - Build for Chrome 86
-
-
