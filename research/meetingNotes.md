@@ -874,11 +874,31 @@ EX) Recommendation - sortBranchBasedOnZipCode
   //Perform Validation
     `document.getElementsByClassName('x-btn-text ')[16].click();`
 
+#### 11/17/20
+
+- [ ] 
+- [x] comm/util lib load
+- [x] comm/util lib unload
+- [x] comm/util lib load test
+- [x] comm/util lib unload test
+
+- [x] config rule unload - WIP - filenaming
+- [x] config rule load
+
+- [x] comm rule unload - WIP - filenaming
+- [x] comm rule load
+
+- [ ] comm action before/after unload
+- [ ] comm action before/after load
+
+<https://superuser.com/questions/195419/google-chrome-is-there-a-keyboard-shortcut-to-open-a-link-in-a-new-tab#:~:text=Go%20to%20the%20link%20you,it%20in%20a%20new%20window>.
+
 ### CONVO TOPICS for next meeting
 
-## WORK REMAINING
 
-- file structure for config/commerce/util - right now all contained in bigmachines/sitedomain folder
+- [ ] file structure for config/commerce/util - right now all contained in bigmachines/sitedomain folder
+- Want to clarify commerce (In order to access the extension popup UI)
+<https://superuser.com/questions/195419/google-chrome-is-there-a-keyboard-shortcut-to-open-a-link-in-a-new-tab#:~:text=Go%20to%20the%20link%20you,it%20in%20a%20new%20window>.
 - You mentioned you had ideas for a github integration. I would like to see how you see this working (to me it still makes more sense to do this locally from the command line). I can't yet envision how you see this working. - Maybe a github UI options mockup.
 - Button disabling/hiding looks good/consistent across the board.
 
@@ -909,3 +929,4 @@ document.querySelectorAll('iframe').forEach( item =>
 ```
 
 - [ ] Chrome Vers Confirmation - Build for Chrome 86
+- [ ] Guidelines/Shortcuts (optimal way to use extension).
