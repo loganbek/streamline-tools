@@ -876,7 +876,7 @@ EX) Recommendation - sortBranchBasedOnZipCode
 
 #### 11/17/20
 
-- [ ] 
+TESTING
 - [x] comm/util lib load
 - [x] comm/util lib unload
 - [x] comm/util lib load test
@@ -892,6 +892,12 @@ EX) Recommendation - sortBranchBasedOnZipCode
 - [ ] comm action before/after load
 
 <https://superuser.com/questions/195419/google-chrome-is-there-a-keyboard-shortcut-to-open-a-link-in-a-new-tab#:~:text=Go%20to%20the%20link%20you,it%20in%20a%20new%20window>.
+
+#### 11/18/20
+
+- [ ] finish configuration/commerce/utilities subfolders (all under commerce currently)
+- [ ] filname tab query for config + comm rules
+- [ ] 
 
 ### CONVO TOPICS for next meeting
 
@@ -930,3 +936,5 @@ document.querySelectorAll('iframe').forEach( item =>
 
 - [ ] Chrome Vers Confirmation - Build for Chrome 86
 - [ ] Guidelines/Shortcuts (optimal way to use extension).
+- [ ] Onboarding Dev Nick for testing/dev
+  - [ ] ok to provide devmcnichols credentials?
