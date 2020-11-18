@@ -877,6 +877,7 @@ EX) Recommendation - sortBranchBasedOnZipCode
 #### 11/17/20
 
 TESTING
+
 - [x] comm/util lib load
 - [x] comm/util lib unload
 - [x] comm/util lib load test
@@ -896,8 +897,10 @@ TESTING
 #### 11/18/20
 
 - [ ] finish configuration/commerce/utilities subfolders (all under commerce currently)
-- [ ] filname tab query for config + comm rules
-- [ ] 
+- [ ] filename tab query for config rules
+- [ ] filename tab query for comm rules
+- [ ] check comm rules action
+  - [ ] filename query
 
 ### CONVO TOPICS for next meeting
 
