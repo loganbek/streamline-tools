@@ -45,9 +45,12 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     bmSiteSubDomain = bmSite;
     console.log(domain);
     console.log(type);
-    bmSiteType = type;
+    bmSiteType = "commerce";
     console.log(bmSiteType);
     if (url !== undefined) {
+
+        //BML SITE TYPE TODO
+        // isUtil = document.querySelector(".x-panel-header-text").innerHTML.includes("Util");
 
         //TEST BML DISABLING
         if (url.includes("bigmachines.com/admin/commerce/rules") || url.includes("bigmachines.com/admin/configuration/rules")) {
@@ -116,7 +119,7 @@ logsButton.disabled = true;
 
 chrome.downloads.onDeterminingFilename.addListener(function(item, suggest) {
     suggest({
-        filename: "bigmachines/" + bmSiteSubDomain + "/" + item.filename,
+        filename: "bigmachines/" + bmSiteSubDomain + "/" + bmSiteType + "/" + item.filename,
         conflictAction: 'overwrite'
     });
 });
