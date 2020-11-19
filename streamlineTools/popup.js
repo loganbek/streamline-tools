@@ -5,7 +5,8 @@ let fileName;
 let commentHeader;
 let url;
 let bmSiteSubDomain;
-let bmSiteType;
+var bmSiteType;
+let header;
 
 // FLAGS
 let unloaded = false;
@@ -50,7 +51,36 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     if (url !== undefined) {
 
         //BML SITE TYPE TODO
-        // isUtil = document.querySelector(".x-panel-header-text").innerHTML.includes("Util");
+        // COMMERCE + UTIL HEADER
+        // .innerHTML.includes("Util");
+
+
+
+        // header = document.querySelector(".x-panel-header-text");
+        // isUtil = header.innerHTML.includes("Util");
+        // isCommerce = header.innerHTML.includes("Commerce");
+
+        // if (header && header.innerHTML.includes("Commerce")) {
+        //     bmSiteType = "commerce";
+        // } else if (header && header.innerHTML.includes("Util")) {
+        //     bmSiteType = "util"
+        // } else {
+        //     bmSiteType = "configuration"
+        // }
+
+        if (document.querySelector(".xpanel-header-text")) {
+            header = document.querySelector(".x-panel-header-text");
+            isUtil = header.innerHTML.includes("Util");
+            isCommerce = header.innerHTML.includes("Commerce");
+            if (isCommerce) {
+                bmSiteType = "commerce";
+            } else if (isUtil) {
+                bmSiteType = "util";
+            } else {
+                bmSiteType = "configuration"
+            }
+            // TODO fix configuration
+        }
 
         //TEST BML DISABLING
         if (url.includes("bigmachines.com/admin/commerce/rules") || url.includes("bigmachines.com/admin/configuration/rules")) {
@@ -127,7 +157,19 @@ chrome.downloads.onDeterminingFilename.addListener(function(item, suggest) {
 // UNLOAD ONCLICK
 unloadButton.onclick = function(params) {
     console.log("unload clicked");
-
+    // if (document.querySelector(".xpanel-header-text")) {
+    //     header = document.querySelector(".x-panel-header-text");
+    //     isUtil = header.innerHTML.includes("Util");
+    //     isCommerce = header.innerHTML.includes("Commerce");
+    //     if (isCommerce) {
+    //         bmSiteType = "commerce";
+    //     } else if (isUtil) {
+    //         bmSiteType = "util";
+    //     } else {
+    //         bmSiteType = "configuration"
+    //     }
+    //     // TODO fix configuration
+    // }
     let unloaded = true;
 
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {

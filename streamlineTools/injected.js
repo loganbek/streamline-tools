@@ -151,6 +151,16 @@ window.addEventListener("loadTestCode",
         //RUN DEBUGGER
         // <button class="x-btn-text bmx-debug" type="button" id="ext-gen268">Run</button>
         // document.getElementById('ext-gen268').click();
+        // nodeList = document.getElementsByName("testScript");
+        // nodeList.foreach(element => alert(nodeList.value));
+        // for (var value of nodeList.values()) {
+        //     alert(value.value);
+        // }
+        // testScript = nodeList[0];
+        // let textareaLoadTestCode = document.querySelector('textarea[name="testScript"]');
+        // console.log(textareaLoadTestCode.value);
+        // textareaLoadTestCode.value = code;
+
         document.getElementsByClassName('bmx-debug')[1].click();
         // alert(document.getElementsByClassName('bmx-debug'));
     }, false);
@@ -160,6 +170,10 @@ window.addEventListener("unloadTestCode",
         let testScript;
         let useTestScript = document.getElementById('useScript').checked;
         if (useTestScript) {
+            // new multi attribute code
+            // const collection = document.querySelectorAll(`[id^="ext-comp-"][name="testScript"]`);
+            // collection.forEach(element => alert(element.innerText));
+
             let commTestScript = document.getElementById('ext-comp-1080');
             let utilTestScript = document.getElementById('ext-comp-1040');
             //ext-comp-1095
@@ -171,9 +185,16 @@ window.addEventListener("unloadTestCode",
             } else if (commTestScript2) {
                 testScript = commTestScript2.value;
             }
+            // let textarea = document.querySelector('textarea[name="testScript"]');
+            // console.log(textarea.value);
+            // textarea.value = code;
+            // // nodeList = document.getElementsByName("testScript");
+            // testScript = textarea.value;
+            // alert(testScript);
             if (testScript == "") {
                 testScript = "\n";
             }
+            // }
             // alert("commTestScript: " + commTestScript);
             // alert("utilTestScript: " + utilTestScript);
             let event = new CustomEvent("PassTestCodeToBackground", { detail: testScript });

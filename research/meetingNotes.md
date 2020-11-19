@@ -858,7 +858,7 @@ Continue config work
 - finish unload ( can success fully save file w/ code but needs fn)
   - figure out load frame
 
-##### Configuration Rules - WIP - (TODO: Use tab query) Done except filenaming piece.
+##### Configuration Rules - WIP - (TODO: Use tab query) Done except filenaming piece
 
 - [x] WIP - UNLOAD
   [ ] - need to store varname on previous page or query for it
@@ -896,14 +896,74 @@ TESTING
 
 #### 11/18/20
 
+
+- [ ] util test unload error () - calculateLaborCharges
+
+Listeners to use multi atribute selector
+- [ ] rewrite unloadTestCode +
+- [ ] loadTestCode 
+
+**UTIL TEST TEXT AREA**
+
+```html
+<textarea style="width: 242px; height: 44px;" autocomplete="off" id="ext-comp-1055" name="testScript" class=" x-form-textarea x-form-field"></textarea>
+```
+
+**COMMERCE TEST TEXT AREA**
+
+<textarea style="width: 242px; height: 44px;" autocomplete="off" id="ext-comp-1080" name="testScript" class=" x-form-textarea x-form-field "></textarea>
+
+need wildcard selector for id name
+
+use
+
+```js
+const prefix = 'gridx_Grid_';
+const suffix = '-9';
+
+const collection = document.querySelectorAll(
+  `[aria-describedby^="${ prefix }"][aria-describedby$="${ suffix }"]`
+);
+
+`[id^="ext-comp-"][name="testScript"]` <- for test unload attribute selector
+
+collection.forEach( element => console.log( element.innerText ) );
+```
+
+<https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors>
+<https://stackoverflow.com/questions/53197181/javascript-selector-with-wildcard>
+
+#### LOW PRIORITY
+
+11/19/20
+
+```js
+if (document.querySelector(".xpanel-header-text")) {
+            header = document.querySelector(".x-panel-header-text");
+            isUtil = header.innerHTML.includes("Util");
+            isCommerce = header.innerHTML.includes("Commerce");
+            if (isCommerce) {
+                bmSiteType = "commerce";
+            } else if (isUtil) {
+                bmSiteType = "util";
+            } else {
+                bmSiteType = "configuration"
+            }
+            // TODO fix configuration
+        }
+```
+
+### UPCOMING DEVELOPMENT
+
 - [ ] finish configuration/commerce/utilities subfolders (all under commerce currently)
 - [ ] filename tab query for config rules
 - [ ] filename tab query for comm rules
 - [ ] check comm rules action
   - [ ] filename query
 
-### CONVO TOPICS for next meeting
+LOW PRIORITY - - [ ] look into moving back to line 1 in editor on load.
 
+### CONVO TOPICS for next meeting
 
 - [ ] file structure for config/commerce/util - right now all contained in bigmachines/sitedomain folder
 - Want to clarify commerce (In order to access the extension popup UI)
@@ -924,9 +984,6 @@ TESTING
     multi contains selector?
     div[class^="tocolor-"], div[class*=" tocolor-"] { <- something like this maybe
 }
-
-  - Error in event handler: ReferenceError: filename is not defined
-    at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/adminCommerceContent.js:115:27
 - editAreas
 - [x] add in (site) folder - devmcnichols, etc.
 - [ ]
