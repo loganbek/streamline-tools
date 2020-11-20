@@ -896,12 +896,12 @@ TESTING
 
 #### 11/18/20
 
-
 - [x] util test unload error () - calculateLaborCharges
 
 Listeners to use multi atribute selector
+
 - [x] rewrite unloadTestCode +
-- [xß] loadTestCode 
+- [x] loadTestCode
 
 **UTIL TEST TEXT AREA**
 
@@ -911,7 +911,9 @@ Listeners to use multi atribute selector
 
 **COMMERCE TEST TEXT AREA**
 
+```html
 <textarea style="width: 242px; height: 44px;" autocomplete="off" id="ext-comp-1080" name="testScript" class=" x-form-textarea x-form-field "></textarea>
+```
 
 need wildcard selector for id name
 
@@ -1002,3 +1004,34 @@ document.querySelectorAll('iframe').forEach( item =>
 - [ ] Agree upon - 
 
 ## Deliverables For Next Time
+
+- [ ] filename tab query for config rules
+- [ ] filename tab query for comm rules
+- [ ] check comm rules action
+  - [ ] filename query
+
+- [ ] finish configuration/commerce/utilities subfolders (all under commerce currently)
+
+## 11/20/20
+
+### CONFIG RULES
+
+<https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5268044&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true>
+
+- Opens in same tab
+
+- Grab varname and store it to chrome local storage
+
+- 
+
+### COMMERCE RULES
+
+- Opens in new tab
+- Store previous tab id
+- grab 
+
+### COMMERCE ACTIONS
+
+- Open in new tab
+
+- Save previous Tab Id
