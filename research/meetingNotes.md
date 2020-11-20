@@ -897,11 +897,11 @@ TESTING
 #### 11/18/20
 
 
-- [ ] util test unload error () - calculateLaborCharges
+- [x] util test unload error () - calculateLaborCharges
 
 Listeners to use multi atribute selector
-- [ ] rewrite unloadTestCode +
-- [ ] loadTestCode 
+- [x] rewrite unloadTestCode +
+- [xß] loadTestCode 
 
 **UTIL TEST TEXT AREA**
 
@@ -994,7 +994,11 @@ document.querySelectorAll('iframe').forEach( item =>
 )
 ```
 
-- [ ] Chrome Vers Confirmation - Build for Chrome 86
+- [ ] Chrome Vers Confirmation - Build for Chrome 86 - Tested on both Desktop and Laptop
 - [ ] Guidelines/Shortcuts (optimal way to use extension).
-- [ ] Onboarding Dev Nick for testing/dev
+- [ ] Onboarding Dev Nick for testing/dev - WIP
   - [ ] ok to provide devmcnichols credentials?
+  - [ ] also going to start testing in other environments (pgrtest2 or devplantronics)?
+- [ ] Agree upon - 
+
+## Deliverables For Next Time
