@@ -1012,7 +1012,18 @@ document.querySelectorAll('iframe').forEach( item =>
 
 - [ ] finish configuration/commerce/utilities subfolders (all under commerce currently)
 
-## 11/20/20
+## 11/2(0+1)/20
+
+
+```html
+<input type="text" class=" x-form-field x-form-text" id="x-auto-3-input" name="varName" tabindex="0" style="width: 340px;" readonly="" disabled="">
+```
+
+```js
+document.querySelector("#x-auto-3-input");
+```
+
+store to chrome local storage - <https://developers.google.com/web/tools/chrome-devtools/storage/localstorage>
 
 ### CONFIG RULES
 
@@ -1021,14 +1032,14 @@ document.querySelectorAll('iframe').forEach( item =>
 - Opens in same tab
 
 - Grab varname and store it to chrome local storage
-
+ 
 - 
 
 ### COMMERCE RULES
 
 - Opens in new tab
 - Store previous tab id
-- grab 
+- query for varname in previous tab
 
 ### COMMERCE ACTIONS
 
