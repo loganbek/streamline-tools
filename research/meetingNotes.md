@@ -1025,6 +1025,8 @@ document.querySelector("#x-auto-3-input");
 
 store to chrome local storage - <https://developers.google.com/web/tools/chrome-devtools/storage/localstorage>
 
+<https://dev.to/chintukarthi/how-to-save-values-in-chrome-local-storage-kmc>
+
 ### CONFIG RULES
 
 <https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5268044&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true>
@@ -1036,7 +1038,19 @@ store to chrome local storage - <https://developers.google.com/web/tools/chrome-
 - <https://developer.chrome.com/apps/storage>
 - storage permissions
 
--
+```js
+chrome.storage.sync.set({'variable_name': 'variable_value'}, function() {
+  console.log("you saved me!!");
+});
+
+chrome.storage.sync.get(['variable_name'], function(result) {
+      if(result.variable_name == undefined) {
+        console.log("I am retrieved!!");
+      }
+}
+
+result.variable_name
+```
 
 ### COMMERCE RULES
 
