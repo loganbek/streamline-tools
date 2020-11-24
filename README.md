@@ -26,6 +26,13 @@ Streamline Tools for Oracle CPQ Cloud
 
 10) Congratulations you've successfully installed Streamline Tools!
 
+# Windows Installation
+
+ - Ensure you have downloaded and installed git [here](https://git-scm.com/download/win)
+
+
+
+
 <!-- ## TroublShooting Steps
 
 1) Hard Refresh/Clear Cache
