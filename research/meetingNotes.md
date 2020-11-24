@@ -1032,8 +1032,11 @@ store to chrome local storage - <https://developers.google.com/web/tools/chrome-
 - Opens in same tab
 
 - Grab varname and store it to chrome local storage
- 
-- 
+
+- <https://developer.chrome.com/apps/storage>
+- storage permissions
+
+-
 
 ### COMMERCE RULES
 
