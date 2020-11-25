@@ -1063,7 +1063,9 @@ result.variable_name
 - Open in new tab
 - Save previous Tab Id
 
+- config file naming smoke tests look good for all rule types
+
 # 11/24/20
-- [ ] config file testing
+- [ ] continue config file testing
 - [ ] installation + weekly testing w/ @nickthegreek
-- [ ] 
+- [ ] comm filename devs
