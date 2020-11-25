@@ -1061,5 +1061,9 @@ result.variable_name
 ### COMMERCE ACTIONS
 
 - Open in new tab
-
 - Save previous Tab Id
+
+# 11/24/20
+- [ ] config file testing
+- [ ] installation + weekly testing w/ @nickthegreek
+- [ ] 
