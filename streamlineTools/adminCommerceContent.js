@@ -104,7 +104,7 @@ chrome.runtime.onMessage.addListener(
         // alert(ruleType);
         // let filename = ruleName + "." + ruleType;
         // alert(filename);
-        let filename = "commerceRuleName";
+        // let filename = "commerceRuleName";
         console.log(sender.tab ?
             "from a content script:" + sender.tab.url :
             "from the extension");
@@ -153,3 +153,17 @@ chrome.runtime.onMessage.addListener(
 //     ],
 //     "all_frames": true
 // }],
+
+filename = document.querySelector("#x-auto-3-input").value;
+
+chrome.storage.sync.set({ 'filename': 'filename' }, function() {
+    console.log("you saved me!!");
+    console.log(result.variable_name);
+});
+
+chrome.storage.sync.get(['filename'], function(result) {
+    if (result.variable_name == undefined) {
+        console.log("I am retrieved!!");
+        console.log(result.variable_name);
+    }
+});
