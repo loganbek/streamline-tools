@@ -23,16 +23,6 @@ chrome.runtime.onInstalled.addListener(function() {
     });
 });
 
-// chrome.storage.sync.set({ 'filename': 'testFileName' }, function() {
-//     console.log("you saved me!!");
-// });
-
-// chrome.storage.sync.get(['filename'], function(result) {
-//             if (result.variable_name == undefined) {
-//                 console.log("I am retrieved!!");
-//             }
-//         }
-
 // var rule1 = {
 //     conditions: [
 //         new chrome.declarativeContent.PageStateMatcher({
