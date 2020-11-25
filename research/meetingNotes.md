@@ -1067,5 +1067,6 @@ result.variable_name
 
 # 11/24/20
 - [ ] continue config file testing
-- [ ] installation + weekly testing w/ @nickthegreek
-- [ ] comm filename devs
+- [ ] installation 
+- [ ] schedule weekly testing w/ @nickthegreekgod
+- [ ] comm filename rules dev
