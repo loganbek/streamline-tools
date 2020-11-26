@@ -1065,8 +1065,15 @@ result.variable_name
 
 - config file naming smoke tests look good for all rule types
 
-# 11/24/20
-- [ ] continue config file testing
-- [ ] installation 
+#### 11/25/20
+
+- [x] continue config file testing
+- [ ] installation w/ @nickthegreekgod
 - [ ] schedule weekly testing w/ @nickthegreekgod
-- [ ] comm filename rules dev
+- [x] comm filename rules dev
+
+####### 11/26/20
+
+- [ ] E2E config rules testing
+- [ ] E2E commerce rules testing
+- [ ] 
