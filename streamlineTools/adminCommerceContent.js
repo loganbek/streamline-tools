@@ -43,9 +43,11 @@
 //         // return true; - DOESNT FIX
 //     });
 
-let commentHeader = "";
-let code = "";
-let testCode = "";
+// let commentHeader = "";
+// let code = "";
+// let testCode = "";
+var code = "";
+var testCode = "";
 
 //Listen for the PassToBackground event
 window.addEventListener("PassToBackground", function(evt) {
@@ -81,12 +83,28 @@ function injectJs(link) {
 
 injectJs(chrome.extension.getURL('adminCommerceInjected.js'));
 
+// var x = (x === undefined) ? your_default_value : x;
+// let filename2 = (filename2 === undefined) ? document.querySelectorAll("input[id^=x-auto]")[1].value : filename2;
+// alert(filename2);
+// let ruleName = (ruleName === undefined) ? document.querySelector("input[name='variable_name']").value : ruleName;
+// alert(ruleName);
+// var ruleNameSelector = document.querySelector("input[name='variable_name']").value;
+// var ruleName = (typeof ruleName === 'undefined') ? document.querySelector("input[name='variable_name']").value : ruleName;
+// alert(ruleName);
+// let ruleType = (ruleType === undefined) ? window.name : ruleType;
+// alert(ruleType);
+
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        let filename = document.getElementById('variableName').value;
-        if (filename === "") {
-            filename = "nofilename";
-        }
+        // let filename2 = document.querySelectorAll("input[id^=x-auto]")[1].value;
+        // alert(filename2);
+        // let ruleName = document.querySelector("input[name='variable_name']").value;
+        // alert(ruleName);
+        // let ruleType = window.name;
+        // alert(ruleType);
+        // let filename = ruleName + "." + ruleType;
+        // alert(filename);
+        // let filename = "commerceRuleName";
         console.log(sender.tab ?
             "from a content script:" + sender.tab.url :
             "from the extension");
@@ -96,9 +114,6 @@ chrome.runtime.onMessage.addListener(
         if (request.greeting == "unload") {
             let unloadEvent = new CustomEvent("unloadCode", { detail: request.code });
             window.dispatchEvent(unloadEvent);
-            if (!code.startsWith(commentHeader)) {
-                code = commentHeader + "\n\n" + code;
-            }
             sendResponse({
                 filename: filename,
                 code: code
@@ -138,3 +153,27 @@ chrome.runtime.onMessage.addListener(
 //     ],
 //     "all_frames": true
 // }],
+
+// ```html <input type="text" class=" x-form-field x-form-text" id="x-auto-214-input" name="varName" tabindex="0" readonly="" disabled="" style="width: 260px;">```
+
+if (document.querySelector("#x-auto-3-input")) {
+    filename = document.querySelector("#x-auto-3-input").value;
+}
+
+if (document.querySelector(".varName")) {
+    filename = document.querySelector(".varName").value;
+}
+
+if (filename != "undefined") {
+    chrome.storage.sync.set({ 'filename': 'filename' }, function() {
+        console.log("you saved me!!");
+        console.log(result.variable_name);
+    });
+}
+
+chrome.storage.sync.get(['filename'], function(result) {
+    if (result.variable_name == undefined) {
+        console.log("I am retrieved!!");
+        console.log(result.variable_name);
+    }
+});

@@ -19,7 +19,19 @@ window.addEventListener('load', function() {
 // }, false);
 
 window.addEventListener('unloadCode', function(evt) {
-    let event = new CustomEvent("PassCodeToBackground", { detail: editArea.textarea.value });
+    // #textarea
+    iframes = document.getElementsByTagName("iframe");
+    console.log(iframes);
+    textAreaCode = document.getElementsByTagName("iframe")[0].contentDocument.querySelector("#textarea").value;
+    console.log(textAreaCode);
+    if (textAreaCode) {
+        testCommerceCode = textAreaCode;
+    } else {
+        testCommerceCode = "\n";
+    }
+    console.log(textAreaCode);
+    console.log(testCommerceCode);
+    let event = new CustomEvent("PassCodeToBackground", { detail: testCommerceCode });
     window.dispatchEvent(event);
 })
 
@@ -28,10 +40,16 @@ window.addEventListener("loadCode", function(evt) {
     code = evt.detail;
     // frame_bm_script.editArea.textarea.value = code;
     // frame_bm_script.editArea.textareaFocused = true;
+    // frame_bm_script_id.editArea.textarea.value = code;
+    // frame_bm_script_id.editArea.textareaFocused = true;
 
-    document.querySelector("#textarea").value = "test";
-    document.querySelector("#textarea").textareaFocused = true;
+    textarea = document.getElementsByTagName("iframe")[0].contentDocument.querySelector("#textarea");
+    textarea.value = code;
 
+    //     document.querySelector("#textarea").value = "test";
+    //     document.querySelector("#textarea").textareaFocused = true;
+    //     document.getElementById("textarea").value = code;
+    //     document.getElementById("textarea").textareaFocused = true;
     //Perform Validation
     // document.getElementById('ext-gen22').click();
     // document.getElementsByClassName('bmx-spellcheck')[0].click();

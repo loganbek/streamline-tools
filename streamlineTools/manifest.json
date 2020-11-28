@@ -1,6 +1,6 @@
 {
     "name": "Streamline Tools",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "description": "Streamline Tools for Oracle CPQ Cloud!",
     "permissions": [
         "downloads",
@@ -20,19 +20,6 @@
         ],
         "persistent": false
     },
-    "content_scripts": [{
-            "matches": ["*://*.bigmachines.com/spring/*"],
-            "js": ["content.js"]
-        },
-        {
-            "matches": ["*://*.bigmachines.com/admin/commerce/rules/*"],
-            "js": ["content.js"]
-        },
-        {
-            "matches": ["*://*.bigmachines.com/admin/configuration/rules/*"],
-            "js": ["content.js"]
-        }
-    ],
     "web_accessible_resources": [
         "jsonpath-1.0.2.js",
         "injected.js",

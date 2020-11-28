@@ -136,20 +136,31 @@ window.addEventListener("loadCode", function(evt) {
 window.addEventListener("loadTestCode",
     function(evt) {
         code = evt.detail;
+        //need to rewrite these if's
         let commTestScript = document.getElementById('ext-comp-1080');
         let utilTestScript = document.getElementById('ext-comp-1040');
         let commTestScript2 = document.getElementById('ext-comp-1095');
-        if (commTestScript) {
+        if (utilTestScript) {
+            utilTestScript.value = code;
+        } else if (commTestScript) {
             commTestScript.value = code;
         } else if (commTestScript2) {
             commTestScript2.value = code;
-        } else if (utilTestScirpt) {
-            utilTestScript.value = code;
         }
         // alert(commTestScript, commTestScript2, utilTestScript);
         //RUN DEBUGGER
         // <button class="x-btn-text bmx-debug" type="button" id="ext-gen268">Run</button>
         // document.getElementById('ext-gen268').click();
+        // nodeList = document.getElementsByName("testScript");
+        // nodeList.foreach(element => alert(nodeList.value));
+        // for (var value of nodeList.values()) {
+        //     alert(value.value);
+        // }
+        // testScript = nodeList[0];
+        // let textareaLoadTestCode = document.querySelector('textarea[name="testScript"]');
+        // console.log(textareaLoadTestCode.value);
+        // textareaLoadTestCode.value = code;
+
         document.getElementsByClassName('bmx-debug')[1].click();
         // alert(document.getElementsByClassName('bmx-debug'));
     }, false);
@@ -159,20 +170,31 @@ window.addEventListener("unloadTestCode",
         let testScript;
         let useTestScript = document.getElementById('useScript').checked;
         if (useTestScript) {
+            // new multi attribute code
+            // const collection = document.querySelectorAll(`[id^="ext-comp-"][name="testScript"]`);
+            // collection.forEach(element => alert(element.innerText));
+
             let commTestScript = document.getElementById('ext-comp-1080');
             let utilTestScript = document.getElementById('ext-comp-1040');
             //ext-comp-1095
             let commTestScript2 = document.getElementById('ext-comp-1095');
-            if (commTestScript) {
+            if (utilTestScript) {
+                testScript = utilTestScript.value;
+            } else if (commTestScript) {
                 testScript = commTestScript.value;
             } else if (commTestScript2) {
                 testScript = commTestScript2.value;
-            } else if (utilTestScript) {
-                testScript = utilTestScript.value;
             }
+            // let textarea = document.querySelector('textarea[name="testScript"]');
+            // console.log(textarea.value);
+            // textarea.value = code;
+            // // nodeList = document.getElementsByName("testScript");
+            // testScript = textarea.value;
+            // alert(testScript);
             if (testScript == "") {
                 testScript = "\n";
             }
+            // }
             // alert("commTestScript: " + commTestScript);
             // alert("utilTestScript: " + utilTestScript);
             let event = new CustomEvent("PassTestCodeToBackground", { detail: testScript });

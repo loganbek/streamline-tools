@@ -1,12 +1,18 @@
 'use strict';
 
+// VARS
 let fileName;
 let commentHeader;
 let url;
+let bmSiteSubDomain;
+var bmSiteType;
+let header;
 
+// FLAGS
 let unloaded = false;
 let unloadedTest = false;
 
+// BUTTONS
 let unloadButton = document.getElementById('unload');
 let loadButton = document.getElementById('load');
 let unloadTestButton = document.getElementById('unloadTest');
@@ -14,25 +20,102 @@ let loadTestButton = document.getElementById('loadTest');
 let optionsButton = document.getElementById('options');
 let logsButton = document.getElementById('logs');
 
+// chrome.tabs.query({windowId: chrome.windows.WINDOW_ID_CURRENT}, (tabs) => {
+//     document.write(`<h3>The tabs you're on are:</h3>`);
+//     document.write('<ul>');
+//     for (let i = 0; i < tabs.length; i++) {
+//       document.write(`<li>${tabs[i].url}</li>`);
+//     }
+//     document.write('</ul>');
+//   });
+
+// CHROME TABS
 chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     let tab = tabs[0];
-    url = tab.url;
+    let url = tab.url;
+    // console.log(tab.url);
+    let full = url;
+    let parts = full.split('.');
+    let sub = parts[0];
+    let domain = parts[1];
+    let type = parts[2];
+    console.log(sub);
+    let bmSiteParts = sub.split('//');
+    let bmSite = bmSiteParts[1];
+    console.log(bmSite);
+    bmSiteSubDomain = bmSite;
+    console.log(domain);
+    console.log(type);
+    bmSiteType = "commerce";
+    console.log(bmSiteType);
     if (url !== undefined) {
-        // alert(url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp"));
+
+        //BML SITE TYPE TODO
+        // COMMERCE + UTIL HEADER
+        // .innerHTML.includes("Util");
+
+
+
+        // header = document.querySelector(".x-panel-header-text");
+        // isUtil = header.innerHTML.includes("Util");
+        // isCommerce = header.innerHTML.includes("Commerce");
+
+        // if (header && header.innerHTML.includes("Commerce")) {
+        //     bmSiteType = "commerce";
+        // } else if (header && header.innerHTML.includes("Util")) {
+        //     bmSiteType = "util"
+        // } else {
+        //     bmSiteType = "configuration"
+        // }
+
+        if (document.querySelector(".xpanel-header-text")) {
+            header = document.querySelector(".x-panel-header-text");
+            isUtil = header.innerHTML.includes("Util");
+            isCommerce = header.innerHTML.includes("Commerce");
+            if (isCommerce) {
+                bmSiteType = "commerce";
+            } else if (isUtil) {
+                bmSiteType = "util";
+            } else {
+                bmSiteType = "configuration"
+            }
+            // TODO fix configuration
+        }
+
+        //TEST BML DISABLING
         if (url.includes("bigmachines.com/admin/commerce/rules") || url.includes("bigmachines.com/admin/configuration/rules")) {
+
+            // alert(url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp"));
+            // INITIAL content.js LOADING
+            // executeContentScript("adminCommerceContent.js");
             // unloadTestButton.style.visibility = "hidden";
             // loadTestButton.style.visibility = "hidden";
             unloadTestButton.disabled = true;
             loadTestButton.disabled = true;
         }
-    }
-    chrome.tabs.sendMessage(tabs[0].id, { greeting: "filename" }, function(response) {
-        if (response !== undefined) {
-            console.log(response.filename);
-            fileName = response.filename;
+        if (url.includes("bigmachines.com/admin/commerce/rules")) {
+            executeContentScript("adminCommerceContent.js");
         }
-    });
+        if (url.includes("bigmachines.com/admin/configuration/rules")) {
+            executeContentScript("adminConfigContent.js");
+        }
+    }
+    if (url.includes("bigmachines.com/spring/")) {
+        chrome.tabs.sendMessage(tabs[0].id, { greeting: "filename" }, function(response) {
+            if (response !== undefined) {
+                console.log(response.filename);
+                fileName = response.filename;
+            }
+        });
+        executeContentScript("content.js");
+    }
 });
+
+function executeContentScript(contentScriptName) {
+    chrome.tabs.executeScript({
+        file: contentScriptName
+    });
+}
 
 // TODO: LOG LINKING
 logsButton.disabled = true;
@@ -66,14 +149,27 @@ logsButton.disabled = true;
 
 chrome.downloads.onDeterminingFilename.addListener(function(item, suggest) {
     suggest({
-        filename: "bigmachines/" + item.filename,
+        filename: "bigmachines/" + bmSiteSubDomain + "/" + bmSiteType + "/" + item.filename,
         conflictAction: 'overwrite'
     });
 });
 
+// UNLOAD ONCLICK
 unloadButton.onclick = function(params) {
     console.log("unload clicked");
-
+    // if (document.querySelector(".xpanel-header-text")) {
+    //     header = document.querySelector(".x-panel-header-text");
+    //     isUtil = header.innerHTML.includes("Util");
+    //     isCommerce = header.innerHTML.includes("Commerce");
+    //     if (isCommerce) {
+    //         bmSiteType = "commerce";
+    //     } else if (isUtil) {
+    //         bmSiteType = "util";
+    //     } else {
+    //         bmSiteType = "configuration"
+    //     }
+    //     // TODO fix configuration
+    // }
     let unloaded = true;
 
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
@@ -88,12 +184,15 @@ unloadButton.onclick = function(params) {
 
 }
 
+// LOAD ONCLICK
 let fileHandle;
 loadButton.addEventListener('click', async(e) => {
-    fileHandle = await window.chooseFileSystemEntries();
-    console.log(fileHandle)
+    // fileHandle = await window.chooseFileSystemEntries();
+    [fileHandle] = await window.showOpenFilePicker();
+    console.log(fileHandle);
     const file = await fileHandle.getFile();
     const contents = await file.text();
+    console.log(contents);
 
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { greeting: "load", code: contents }, function(response) {
@@ -103,6 +202,15 @@ loadButton.addEventListener('click', async(e) => {
 
 });
 
+// let fileHandle;
+// butOpenFile.addEventListener('click', async () => {
+//   [fileHandle] = await window.showOpenFilePicker();
+//   const file = await fileHandle.getFile();
+//   const contents = await file.text();
+//   textArea.value = contents;
+// });
+
+// UNLOAD TEST ONCLICK
 unloadTestButton.onclick = function(params) {
     console.log("unloadTest clicked");
     let unloadedTest = true;
@@ -118,6 +226,7 @@ unloadTestButton.onclick = function(params) {
     });
 }
 
+// LOAD TEST ONCLICK
 let fileHandle2;
 loadTestButton.addEventListener('click', async(e) => {
     const options = {
@@ -128,8 +237,9 @@ loadTestButton.addEventListener('click', async(e) => {
         }, ],
         excludeAcceptAllOption: true
     };
-    fileHandle2 = await window.chooseFileSystemEntries(options);
-    console.log(fileHandle2)
+    //    [fileHandle2] = await window.showOpenFilePicker(options);
+    [fileHandle2] = await window.showOpenFilePicker();
+    console.log(fileHandle2);
     const file = await fileHandle2.getFile();
     const contents = await file.text();
 
@@ -141,6 +251,7 @@ loadTestButton.addEventListener('click', async(e) => {
     });
 });
 
+// FILE SAVE
 function saveText(filename, text) {
     let tempElem = document.createElement('a');
     tempElem.setAttribute('href', 'data:bml/plain;charset=utf-8,' + encodeURIComponent(text));

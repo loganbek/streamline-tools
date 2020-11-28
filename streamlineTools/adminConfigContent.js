@@ -1,6 +1,43 @@
-let commentHeader = "";
-let code = "";
-let testCode = "";
+// let commentHeader = "";
+// let code = "";
+// let testCode = "";
+var code = "";
+var testCode = "";
+var filename = filename || "";
+
+if (document.getElementById("#x-auto-3-input")) {
+    filename = document.getElementById("#x-auto-3-input").value;
+    // document.querySelector("#x-auto-3-input")
+    console.log(filename);
+}
+
+if (window.document.getElementById("#x-auto-3-input")) {
+    filename = window.document.getElementById("#x-auto-3-input").value;
+    console.log(filename)
+}
+
+window.addEventListener('unloadCode', function(evt) {
+    // frameList = window.frames;
+    // console.log("frameList ->" + frameList);
+    // // console.log("frameList.editAreas.value -> " + frameList.editAreas.value);
+    // console.log("frameList.editAreas -> " + frameList.editAreas);
+    // console.log("frameList.textArea -> " + frameList.textArea);
+    // // console.log("frameList.textArea.value -> " + frameList.textArea.value);
+    // console.log("frameList" + frameList.value);
+    // // console.log("frameList.querySelector" + frameList.querySelector("#textarea"));
+    // // #textarea
+    // console.log(frameList.contentWindow);
+    // console.log(document.getElementsByTagName("iframe")[0].contentWindow); // <- build on this
+    // console.log(document.querySelector("#frame_x-auto-143-area"));
+    // detail: frame_bm_script.editArea.textarea.value
+    // /html/body/div[1]/div[3]/div[2]/textarea
+    // document.querySelector("#textarea")
+    // [attribute*="value"]
+    // console.log()
+    detail1 = "@#$@#";
+    let event = new CustomEvent("PassCodeToBackground", { detail: detail1 });
+    window.dispatchEvent(event);
+})
 
 //Listen for the PassToBackground event
 window.addEventListener("PassToBackground", function(evt) {
@@ -23,9 +60,9 @@ window.addEventListener("PassTestCodeToBackground", function(evt) {
 }, false);
 
 //Listen for the unloadCode event
-window.addEventListener("unloadCode", function(evt) {
-    code = evt.detail;
-}, false);
+// window.addEventListener("unloadCode", function(evt) {
+//     code = evt.detail;
+// }, false);
 
 function injectJs(link) {
     let scr = document.createElement('script');
@@ -34,13 +71,28 @@ function injectJs(link) {
     document.getElementsByTagName('head')[0].appendChild(scr);
 }
 
-injectJs(chrome.extension.getURL('injected.js'));
+injectJs(chrome.extension.getURL('adminConfigInjected.js'));
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        let filename = document.getElementById('variableName').value;
+        // comm rules var name
+        // document.getElementById('x-auto-214-input').value;
+        //TODO WILD CARD
+        // let filename = document.getElementById('x-auto-3-input').value;
+        // let filename = document.querySelectorAll("input[id*=x-auto-]");
+        // let filename = document.getElementsByName("varName").value;
+        // console.log(document.getElementById("#x-auto-3-input").value);
+        // if (document.getElementById("#x-auto-3-input")) {
+        //     filename = document.getElementById("#x-auto-3-input").value;
+        //     console.log(filename);
+        // }
+        // let filename = "configHardCodeFileName";
+        // var wldCardStrSelector = "x-auto-" + "*" + "-input";
+        // var contentWindow = document.querySelectorAll(wldCardStrSelector);
+        // var contentWindow = document.querySelectorAll('.page-iframe');
+        console.log(filename);
         if (filename === "") {
-            filename = "nofilename";
+            filename = "setSupplierDescriptionBeforeReady";
         }
         console.log(sender.tab ?
             "from a content script:" + sender.tab.url :
@@ -51,9 +103,9 @@ chrome.runtime.onMessage.addListener(
         if (request.greeting == "unload") {
             let unloadEvent = new CustomEvent("unloadCode", { detail: request.code });
             window.dispatchEvent(unloadEvent);
-            if (!code.startsWith(commentHeader)) {
-                code = commentHeader + "\n\n" + code;
-            }
+            // if (!code.startsWith(commentHeader)) {
+            //     code = commentHeader + "\n\n" + code;
+            // }
             sendResponse({
                 filename: filename,
                 code: code
@@ -81,6 +133,17 @@ chrome.runtime.onMessage.addListener(
         // return true;
     });
 
+function getElementsStartsWithId(id) {
+    var children = document.body.getElementsByTagName('*');
+    var elements = [],
+        child;
+    for (var i = 0, length = children.length; i < length; i++) {
+        child = children[i];
+        if (child.id.substr(0, id.length) == id)
+            elements.push(child);
+    }
+    return elements;
+}
 
 //OLD CONTENT SCRIPT MANIFEST
 // "content_scripts": [{
@@ -93,3 +156,33 @@ chrome.runtime.onMessage.addListener(
 //     ],
 //     "all_frames": true
 // }],
+
+// filename = document.querySelector("#x-auto-3-input").value;
+
+// chrome.storage.sync.set({ 'filename': 'filename' }, function() {
+//     console.log("you saved me!!");
+//     console.log(result.variable_name);
+// });
+
+// chrome.storage.sync.get(['filename'], function(result) {
+//     if (result.variable_name == undefined) {
+//         console.log("I am retrieved!!");
+//         console.log(result.variable_name);
+//     }
+// });
+
+if (document.querySelector("#x-auto-3-input")) {
+    filename = document.querySelector("#x-auto-3-input").value;
+}
+
+chrome.storage.sync.set({ 'filename': 'filename' }, function() {
+    console.log("you saved me!!");
+    console.log(result.variable_name);
+});
+
+chrome.storage.sync.get(['filename'], function(result) {
+    if (result.variable_name == undefined) {
+        console.log("I am retrieved!!");
+        console.log(result.variable_name);
+    }
+});

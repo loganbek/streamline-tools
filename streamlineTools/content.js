@@ -1,6 +1,10 @@
-let commentHeader = "";
-let code = "";
-let testCode = "";
+// let commentHeader = commentHeader || "";
+// if(typeof commentHeader !== 'undefined'){
+//     alert("Variable x is defined.");
+//   }
+var commentHeader = "";
+var code = "";
+var testCode = "";
 
 //Listen for the PassToBackground event
 window.addEventListener("PassToBackground", function(evt) {
@@ -39,9 +43,7 @@ injectJs(chrome.extension.getURL('injected.js'));
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         let filename = document.getElementById('variableName').value;
-        if (filename === "") {
-            filename = "nofilename";
-        }
+        filename = newFunction(filename);
         console.log(sender.tab ?
             "from a content script:" + sender.tab.url :
             "from the extension");
@@ -81,6 +83,28 @@ chrome.runtime.onMessage.addListener(
         // return true;
     });
 
+
+
+function newFunction(filename) {
+    if (filename === "") {
+        filename = "nofilename";
+    }
+    return filename;
+}
+//MORE TECENT CONTENT SCRIPT MANIFEST
+// "content_scripts": [{
+//     "matches": ["*://*.bigmachines.com/spring/*"],
+//     "js": ["content.js"]
+// },
+// {
+//     "matches": ["*://*.bigmachines.com/admin/commerce/rules/*"],
+//     "js": ["content.js"]
+// },
+// {
+//     "matches": ["*://*.bigmachines.com/admin/configuration/rules/*"],
+//     "js": ["content.js"]
+// }
+// ],
 
 //OLD CONTENT SCRIPT MANIFEST
 // "content_scripts": [{
