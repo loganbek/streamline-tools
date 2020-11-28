@@ -1072,9 +1072,19 @@ result.variable_name
 - [ ] schedule weekly testing w/ @nickthegreekgod
 - [x] comm filename rules dev
 
-####### 11/26/20
+####### 11/27-28/20
 
+- [ ] config smoke
+- [ ] commerce smoke
+- [ ] util smoke
+- [ ] commerce rules smoke
+- [ ] commerce actions smoke
+
+- [ ] merge v0.5.0 into master for feature complete
+
+- [ ] add util + config subdirectories
+
+####### 11/29/20
 - [ ] E2E config rules testing
 - [ ] E2E commerce rules testing
 - [ ] log install streamline tools on windows partition
-- 
