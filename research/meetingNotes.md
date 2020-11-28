@@ -1074,17 +1074,27 @@ result.variable_name
 
 ####### 11/27-28/20
 
-- [ ] config smoke
-- [ ] commerce smoke
-- [ ] util smoke
+- [x] config smoke
+- [x] commerce smoke
+- [x] util smoke
 - [ ] commerce rules smoke
+- [ ] -needs work still
+
+```html <input type="text" class=" x-form-field x-form-text" id="x-auto-214-input" name="varName" tabindex="0" readonly="" disabled="" style="width: 260px;">```
+
 - [ ] commerce actions smoke
+  - fn fix -
+  - /html/body/table[5]/tbody/tr/td[3]/form[2]/div[1]/table/tbody/tr[3]/td[2]/text()
 
 - [ ] merge v0.5.0 into master for feature complete
 
-- [ ] add util + config subdirectories
-
 ####### 11/29/20
+
 - [ ] E2E config rules testing
 - [ ] E2E commerce rules testing
 - [ ] log install streamline tools on windows partition
+
+TODO:
+
+- [ ] add util + config subdirectories
+- [ ] look into config load editor highting (pretty sure theres a quick fix)

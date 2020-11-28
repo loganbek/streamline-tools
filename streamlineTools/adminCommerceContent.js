@@ -154,12 +154,22 @@ chrome.runtime.onMessage.addListener(
 //     "all_frames": true
 // }],
 
-filename = document.querySelector("#x-auto-3-input").value;
+// ```html <input type="text" class=" x-form-field x-form-text" id="x-auto-214-input" name="varName" tabindex="0" readonly="" disabled="" style="width: 260px;">```
 
-chrome.storage.sync.set({ 'filename': 'filename' }, function() {
-    console.log("you saved me!!");
-    console.log(result.variable_name);
-});
+if (document.querySelector("#x-auto-3-input")) {
+    filename = document.querySelector("#x-auto-3-input").value;
+}
+
+if (document.querySelector(".varName")) {
+    filename = document.querySelector(".varName").value;
+}
+
+if (filename != "undefined") {
+    chrome.storage.sync.set({ 'filename': 'filename' }, function() {
+        console.log("you saved me!!");
+        console.log(result.variable_name);
+    });
+}
 
 chrome.storage.sync.get(['filename'], function(result) {
     if (result.variable_name == undefined) {
