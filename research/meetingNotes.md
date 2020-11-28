@@ -1076,4 +1076,5 @@ result.variable_name
 
 - [ ] E2E config rules testing
 - [ ] E2E commerce rules testing
-- [ ] 
+- [ ] log install streamline tools on windows partition
+- 
