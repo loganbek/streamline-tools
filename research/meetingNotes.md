@@ -903,13 +903,13 @@ Listeners to use multi atribute selector
 - [x] rewrite unloadTestCode +
 - [x] loadTestCode
 
-**UTIL TEST TEXT AREA**
+UTIL TEST TEXT AREA
 
 ```html
 <textarea style="width: 242px; height: 44px;" autocomplete="off" id="ext-comp-1055" name="testScript" class=" x-form-textarea x-form-field"></textarea>
 ```
 
-**COMMERCE TEST TEXT AREA**
+COMMERCE TEST TEXT AREA
 
 ```html
 <textarea style="width: 242px; height: 44px;" autocomplete="off" id="ext-comp-1080" name="testScript" class=" x-form-textarea x-form-field "></textarea>
@@ -1001,7 +1001,7 @@ document.querySelectorAll('iframe').forEach( item =>
 - [ ] Onboarding Dev Nick for testing/dev - WIP
   - [ ] ok to provide devmcnichols credentials?
   - [ ] also going to start testing in other environments (pgrtest2 or devplantronics)?
-- [ ] Agree upon - 
+- [ ] Agree upon -
 
 ## Deliverables For Next Time
 
@@ -1013,7 +1013,6 @@ document.querySelectorAll('iframe').forEach( item =>
 - [ ] finish configuration/commerce/utilities subfolders (all under commerce currently)
 
 ## 11/23/20
-
 
 ```html
 <input type="text" class=" x-form-field x-form-text" id="x-auto-3-input" name="varName" tabindex="0" style="width: 340px;" readonly="" disabled="">
@@ -1094,7 +1093,18 @@ result.variable_name
 - [ ] E2E commerce rules testing
 - [ ] log install streamline tools on windows partition
 
+
+version - 0.6.0-alpha
 TODO:
 
 - [ ] add util + config subdirectories
 - [ ] look into config load editor highting (pretty sure theres a quick fix)
+
+TODO CLEANUP:
+
+- [ ] remove unused permissions from manifest.json
+- [ ] DRY up
+
+####### 11/30/20
+
+- [ ]
