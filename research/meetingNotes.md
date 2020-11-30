@@ -1067,7 +1067,7 @@ result.variable_name
 #### 11/25/20
 
 - [x] continue config file testing
-- [ ] installation w/ @nickthegreekgod
+- [x] installation w/ @nickthegreekgod
 - [ ] schedule weekly testing w/ @nickthegreekgod
 - [x] comm filename rules dev
 
@@ -1092,9 +1092,17 @@ result.variable_name
 - [ ] E2E config rules testing
 - [ ] E2E commerce rules testing
 - [ ] log install streamline tools on windows partition
+- [x] installation w/ @nickthegreekgod
 
+####### 11/30/20
 
-version - 0.6.0-alpha
+- [ ] commerce actions smoke
+
+- fn fix -
+- /html/body/table[5]/tbody/tr/td[3]/form[2]/div[1]/table/tbody/tr[3]/td[2]/text()
+
+##### v - 0.7.0-alpha
+
 TODO:
 
 - [ ] add util subdirectory
@@ -1103,11 +1111,8 @@ TODO:
 
 TODO CLEANUP:
 
-- [ ] minor config text exitor highlighting issue (may need another click event).
+- [ ] /html/body/table[5]/tbody/tr/td[3]/form[2]/div[1]/table/tbody/tr[3]/td[2]/text()
+- [ ] minor config text exitor highlighting issue (may need another click (or on change or on blur) event).
 - [ ] remove unused permissions from manifest.json
 - [ ] maybe remove step 9 from install
 - [ ] DRY up
-
-####### 11/30/20
-
-- [ ]
