@@ -1105,6 +1105,7 @@ TODO CLEANUP:
 
 - [ ] minor config text exitor highlighting issue (may need another click event).
 - [ ] remove unused permissions from manifest.json
+- [ ] maybe remove step 9 from install
 - [ ] DRY up
 
 ####### 11/30/20
