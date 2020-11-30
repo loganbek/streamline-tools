@@ -1097,11 +1097,13 @@ result.variable_name
 version - 0.6.0-alpha
 TODO:
 
-- [ ] add util + config subdirectories
-- [ ] look into config load editor highting (pretty sure theres a quick fix)
+- [ ] add util subdirectory
+- [x] add configuration subdirectory
+  - ```html <span class="x-panel-header-text" id="ext-gen55">Util BML Library Function Editor: Properties &amp; Parameters</span>```
 
 TODO CLEANUP:
 
+- [ ] minor config text exitor highlighting issue (may need another click event).
 - [ ] remove unused permissions from manifest.json
 - [ ] DRY up
 

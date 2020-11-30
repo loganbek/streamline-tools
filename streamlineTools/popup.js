@@ -68,19 +68,19 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
         //     bmSiteType = "configuration"
         // }
 
-        if (document.querySelector(".xpanel-header-text")) {
-            header = document.querySelector(".x-panel-header-text");
-            isUtil = header.innerHTML.includes("Util");
-            isCommerce = header.innerHTML.includes("Commerce");
-            if (isCommerce) {
-                bmSiteType = "commerce";
-            } else if (isUtil) {
-                bmSiteType = "util";
-            } else {
-                bmSiteType = "configuration"
-            }
-            // TODO fix configuration
-        }
+        // if (document.querySelector(".xpanel-header-text")) {
+        //     header = document.querySelector(".x-panel-header-text");
+        //     isUtil = header.innerHTML.includes("Util");
+        //     isCommerce = header.innerHTML.includes("Commerce");
+        //     if (isCommerce) {
+        //         bmSiteType = "commerce";
+        //     } else if (isUtil) {
+        //         bmSiteType = "util";
+        //     } else {
+        //         bmSiteType = "configuration"
+        //     }
+        //     // TODO fix configuration
+        // }
 
         //TEST BML DISABLING
         if (url.includes("bigmachines.com/admin/commerce/rules") || url.includes("bigmachines.com/admin/configuration/rules")) {
@@ -97,6 +97,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
             executeContentScript("adminCommerceContent.js");
         }
         if (url.includes("bigmachines.com/admin/configuration/rules")) {
+            bmSiteType = "configuration";
             executeContentScript("adminConfigContent.js");
         }
     }
