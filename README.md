@@ -4,7 +4,7 @@
 
 Streamline Tools for Oracle CPQ Cloud
 
-## Installation Instructions 
+## Installation Instructions
 
 1) Download the latest version of Streamline Tools [here](https://github.com/loganbek/streamlineTools/releases).
 
