@@ -48,6 +48,19 @@
 // let testCode = "";
 var code = "";
 var testCode = "";
+// var filename = filename || "";
+var filename;
+
+// if (document.getElementById("#x-auto-3-input")) {
+//     filename = document.getElementById("#x-auto-3-input").value;
+//     // document.querySelector("#x-auto-3-input")
+//     console.log(filename);
+// }
+
+// if (window.document.getElementById("#x-auto-3-input")) {
+//     filename = window.document.getElementById("#x-auto-3-input").value;
+//     console.log(filename)
+// }
 
 //Listen for the PassToBackground event
 window.addEventListener("PassToBackground", function(evt) {
@@ -156,20 +169,49 @@ chrome.runtime.onMessage.addListener(
 
 // ```html <input type="text" class=" x-form-field x-form-text" id="x-auto-214-input" name="varName" tabindex="0" readonly="" disabled="" style="width: 260px;">```
 
-if (document.querySelector("#x-auto-3-input")) {
-    filename = document.querySelector("#x-auto-3-input").value;
-}
+// if (document.querySelector("#x-auto-3-input")) {
+//     filename = document.querySelector("#x-auto-3-input").value;
+// }
+
+// if (document.querySelector(".varName")) {
+//     filename = document.querySelector(".varName").value;
+// }
+
+
+// let elements = document.getElementsByClassName("varName");
+// console.log(elements);
+
+// if (elements[0]) {
+//     console.log(elements[0].value);
+//     console.log(elements[0].nodeValue);
+//     filename = elements[0].value;
+// }
 
 if (document.querySelector(".varName")) {
     filename = document.querySelector(".varName").value;
+    console.log(filename);
 }
 
-if (filename != "undefined") {
-    chrome.storage.sync.set({ 'filename': 'filename' }, function() {
-        console.log("you saved me!!");
-        console.log(result.variable_name);
-    });
+if (window.document.querySelector(".varName")) {
+    filename = window.document.querySelector(".varName");
+    console.log(filename);
 }
+
+// #general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]
+
+if (document.querySelector('[name="variable_name"]')) {
+    filename = document.querySelector('[name="variable_name"]');
+}
+
+if (window.document.querySelector('[name="variable_name"]')) {
+    filename = window.document.querySelector('[name="variable_name"]');
+}
+
+chrome.storage.sync.set({ 'filename': 'filename' }, function() {
+    console.log("you saved me!!");
+    console.log(result.variable_name);
+});
+
 
 chrome.storage.sync.get(['filename'], function(result) {
     if (result.variable_name == undefined) {

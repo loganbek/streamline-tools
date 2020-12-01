@@ -1116,3 +1116,18 @@ TODO CLEANUP:
 - [ ] remove unused permissions from manifest.json
 - [ ] maybe remove step 9 from install
 - [ ] DRY up
+
+
+TEMP NOTES
+
+```html
+<textarea id="textarea" wrap="off" onchange="editArea.execCommand(&quot;onchange&quot;);" onfocus="javascript:editArea.textareaFocused=true;" onblur="javascript:editArea.textareaFocused=false;" style="width: 492px; height: 2325px; font-family: monospace; font-size: 10pt; line-height: 15px; margin-left: 0px; margin-top: 0px;" classname="null hidden" class="null hidden" spellcheck="false"> </textarea>
+```
+
+```css
+#textarea
+```
+
+```js
+document.querySelector("#textarea")
+```

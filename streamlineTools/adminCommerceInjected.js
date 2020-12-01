@@ -71,4 +71,10 @@ function main() {
 
     let event = new CustomEvent("PassToBackground", { code });
     window.dispatchEvent(event);
+
+    // let elements = document.getElementsByClassName("varName");
+    // console.log(elements);
+    // console.log(elements[0].value);
+
+
 }
