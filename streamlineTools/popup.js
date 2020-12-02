@@ -32,6 +32,8 @@ let logsButton = document.getElementById('logs');
 // CHROME TABS
 chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     let tab = tabs[0];
+    // console.log("TAB");
+    // alert(tab);
     let url = tab.url;
     // console.log(tab.url);
     let full = url;

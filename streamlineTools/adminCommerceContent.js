@@ -207,13 +207,13 @@ if (window.document.querySelector('[name="variable_name"]')) {
     filename = window.document.querySelector('[name="variable_name"]');
 }
 
-chrome.storage.sync.set({ 'filename': 'filename' }, function() {
+chrome.storage.sync.set({ 'commerceFileName': 'commerceFileName' }, function() {
     console.log("you saved me!!");
     console.log(result.variable_name);
 });
 
 
-chrome.storage.sync.get(['filename'], function(result) {
+chrome.storage.sync.get(['commerceFileName'], function(result) {
     if (result.variable_name == undefined) {
         console.log("I am retrieved!!");
         console.log(result.variable_name);

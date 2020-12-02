@@ -1109,14 +1109,6 @@ TODO:
 - [x] add configuration subdirectory
   - ```html <span class="x-panel-header-text" id="ext-gen55">Util BML Library Function Editor: Properties &amp; Parameters</span>```
 
-TODO CLEANUP:
-
-- [ ] /html/body/table[5]/tbody/tr/td[3]/form[2]/div[1]/table/tbody/tr[3]/td[2]/text()
-- [ ] minor config text exitor highlighting issue (may need another click (or on change or on blur) event).
-- [ ] remove unused permissions from manifest.json
-- [ ] maybe remove step 9 from install
-- [ ] DRY up
-
 
 TEMP NOTES
 
@@ -1131,3 +1123,25 @@ TEMP NOTES
 ```js
 document.querySelector("#textarea")
 ```
+
+<https://stackoverflow.com/questions/4374793/accessing-current-tab-dom-object-from-a-chrome-extension>
+
+12/1+2/20
+
+- [ ] comm rules/action fn fix research
+- [ ] add util subdirectory
+- [ ] config folder different icon
+
+MEETING 12/3/20 - MSTGA - Make Streameline Tools Great Again
+Reastablishing our tool in the DOMinance hierarchy
+Grappling w/ complexity
+eloquent js - <https://eloquentjavascript.net/00_intro.html>
+
+DEMO - CONFIG
+TODO CLEANUP:
+
+- [ ] /html/body/table[5]/tbody/tr/td[3]/form[2]/div[1]/table/tbody/tr[3]/td[2]/text()
+- [ ] minor config text exitor highlighting issue (may need another click (or on change or on blur) event).
+- [ ] remove unused permissions from manifest.json
+- [ ] maybe remove step 9 from install
+- [ ] DRY up
