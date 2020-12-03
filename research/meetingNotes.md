@@ -1129,7 +1129,7 @@ document.querySelector("#textarea")
 
 - [ ] comm rules/action fn fix research
 - [ ] add util subdirectory
-- [ ] config folder different icon <- checkout if this happens on other comps
+- [x] config folder different icon <- checkout if this happens on other comps (non-issue (local mac vscode icon extension likely));
 
 SMOKE TEST CONFIG
 <https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=4954262&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true>
