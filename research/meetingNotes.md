@@ -1136,21 +1136,23 @@ SMOKE TEST CONFIG
 hideRecommendedPartsArraySet - recommendation rule
 
 - [x] unload
-  - [ ] load but had syntax highlight issue + does not auto validate
+  - [x] load but had syntax highlight issue + does not auto validate
 setProcessingSheetField - recommendation rule
 
 <https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=4889573&rule_type=2&pline_id=-1&segment_id=11&model_id=-1&fromList=true>
 constraintProductTypesWhenProductAccessories - constraint rule
 
 - [x] unload
-- [ ] load but had syntax highlight issue + does not auto validate
+- [x] load but had syntax highlight issue + does not auto validate
 
 12/3/20
-- CONFIG - auto validate HTML collection
-- COMM - actions filename
-- COMM - rules filename
 
-  MEETING 12/3/20 - MSTGA - Make Streameline Tools Great Again
+- [x] CONFIG - auto validate HTML collection - i think config is 100% complete
+- [ ] COMM - actions filename - tabs query?
+- [ ] COMM - rules filename -
+- [ ] add util subdirectory
+
+MEETING 12/3/20 - MSTGA - Make Streameline Tools Great Again
 Reastablishing our tool in the DOMinance hierarchy
 Grappling w/ complexity
 eloquent js - <https://eloquentjavascript.net/00_intro.html>
@@ -1158,8 +1160,9 @@ eloquent js - <https://eloquentjavascript.net/00_intro.html>
 DEMO - CONFIG
 TODO CLEANUP:
 
-- [ ] /html/body/table[5]/tbody/tr/td[3]/form[2]/div[1]/table/tbody/tr[3]/td[2]/text()
-- [ ] minor config text exitor highlighting issue (may need another click (or on change or on blur) event).
+- [x] minor config text exitor highlighting issue (may need another click (or on change or on blur) event).
 - [ ] remove unused permissions from manifest.json
 - [ ] maybe remove step 9 from install
 - [ ] DRY up
+
+- [ ] commerce action naming worse case scenario display name + id . bml

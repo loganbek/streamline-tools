@@ -145,7 +145,7 @@ window.addEventListener("loadCode", function(evt) {
     // console.log("parent.editArea.textarea.value = code;" + "parent.editArea.textareaFocused = true");
     textarea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
     textarea.value = code;
-    textarea.onchange();
+    // textarea.onchange(); <- seems to do nothing
     // https://stackoverflow.com/questions/2856513/how-can-i-trigger-an-onchange-event-manually
     // textarea.click;
     // textarea.execCommand("onchange");
@@ -170,7 +170,15 @@ window.addEventListener("loadCode", function(evt) {
         }
     }
     validateButton.click();
+    // updateTextArea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").reload();
+    // textarea.onchange(); <- Does nothing
+    // textarea.value; <- does nothing
+    // updateTextArea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").onblur;
+    updateTextArea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").textareaFocused = true;
+    // TODO LOGAN - parent parent click - 
 
+    // javascript:editArea.textareaFocused=true;
+    // document.querySelector("#textarea").click();
     // innerText === "Validate";
     // outerText === "Validate";
     // document.getElementById('ext-gen22').click();
