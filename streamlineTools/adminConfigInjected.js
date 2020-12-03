@@ -145,6 +145,9 @@ window.addEventListener("loadCode", function(evt) {
     // console.log("parent.editArea.textarea.value = code;" + "parent.editArea.textareaFocused = true");
     textarea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
     textarea.value = code;
+    textarea.onchange();
+    // https://stackoverflow.com/questions/2856513/how-can-i-trigger-an-onchange-event-manually
+    // textarea.click;
     // textarea.execCommand("onchange");
     // textarea.editArea.textareaFocused = true;
 
@@ -153,7 +156,23 @@ window.addEventListener("loadCode", function(evt) {
     console.log("HTML COLLECTION");
     console.log(document.getElementsByClassName('x-btn-text '));
     // document.getElementsByClassName('x-btn-text ')[16].click(); // TODO FIGURE OUT HOW TO FILTER
-    document.getElementsByClassName('x-btn-text ')[15].click(); // clicking close?
+    // document.getElementsByClassName('x-btn-text ')[15].click(); // clicking close?
+    buttonCollection = document.getElementsByClassName('x-btn-text ');
+    //Maybe loop through collection and check for "Validate"?
+    for (let item of buttonCollection) {
+        console.log(item.id);
+        console.log(item.innerHTML);
+        console.log(item.innerText);
+        console.log(item.outerText);
+        if (item.innerText === "Validate") {
+            console.log("found validate button");
+            validateButton = item;
+        }
+    }
+    validateButton.click();
+
+    // innerText === "Validate";
+    // outerText === "Validate";
     // document.getElementById('ext-gen22').click();
     // document.getElementsByClassName('bmx-spellcheck')[0].click();
     // document.getElementById('check').click();
