@@ -1109,7 +1109,6 @@ TODO:
 - [x] add configuration subdirectory
   - ```html <span class="x-panel-header-text" id="ext-gen55">Util BML Library Function Editor: Properties &amp; Parameters</span>```
 
-
 TEMP NOTES
 
 ```html
@@ -1130,9 +1129,23 @@ document.querySelector("#textarea")
 
 - [ ] comm rules/action fn fix research
 - [ ] add util subdirectory
-- [ ] config folder different icon
+- [ ] config folder different icon <- checkout if this happens on other comps
 
-MEETING 12/3/20 - MSTGA - Make Streameline Tools Great Again
+SMOKE TEST CONFIG
+<https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=4954262&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true>
+hideRecommendedPartsArraySet - recommendation rule
+
+- [x] unload
+  - [ ] load but had syntax highlight issue + does not auto validate
+setProcessingSheetField - recommendation rule
+
+<https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=4889573&rule_type=2&pline_id=-1&segment_id=11&model_id=-1&fromList=true>
+constraintProductTypesWhenProductAccessories - constraint rule
+
+- [x] unload
+- [ ] load but had syntax highlight issue + does not auto validate
+
+  MEETING 12/3/20 - MSTGA - Make Streameline Tools Great Again
 Reastablishing our tool in the DOMinance hierarchy
 Grappling w/ complexity
 eloquent js - <https://eloquentjavascript.net/00_intro.html>
