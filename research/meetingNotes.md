@@ -1145,6 +1145,11 @@ constraintProductTypesWhenProductAccessories - constraint rule
 - [x] unload
 - [ ] load but had syntax highlight issue + does not auto validate
 
+12/3/20
+- CONFIG - auto validate HTML collection
+- COMM - actions filename
+- COMM - rules filename
+
   MEETING 12/3/20 - MSTGA - Make Streameline Tools Great Again
 Reastablishing our tool in the DOMinance hierarchy
 Grappling w/ complexity

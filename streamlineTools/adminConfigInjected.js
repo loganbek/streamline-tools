@@ -152,8 +152,8 @@ window.addEventListener("loadCode", function(evt) {
     //Perform Validation
     console.log("HTML COLLECTION");
     console.log(document.getElementsByClassName('x-btn-text '));
-    document.getElementsByClassName('x-btn-text ')[16].click(); // TODO FIGURE OUT HOW TO FILTER
-    document.getElementsByClassName('x-btn-text ')[15].click();
+    // document.getElementsByClassName('x-btn-text ')[16].click(); // TODO FIGURE OUT HOW TO FILTER
+    document.getElementsByClassName('x-btn-text ')[15].click(); // clicking close?
     // document.getElementById('ext-gen22').click();
     // document.getElementsByClassName('bmx-spellcheck')[0].click();
     // document.getElementById('check').click();
