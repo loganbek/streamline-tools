@@ -176,7 +176,14 @@ window.addEventListener("loadCode", function(evt) {
     // updateTextArea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").onblur;
     updateTextArea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").textareaFocused = true;
     // TODO LOGAN - parent parent click - 
+    console.log(parent.window.document.getElementById('textarea'));
+    parent.window.document.getElementById('textarea').click();
 
+    document.body.parentNode; // Returns the <html> element
+    document.body.parentElement; // Returns the <html> element
+
+    document.documentElement.parentNode; // Returns the Document node
+    document.documentElement.parentElement;
     // javascript:editArea.textareaFocused=true;
     // document.querySelector("#textarea").click();
     // innerText === "Validate";

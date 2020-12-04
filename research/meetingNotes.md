@@ -1166,3 +1166,9 @@ TODO CLEANUP:
 - [ ] DRY up
 
 - [ ] commerce action naming worse case scenario display name + id . bml
+
+<https://gomakethings.com/climbing-up-and-down-the-dom-tree-with-vanilla-javascript/>
+
+12/4/20
+
+- [ ] config parent click trials
