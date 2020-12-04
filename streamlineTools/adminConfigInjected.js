@@ -169,21 +169,70 @@ window.addEventListener("loadCode", function(evt) {
             validateButton = item;
         }
     }
-    validateButton.click();
+    // validateButton.click();
     // updateTextArea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").reload();
     // textarea.onchange(); <- Does nothing
     // textarea.value; <- does nothing
     // updateTextArea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").onblur;
     updateTextArea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").textareaFocused = true;
     // TODO LOGAN - parent parent click - 
-    console.log(parent.window.document.getElementById('textarea'));
-    parent.window.document.getElementById('textarea').click();
+    var elem = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
+    console.log(elem);
+    var closestElem = getClosest(elem, '#editor');
+    var closestResult = getClosest(elem, "#result");
+    // var closestSelection = getClosest(elem, "#selection_field_text"); <- BREAKING
+    // var closestContentHighlight = getClosest(elem, "#content_highlight"); <- BREAKING
 
-    document.body.parentNode; // Returns the <html> element
-    document.body.parentElement; // Returns the <html> element
+    var closestContainer = getClosest(elem, "#container");
 
-    document.documentElement.parentNode; // Returns the Document node
-    document.documentElement.parentElement;
+
+    // console.log(closestContentHighlight);
+    //#container
+
+    // console.log(closestSelection);
+    console.log(closestContainer);
+    console.log(closestResult);
+    console.log(closestElem);
+    // closestElem.click;
+    // closestContentHighlight.click;
+    // closestContentHighlight.click();
+
+    // closestSelection.click;
+    // closestSelection.click();
+
+    closestContainer.click;
+    closestContainer.click();
+
+    elem.click;
+    elem.click();
+
+    // document.getElementById('elementId').dispatchEvent(new MouseEvent("click",{bubbles: true, cancellable: true}));
+
+    closestElem.dispatchEvent(new MouseEvent("click"), { bubbles: true, cancellable: true });
+    closestResult.dispatchEvent(new MouseEvent("click"), { bubbles: true, cancellable: true });
+
+    closestElem.click();
+    closestElem.click;
+
+    closestResult.click();
+    closestResult.click;
+
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    console.log("Hello");
+    sleep(2000).then(() => { console.log("World!"); });
+
+    // console.log(parent.window.document.getElementById('textarea'));
+    // parent.window.document.getElementById('textarea').click();
+
+    // document.body.parentNode; // Returns the <html> element
+    // document.body.parentElement; // Returns the <html> element
+
+    // document.documentElement.parentNode; // Returns the Document node
+    // document.documentElement.parentElement;
     // javascript:editArea.textareaFocused=true;
     // document.querySelector("#textarea").click();
     // innerText === "Validate";
@@ -191,6 +240,8 @@ window.addEventListener("loadCode", function(evt) {
     // document.getElementById('ext-gen22').click();
     // document.getElementsByClassName('bmx-spellcheck')[0].click();
     // document.getElementById('check').click();
+
+    validateButton.click();
 }, false);
 
 function main() {
@@ -209,3 +260,37 @@ function main() {
     let event = new CustomEvent("PassToBackground", { code });
     window.dispatchEvent(event);
 }
+
+/**
+ * Get the closest matching element up the DOM tree.
+ * @private
+ * @param  {Element} elem     Starting element
+ * @param  {String}  selector Selector to match against
+ * @return {Boolean|Element}  Returns null if not match found
+ */
+var getClosest = function(elem, selector) {
+
+    // Element.matches() polyfill
+    if (!Element.prototype.matches) {
+        Element.prototype.matches =
+            Element.prototype.matchesSelector ||
+            Element.prototype.mozMatchesSelector ||
+            Element.prototype.msMatchesSelector ||
+            Element.prototype.oMatchesSelector ||
+            Element.prototype.webkitMatchesSelector ||
+            function(s) {
+                var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+                    i = matches.length;
+                while (--i >= 0 && matches.item(i) !== this) {}
+                return i > -1;
+            };
+    }
+
+    // Get closest match
+    for (; elem && elem !== document; elem = elem.parentNode) {
+        if (elem.matches(selector)) return elem;
+    }
+
+    return null;
+
+};

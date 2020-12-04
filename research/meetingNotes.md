@@ -1147,7 +1147,7 @@ constraintProductTypesWhenProductAccessories - constraint rule
 
 12/3/20
 
-- [x] CONFIG - auto validate HTML collection - i think config is 100% complete
+- [x] CONFIG - auto validate HTML collection - i think config is 95% complete
 - [ ] COMM - actions filename - tabs query?
 - [ ] COMM - rules filename -
 - [ ] add util subdirectory
@@ -1172,3 +1172,9 @@ TODO CLEANUP:
 12/4/20
 
 - [ ] config parent click trials
+document.querySelector("#editor")
+/html/body/div[1]
+document.querySelector("#editor")
+
+
+12/5/20
