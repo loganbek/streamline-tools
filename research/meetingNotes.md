@@ -1178,16 +1178,16 @@ document.querySelector("#editor")
 
 MEH
 
-
 12/5/20
 
-
 - [x] DOM traversal methods
-- [ ] continued click trials
+  - [ ] what combinations can you try?
+  - [ ] 3 methods + different hooks
+    - [ ]
+- [x] continued click trials
+  - [ ] can you try from content instead?
 
-
-
-
+<https://gomakethings.com/detecting-clicks-inside-an-element-with-vanilla-javascript/>
 2021
 <https://blog.oauth.io/how-to-add-github-social-login-button/>
 

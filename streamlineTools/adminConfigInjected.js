@@ -151,31 +151,17 @@ window.addEventListener("loadCode", function(evt) {
     // textarea.execCommand("onchange");
     // textarea.editArea.textareaFocused = true;
 
-
-    //Perform Validation
-    console.log("HTML COLLECTION");
-    console.log(document.getElementsByClassName('x-btn-text '));
-    // document.getElementsByClassName('x-btn-text ')[16].click(); // TODO FIGURE OUT HOW TO FILTER
-    // document.getElementsByClassName('x-btn-text ')[15].click(); // clicking close?
-    buttonCollection = document.getElementsByClassName('x-btn-text ');
-    //Maybe loop through collection and check for "Validate"?
-    for (let item of buttonCollection) {
-        console.log(item.id);
-        console.log(item.innerHTML);
-        console.log(item.innerText);
-        console.log(item.outerText);
-        if (item.innerText === "Validate") {
-            console.log("found validate button");
-            validateButton = item;
-        }
-    }
     // validateButton.click();
     // updateTextArea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").reload();
     // textarea.onchange(); <- Does nothing
     // textarea.value; <- does nothing
     // updateTextArea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").onblur;
-    updateTextArea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").textareaFocused = true;
-    // TODO LOGAN - parent parent click - 
+    // updateTextArea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").textareaFocused = true;
+    // updateTextArea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").click();
+    // updateTextArea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").click;
+
+    document.querySelector("body")
+        // TODO LOGAN - parent parent click - 
     var elem = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
     console.log(elem);
     var closestElem = getClosest(elem, '#editor');
@@ -185,14 +171,21 @@ window.addEventListener("loadCode", function(evt) {
 
     var closestContainer = getClosest(elem, "#container");
 
-
+    var closestBody = getClosest(elem, "body");
     // console.log(closestContentHighlight);
     //#container
+
+    var closestCursor = getClosest("#cursor_pos");
 
     // console.log(closestSelection);
     console.log(closestContainer);
     console.log(closestResult);
     console.log(closestElem);
+    console.log(closestBody);
+    console.log(closestCursor);
+
+    closestCursor.click;
+    closestCursor.click();
     // closestElem.click;
     // closestContentHighlight.click;
     // closestContentHighlight.click();
@@ -200,8 +193,13 @@ window.addEventListener("loadCode", function(evt) {
     // closestSelection.click;
     // closestSelection.click();
 
+    closestBody.click;
+    closestBody.click();
+
     closestContainer.click;
     closestContainer.click();
+
+    closestContainer.focus();
 
     elem.click;
     elem.click();
@@ -240,6 +238,23 @@ window.addEventListener("loadCode", function(evt) {
     // document.getElementById('ext-gen22').click();
     // document.getElementsByClassName('bmx-spellcheck')[0].click();
     // document.getElementById('check').click();
+    //Perform Validation
+    // console.log("HTML COLLECTION");
+    // console.log(document.getElementsByClassName('x-btn-text '));
+    // document.getElementsByClassName('x-btn-text ')[16].click(); // TODO FIGURE OUT HOW TO FILTER
+    // document.getElementsByClassName('x-btn-text ')[15].click(); // clicking close?
+    buttonCollection = document.getElementsByClassName('x-btn-text ');
+    //Maybe loop through collection and check for "Validate"?
+    for (let item of buttonCollection) {
+        // console.log(item.id);
+        // console.log(item.innerHTML);
+        // console.log(item.innerText);
+        // console.log(item.outerText);
+        if (item.innerText === "Validate") {
+            console.log("found validate button");
+            validateButton = item;
+        }
+    }
 
     validateButton.click();
 }, false);
