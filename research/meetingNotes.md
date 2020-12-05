@@ -1182,6 +1182,8 @@ MEH
 12/5/20
 
 
+- [x] DOM traversal methods
+- [ ] continued click trials
 
 
 
