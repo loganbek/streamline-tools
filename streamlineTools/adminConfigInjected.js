@@ -164,6 +164,12 @@ window.addEventListener("loadCode", function(evt) {
         // TODO LOGAN - parent parent click - 
     var elem = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
     console.log(elem);
+
+    elem.click;
+    elem.click();
+
+    elem.focus();
+
     var closestElem = getClosest(elem, '#editor');
     var closestResult = getClosest(elem, "#result");
     // var closestSelection = getClosest(elem, "#selection_field_text"); <- BREAKING
@@ -175,17 +181,17 @@ window.addEventListener("loadCode", function(evt) {
     // console.log(closestContentHighlight);
     //#container
 
-    var closestCursor = getClosest("#cursor_pos");
+    // var closestCursor = getClosest("#cursor_pos"); // errors
 
     // console.log(closestSelection);
     console.log(closestContainer);
     console.log(closestResult);
     console.log(closestElem);
     console.log(closestBody);
-    console.log(closestCursor);
+    // console.log(closestCursor);
 
-    closestCursor.click;
-    closestCursor.click();
+    // closestCursor.click;
+    // closestCursor.click();
     // closestElem.click;
     // closestContentHighlight.click;
     // closestContentHighlight.click();
@@ -214,7 +220,6 @@ window.addEventListener("loadCode", function(evt) {
 
     closestResult.click();
     closestResult.click;
-
 
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
