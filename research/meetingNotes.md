@@ -1199,16 +1199,28 @@ Maybe useful for comm fn
   something w/ cursor position or selection?
 
 <https://gomakethings.com/detecting-clicks-inside-an-element-with-vanilla-javascript/>
-2021
-<https://blog.oauth.io/how-to-add-github-social-login-button/>
-
-<https://eloquentjavascript.net/03_functions.html>
-
-
-- [ ] <https://hackernoon.com/creating-popup-chrome-extensions-that-interact-with-the-dom-27b943978daf>
-
 
 12/8/20
 
 - look into mouse positioning b4 click
 - learn about click + event propogation
+- related target
+  <https://www.w3schools.com/jsref/event_relatedtarget.asp>
+- [ ] <https://hackernoon.com/creating-popup-chrome-extensions-that-interact-with-the-dom-27b943978daf>
+- z index
+- maybe jquery is worht a shot
+  - <https://stackoverflow.com/questions/29811284/get-click-position-on-the-window>
+  - <https://javascript.info/coordinates>
+
+  - <https://css-tricks.com/simulating-mouse-movement/>
+
+2021
+<https://blog.oauth.io/how-to-add-github-social-login-button/>
+<https://stackoverflow.com/questions/7237894/how-do-i-make-a-signup-with-github-button-like-the-one-on-coderwall>
+<https://eloquentjavascript.net/03_functions.html>
+  
+  ```html
+  <a class="btn btn-block btn-social btn-github">
+    <span class="fa fa-github"></span> Sign in with Github
+  </a>
+  ```
