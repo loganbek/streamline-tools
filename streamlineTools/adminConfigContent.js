@@ -138,6 +138,21 @@ chrome.runtime.onMessage.addListener(
             var closestBody = getClosest(elem, "body");
             // console.log(closestContentHighlight);
             //#container
+            // document.querySelector("#editor").click;
+            // document.querySelector("#editor").click();
+
+            var x = event.clientX; // Get the horizontal coordinate
+            var y = event.clientY; // Get the vertical coordinate
+            var coor = "X coords: " + x + ", Y coords: " + y;
+            console.log(coor);
+
+            var cX = event.clientX;
+            var sX = event.screenX;
+            var cY = event.clientY;
+            var sY = event.screenY;
+            var coords1 = "client - X: " + cX + ", Y coords: " + cY;
+            var coords2 = "screen - X: " + sX + ", Y coords: " + sY;
+
 
             // var closestCursor = getClosest("#cursor_pos"); // errors
 

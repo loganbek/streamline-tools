@@ -1185,10 +1185,30 @@ MEH
   - [ ] 3 methods + different hooks
     - [ ]
 - [x] continued click trials
-  - [ ] can you try from content instead?
+  - [ ] can you try from content instead? - MEH
+
+12/6+7/20
+
+let objectA = {a: 1, b: 2};
+Object.assign(objectA, {b: 3, c: 4});
+console.log(objectA);
+// → {a: 1, b: 3, c: 4}
+
+Maybe useful for comm fn
+
+  something w/ cursor position or selection?
 
 <https://gomakethings.com/detecting-clicks-inside-an-element-with-vanilla-javascript/>
 2021
 <https://blog.oauth.io/how-to-add-github-social-login-button/>
 
 <https://eloquentjavascript.net/03_functions.html>
+
+
+- [ ] <https://hackernoon.com/creating-popup-chrome-extensions-that-interact-with-the-dom-27b943978daf>
+
+
+12/8/20
+
+- look into mouse positioning b4 click
+- learn about click + event propogation
