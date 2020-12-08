@@ -1214,6 +1214,19 @@ Maybe useful for comm fn
 
   - <https://css-tricks.com/simulating-mouse-movement/>
 
+
+DEVMCNICHOLS CPQ VERSION
+Version: 20B Patch 4
+Copyright © 2014, 2020, Oracle and/or its affiliates. All rights reserved.
+Confidential & Proprietary
+Patent: U.S. 8,578,265 B2. Additional Patents Pending.
+Release Date:	11/04/2020
+Build Date:	11/04/2020
+Build Number:	Release_R2020_B_Patch4 1104 09:58
+
+
+  12/9/20
+
 2021
 <https://blog.oauth.io/how-to-add-github-social-login-button/>
 <https://stackoverflow.com/questions/7237894/how-do-i-make-a-signup-with-github-button-like-the-one-on-coderwall>
@@ -1224,3 +1237,5 @@ Maybe useful for comm fn
     <span class="fa fa-github"></span> Sign in with Github
   </a>
   ```
+
+
