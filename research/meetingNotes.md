@@ -1227,6 +1227,20 @@ Build Number:	Release_R2020_B_Patch4 1104 09:58
 
   12/9/20
 
+  - another round of config trials
+    - look into mouse positioning b4 click
+- learn about click + event propogation
+- related target
+  <https://www.w3schools.com/jsref/event_relatedtarget.asp>
+- [ ] <https://hackernoon.com/creating-popup-chrome-extensions-that-interact-with-the-dom-27b943978daf>
+- z index
+- maybe jquery is worht a shot
+  - <https://stackoverflow.com/questions/29811284/get-click-position-on-the-window>
+  - <https://javascript.info/coordinates>
+
+  - <https://css-tricks.com/simulating-mouse-movement/>
+
+
 2021
 <https://blog.oauth.io/how-to-add-github-social-login-button/>
 <https://stackoverflow.com/questions/7237894/how-do-i-make-a-signup-with-github-button-like-the-one-on-coderwall>
@@ -1238,4 +1252,16 @@ Build Number:	Release_R2020_B_Patch4 1104 09:58
   </a>
   ```
 
+<https://stackoverflow.com/questions/65091074/jquery-how-to-change-one-click-to-two-clicks-in-specific-case>
 
+COMMAND LINE MERGE
+Step 1: From your project repository, bring in the changes and test.
+
+git fetch origin
+git checkout -b v0.7.0-alpha origin/v0.7.0-alpha
+git merge master
+Step 2: Merge the changes and update on GitHub.
+
+git checkout master
+git merge --no-ff v0.7.0-alpha
+git push origin master
