@@ -1238,7 +1238,33 @@ Build Number:	Release_R2020_B_Patch4 1104 09:58
   - <https://stackoverflow.com/questions/29811284/get-click-position-on-the-window>
   - <https://javascript.info/coordinates>
 
-  - <https://css-tricks.com/simulating-mouse-movement/>
+  - <https://css-tricks.com/simulating-mouse-movement/>\
+
+
+recreate document.querySelector("#container")?
+  - build util
+
+/html/body/div[1]/div[3]/div[2]/textarea
+
+<https://stackoverflow.com/questions/10596417/is-there-a-way-to-get-element-by-xpath-using-javascript-in-selenium-webdriver>
+
+
+```js
+function getElementByXpath(path) {
+  return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+}
+```
+
+console.log( getElementByXpath("//html[1]/body[1]/div[1]") );
+
+
+  textarea#textarea.null.hidden
+HTMLTextAreaElement
+HTMLElement
+Element
+Node
+EventTarget
+Object
 
 
 2021
@@ -1265,3 +1291,7 @@ Step 2: Merge the changes and update on GitHub.
 git checkout master
 git merge --no-ff v0.7.0-alpha
 git push origin master
+
+12/12/20
+- config work
+- commerce work
