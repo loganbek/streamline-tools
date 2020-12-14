@@ -1292,6 +1292,25 @@ git checkout master
 git merge --no-ff v0.7.0-alpha
 git push origin master
 
-12/12/20
+12/12 + 13/20
 - config work
 - commerce work
+
+- look into mouse positioning b4 click
+- learn about click + event propogation
+- related target
+  <https://www.w3schools.com/jsref/event_relatedtarget.asp>
+- [ ] <https://hackernoon.com/creating-popup-chrome-extensions-that-interact-with-the-dom-27b943978daf>
+- z index
+- maybe jquery is worht a shot
+  - <https://stackoverflow.com/questions/29811284/get-click-position-on-the-window>
+  - <https://javascript.info/coordinates>
+
+  - <https://css-tricks.com/simulating-mouse-movement/>
+
+updated desktop chrome - version
+Google Chrome is up to date
+Version 87.0.4280.88 (Official Build) (x86_64)
+
+
+Meeting 12/17/20
