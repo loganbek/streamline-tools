@@ -1293,6 +1293,7 @@ git merge --no-ff v0.7.0-alpha
 git push origin master
 
 12/12 + 13/20
+
 - config work
 - commerce work
 
@@ -1308,9 +1309,19 @@ git push origin master
 
   - <https://css-tricks.com/simulating-mouse-movement/>
 
+maybe re create this element
+
+```
+<div id="selection_field" class="" style="display: block; font-family: monospace; font-size: 10pt; line-height: 15px; top: 15px; width: 2468px;"><span></span><strong></strong><span>
+            // </span></div>
+```
+
 updated desktop chrome - version
 Google Chrome is up to date
 Version 87.0.4280.88 (Official Build) (x86_64)
 
+- check alert - injected.js - alert("Please Check - Use Test Script."); x3 on - email notification generator
+- test script - test
 
 Meeting 12/17/20
+

@@ -141,17 +141,20 @@ chrome.runtime.onMessage.addListener(
             // document.querySelector("#editor").click;
             // document.querySelector("#editor").click();
 
-            var x = event.clientX; // Get the horizontal coordinate
-            var y = event.clientY; // Get the vertical coordinate
-            var coor = "X coords: " + x + ", Y coords: " + y;
-            console.log(coor);
+            // var x = event.clientX; // Get the horizontal coordinate
+            // var y = event.clientY; // Get the vertical coordinate
+            // var coor = "X coords: " + x + ", Y coords: " + y;
+            // console.log(coor);
 
-            var cX = event.clientX;
-            var sX = event.screenX;
-            var cY = event.clientY;
-            var sY = event.screenY;
-            var coords1 = "client - X: " + cX + ", Y coords: " + cY;
-            var coords2 = "screen - X: " + sX + ", Y coords: " + sY;
+            // var cX = event.clientX;
+            // var sX = event.screenX;
+            // var cY = event.clientY;
+            // var sY = event.screenY;
+            // var coords1 = "client - X: " + cX + ", Y coords: " + cY;
+            // var coords2 = "screen - X: " + sX + ", Y coords: " + sY;
+
+            //             <div id="selection_field" class="" style="display: block; font-family: monospace; font-size: 10pt; line-height: 15px; top: 15px; width: 2468px;"><span></span><strong></strong><span>
+            // </span></div>
 
 
             // var closestCursor = getClosest("#cursor_pos"); // errors
