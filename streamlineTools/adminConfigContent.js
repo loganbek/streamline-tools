@@ -123,19 +123,30 @@ chrome.runtime.onMessage.addListener(
             var elem = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
             console.log(elem);
 
-            elem.click;
-            elem.click();
+            // var elem = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
+            // console.log(elem);
 
-            elem.focus();
+            // $elem.trigger('click');
+            // you do a $('#textid').focus();
 
-            var closestElem = getClosest(elem, '#editor');
-            var closestResult = getClosest(elem, "#result");
-            // var closestSelection = getClosest(elem, "#selection_field_text"); <- BREAKING
-            // var closestContentHighlight = getClosest(elem, "#content_highlight"); <- BREAKING
+            // var iContentBody = $(".iframe-content").contents().find("body");
+            // console.log("iContentBody");
+            // console.log(iContentBody);
+            // var endLetterSequenceNo = iContentBody.find(".iframe-content p").text();
 
-            var closestContainer = getClosest(elem, "#container");
+            // elem.click;
+            // elem.click();
 
-            var closestBody = getClosest(elem, "body");
+            // elem.focus();
+
+            // var closestElem = getClosest(elem, '#editor');
+            // var closestResult = getClosest(elem, "#result");
+            // // var closestSelection = getClosest(elem, "#selection_field_text"); <- BREAKING
+            // // var closestContentHighlight = getClosest(elem, "#content_highlight"); <- BREAKING
+
+            // var closestContainer = getClosest(elem, "#container");
+
+            // var closestBody = getClosest(elem, "body");
             // console.log(closestContentHighlight);
             //#container
             // document.querySelector("#editor").click;
@@ -160,10 +171,10 @@ chrome.runtime.onMessage.addListener(
             // var closestCursor = getClosest("#cursor_pos"); // errors
 
             // console.log(closestSelection);
-            console.log(closestContainer);
-            console.log(closestResult);
-            console.log(closestElem);
-            console.log(closestBody);
+            // console.log(closestContainer);
+            // console.log(closestResult);
+            // console.log(closestElem);
+            // console.log(closestBody);
             // console.log(closestCursor);
 
             // closestCursor.click;
@@ -175,27 +186,27 @@ chrome.runtime.onMessage.addListener(
             // closestSelection.click;
             // closestSelection.click();
 
-            closestBody.click;
-            closestBody.click();
+            // closestBody.click;
+            // closestBody.click();
 
-            closestContainer.click;
-            closestContainer.click();
+            // closestContainer.click;
+            // closestContainer.click();
 
-            closestContainer.focus();
+            // closestContainer.focus();
 
-            elem.click;
-            elem.click();
+            // elem.click;
+            // elem.click();
 
             // document.getElementById('elementId').dispatchEvent(new MouseEvent("click",{bubbles: true, cancellable: true}));
 
-            closestElem.dispatchEvent(new MouseEvent("click"), { bubbles: true, cancellable: true });
-            closestResult.dispatchEvent(new MouseEvent("click"), { bubbles: true, cancellable: true });
+            // closestElem.dispatchEvent(new MouseEvent("click"), { bubbles: true, cancellable: true });
+            // closestResult.dispatchEvent(new MouseEvent("click"), { bubbles: true, cancellable: true });
 
-            closestElem.click();
-            closestElem.click;
+            // closestElem.click();
+            // closestElem.click;
 
-            closestResult.click();
-            closestResult.click;
+            // closestResult.click();
+            // closestResult.click;
         } else if (request.greeting == "loadTest") {
             console.log(request.code);
             let loadTestEvent = new CustomEvent("loadTestCode", { detail: request.code });
