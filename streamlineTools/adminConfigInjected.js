@@ -145,6 +145,9 @@ window.addEventListener("loadCode", function(evt) {
     // console.log("parent.editArea.textarea.value = code;" + "parent.editArea.textareaFocused = true");
     textarea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
     textarea.value = code;
+
+    textarea.parent.click;
+    textarea.parent.click();
     // textarea.onchange(); <- seems to do nothing
     // https://stackoverflow.com/questions/2856513/how-can-i-trigger-an-onchange-event-manually
     // textarea.click;
