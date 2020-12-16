@@ -264,7 +264,7 @@ if (document.querySelector("#x-auto-3-input")) {
 
 chrome.storage.sync.set({ 'filename': 'filename' }, function() {
     console.log("you saved me!!");
-    console.log(result.variable_name);
+    // console.log(result.variable_name);
 });
 
 chrome.storage.sync.get(['filename'], function(result) {
