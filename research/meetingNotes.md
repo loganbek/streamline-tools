@@ -1325,6 +1325,10 @@ Version 87.0.4280.88 (Official Build) (x86_64)
 
 - config grind
 
+- [x] config error - Error handling response: ReferenceError: result is not defined
+    at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/adminConfigContent.js:267:17
+adminConfigContent.js:272 
+
 Visual Studio Code Update
 Version: 1.52.0
 Commit: 940b5f4bb5fa47866a54529ed759d95d09ee80be
