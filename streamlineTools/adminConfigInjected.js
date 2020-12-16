@@ -74,7 +74,7 @@ window.addEventListener('unloadCode', function(evt) {
     // .editArea.textarea.value
     // .div[1].div[3].div[2].textArea
     console.log("CONTENT WINDOW");
-    console.log(document.getElementsByTagName("iframe")[1].contentWindow);
+    console.log(document.getElementsByTagName("iframe")[1].contentWindow.window);
     console.log(document.getElementsByTagName("iframe")[1].contentWindow.innerHTML);
     console.log(document.getElementsByTagName("iframe")[1].contentWindow.html);
     // document.querySelector("#textarea")
@@ -148,6 +148,20 @@ window.addEventListener("loadCode", function(evt) {
 
     // textarea.parent.click;
     // textarea.parent.click();
+
+    // document.getElementById('some_frame_id').contentWindow.location.reload();
+
+    // console.log(window.frames("ConfigRuleEditor"));\
+    // var frame = window.parent.frames["searchoutput"];
+    // var frameDocument = (frame.contentWindow.document || frame.contentDocument);
+    // frameDocument.open("text/html");
+    // window.frames["frame_name"].documen
+
+
+    console.log("CALLED RELOAD");
+    // textarea.reload(); <- invalid
+    // document.getElementsByTagName("iframe")[1].contentDocument.location.reload(); // <-dissapears
+    // document.getElementsByTagName('iframe')[1].style.webkitTransform = 'scale(1)'; <- no effect
 
     // console.log("textarea.parent.document");
     // console.log(textarea.parent.document);

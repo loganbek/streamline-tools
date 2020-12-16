@@ -1320,8 +1320,10 @@ updated desktop chrome - version
 Google Chrome is up to date
 Version 87.0.4280.88 (Official Build) (x86_64)
 
-- check alert - injected.js - alert("Please Check - Use Test Script."); x3 on - email notification generator
+- [x] check alert - injected.js - alert("Please Check - Use Test Script."); x3 on - email notification generator
 - test script - test
+
+- config grind
 
 Meeting 12/17/20
 
