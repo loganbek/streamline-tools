@@ -1325,5 +1325,15 @@ Version 87.0.4280.88 (Official Build) (x86_64)
 
 - config grind
 
+Visual Studio Code Update
+Version: 1.52.0
+Commit: 940b5f4bb5fa47866a54529ed759d95d09ee80be
+Date: 2020-12-10T22:46:53.673Z
+Electron: 9.3.5
+Chrome: 83.0.4103.122
+Node.js: 12.14.1
+V8: 8.3.110.13-electron.0
+OS: Darwin x64 19.6.0
+
 Meeting 12/17/20
 
