@@ -146,6 +146,7 @@ window.addEventListener("loadCode", function(evt) {
     textarea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
     textarea.value = code;
 
+
     // textarea.parent.click;
     // textarea.parent.click();
 
@@ -192,6 +193,20 @@ window.addEventListener("loadCode", function(evt) {
     // TODO LOGAN - parent parent click - 
     var elem = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
     console.log(elem);
+
+    // SIMULATE CLICK TRIALS - WIP
+    console.log("simulateClickTrials");
+    // simulateClick(textarea);
+    // simulateClick(elem);
+    simulateClick(textarea.parent.elem);
+
+    //SIMULATE CLICK W/ INTERVAL
+    // var interval = setInterval(function() {
+
+    //     document.querySelector('.fp-controlArrow.fp-next').click();
+
+
+    //     }, 5000);
 
     // textarea.parent.click;
     // textarea.parent.click();

@@ -1344,7 +1344,13 @@ Meeting 12/17/20
 - [ ] parent.area
 - [ ] maybe key down
   - var keyboardEvent = new KeyboardEvent('keypress', {bubbles:true}); 
-Object.defineProperty(keyboardEvent, 'charCode', {get:function(){return this.charCodeVal;}}); 
+Object.defineProperty(keyboardEvent, 'charCode', {get:function(){return this.charCodeVal;}});
 - keyboardEvent.charCodeVal = [your char code];
 - document.body.dispatchEvent(keyboardEvent);
-- https://stackoverflow.com/questions/1897333/firing-a-keyboard-event-on-chrome/23812767#23812767
+- <https://stackoverflow.com/questions/1897333/firing-a-keyboard-event-on-chrome/23812767#23812767>
+- maybe remove null/hidden class from classList - .remove("foo");
+- <https://gomakethings.com/how-to-simulate-a-click-event-with-javascript/>
+
+- [x] simulate click trial; NOGO
+- [ ] simulate click trials w/ interval;
+- [ ] simulate click trials w/ validate interval;
