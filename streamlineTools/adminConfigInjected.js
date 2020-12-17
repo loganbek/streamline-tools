@@ -485,3 +485,21 @@ var getParentsUntil = function(elem, parent, selector) {
 // var parentsUntilByFilter = getParentsUntil(elem, '.some-class', '[data-something]');
 // var allParentsUntil = getParentsUntil(elem);
 // var allParentsExcludingElem = getParentsUntil(elem.parentNode);
+
+// https://gomakethings.com/how-to-simulate-a-click-event-with-javascript/
+
+/**
+ * Simulate a click event.
+ * @public
+ * @param {Element} elem  the element to simulate a click on
+ */
+var simulateClick = function(elem) {
+    // Create our event (with options)
+    var evt = new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window
+    });
+    // If cancelled, don't dispatch our event
+    var canceled = !elem.dispatchEvent(evt);
+};
