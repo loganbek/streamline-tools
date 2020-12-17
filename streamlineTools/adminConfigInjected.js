@@ -195,18 +195,19 @@ window.addEventListener("loadCode", function(evt) {
     console.log(elem);
 
     // SIMULATE CLICK TRIALS - WIP
-    console.log("simulateClickTrials");
+    // console.log("simulateClickTrials");
     // simulateClick(textarea);
     // simulateClick(elem);
-    simulateClick(textarea.parent.elem);
+
+    // windowHook = window;
+    // simulateClick(windowHook);
+    // simulateClick(window);
+    // simulateClick(textarea.parent.elem);
 
     //SIMULATE CLICK W/ INTERVAL
     // var interval = setInterval(function() {
-
-    //     document.querySelector('.fp-controlArrow.fp-next').click();
-
-
-    //     }, 5000);
+    //     // document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").click();
+    // }, 5000);
 
     // textarea.parent.click;
     // textarea.parent.click();
@@ -338,7 +339,7 @@ window.addEventListener("loadCode", function(evt) {
         }
     }
 
-    validateButton.click();
+    // validateButton.click();
 }, false);
 
 function main() {

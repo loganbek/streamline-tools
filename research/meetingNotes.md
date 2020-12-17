@@ -1352,5 +1352,6 @@ Object.defineProperty(keyboardEvent, 'charCode', {get:function(){return this.cha
 - <https://gomakethings.com/how-to-simulate-a-click-event-with-javascript/>
 
 - [x] simulate click trial; NOGO
-- [ ] simulate click trials w/ interval;
+- [x] simulate click trials w/ interval;
+- [x] simulate click trials w/o validate;
 - [ ] simulate click trials w/ validate interval;
