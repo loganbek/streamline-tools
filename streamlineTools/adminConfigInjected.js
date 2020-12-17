@@ -157,8 +157,16 @@ window.addEventListener("loadCode", function(evt) {
     // frameDocument.open("text/html");
     // window.frames["frame_name"].documen
 
+    //     var doc;
+    // if (iframe.document)
+    //     iframe.doc = iframe.document;
+    // else if (iframe.contentDocument)
+    //     iframe.doc = iframe.contentDocument;
+    // else if (iframe.contentWindow)
+    //     iframe.doc = iframe.contentWindow.document;
 
-    console.log("CALLED RELOAD");
+
+    // console.log("CALLED RELOAD");
     // textarea.reload(); <- invalid
     // document.getElementsByTagName("iframe")[1].contentDocument.location.reload(); // <-dissapears
     // document.getElementsByTagName('iframe')[1].style.webkitTransform = 'scale(1)'; <- no effect

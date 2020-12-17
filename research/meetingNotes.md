@@ -1341,3 +1341,10 @@ OS: Darwin x64 19.6.0
 
 Meeting 12/17/20
 
+- [ ] parent.area
+- [ ] maybe key down
+  - var keyboardEvent = new KeyboardEvent('keypress', {bubbles:true}); 
+Object.defineProperty(keyboardEvent, 'charCode', {get:function(){return this.charCodeVal;}}); 
+- keyboardEvent.charCodeVal = [your char code];
+- document.body.dispatchEvent(keyboardEvent);
+- https://stackoverflow.com/questions/1897333/firing-a-keyboard-event-on-chrome/23812767#23812767
