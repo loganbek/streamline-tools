@@ -1351,7 +1351,17 @@ Object.defineProperty(keyboardEvent, 'charCode', {get:function(){return this.cha
 - maybe remove null/hidden class from classList - .remove("foo");
 - <https://gomakethings.com/how-to-simulate-a-click-event-with-javascript/>
 
+INJECTED
+
 - [x] simulate click trial; NOGO
 - [x] simulate click trials w/ interval;
 - [x] simulate click trials w/o validate;
+- [ ] simulate click trials w/ validate interval;
+- [ ]
+
+CONTENT
+
+- [ ] simulate click trial; NOGO
+- [ ] simulate click trials w/ interval;
+- [ ] simulate click trials w/o validate;
 - [ ] simulate click trials w/ validate interval;
