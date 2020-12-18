@@ -123,6 +123,31 @@ chrome.runtime.onMessage.addListener(
             var elem = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
             console.log(elem);
 
+            // WIP: LOAD TRIALS
+            // console.log("parent.editArea.textarea.value = code;" + "parent.editArea.textareaFocused = true");
+            textarea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
+            // textarea.value = code;
+
+            // SIMULATE CLICK TRIALS - WIP
+            console.log("simulateClickTrials");
+            simulateClick(textarea);
+            // simulateClick(elem);
+
+            // textarea.onchange();
+
+            // windowHook = window;
+            // simulateClick(windowHook);
+            // simulateClick(window);
+            // simulateClick(textarea.parent.elem);
+
+            //SIMULATE CLICK W/ INTERVAL
+            // var interval = setInterval(function() {
+            //     // document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").click();
+            // }, 5000);
+
+            // textarea.parent.click;
+            // textarea.parent.click();
+
             // var elem = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
             // console.log(elem);
 

@@ -146,6 +146,28 @@ window.addEventListener("loadCode", function(evt) {
     textarea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
     textarea.value = code;
 
+    // TEXT AREA ONCHANGE
+    console.log("TEXTAREA ONCHANGE()");
+    textarea.onchange();
+
+    // #x-auto-149
+
+    // 
+
+    // #x-auto-154 > div.x-window-tl
+    // divXWindow = document.getElementsByClassName("div.x-window-tl");
+    // console.log(divXWindow);
+
+    console.log("x-toolbar-right");
+    divXWindow = document.getElementsByClassName("x-toolbar-right");
+    console.log(divXWindow);
+
+    for (let item of divXWindow) {
+        console.log(item);
+        item.click();
+    }
+    // document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
+
 
     // textarea.parent.click;
     // textarea.parent.click();
@@ -212,8 +234,8 @@ window.addEventListener("loadCode", function(evt) {
     // textarea.parent.click;
     // textarea.parent.click();
 
-    console.log("textarea.parent");
-    console.log(textarea.parent);
+    // console.log("textarea.parent");
+    // console.log(textarea.parent);
 
     // console.log("textarea.parent.document");
     // console.log(textarea.parent.document);
@@ -221,8 +243,8 @@ window.addEventListener("loadCode", function(evt) {
     // console.log("elem.parent.click");
     // elem.parent.click;
 
-    console.log("elem.parent");
-    console.log(elem.parent);
+    // console.log("elem.parent");
+    // console.log(elem.parent);
 
     // window.click;
     // window.click();
