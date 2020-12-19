@@ -1367,3 +1367,7 @@ CONTENT
 - [ ] simulate click trials w/ validate interval;
 
 - loadcode listener?
+
+jquery trigger?
+
+- 
