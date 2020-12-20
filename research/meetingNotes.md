@@ -1424,4 +1424,22 @@ document.getElementsByTagName('head')[0].appendChild(jq);
 jQuery.noConflict();
 ```
 
+```js
+$('textarea').last().click();
+
+$('textarea').last().on( "click", function() {
+  alert( $( this ).text() );
+});
+
+$( "#textrea" ).last().trigger( "click" );
+
+```
+
 12/21/20
+
+Meeting 12/24/20
+
+Status Update
+Publishing to Chrome Webstore
+<https://developer.chrome.com/docs/webstore/publish/>
+Pay the $5 registration fee
