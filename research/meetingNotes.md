@@ -1380,3 +1380,36 @@ jquery trigger handler - <https://api.jquery.com/triggerhandler/>
 <https://stackoverflow.com/questions/20928915/how-to-get-jquery-triggerclick-to-initiate-a-mouse-click>
 <https://stackoverflow.com/questions/3979041/jquery-triggerclick/54404180>
 <https://stackoverflow.com/questions/11486630/jquery-trigger-click-vs-click/11486648>
+
+```js
+$(".btn, .btn2").on('click',function () {
+    $($(".a")[0]).trigger('click'); // first element
+});
+
+$(".a").on('click', function (e){
+    alert(e.target);
+});​
+```
+
+```js
+$( "#foo" ).on( "click", function() {
+  alert( $( this ).text() );
+});
+$( "#foo" ).trigger( "click" );
+```
+
+```js
+$( "#foo" ).on( "custom", function( event, param1, param2 ) {
+  alert( param1 + "\n" + param2 );
+});
+$( "#foo").trigger( "custom", [ "Custom", "Event" ] );
+```
+
+TRIGGER TRIALS
+
+```js
+$( "#textrea" ).on( "click", function() {
+  alert( $( this ).text() );
+});
+$( "#textrea" ).trigger( "click" );
+```
