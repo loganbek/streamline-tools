@@ -1442,4 +1442,5 @@ Meeting 12/24/20
 Status Update
 Publishing to Chrome Webstore
 <https://developer.chrome.com/docs/webstore/publish/>
-Pay the $5 registration fee
+Pay the $5 registration fee 2 Register as Chrome Web Store Developer
+<https://chrome.google.com/webstore/devconsole/register>
