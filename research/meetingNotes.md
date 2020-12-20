@@ -1370,4 +1370,13 @@ CONTENT
 
 jquery trigger?
 
-- 
+- post meet
+- work config til monday and then switch to comm
+
+12/20/20
+
+jquery trigger - <https://api.jquery.com/trigger/>
+jquery trigger handler - <https://api.jquery.com/triggerhandler/>
+<https://stackoverflow.com/questions/20928915/how-to-get-jquery-triggerclick-to-initiate-a-mouse-click>
+<https://stackoverflow.com/questions/3979041/jquery-triggerclick/54404180>
+<https://stackoverflow.com/questions/11486630/jquery-trigger-click-vs-click/11486648>
