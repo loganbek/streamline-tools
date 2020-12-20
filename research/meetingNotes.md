@@ -1381,6 +1381,8 @@ jquery trigger handler - <https://api.jquery.com/triggerhandler/>
 <https://stackoverflow.com/questions/3979041/jquery-triggerclick/54404180>
 <https://stackoverflow.com/questions/11486630/jquery-trigger-click-vs-click/11486648>
 
+this.find jquery
+
 ```js
 $(".btn, .btn2").on('click',function () {
     $($(".a")[0]).trigger('click'); // first element
@@ -1413,3 +1415,13 @@ $( "#textrea" ).on( "click", function() {
 });
 $( "#textrea" ).trigger( "click" );
 ```
+
+```js
+var jq = document.createElement('script');
+jq.src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js";
+document.getElementsByTagName('head')[0].appendChild(jq);
+// ... give time for script to load, then type (or see below for non wait option)
+jQuery.noConflict();
+```
+
+12/21/20
