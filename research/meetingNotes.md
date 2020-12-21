@@ -1214,7 +1214,6 @@ Maybe useful for comm fn
 
   - <https://css-tricks.com/simulating-mouse-movement/>
 
-
 DEVMCNICHOLS CPQ VERSION
 Version: 20B Patch 4
 Copyright © 2014, 2020, Oracle and/or its affiliates. All rights reserved.
@@ -1436,6 +1435,12 @@ $( "#textrea" ).last().trigger( "click" );
 ```
 
 12/21/20
+
+commerce rules trial
+
+```js
+document.getElementsByName('varName')[0].value
+```
 
 Meeting 12/24/20
 

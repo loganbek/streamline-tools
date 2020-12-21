@@ -23,6 +23,11 @@ chrome.runtime.onInstalled.addListener(function() {
     });
 });
 
+// if (document.getElementsByName('varName')[0]) {
+//     filename = document.getElementsByName('varName')[0].value;
+//     alert(filename);
+// }
+
 // var rule1 = {
 //     conditions: [
 //         new chrome.declarativeContent.PageStateMatcher({

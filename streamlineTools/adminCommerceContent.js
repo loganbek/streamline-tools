@@ -199,17 +199,24 @@ if (window.document.querySelector(".varName")) {
 
 // #general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]
 
-if (document.querySelector('[name="variable_name"]')) {
-    filename = document.querySelector('[name="variable_name"]');
-}
+// WIP COMMERCE FN TRIALS
 
-if (window.document.querySelector('[name="variable_name"]')) {
-    filename = window.document.querySelector('[name="variable_name"]');
-}
+// if (document.getElementsByName('varName')[0]) {
+filename = document.getElementsByName('varName')[0].value;
+console.log(filename);
+// }
 
-chrome.storage.sync.set({ 'commerceFileName': 'commerceFileName' }, function() {
+// if (document.querySelector('[name="variable_name"]')) {
+//     filename = document.querySelector('[name="variable_name"]');
+// }
+
+// if (window.document.querySelector('[name="variable_name"]')) {
+//     filename = window.document.querySelector('[name="variable_name"]');
+// }
+
+chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
     console.log("you saved me!!");
-    console.log(result.variable_name);
+    // console.log(result.variable_name);
 });
 
 
