@@ -1438,15 +1438,65 @@ commerce rules trial
 document.getElementsByName('varName')[0].value
 ```
 
-12/22/20
-
 - [ ] try chrome local instead of sync
+
+```JS
+chrome.storage.local.set({key: value}, function() {
+  console.log('Value is set to ' + value);
+});
+
+chrome.storage.local.get(['key'], function(result) {
+  console.log('Value currently is ' + result.key);
+});
+```
+
 - [ ] background script
+  - <https://developer.chrome.com/docs/extensions/reference/runtime/#method-sendMessage>
+- debugging
+  <https://stackoverflow.com/questions/3829150/google-chrome-extension-console-log-from-background-page>
+  <https://developer.chrome.com/docs/extensions/mv2/messaging/>
+
+```js
+// REQUEST FROM CONTENT SCRIPT
+chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
+  console.log(response.farewell);
+});
+```
+
+```js
+// EXTENSION TO CONTENT SCRIPT
+chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello"}, function(response) {
+    console.log(response.farewell);
+  });
+});
+```
+
+```js
+//RECEIVING END
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    console.log(sender.tab ?
+                "from a content script:" + sender.tab.url :
+                "from the extension");
+    if (request.greeting == "hello")
+      sendResponse({farewell: "goodbye"});
+  }
+);
+```
 
 Meeting 12/24/20
 
 Status Update
-Publishing to Chrome Webstore
+
+###### Publishing to Chrome Webstore
+
 <https://developer.chrome.com/docs/webstore/publish/>
 Pay the $5 registration fee 2 Register as Chrome Web Store Developer
 <https://chrome.google.com/webstore/devconsole/register>
+
+##### Manifest V3
+
+<https://developer.chrome.com/docs/extensions/mv3/intro/>
+
+- Published on Monday, November 9, 2020
