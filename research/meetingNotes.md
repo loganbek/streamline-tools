@@ -1219,15 +1219,14 @@ Version: 20B Patch 4
 Copyright © 2014, 2020, Oracle and/or its affiliates. All rights reserved.
 Confidential & Proprietary
 Patent: U.S. 8,578,265 B2. Additional Patents Pending.
-Release Date:	11/04/2020
-Build Date:	11/04/2020
-Build Number:	Release_R2020_B_Patch4 1104 09:58
-
+Release Date: 11/04/2020
+Build Date: 11/04/2020
+Build Number: Release_R2020_B_Patch4 1104 09:58
 
   12/9/20
 
-  - another round of config trials
-    - look into mouse positioning b4 click
+- another round of config trials
+  - look into mouse positioning b4 click
 - learn about click + event propogation
 - related target
   <https://www.w3schools.com/jsref/event_relatedtarget.asp>
@@ -1239,14 +1238,13 @@ Build Number:	Release_R2020_B_Patch4 1104 09:58
 
   - <https://css-tricks.com/simulating-mouse-movement/>\
 
-
 recreate document.querySelector("#container")?
-  - build util
+
+- build util
 
 /html/body/div[1]/div[3]/div[2]/textarea
 
 <https://stackoverflow.com/questions/10596417/is-there-a-way-to-get-element-by-xpath-using-javascript-in-selenium-webdriver>
-
 
 ```js
 function getElementByXpath(path) {
@@ -1256,7 +1254,6 @@ function getElementByXpath(path) {
 
 console.log( getElementByXpath("//html[1]/body[1]/div[1]") );
 
-
   textarea#textarea.null.hidden
 HTMLTextAreaElement
 HTMLElement
@@ -1264,7 +1261,6 @@ Element
 Node
 EventTarget
 Object
-
 
 2021
 <https://blog.oauth.io/how-to-add-github-social-login-button/>
@@ -1310,7 +1306,7 @@ git push origin master
 
 maybe re create this element
 
-```
+```html
 <div id="selection_field" class="" style="display: block; font-family: monospace; font-size: 10pt; line-height: 15px; top: 15px; width: 2468px;"><span></span><strong></strong><span>
             // </span></div>
 ```
@@ -1326,7 +1322,7 @@ Version 87.0.4280.88 (Official Build) (x86_64)
 
 - [x] config error - Error handling response: ReferenceError: result is not defined
     at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/adminConfigContent.js:267:17
-adminConfigContent.js:272 
+adminConfigContent.js:272
 
 Visual Studio Code Update
 Version: 1.52.0
@@ -1342,7 +1338,7 @@ Meeting 12/17/20
 
 - [ ] parent.area
 - [ ] maybe key down
-  - var keyboardEvent = new KeyboardEvent('keypress', {bubbles:true}); 
+  - var keyboardEvent = new KeyboardEvent('keypress', {bubbles:true});
 Object.defineProperty(keyboardEvent, 'charCode', {get:function(){return this.charCodeVal;}});
 - keyboardEvent.charCodeVal = [your char code];
 - document.body.dispatchEvent(keyboardEvent);
@@ -1434,7 +1430,7 @@ $( "#textrea" ).last().trigger( "click" );
 
 ```
 
-12/21/20
+12/21+22/20
 
 commerce rules trial
 
@@ -1443,7 +1439,9 @@ document.getElementsByName('varName')[0].value
 ```
 
 12/22/20
-try chrome local instead of sync
+
+- [ ] try chrome local instead of sync
+- [ ] background script
 
 Meeting 12/24/20
 
