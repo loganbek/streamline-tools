@@ -1442,6 +1442,9 @@ commerce rules trial
 document.getElementsByName('varName')[0].value
 ```
 
+12/22/20
+try chrome local instead of sync
+
 Meeting 12/24/20
 
 Status Update

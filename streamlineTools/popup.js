@@ -179,6 +179,18 @@ unloadButton.onclick = function(params) {
         chrome.tabs.sendMessage(tabs[0].id, { greeting: "unload" }, function(response) {
             console.log(response.filename);
             console.log(response.code);
+
+            //WIP COMMERCE RULES FN
+            // if (url.includes("bigmachines.com/admin/commerce/rules")) {
+            //     chrome.storage.sync.get(['commerceFileName'], function(result) {
+            //         if (result.variable_name == undefined) {
+            //             console.log("I am retrieved!!");
+            //             console.log(result.variable_name);
+            //             response.filename = response.variable_name;
+            //         }
+            //     });
+            // }
+
             if (response.code && response.filename) {
                 saveText(response.filename + ".bml", response.code);
             }

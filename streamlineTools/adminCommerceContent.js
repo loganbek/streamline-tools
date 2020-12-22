@@ -127,6 +127,13 @@ chrome.runtime.onMessage.addListener(
         if (request.greeting == "unload") {
             let unloadEvent = new CustomEvent("unloadCode", { detail: request.code });
             window.dispatchEvent(unloadEvent);
+            // if (document.getElementsByName('varName').length > 0) {
+            //     filename = document.getElementsByName('varName')[0].value;
+            // }
+            chrome.storage.sync.get(['commerceFileName'], function(result) {
+                console.log('Value currently is ' + result.key);
+                filename = result.key;
+            });
             sendResponse({
                 filename: filename,
                 code: code
@@ -187,23 +194,23 @@ chrome.runtime.onMessage.addListener(
 //     filename = elements[0].value;
 // }
 
-if (document.querySelector(".varName")) {
-    filename = document.querySelector(".varName").value;
-    console.log(filename);
-}
+// if (document.querySelector(".varName")) {
+//     filename = document.querySelector(".varName").value;
+//     console.log(filename);
+// }
 
-if (window.document.querySelector(".varName")) {
-    filename = window.document.querySelector(".varName");
-    console.log(filename);
-}
+// if (window.document.querySelector(".varName")) {
+//     filename = window.document.querySelector(".varName");
+//     console.log(filename);
+// }
 
 // #general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]
 
 // WIP COMMERCE FN TRIALS
 
 // if (document.getElementsByName('varName')[0]) {
-filename = document.getElementsByName('varName')[0].value;
-console.log(filename);
+// filename = document.getElementsByName('varName')[0].value;
+// console.log(filename);
 // }
 
 // if (document.querySelector('[name="variable_name"]')) {
@@ -213,16 +220,11 @@ console.log(filename);
 // if (window.document.querySelector('[name="variable_name"]')) {
 //     filename = window.document.querySelector('[name="variable_name"]');
 // }
-
-chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
-    console.log("you saved me!!");
-    // console.log(result.variable_name);
-});
-
-
-chrome.storage.sync.get(['commerceFileName'], function(result) {
-    if (result.variable_name == undefined) {
-        console.log("I am retrieved!!");
-        console.log(result.variable_name);
-    }
-});
+if (document.getElementsByName('varName').length > 0) {
+    filename = document.getElementsByName('varName')[0].value;
+    chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
+        console.log("you saved me!!");
+        console.log(filename);
+        // console.log(result.variable_name);
+    });
+}
