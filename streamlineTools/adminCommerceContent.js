@@ -229,11 +229,12 @@ if (document.getElementsByName('varName').length > 0) {
     });
 }
 
-if (document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input") !== null) {
-    commActionFileNameElement = document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input");
-    commActionFileName = commActionFileNameElement.innertext;
-    console.log(commActionFileNameElement);
-    console.log(commActionFileName);
+if (document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]") !== null) {
+    filename = document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]").value;
+    // commActionFileName = commActionFileNameElement.innertext;
+    // #general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]
+    console.log(filename);
+    // console.log(commActionFileName);
     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
         console.log("you saved me!! comm action");
         console.log(filename);

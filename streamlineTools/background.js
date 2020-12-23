@@ -28,16 +28,16 @@ chrome.runtime.onInstalled.addListener(function() {
 //     alert(filename);
 // }
 // GRAB COMM RULES VARNAME
-filenameElements = document.getElementsByName('varName');
-if (filenameElements.length > 0) {
-    filename = document.getElementsByName('varName')[0].value;
-    // STORE
-    chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
-        console.log("you saved me from background!!");
-        console.log(filename);
-        // console.log(result.variable_name);
-    });
-}
+// filenameElements = document.getElementsByName('varName');
+// if (filenameElements.length > 0) {
+//     filename = document.getElementsByName('varName')[0].value;
+//     // STORE
+//     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
+//         console.log("you saved me from background!!");
+//         console.log(filename);
+//         // console.log(result.variable_name);
+//     });
+// }
 // GRAB COMM ACTIONS VAR NAME
 // #general > table > tbody > tr:nth-child(3) > td.form-input
 // commActionFileNameElement = document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input");
