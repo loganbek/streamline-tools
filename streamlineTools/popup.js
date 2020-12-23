@@ -85,7 +85,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
         // }
 
         //TEST BML DISABLING
-        if (url.includes("bigmachines.com/admin/commerce/rules") || url.includes("bigmachines.com/admin/configuration/rules")) {
+        if (url.includes("bigmachines.com/admin/commerce/rules") || url.includes("bigmachines.com/admin/configuration/rules" || url.includes("bigmachines/admin/commerce/actions"))) {
 
             // alert(url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp"));
             // INITIAL content.js LOADING
@@ -95,7 +95,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
             unloadTestButton.disabled = true;
             loadTestButton.disabled = true;
         }
-        if (url.includes("bigmachines.com/admin/commerce/rules")) {
+        if (url.includes("bigmachines.com/admin/commerce/rules" || url.includes("bigmachines.com/admin/commerce/actions"))) {
             executeContentScript("adminCommerceContent.js");
         }
         if (url.includes("bigmachines.com/admin/configuration/rules")) {
