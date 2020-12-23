@@ -1485,6 +1485,9 @@ chrome.runtime.onMessage.addListener(
 );
 ```
 
+- [ ] comm fn rules functions
+- add [ ] <https://devmcnichols.bigmachines.com/admin/commerce/actions/list_actions.jsp?doc_id=4653823> to page state matcher
+
 Meeting 12/24/20
 
 Status Update

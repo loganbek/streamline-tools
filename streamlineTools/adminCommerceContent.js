@@ -223,8 +223,19 @@ chrome.runtime.onMessage.addListener(
 if (document.getElementsByName('varName').length > 0) {
     filename = document.getElementsByName('varName')[0].value;
     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
-        console.log("you saved me!!");
+        console.log("you saved me!! comm rules");
         console.log(filename);
         // console.log(result.variable_name);
+    });
+}
+
+if (document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input") !== null) {
+    commActionFileNameElement = document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input");
+    commActionFileName = commActionFileNameElement.innertext;
+    console.log(commActionFileNameElement);
+    console.log(commActionFileName);
+    chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
+        console.log("you saved me!! comm action");
+        console.log(filename);
     });
 }

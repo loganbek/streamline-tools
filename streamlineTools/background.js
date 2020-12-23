@@ -13,8 +13,8 @@ chrome.runtime.onInstalled.addListener(function() {
             conditions: [new chrome.declarativeContent.PageStateMatcher({
                 pageUrl: { hostSuffix: 'bigmachines.com' },
                 // pageUrl: { pathContains: 'bigmachines.com/spring' },
-                // pageUrl: { urlMatches: 'bigmachines.com/spring|bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp|bigmachines.com/admin/configuration/rules/edit_rule.jsp' },
-                pageUrl: { urlMatches: 'bigmachines.com/spring|bigmachines.com/admin/commerce/rules/|bigmachines.com/admin/configuration/rules/' },
+                // https://devmcnichols.bigmachines.com/admin/commerce/actions/list_actions.jsp?doc_id=4653823m/admin/commerce/rules/edit_rule_inputs.jsp|bigmachines.com/admin/configuration/rules/edit_rule.jsp' },
+                pageUrl: { urlMatches: 'bigmachines.com/spring|bigmachines.com/admin/commerce/rules/|bigmachines.com/admin/commerce/actions|bigmachines.com/admin/configuration/rules/' },
                 // pageUrl: { urlContains: 'bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp' },
                 // pageUrl: { hostSuffix: 'bigmachines.com' },
             })],
@@ -38,7 +38,12 @@ if (filenameElements.length > 0) {
         // console.log(result.variable_name);
     });
 }
-
+// GRAB COMM ACTIONS VAR NAME
+// #general > table > tbody > tr:nth-child(3) > td.form-input
+// commActionFileNameElement = document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input");
+// commActionFileName = commActionFileNameElement.innertext;
+// console.log(commActionFileNameElement);
+// console.log(commActionFileName);
 // var rule1 = {
 //     conditions: [
 //         new chrome.declarativeContent.PageStateMatcher({
