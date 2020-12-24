@@ -177,8 +177,8 @@ unloadButton.onclick = function(params) {
 
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { greeting: "unload" }, function(response) {
-            console.log(response.filename);
-            console.log(response.code);
+            //             console.log(response.filename);
+            //             console.log(response.code);
 
             //             WIP COMMERCE RULES FN
             if (tabs[0].url.includes("bigmachines.com/admin/commerce/rules")) {
@@ -186,6 +186,15 @@ unloadButton.onclick = function(params) {
                     if (result.commerceFileName !== undefined) {
                         console.log("I am retrieved!!");
                         console.log(result.commerceFileName);
+                        console.log(tabs[0].document);
+                        if (tabs[0].title.includes("After")) {
+                            console.log("AFTER POPUP");
+                            saveText(result.commerceFileName + ".afterFormulas.bml", response.code);
+                        } else if (tabs[0].title.includes("Before")) {
+                            console.log("BEFORE POPUP");
+                            saveText(result.commerceFileName + ".beforeFormulas.bml", response.code);
+                        }
+
                         // response.filename = result.commerceFileName;
                         saveText(result.commerceFileName + ".bml", response.code);
                     }
