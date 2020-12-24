@@ -50,6 +50,8 @@ var code = "";
 var testCode = "";
 // var filename = filename || "";
 var filename;
+var filenameAfter;
+var filenameBefore;
 
 // if (document.getElementById("#x-auto-3-input")) {
 //     filename = document.getElementById("#x-auto-3-input").value;
@@ -130,14 +132,83 @@ chrome.runtime.onMessage.addListener(
             // if (document.getElementsByName('varName').length > 0) {
             //     filename = document.getElementsByName('varName')[0].value;
             // }
+            // if (!document.title.includes("After") && !document.title.includes("Before")) {
             chrome.storage.sync.get(['commerceFileName'], function(result) {
                 console.log('Value currently is ' + result.key);
-                filename = result.key;
+                if (result.key !== undefined) {
+                    filename = result.key;
+                }
             });
-            sendResponse({
-                filename: filename,
-                code: code
-            });
+            // }
+            // ACTIONS BEFORE/AFTER FORMULAS FN
+            if (document.title.includes("After")) {
+                // SYNC
+                // var filenameAfter;
+                // chrome.storage.sync.get(['commerceFileName'], function(result) {
+                //     filenameAfter = result.commerceFileName;
+                //     console.log(filenameAfter);
+                // });
+                // console.log(filenameAfter);
+                // console.log("includes after");
+                // console.log(filename);
+                // filename = filename + ".afterFormulas";
+                // console.log(filename);
+                // chrome.storage.sync.get(['commerceFileName'], function(result) {
+                //     console.log('Value currently is ' + result.key);
+                //     if (result.key !== undefined) {
+                //         filename = result.key;
+                //     }
+                //     var filenameAfterFinal = filename + ".afterFormulas";
+                //     console.log(filenameAfterFinal);
+                //     filename = filenameAfterFinal;
+                // });
+
+                // var filenameAfterFinal = filename + ".afterFormulas";
+                // console.log(filenameAfterFinal);
+                // chrome.storage.sync.set({ 'commerceFileName': filenameAfterFinal }, function() {
+                //     console.log("you saved me!! comm action after");
+                //     console.log(filenameAfterFinal);
+                // });
+                // filename = filenameAfterFinal;
+            } else if (document.title.includes("Before")) {
+                // SYNC
+                // var filenameBefore;
+                // chrome.storage.sync.get(['commerceFileName'], function(result) {
+                //     filenameBefore = result.commerceFileName;
+                //     console.log(filenameBefore);
+                // });
+                // console.log(filenameBefore);
+                console.log("includes before");
+                // chrome.storage.sync.get(['commerceFileName'], function(result) {
+                //     console.log('Value currently is ' + result.key);
+                //     if (result.key !== undefined) {
+                //         filename = result.key;
+                //     }
+                //     var filenameBeforeFinal = filename + ".beforeFormulas";
+                //     console.log(filenameBeforeFinal);
+                //     filename = filenameBeforeFinal;
+                // });
+                // console.log(filename);
+                // filename = filename + ".beforeFormulas";
+                // console.log(filename);
+                // var filenameBeforeFinal = filename + ".beforeFormulas";
+                // console.log(filenameBeforeFinal);
+                // chrome.storage.sync.set({ 'commerceFileName': filenameBeforeFinal }, function() {
+                //     console.log("you saved me!! comm action before");
+                //     console.log(filenameBeforeFinal);
+                // });
+                // filename = filenameBeforeFinal;
+                sendResponse({
+                    filename: filename + ".beforeForumulas",
+                    code: code
+                });
+                // break;
+            } else {
+                sendResponse({
+                    filename: filename,
+                    code: code
+                });
+            }
         } else if (request.greeting == "unloadTest") {
             let unloadTestEvent = new CustomEvent("unloadTestCode", { detail: request.code });
             window.dispatchEvent(unloadTestEvent);
@@ -220,6 +291,28 @@ chrome.runtime.onMessage.addListener(
 // if (window.document.querySelector('[name="variable_name"]')) {
 //     filename = window.document.querySelector('[name="variable_name"]');
 // }
+// if (document.getElementsByName('varName').length > 0) {
+//     filename = document.getElementsByName('varName')[0].value;
+//     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
+//         console.log("you saved me!! comm rules");
+//         console.log(filename);
+//         // console.log(result.variable_name);
+//     });
+// }
+
+// if ((document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]") !== null) && (document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]") !== undefined)) {
+//     filename = document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]").value;
+//     // commActionFileName = commActionFileNameElement.innertext;
+//     // #general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]
+//     console.log(filename);
+
+//     // console.log(commActionFileName);
+//     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
+//         console.log("you saved me!! comm action");
+//         console.log(filename);
+//     });
+// }
+
 if (document.getElementsByName('varName').length > 0) {
     filename = document.getElementsByName('varName')[0].value;
     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
@@ -229,14 +322,47 @@ if (document.getElementsByName('varName').length > 0) {
     });
 }
 
-if (document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]") !== null) {
+if ((document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]") !== null) && (document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]") !== undefined)) {
     filename = document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]").value;
     // commActionFileName = commActionFileNameElement.innertext;
     // #general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]
     console.log(filename);
+
     // console.log(commActionFileName);
     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
         console.log("you saved me!! comm action");
         console.log(filename);
     });
 }
+
+// // ACTIONS BEFORE/AFTER FORMULAS FN
+// if (document.title.includes("After")) {
+//     // SYNC
+//     // var filenameAfter;
+//     chrome.storage.sync.get(['commerceFileName'], function(result) {
+//         filenameAfter = result.commerceFileName;
+//         console.log(filenameAfter);
+//     });
+//     console.log(filenameAfter);
+//     var filenameAfterFinal = filenameAfter + ".afterFormulas";
+//     console.log(filenameAfterFinal);
+//     chrome.storage.sync.set({ 'commerceFileName': filenameAfterFinal }, function() {
+//         console.log("you saved me!! comm action");
+//         console.log(filenameAfterFinal);
+//     });
+// }
+// if (document.title.includes("Before")) {
+//     // SYNC
+//     // var filenameBefore;
+//     chrome.storage.sync.get(['commerceFileName'], function(result) {
+//         filenameBefore = result.commerceFileName;
+//         console.log(filenameBefore);
+//     });
+//     console.log(filenameBefore);
+//     var filenameBeforeFinal = filenameBefore + ".beforeFormulas";
+//     console.log(filenameBeforeFinal);
+//     chrome.storage.sync.set({ 'commerceFileName': filenameBeforeFinal }, function() {
+//         console.log("you saved me!! comm action");
+//         console.log(filenameBeforeFinal);
+//     });
+// }

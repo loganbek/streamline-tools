@@ -1485,8 +1485,27 @@ chrome.runtime.onMessage.addListener(
 );
 ```
 
-- [ ] comm fn rules functions
-- add [ ] <https://devmcnichols.bigmachines.com/admin/commerce/actions/list_actions.jsp?doc_id=4653823> to page state matcher
+- [x] comm fn rules functions
+  - works w/ click on previous tab
+    - [ ] query dom with message passing?
+- add [x] <https://devmcnichols.bigmachines.com/admin/commerce/actions/list_actions.jsp?doc_id=4653823> to page state matcher
+- [x] comm fn actions functions
+
+12/23/20
+
+###### ACTIONS TODO
+
+- [ ] distinguish between before and after
+- IF TITLE CONTAINS 
+- [ ] store varname without popup click
+
+###### RULES TODO
+
+- [ ] store varname without popup click
+
+###### CONFIG TODO
+
+- [ ] try to find way around having to click post load.
 
 Meeting 12/24/20
 
