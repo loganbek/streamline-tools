@@ -1495,9 +1495,10 @@ chrome.runtime.onMessage.addListener(
 
 ###### ACTIONS TODO
 
-- [ ] distinguish between before and after
-- IF TITLE CONTAINS 
-- [ ] store varname without popup click
+- [x] distinguish between before and after
+- IF TITLE CONTAINS
+- [ ] store varname without popup click - query previous tab in popup instead of save from content script
+  <https://developer.chrome.com/docs/extensions/reference/tabs/>
 
 ###### RULES TODO
 
@@ -1522,3 +1523,8 @@ Pay the $5 registration fee 2 Register as Chrome Web Store Developer
 <https://developer.chrome.com/docs/extensions/mv3/intro/>
 
 - Published on Monday, November 9, 2020
+
+
+new button for commerce actions and rules
+
+button that opens define function before after in new tab instead of window
