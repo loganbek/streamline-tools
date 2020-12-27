@@ -1537,6 +1537,7 @@ button that opens define function before after in new tab instead of window
 - IF TITLE CONTAINS
 - [ ] store varname without popup click - query previous tab in popup instead of save from content script
   <https://developer.chrome.com/docs/extensions/reference/tabs/>
+  - define function link - <a class="button-text" name="define_function" id="define_function" href="#">Define Function</a> <->
 
 ####### RULES TODO
 
@@ -1545,3 +1546,16 @@ button that opens define function before after in new tab instead of window
 ####### CONFIG TODO
 
 - [ ] try to find way around having to click post load.
+
+Chrome Web Store Description
+<https://chrome.google.com/webstore/category/extensions?hl=en>
+
+Overview
+
+Streamline your CPQ workflows
+
+administration, maintenance, 
+
+UNLOAD and LOAD your BML scripts for Oracle CPQ Cloud.
+Text Editor
+Git Versioning Control
