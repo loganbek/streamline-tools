@@ -1528,3 +1528,20 @@ Pay the $5 registration fee 2 Register as Chrome Web Store Developer
 new button for commerce actions and rules
 
 button that opens define function before after in new tab instead of window
+
+12/27/20
+
+####### ACTIONS TODO
+
+- [x] distinguish between before and after
+- IF TITLE CONTAINS
+- [ ] store varname without popup click - query previous tab in popup instead of save from content script
+  <https://developer.chrome.com/docs/extensions/reference/tabs/>
+
+####### RULES TODO
+
+- [ ] store varname without popup click
+
+####### CONFIG TODO
+
+- [ ] try to find way around having to click post load.
