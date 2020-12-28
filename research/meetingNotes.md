@@ -1524,7 +1524,6 @@ Pay the $5 registration fee 2 Register as Chrome Web Store Developer
 
 - Published on Monday, November 9, 2020
 
-
 new button for commerce actions and rules
 
 button that opens define function before after in new tab instead of window
@@ -1537,11 +1536,27 @@ button that opens define function before after in new tab instead of window
 - IF TITLE CONTAINS
 - [ ] store varname without popup click - query previous tab in popup instead of save from content script
   <https://developer.chrome.com/docs/extensions/reference/tabs/>
-  - define function link - <a class="button-text" name="define_function" id="define_function" href="#">Define Function</a> <->
+  - define function link -
+
+```js  
+<a class="button-text" name="define_function" id="define_function" href="#">Define Function</a> <->
+```
+
+```html
+  <table onclick="javascript:editPreModifyFunction();bmCancelBubble(event)" onmouseover="bmButtonMouseOver(this,'javascript:editPreModifyFunction()')" onmousedown="bmButtonMouseDown(this,'javascript:editPreModifyFunction()')" onmouseup="bmButtonMouseUp(this,'javascript:editPreModifyFunction()')" onmouseout="bmButtonMouseOut(this,'javascript:editPreModifyFunction()')" class="plain-button" cellspacing="0" cellpadding="0" role="button" aria-label="Define Function" style="cursor: pointer;">
+ <tbody><tr>
+  <td class="button-left"><img class="button-left" src="/img/button10.gif"></td>
+  <td class="button-middle" nowrap="true"><div style="margin: 0px 0px 1px;"><a class="button-text" name="define_function" id="define_function" href="#">Define Function</a></div></td>  <td class="button-right"><img class="button-right" src="/img/button10.gif"></td>
+ </tr>
+</tbody></table>
+```
+
+12/27/20
 
 ####### RULES TODO
 
 - [ ] store varname without popup click
+  - [ ] TODO: finish new tab query
 
 ####### CONFIG TODO
 
@@ -1552,10 +1567,22 @@ Chrome Web Store Description
 
 Overview
 
-Streamline your CPQ workflows
+GIF/Demo Video
 
-administration, maintenance, 
+Streamline your CPQ workflows, development, administration and maintenance.
 
-UNLOAD and LOAD your BML scripts for Oracle CPQ Cloud.
-Text Editor
+LOAD AND UNLOAD your BML scripts to and from Oracle CPQ Cloud.
+Use w/ your favorite Text Editor - Visual Studio Code.
 Git Versioning Control
+
+Please create any bugs/issues/feature requests [here](https://github.com/loganbek/streamlineTools/issues/new/choose).
+
+12/28/20
+12/29/20
+12/30/20
+12/31/20
+
+MEETING PRE/POST NEW YEAR
+
+START WEB STORE PROCESS
+NPM PACKAGE? - <https://docs.github.com/en/free-pro-team@latest/packages/guides/configuring-npm-for-use-with-github-packages>
