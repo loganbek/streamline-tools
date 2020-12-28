@@ -1569,6 +1569,8 @@ Overview
 
 GIF/Demo Video
 
+Chrome Web Store: <>
+
 Streamline your CPQ workflows, development, administration and maintenance.
 
 LOAD AND UNLOAD your BML scripts to and from Oracle CPQ Cloud.
@@ -1578,6 +1580,99 @@ Git Versioning Control
 Please create any bugs/issues/feature requests [here](https://github.com/loganbek/streamlineTools/issues/new/choose).
 
 12/28/20
+
+Store listing
+Product details
+For all languages
+
+Title from package
+
+Streamline Tools
+Summary from package
+
+Streamline Tools for Oracle CPQ Cloud!
+Description*
+0 / 16000
+Focus on explaining what the item does and why users should install it
+Category*
+
+Developer Tools
+arrow_drop_downarrow_drop_down
+Language*
+
+English (United States)
+arrow_drop_downarrow_drop_down
+Specifying your item’s language will help users find it. If you support multiple languages, then you should internationalize your item. Learn more
+Graphic assets
+Screenshot ordering on this dashboard is not yet available. For now please use the old dashboard to order screenshots.
+
+Store icon
+
+128x128 pixels
+
+Please ensure icon follows image guidelines
+
+Global assets
+Global promo video
+Youtube URL
+Enter a YouTube video URL
+
+Screenshots
+
+Up to a maximum of 5
+
+1280x800 or 640x400
+
+JPEG or 24-bit PNG (no alpha)
+
+At least one is required
+
+Drop image here
+
+Small promo tile
+
+440x280 Canvas
+
+JPEG or 24-bit PNG (no alpha)
+
+Drop image here
+
+Large promo tile
+
+920x680 Canvas
+
+JPEG or 24-bit PNG (no alpha)
+
+Drop image here
+
+Marquee promo tile
+
+1400x560 Canvas
+
+JPEG or 24-bit PNG (no alpha)
+
+Drop image here
+
+Additional fields
+Official URL
+
+None
+arrow_drop_downarrow_drop_down
+Or Add a new site
+If your item is associated with a website that you own, select that website from the list. You can register as the owner for a site using Google Search Console.
+Homepage URL
+Homepage URL
+Link to website for your item
+
+Support URL
+Support URL
+Providing the URLs for description and support pages can improve your users’ experience and help make this item’s ratings and comments more meaningful.
+Mature content
+Examples of mature content include sexual and suggestive content, strong language, violence, or a focus on the consumption or sale of alcohol, tobacco, or drugs. Learn more
+Google analytics ID
+UA-
+Specify your Google Analytics ID here if you’d like to use Google Analytics to track your item
+
 12/29/20
 12/30/20
 12/31/20
