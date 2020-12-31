@@ -1673,10 +1673,25 @@ Google analytics ID
 UA-
 Specify your Google Analytics ID here if you’d like to use Google Analytics to track your item
 
-12/29/20
-12/30/20
 12/31/20
 
+- [ ] finish rules tab query
+- [ ] finish actions tab query
+
+TODO LATER:
+
+####### RULES TODO
+
+- [ ] store varname without popup click
+  - [ ] TODO: finish new tab query
+
+####### CONFIG TODO
+
+- [ ] try to find way around having to click post load.
+
+####### BOTH
+
+- [ ] use tab.title to further break out file structure (comm rules + actions)
 MEETING PRE/POST NEW YEAR
 
 START WEB STORE PROCESS
