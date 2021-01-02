@@ -80,7 +80,13 @@ chrome.tabs.query({ currentWindow: true }, function(result) {
         console.log(tab.scope);
         //TODO: TRY CAPTURE VISIBLE TAB
         // captureVisibleTab();
+        // if (tab.title
 
+        chrome.tabs.captureVisibleTab();
+
+        // TAB TITLE -Commerce Rule Editor Commerce Rule Editor
+
+        // TODO EXCLUDE popup.js:72 Select Inputs For Area: Hiding Rule Condition
     });
 });
 

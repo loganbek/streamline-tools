@@ -1684,6 +1684,20 @@ TODO LATER:
 
 - [ ] store varname without popup click
   - [ ] TODO: finish new tab query
+  RULES
+    - [ ] 1st URL: <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?document_id=4653823&process_id=4653759>
+    - [ ] 2nd URL: <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_function.jsp>
+    - [ ] /html/body/div[1]/div/div[2]/div[2]/div[1]/div[2]/div[3]/div[2]/div[2]/div[1]/div/div/div/div/div[2]/div[3]/table/tbody/tr[2]/td[2]/em/button/text()
+    - [ ] document.querySelector("#x-auto-430 > tbody > tr:nth-child(2) > td.x-btn-mc > em > button")
+    - edit functoin button listener
+    - document.querySelector("#x-auto-430 > tbody > tr:nth-child(2) > td.x-btn-mc > em > button")
+    - 4 dif tabt titles
+      - Commerce Rule Editor
+
+  ACTIONS
+  - 1st URL - <https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=4723726&doc_id=4653823>
+    - 2nd URL - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=472372>
+    - 3rd URL - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_function.jsp>
 
 ####### CONFIG TODO
 
@@ -1693,6 +1707,8 @@ TODO LATER:
 
 - [ ] use tab.title to further break out file structure (comm rules + actions)
 MEETING PRE/POST NEW YEAR
+- [ ] google analytics
+- [ ] web store assets
 
 START WEB STORE PROCESS
 NPM PACKAGE? - <https://docs.github.com/en/free-pro-team@latest/packages/guides/configuring-npm-for-use-with-github-packages>
