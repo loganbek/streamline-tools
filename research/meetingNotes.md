@@ -1718,3 +1718,30 @@ START WEB STORE PROCESS
 NPM PACKAGE? - <https://docs.github.com/en/free-pro-team@latest/packages/guides/configuring-npm-for-use-with-github-packages>
 can invoke browser or page action to capture comm fn? - meh
 look into service workers and promises
+
+
+MV3 Deprecation API
+Sunset for deprecated APIs 
+There are a number of APIs that have long been deprecated. Manifest V3 finally removes support for these deprecated APIs. These include:
+
+chrome.extension.sendRequest()
+chrome.extension.onRequest
+chrome.extension.onRequestExternal
+chrome.extension.lastError
+chrome.extension.getURL()
+chrome.extension.getExtensionTabs()
+chrome.tabs.Tab.selected
+chrome.tabs.sendRequest()
+chrome.tabs.getSelected()
+chrome.tabs.getAllInWindow()
+chrome.tabs.onSelectionChanged
+chrome.tabs.onActiveChanged
+chrome.tabs.onHighlightChanged
+As well as the undocumented:
+
+chrome.extension.sendMessage()
+chrome.extension.connect()
+chrome.extension.onConnect
+chrome.extension.onMessage
+If your extensions use any of these deprecated APIs, you’ll need to make the appropriate changes when you migrate to MV3.
+
