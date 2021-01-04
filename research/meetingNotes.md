@@ -1745,3 +1745,4 @@ chrome.extension.onConnect
 chrome.extension.onMessage
 If your extensions use any of these deprecated APIs, you’ll need to make the appropriate changes when you migrate to MV3.
 
+<https://developer.chrome.com/docs/extensions/mv3/mv3-migration-checklist/>
