@@ -82,7 +82,7 @@ chrome.tabs.query({ currentWindow: true }, function(result) {
         // captureVisibleTab();
         // if (tab.title
 
-        chrome.tabs.captureVisibleTab();
+        // chrome.tabs.captureVisibleTab();
 
         // TAB TITLE -Commerce Rule Editor Commerce Rule Editor
 

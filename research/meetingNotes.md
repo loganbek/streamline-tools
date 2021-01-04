@@ -1693,6 +1693,8 @@ TODO LATER:
     - document.querySelector("#x-auto-430 > tbody > tr:nth-child(2) > td.x-btn-mc > em > button")
     - 4 dif tabt titles
       - Commerce Rule Editor
+      - <https://sung.codes/blog/2019/02/17/getting-dom-content-from-chrome-extension-2>
+      - <https://www.udemy.com/course/google-chrome-extension/?couponCode=HAPPYNEWYEAR>
 
   ACTIONS
   - 1st URL - <https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=4723726&doc_id=4653823>
@@ -1710,5 +1712,9 @@ MEETING PRE/POST NEW YEAR
 - [ ] google analytics
 - [ ] web store assets
 
+use for context menu?
+
 START WEB STORE PROCESS
 NPM PACKAGE? - <https://docs.github.com/en/free-pro-team@latest/packages/guides/configuring-npm-for-use-with-github-packages>
+can invoke browser or page action to capture comm fn? - meh
+look into service workers and promises
