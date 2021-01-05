@@ -1694,7 +1694,7 @@ TODO LATER:
     - 4 dif tabt titles
       - Commerce Rule Editor
       - <https://sung.codes/blog/2019/02/17/getting-dom-content-from-chrome-extension-2>
-      - <https://www.udemy.com/course/google-chrome-extension/?couponCode=HAPPYNEWYEAR>
+      - maybe try out lastFocusedWindow
 
   ACTIONS
   - 1st URL - <https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=4723726&doc_id=4653823>
@@ -1719,9 +1719,8 @@ NPM PACKAGE? - <https://docs.github.com/en/free-pro-team@latest/packages/guides/
 can invoke browser or page action to capture comm fn? - meh
 look into service workers and promises
 
-
 MV3 Deprecation API
-Sunset for deprecated APIs 
+Sunset for deprecated APIs
 There are a number of APIs that have long been deprecated. Manifest V3 finally removes support for these deprecated APIs. These include:
 
 chrome.extension.sendRequest()
@@ -1746,3 +1745,5 @@ chrome.extension.onMessage
 If your extensions use any of these deprecated APIs, you’ll need to make the appropriate changes when you migrate to MV3.
 
 <https://developer.chrome.com/docs/extensions/mv3/mv3-migration-checklist/>
+
+- <https://www.udemy.com/course/google-chrome-extension/?couponCode=HAPPYNEWYEAR>
