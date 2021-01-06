@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // ADMIN COMMERCE CONTENT
 
 // function injectJs(link) {
@@ -251,92 +250,9 @@ chrome.runtime.onMessage.addListener(
         // }
         // return true;
         // return true;
+        // }
+        // return true;
     });
-=======
-'use strict';
-
-// VARS
-let fileName;
-let commentHeader;
-let url;
-let bmSiteSubDomain;
-var bmSiteType;
-let header;
-
-// FLAGS
-let unloaded = false;
-let unloadedTest = false;
-
-// BUTTONS
-let unloadButton = document.getElementById('unload');
-let loadButton = document.getElementById('load');
-let unloadTestButton = document.getElementById('unloadTest');
-let loadTestButton = document.getElementById('loadTest');
-let optionsButton = document.getElementById('options');
-let logsButton = document.getElementById('logs');
-
-// chrome.tabs.query({windowId: chrome.windows.WINDOW_ID_CURRENT}, (tabs) => {
-//     document.write(`<h3>The tabs you're on are:</h3>`);
-//     document.write('<ul>');
-//     for (let i = 0; i < tabs.length; i++) {
-//       document.write(`<li>${tabs[i].url}</li>`);
-//     }
-//     document.write('</ul>');
-//   });
-
-chrome.tabs.query({ currentWindow: true }, function(result) {
-    result.forEach(function(tab) {
-        //         do stuff here;
-        // console.log("TAB ID");
-        // console.log(tab.id);
-        // console.log("TAB NAME");
-        // console.log(tab.name);
-        // console.log("TAB DOCUMENT");
-        // console.log(tab.document);
-        console.log("TAB URL");
-        console.log(tab.url);
-        console.log("TAB ACTIVE");
-        console.log(tab.active);
-        console.log("TAB AUDIBLE");
-        console.log(tab.audible);
-        console.log("TAB AUTODISCARDIBLE");
-        console.log(tab.autoDiscardible);
-        console.log("TAB FAVICONURL");
-        console.log(tab.favIconUrl);
-        console.log("TAB GROUPID");
-        console.log(tab.groupId);
-        console.log("TAB HEIGHT");
-        console.log(tab.height);
-        console.log("TAB HIGHLIGHTED");
-        console.log(tab.highlighted);
-        console.log("TAB ID");
-        console.log(tab.id);
-        console.log("TAB INDEX");
-        console.log(tab.index);
-        console.log("TAB OPENERTABID");
-        console.log(tab.openerTabid);
-        console.log("TAB PENDINGURL");
-        console.log(tab.pendingUrl);
-        console.log("TAB SELECTED");
-        console.log(tab.selected);
-        console.log("TAB SESSIONID");
-        console.log(tab.sessionId);
-        console.log("TAB STATUS");
-        console.log(tab.status);
-        console.log("TAB TITLE");
-        console.log(tab.title);
-        console.log("TAB WINDOW");
-        console.log(tab.windowId);
-        console.log("TAB DEFAULTZOOMFACTOR");
-        console.log(tab.defaultZoomFactor);
-        console.log("TAB MODE");
-        console.log(tab.mode);
-        console.log("TAB SCOPE")
-        console.log(tab.scope);
-        //TODO: TRY CAPTURE VISIBLE TAB
-        // captureVisibleTab();
-        // if (tab.title
->>>>>>> parent of af454f6... log rm
 
 
 //OLD CONTENT SCRIPT MANIFEST
@@ -422,8 +338,8 @@ chrome.tabs.query({ currentWindow: true }, function(result) {
 if (document.getElementsByName('varName').length > 0) {
     filename = document.getElementsByName('varName')[0].value;
     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
-        // console.log("you saved me!! comm rules");
-        // console.log(filename);
+        console.log("you saved me!! comm rules");
+        console.log(filename);
         // console.log(result.variable_name);
     });
 }
@@ -432,12 +348,12 @@ if ((document.querySelector("#general > table > tbody > tr:nth-child(3) > td.for
     filename = document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]").value;
     // commActionFileName = commActionFileNameElement.innertext;
     // #general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]
-    // console.log(filename);
+    console.log(filename);
 
     // console.log(commActionFileName);
     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
-        // console.log("you saved me!! comm action");
-        // console.log(filename);
+        console.log("you saved me!! comm action");
+        console.log(filename);
     });
 }
 
@@ -471,7 +387,4 @@ if ((document.querySelector("#general > table > tbody > tr:nth-child(3) > td.for
 //         console.log("you saved me!! comm action");
 //         console.log(filenameBeforeFinal);
 //     });
-// }     },
-//     ],
-//     excludeAcceptAllOption: true
-//   };
+// }

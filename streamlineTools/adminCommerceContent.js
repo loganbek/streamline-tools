@@ -229,7 +229,6 @@ chrome.runtime.onMessage.addListener(
             sendResponse({
                 filename: filename
             });
-<<<<<<< HEAD
         }
         // else if (request.greeting == "commerceFilename") {
 
@@ -250,10 +249,8 @@ chrome.runtime.onMessage.addListener(
 
         // }
         // return true;
-=======
-            // return true;
-        }
->>>>>>> parent of af454f6... log rm
+        // return true;
+        // }
         // return true;
     });
 
