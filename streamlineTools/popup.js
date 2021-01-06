@@ -38,49 +38,60 @@ chrome.tabs.query({ currentWindow: true }, function(result) {
         // console.log(tab.name);
         // console.log("TAB DOCUMENT");
         // console.log(tab.document);
-        console.log("TAB URL");
-        console.log(tab.url);
-        console.log("TAB ACTIVE");
-        console.log(tab.active);
-        console.log("TAB AUDIBLE");
-        console.log(tab.audible);
-        console.log("TAB AUTODISCARDIBLE");
-        console.log(tab.autoDiscardible);
-        console.log("TAB FAVICONURL");
-        console.log(tab.favIconUrl);
-        console.log("TAB GROUPID");
-        console.log(tab.groupId);
-        console.log("TAB HEIGHT");
-        console.log(tab.height);
-        console.log("TAB HIGHLIGHTED");
-        console.log(tab.highlighted);
-        console.log("TAB ID");
-        console.log(tab.id);
-        console.log("TAB INDEX");
-        console.log(tab.index);
-        console.log("TAB OPENERTABID");
-        console.log(tab.openerTabid);
-        console.log("TAB PENDINGURL");
-        console.log(tab.pendingUrl);
-        console.log("TAB SELECTED");
-        console.log(tab.selected);
-        console.log("TAB SESSIONID");
-        console.log(tab.sessionId);
-        console.log("TAB STATUS");
-        console.log(tab.status);
-        console.log("TAB TITLE");
-        console.log(tab.title);
-        console.log("TAB WINDOW");
-        console.log(tab.windowId);
-        console.log("TAB DEFAULTZOOMFACTOR");
-        console.log(tab.defaultZoomFactor);
-        console.log("TAB MODE");
-        console.log(tab.mode);
-        console.log("TAB SCOPE")
-        console.log(tab.scope);
+        // console.log("TAB URL");
+        // console.log(tab.url);
+        // console.log("TAB ACTIVE");
+        // console.log(tab.active);
+        // console.log("TAB AUDIBLE");
+        // console.log(tab.audible);
+        // console.log("TAB AUTODISCARDIBLE");
+        // console.log(tab.autoDiscardible);
+        // console.log("TAB FAVICONURL");
+        // console.log(tab.favIconUrl);
+        // console.log("TAB GROUPID");
+        // console.log(tab.groupId);
+        // console.log("TAB HEIGHT");
+        // console.log(tab.height);
+        // console.log("TAB HIGHLIGHTED");
+        // console.log(tab.highlighted);
+        // console.log("TAB ID");
+        // console.log(tab.id);
+        // console.log("TAB INDEX");
+        // console.log(tab.index);
+        // console.log("TAB OPENERTABID");
+        // console.log(tab.openerTabid);
+        // console.log("TAB PENDINGURL");
+        // console.log(tab.pendingUrl);
+        // console.log("TAB SELECTED");
+        // console.log(tab.selected);
+        // console.log("TAB SESSIONID");
+        // console.log(tab.sessionId);
+        // console.log("TAB STATUS");
+        // console.log(tab.status);
+        // console.log("TAB TITLE");
+        // console.log(tab.title);
+        // console.log("TAB WINDOW");
+        // console.log(tab.windowId);
+        // console.log("TAB DEFAULTZOOMFACTOR");
+        // console.log(tab.defaultZoomFactor);
+        // console.log("TAB MODE");
+        // console.log(tab.mode);
+        // console.log("TAB SCOPE")
+        // console.log(tab.scope);
+        // console.log("TAB DOCUMENT");
+        // console.log(tab.document);
+
         //TODO: TRY CAPTURE VISIBLE TAB
         // captureVisibleTab();
-        // if (tab.title
+        //TODO FIX
+        // if (tab.title === "Commerce Rule Editor") {
+        //     chrome.tabs.sendMessage(tab[0].id, { greeting: "commerceFilename" }, function(response) {
+        //         if (response !== undefined) {
+        //             console.log(response.filename);
+        //             fileName = response.filename;
+        //         }
+        //     });
+        // }
 
         // chrome.tabs.captureVisibleTab();
 
