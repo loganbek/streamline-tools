@@ -1,390 +1,318 @@
-// ADMIN COMMERCE CONTENT
+'use strict';
 
-// function injectJs(link) {
-//     let scr = document.createElement('script');
-//     scr.type = "text/javascript";
-//     scr.src = link;
-//     document.getElementsByTagName('head')[0].appendChild(scr);
-// }
+// VARS
+let fileName;
+let commentHeader;
+let url;
+let bmSiteSubDomain;
+var bmSiteType;
+let header;
 
-// injectJs(chrome.extension.getURL('adminCommerceInjected.js'));
+// FLAGS
+let unloaded = false;
+let unloadedTest = false;
 
-// chrome.runtime.onMessage.addListener(
-//     function(request, sender, sendResponse) {
-//         // let filename = document.getElementById('variableName').value;
-//         // if (filename === "") {
-//         //     filename = "nofilename";
-//         // }
-//         let filename = "addVendor_quote.beforeModify";
-//         console.log(sender.tab ?
-//             "from a content script:" + sender.tab.url :
-//             "from the extension");
-//         console.log(request.greeting ?
-//             "greeting: " + request.greeting :
-//             "nogreeting");
-//         if (request.greeting == "unload") {
-//             let unloadEvent = new CustomEvent("unloadCode", { detail: request.code });
-//             window.dispatchEvent(unloadEvent);
-//             // if (!code.startsWith(commentHeader)) {
-//             //     code = commentHeader + "\n\n" + code;
-//             // }
-//             sendResponse({
-//                 filename: filename,
-//                 code: code
-//             });
-//         } else if (request.greeting == "load") {
-//             let loadEvent = new CustomEvent("loadCode", { detail: request.code });
-//             window.dispatchEvent(loadEvent);
-//             // } else if (request.greeting == "filename") {
-//             //     sendResponse({
-//             //         filename: filename
-//             //     });
-//         }
-//         // return true; - DOESNT FIX
-//     });
+// BUTTONS
+let unloadButton = document.getElementById('unload');
+let loadButton = document.getElementById('load');
+let unloadTestButton = document.getElementById('unloadTest');
+let loadTestButton = document.getElementById('loadTest');
+let optionsButton = document.getElementById('options');
+let logsButton = document.getElementById('logs');
 
-// let commentHeader = "";
-// let code = "";
-// let testCode = "";
-var code = "";
-var testCode = "";
-// var filename = filename || "";
-var filename;
-var filenameAfter;
-var filenameBefore;
+// chrome.tabs.query({windowId: chrome.windows.WINDOW_ID_CURRENT}, (tabs) => {
+//     document.write(`<h3>The tabs you're on are:</h3>`);
+//     document.write('<ul>');
+//     for (let i = 0; i < tabs.length; i++) {
+//       document.write(`<li>${tabs[i].url}</li>`);
+//     }
+//     document.write('</ul>');
+//   });
 
-// if (document.getElementById("#x-auto-3-input")) {
-//     filename = document.getElementById("#x-auto-3-input").value;
-//     // document.querySelector("#x-auto-3-input")
-//     console.log(filename);
-// }
+// CHROME TABS
+chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+    let tab = tabs[0];
+    // console.log("TAB");
+    // alert(tab);
+    let url = tab.url;
+    // console.log(tab.url);
+    let full = url;
+    let parts = full.split('.');
+    let sub = parts[0];
+    let domain = parts[1];
+    let type = parts[2];
+    console.log(sub);
+    let bmSiteParts = sub.split('//');
+    let bmSite = bmSiteParts[1];
+    console.log(bmSite);
+    bmSiteSubDomain = bmSite;
+    console.log(domain);
+    console.log(type);
+    bmSiteType = "commerce";
+    console.log(bmSiteType);
+    if (url !== undefined) {
 
-// if (window.document.getElementById("#x-auto-3-input")) {
-//     filename = window.document.getElementById("#x-auto-3-input").value;
-//     console.log(filename)
-// }
+        //BML SITE TYPE TODO
+        // COMMERCE + UTIL HEADER
+        // .innerHTML.includes("Util");
 
-//Listen for the PassToBackground event
-window.addEventListener("PassToBackground", function(evt) {
-    code = evt.detail;
-}, false);
 
-//Listen for the PassCommentHeader event
-window.addEventListener("PassCommentHeader", function(evt) {
-    commentHeader = evt.detail;
-}, false);
 
-//Listen for the code event
-window.addEventListener("PassCodeToBackground", function(evt) {
-    code = evt.detail;
-}, false);
+        // header = document.querySelector(".x-panel-header-text");
+        // isUtil = header.innerHTML.includes("Util");
+        // isCommerce = header.innerHTML.includes("Commerce");
 
-//Listen for the testcode event
-window.addEventListener("PassTestCodeToBackground", function(evt) {
-    testCode = evt.detail;
-}, false);
+        // if (header && header.innerHTML.includes("Commerce")) {
+        //     bmSiteType = "commerce";
+        // } else if (header && header.innerHTML.includes("Util")) {
+        //     bmSiteType = "util"
+        // } else {
+        //     bmSiteType = "configuration"
+        // }
 
-//Listen for the unloadCode event
-window.addEventListener("unloadCode", function(evt) {
-    code = evt.detail;
-}, false);
+        // if (document.querySelector(".xpanel-header-text")) {
+        //     header = document.querySelector(".x-panel-header-text");
+        //     isUtil = header.innerHTML.includes("Util");
+        //     isCommerce = header.innerHTML.includes("Commerce");
+        //     if (isCommerce) {
+        //         bmSiteType = "commerce";
+        //     } else if (isUtil) {
+        //         bmSiteType = "util";
+        //     } else {
+        //         bmSiteType = "configuration"
+        //     }
+        //     // TODO fix configuration
+        // }
 
-function injectJs(link) {
-    let scr = document.createElement('script');
-    scr.type = "text/javascript";
-    scr.src = link;
-    document.getElementsByTagName('head')[0].appendChild(scr);
-}
+        //TEST BML DISABLING
+        if (url.includes("bigmachines.com/admin/commerce/rules") || url.includes("bigmachines.com/admin/configuration/rules") || url.includes("bigmachines.com/admin/commerce/actions")) {
 
-injectJs(chrome.extension.getURL('adminCommerceInjected.js'));
-
-// var x = (x === undefined) ? your_default_value : x;
-// let filename2 = (filename2 === undefined) ? document.querySelectorAll("input[id^=x-auto]")[1].value : filename2;
-// alert(filename2);
-// let ruleName = (ruleName === undefined) ? document.querySelector("input[name='variable_name']").value : ruleName;
-// alert(ruleName);
-// var ruleNameSelector = document.querySelector("input[name='variable_name']").value;
-// var ruleName = (typeof ruleName === 'undefined') ? document.querySelector("input[name='variable_name']").value : ruleName;
-// alert(ruleName);
-// let ruleType = (ruleType === undefined) ? window.name : ruleType;
-// alert(ruleType);
-
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-        // let filename2 = document.querySelectorAll("input[id^=x-auto]")[1].value;
-        // alert(filename2);
-        // let ruleName = document.querySelector("input[name='variable_name']").value;
-        // alert(ruleName);
-        // let ruleType = window.name;
-        // alert(ruleType);
-        // let filename = ruleName + "." + ruleType;
-        // alert(filename);
-        // let filename = "commerceRuleName";
-        console.log(sender.tab ?
-            "from a content script:" + sender.tab.url :
-            "from the extension");
-        console.log(request.greeting ?
-            "greeting: " + request.greeting :
-            "nogreeting");
-        if (request.greeting == "unload") {
-            let unloadEvent = new CustomEvent("unloadCode", { detail: request.code });
-            window.dispatchEvent(unloadEvent);
-            // if (document.getElementsByName('varName').length > 0) {
-            //     filename = document.getElementsByName('varName')[0].value;
-            // }
-            // if (!document.title.includes("After") && !document.title.includes("Before")) {
-            chrome.storage.sync.get(['commerceFileName'], function(result) {
-                console.log('Value currently is ' + result.key);
-                if (result.key !== undefined) {
-                    filename = result.key;
-                }
-            });
-            // }
-            // ACTIONS BEFORE/AFTER FORMULAS FN
-            // if (document.title.includes("After")) {
-            //     // SYNC
-            //     // var filenameAfter;
-            //     // chrome.storage.sync.get(['commerceFileName'], function(result) {
-            //     //     filenameAfter = result.commerceFileName;
-            //     //     console.log(filenameAfter);
-            //     // });
-            //     // console.log(filenameAfter);
-            //     // console.log("includes after");
-            //     // console.log(filename);
-            //     // filename = filename + ".afterFormulas";
-            //     // console.log(filename);
-            //     // chrome.storage.sync.get(['commerceFileName'], function(result) {
-            //     //     console.log('Value currently is ' + result.key);
-            //     //     if (result.key !== undefined) {
-            //     //         filename = result.key;
-            //     //     }
-            //     //     var filenameAfterFinal = filename + ".afterFormulas";
-            //     //     console.log(filenameAfterFinal);
-            //     //     filename = filenameAfterFinal;
-            //     // });
-
-            //     // var filenameAfterFinal = filename + ".afterFormulas";
-            //     // console.log(filenameAfterFinal);
-            //     // chrome.storage.sync.set({ 'commerceFileName': filenameAfterFinal }, function() {
-            //     //     console.log("you saved me!! comm action after");
-            //     //     console.log(filenameAfterFinal);
-            //     // });
-            //     // filename = filenameAfterFinal;
-            // } else if (document.title.includes("Before")) {
-            //     // SYNC
-            //     // var filenameBefore;
-            //     // chrome.storage.sync.get(['commerceFileName'], function(result) {
-            //     //     filenameBefore = result.commerceFileName;
-            //     //     console.log(filenameBefore);
-            //     // });
-            //     // console.log(filenameBefore);
-            //     console.log("includes before");
-            //     // chrome.storage.sync.get(['commerceFileName'], function(result) {
-            //     //     console.log('Value currently is ' + result.key);
-            //     //     if (result.key !== undefined) {
-            //     //         filename = result.key;
-            //     //     }
-            //     //     var filenameBeforeFinal = filename + ".beforeFormulas";
-            //     //     console.log(filenameBeforeFinal);
-            //     //     filename = filenameBeforeFinal;
-            //     // });
-            //     // console.log(filename);
-            //     // filename = filename + ".beforeFormulas";
-            //     // console.log(filename);
-            //     // var filenameBeforeFinal = filename + ".beforeFormulas";
-            //     // console.log(filenameBeforeFinal);
-            //     // chrome.storage.sync.set({ 'commerceFileName': filenameBeforeFinal }, function() {
-            //     //     console.log("you saved me!! comm action before");
-            //     //     console.log(filenameBeforeFinal);
-            //     // });
-            //     // filename = filenameBeforeFinal;
-            //     beforeFileName = filename + ".beforeFormulas";
-            //     console.log(beforeFileName);
-            //     sendResponse({
-            //         filename: beforeFileName,
-            //         code: code
-            //     });
-            //     // break;
-            // } else {
-            sendResponse({
-                filename: filename,
-                code: code
-            });
-            // }
-        } else if (request.greeting == "unloadTest") {
-            let unloadTestEvent = new CustomEvent("unloadTestCode", { detail: request.code });
-            window.dispatchEvent(unloadTestEvent);
-            sendResponse({
-                filename: filename,
-                testCode: testCode
-            });
-        } else if (request.greeting == "load") {
-            let loadEvent = new CustomEvent("loadCode", { detail: request.code });
-            window.dispatchEvent(loadEvent);
-        } else if (request.greeting == "loadTest") {
-            console.log(request.code);
-            let loadTestEvent = new CustomEvent("loadTestCode", { detail: request.code });
-            window.dispatchEvent(loadTestEvent);
-        } else if (request.greeting == "filename") {
-            sendResponse({
-                filename: filename
-            });
+            // alert(url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp"));
+            // INITIAL content.js LOADING
+            // executeContentScript("adminCommerceContent.js");
+            // unloadTestButton.style.visibility = "hidden";
+            // loadTestButton.style.visibility = "hidden";
+            unloadTestButton.disabled = true;
+            loadTestButton.disabled = true;
         }
-        // else if (request.greeting == "commerceFilename") {
+        if (url.includes("bigmachines.com/admin/commerce/rules") || url.includes("bigmachines.com/admin/commerce/actions")) {
+            executeContentScript("adminCommerceContent.js");
+        }
+        if (url.includes("bigmachines.com/admin/configuration/rules")) {
+            bmSiteType = "configuration";
+            executeContentScript("adminConfigContent.js");
+        }
+    }
+    if (url.includes("bigmachines.com/spring/")) {
+        chrome.tabs.sendMessage(tabs[0].id, { greeting: "filename" }, function(response) {
+            if (response !== undefined) {
+                console.log(response.filename);
+                fileName = response.filename;
+            }
+        });
+        executeContentScript("content.js");
+    }
+});
 
-        //     // GRAB COMM FN
-        //     // var commerceFileName =
-
-        //     //POPUP UNLOAD QUERY
-        //     // chrome.tabs.query({currentWindow: true}), function(tabs){
-        //     //     chrome.tabs.sendMessage(tabs[0].id, { greeting: "getCommerceFilename" }, function(response) {
-        //     //     consoleonsole.log(response.commerceFileName);
-        //     //     });
-        //     // });
-
-        //     // SEND COMM FN RESPONSE
-        //     sendResponse({
-        //         filename: "commerceFilename"
-        //     });
-
-        // }
-        // return true;
-        // return true;
-        // }
-        // return true;
-    });
-
-
-//OLD CONTENT SCRIPT MANIFEST
-// "content_scripts": [{
-//     "matches": [
-//         "*://*.bigmachines.com/*"
-//     ],
-//     "js": [
-//         "jsonpath-1.0.2.js",
-//         "content.js"
-//     ],
-//     "all_frames": true
-// }],
-
-// ```html <input type="text" class=" x-form-field x-form-text" id="x-auto-214-input" name="varName" tabindex="0" readonly="" disabled="" style="width: 260px;">```
-
-// if (document.querySelector("#x-auto-3-input")) {
-//     filename = document.querySelector("#x-auto-3-input").value;
-// }
-
-// if (document.querySelector(".varName")) {
-//     filename = document.querySelector(".varName").value;
-// }
-
-
-// let elements = document.getElementsByClassName("varName");
-// console.log(elements);
-
-// if (elements[0]) {
-//     console.log(elements[0].value);
-//     console.log(elements[0].nodeValue);
-//     filename = elements[0].value;
-// }
-
-// if (document.querySelector(".varName")) {
-//     filename = document.querySelector(".varName").value;
-//     console.log(filename);
-// }
-
-// if (window.document.querySelector(".varName")) {
-//     filename = window.document.querySelector(".varName");
-//     console.log(filename);
-// }
-
-// #general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]
-
-// WIP COMMERCE FN TRIALS
-
-// if (document.getElementsByName('varName')[0]) {
-// filename = document.getElementsByName('varName')[0].value;
-// console.log(filename);
-// }
-
-// if (document.querySelector('[name="variable_name"]')) {
-//     filename = document.querySelector('[name="variable_name"]');
-// }
-
-// if (window.document.querySelector('[name="variable_name"]')) {
-//     filename = window.document.querySelector('[name="variable_name"]');
-// }
-// if (document.getElementsByName('varName').length > 0) {
-//     filename = document.getElementsByName('varName')[0].value;
-//     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
-//         console.log("you saved me!! comm rules");
-//         console.log(filename);
-//         // console.log(result.variable_name);
-//     });
-// }
-
-// if ((document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]") !== null) && (document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]") !== undefined)) {
-//     filename = document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]").value;
-//     // commActionFileName = commActionFileNameElement.innertext;
-//     // #general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]
-//     console.log(filename);
-
-//     // console.log(commActionFileName);
-//     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
-//         console.log("you saved me!! comm action");
-//         console.log(filename);
-//     });
-// }
-
-if (document.getElementsByName('varName').length > 0) {
-    filename = document.getElementsByName('varName')[0].value;
-    chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
-        console.log("you saved me!! comm rules");
-        console.log(filename);
-        // console.log(result.variable_name);
+function executeContentScript(contentScriptName) {
+    chrome.tabs.executeScript({
+        file: contentScriptName
     });
 }
 
-if ((document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]") !== null) && (document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]") !== undefined)) {
-    filename = document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]").value;
-    // commActionFileName = commActionFileNameElement.innertext;
-    // #general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]
-    console.log(filename);
+// TODO: LOG LINKING
+logsButton.disabled = true;
 
-    // console.log(commActionFileName);
-    chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
-        console.log("you saved me!! comm action");
-        console.log(filename);
+// chrome.tabs.query({
+//     active: true,
+//     lastFocusedWindow: true
+// }, function(tabs) {
+//     // and use that tab to fill in out title and url
+//     var tab = tabs[0];
+//     console.log("url :", tab.url);
+//     // alert(tab.url);
+//     url = tab.url;
+// });
+
+// alert(url);
+
+// TEST BUTTON HIDING
+// if (url !== undefined) {
+//     alert(url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp"));
+//     if (url.includes("bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp")) {
+//         unloadTestButton.style.visibility = "hidden";
+//         loadTestButton.style.visibility = "hidden";
+//         unloadTestButton.disabled = true;
+//         loadTestButton.disabled = true;
+//     }
+// }
+
+// unloadTestButton.disabled = true;
+// loadTestButton.disabled = true;
+
+chrome.downloads.onDeterminingFilename.addListener(function(item, suggest) {
+    suggest({
+        filename: "bigmachines/" + bmSiteSubDomain + "/" + bmSiteType + "/" + item.filename,
+        conflictAction: 'overwrite'
+    });
+});
+
+// UNLOAD ONCLICK
+unloadButton.onclick = function(params) {
+    console.log("unload clicked");
+    // if (document.querySelector(".xpanel-header-text")) {
+    //     header = document.querySelector(".x-panel-header-text");
+    //     isUtil = header.innerHTML.includes("Util");
+    //     isCommerce = header.innerHTML.includes("Commerce");
+    //     if (isCommerce) {
+    //         bmSiteType = "commerce";
+    //     } else if (isUtil) {
+    //         bmSiteType = "util";
+    //     } else {
+    //         bmSiteType = "configuration"
+    //     }
+    //     // TODO fix configuration
+    // }
+    let unloaded = true;
+
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, { greeting: "unload" }, function(response) {
+            //             console.log(response.filename);
+            //             console.log(response.code);
+
+            //             WIP COMMERCE RULES FN
+            if (tabs[0].url.includes("bigmachines.com/admin/commerce/rules")) {
+                chrome.storage.sync.get(['commerceFileName'], function(result) {
+                    if (result.commerceFileName !== undefined) {
+                        console.log("I am retrieved!!");
+                        console.log(result.commerceFileName);
+                        console.log(tabs[0].document);
+                        if (tabs[0].title.includes("After")) {
+                            console.log("AFTER POPUP");
+                            saveText(result.commerceFileName + ".afterFormulas.bml", response.code);
+                        } else if (tabs[0].title.includes("Before")) {
+                            console.log("BEFORE POPUP");
+                            saveText(result.commerceFileName + ".beforeFormulas.bml", response.code);
+                        }
+
+                        // response.filename = result.commerceFileName;
+                        saveText(result.commerceFileName + ".bml", response.code);
+                    }
+                });
+            } else if (response.code && response.filename) {
+                saveText(response.filename + ".bml", response.code);
+            }
+        });
+    });
+
+}
+
+// LOAD ONCLICK
+let fileHandle;
+loadButton.addEventListener('click', async(e) => {
+    // fileHandle = await window.chooseFileSystemEntries();
+    [fileHandle] = await window.showOpenFilePicker();
+    console.log(fileHandle);
+    const file = await fileHandle.getFile();
+    const contents = await file.text();
+    console.log(contents);
+
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, { greeting: "load", code: contents }, function(response) {
+            console.log(response);
+        });
+    });
+
+});
+
+// let fileHandle;
+// butOpenFile.addEventListener('click', async () => {
+//   [fileHandle] = await window.showOpenFilePicker();
+//   const file = await fileHandle.getFile();
+//   const contents = await file.text();
+//   textArea.value = contents;
+// });
+
+// UNLOAD TEST ONCLICK
+unloadTestButton.onclick = function(params) {
+    console.log("unloadTest clicked");
+    let unloadedTest = true;
+
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, { greeting: "unloadTest" }, function(response) {
+            console.log(response.filename);
+            console.log(response.testCode);
+            if (response.testCode && response.filename) {
+                saveText(response.filename + ".test" + ".bml", response.testCode);
+            }
+        });
     });
 }
 
-// // ACTIONS BEFORE/AFTER FORMULAS FN
-// if (document.title.includes("After")) {
-//     // SYNC
-//     // var filenameAfter;
-//     chrome.storage.sync.get(['commerceFileName'], function(result) {
-//         filenameAfter = result.commerceFileName;
-//         console.log(filenameAfter);
-//     });
-//     console.log(filenameAfter);
-//     var filenameAfterFinal = filenameAfter + ".afterFormulas";
-//     console.log(filenameAfterFinal);
-//     chrome.storage.sync.set({ 'commerceFileName': filenameAfterFinal }, function() {
-//         console.log("you saved me!! comm action");
-//         console.log(filenameAfterFinal);
-//     });
-// }
-// if (document.title.includes("Before")) {
-//     // SYNC
-//     // var filenameBefore;
-//     chrome.storage.sync.get(['commerceFileName'], function(result) {
-//         filenameBefore = result.commerceFileName;
-//         console.log(filenameBefore);
-//     });
-//     console.log(filenameBefore);
-//     var filenameBeforeFinal = filenameBefore + ".beforeFormulas";
-//     console.log(filenameBeforeFinal);
-//     chrome.storage.sync.set({ 'commerceFileName': filenameBeforeFinal }, function() {
-//         console.log("you saved me!! comm action");
-//         console.log(filenameBeforeFinal);
-//     });
-// }
+// LOAD TEST ONCLICK
+let fileHandle2;
+loadTestButton.addEventListener('click', async(e) => {
+    const options = {
+        types: [{
+            accept: {
+                'bml/plain': '.test.bml'
+            }
+        }, ],
+        excludeAcceptAllOption: true
+    };
+    //    [fileHandle2] = await window.showOpenFilePicker(options);
+    [fileHandle2] = await window.showOpenFilePicker();
+    console.log(fileHandle2);
+    const file = await fileHandle2.getFile();
+    const contents = await file.text();
+
+
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, { greeting: "loadTest", code: contents }, function(response) {
+            console.log(response);
+        });
+    });
+});
+
+// FILE SAVE
+function saveText(filename, text) {
+    let tempElem = document.createElement('a');
+    tempElem.setAttribute('href', 'data:bml/plain;charset=utf-8,' + encodeURIComponent(text));
+    tempElem.setAttribute('download', filename);
+    tempElem.click();
+}
+
+// OPTIONS HANDLER
+optionsButton.onclick = function(params) {
+    // alert("optionsClicked");
+    window.location = '/options.html';
+}
+
+
+// const options = {
+//     types: [
+//       {
+//         description: 'Text Files',
+//         accept: {
+//           'text/plain': ['.txt', '.text'],
+//           'text/html': ['.html', '.htm']
+//         }
+//       },
+//       {
+//         description: 'Images',
+//         accept: {
+//           'image/*': ['.png', '.gif', '.jpeg', '.jpg']
+//         }
+//       }
+//     ],
+
+// const options = {
+//     types: [
+//       {
+//         accept: {
+//           'image/svg+xml': '.svg'
+//         }
+//       },
+//     ],
+//     excludeAcceptAllOption: true
+//   };
