@@ -21,16 +21,16 @@ window.addEventListener('load', function() {
 window.addEventListener('unloadCode', function(evt) {
     // #textarea
     iframes = document.getElementsByTagName("iframe");
-    // console.log(iframes);
+    console.log(iframes);
     textAreaCode = document.getElementsByTagName("iframe")[0].contentDocument.querySelector("#textarea").value;
-    // console.log(textAreaCode);
+    console.log(textAreaCode);
     if (textAreaCode) {
         testCommerceCode = textAreaCode;
     } else {
         testCommerceCode = "\n";
     }
-    // console.log(textAreaCode);
-    // console.log(testCommerceCode);
+    console.log(textAreaCode);
+    console.log(testCommerceCode);
     let event = new CustomEvent("PassCodeToBackground", { detail: testCommerceCode });
     window.dispatchEvent(event);
 })
@@ -67,7 +67,7 @@ function main() {
     // }
 
     code = document.querySelector("#textarea").value;
-    // alert(code);
+    alert(code);
 
     let event = new CustomEvent("PassToBackground", { code });
     window.dispatchEvent(event);

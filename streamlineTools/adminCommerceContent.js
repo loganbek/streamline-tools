@@ -229,6 +229,7 @@ chrome.runtime.onMessage.addListener(
             sendResponse({
                 filename: filename
             });
+<<<<<<< HEAD
         }
         // else if (request.greeting == "commerceFilename") {
 
@@ -249,6 +250,10 @@ chrome.runtime.onMessage.addListener(
 
         // }
         // return true;
+=======
+            // return true;
+        }
+>>>>>>> parent of af454f6... log rm
         // return true;
     });
 
@@ -336,8 +341,8 @@ chrome.runtime.onMessage.addListener(
 if (document.getElementsByName('varName').length > 0) {
     filename = document.getElementsByName('varName')[0].value;
     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
-        // console.log("you saved me!! comm rules");
-        // console.log(filename);
+        console.log("you saved me!! comm rules");
+        console.log(filename);
         // console.log(result.variable_name);
     });
 }
@@ -346,12 +351,12 @@ if ((document.querySelector("#general > table > tbody > tr:nth-child(3) > td.for
     filename = document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]").value;
     // commActionFileName = commActionFileNameElement.innertext;
     // #general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]
-    // console.log(filename);
+    console.log(filename);
 
     // console.log(commActionFileName);
     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
-        // console.log("you saved me!! comm action");
-        // console.log(filename);
+        console.log("you saved me!! comm action");
+        console.log(filename);
     });
 }
 
