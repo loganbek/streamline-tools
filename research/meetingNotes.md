@@ -1747,3 +1747,16 @@ If your extensions use any of these deprecated APIs, you’ll need to make the a
 <https://developer.chrome.com/docs/extensions/mv3/mv3-migration-checklist/>
 
 - <https://www.udemy.com/course/google-chrome-extension/?couponCode=HAPPYNEWYEAR>
+
+query prev tab for
+
+```html
+<input type="text" class=" x-form-field x-form-text" id="x-auto-214-input" name="varName" tabindex="0" style="width: 260px;" readonly="" disabled="">
+```
+
+- BM sandbox ( no client ) for testing ? - im sure licensing is teh wurst
+
+1/11/21
+
+- popup unload on click - add check for url and then write 2 tab querys
+- content script listener w/ name query
