@@ -1760,3 +1760,18 @@ query prev tab for
 
 - popup unload on click - add check for url and then write 2 tab querys
 - content script listener w/ name query
+
+- [ ] tab query + send message to adminContentCommerce.js content script
+
+####### NEXT MEETING
+
+STATUS UPDATE
+
+- [ ]
+
+Streamline Tools v0.0.8-alpha
+Streamline Tools
+
+- [ ] Status of Non Client Connected env??? - I know Oracle is prob klibby around this.
+
+- [ ] Webstore Process + assets
