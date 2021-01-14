@@ -1763,6 +1763,11 @@ query prev tab for
 
 - [ ] tab query + send message to adminContentCommerce.js content script
 
+1/13/21
+
+- [ ] map unload click path
+- [ ] different code pieces with console.log
+
 ####### NEXT MEETING
 
 STATUS UPDATE
@@ -1770,7 +1775,9 @@ STATUS UPDATE
 - [ ]
 
 Streamline Tools v0.0.8-alpha
-Streamline Tools
+Streamline Tools v1.0.0-beta <- Chrome Webstore Release
+<https://semver.org/>
+<https://git-scm.com/book/en/v2/Git-Basics-Tagging>
 
 - [ ] Status of Non Client Connected env??? - I know Oracle is prob klibby around this.
 
