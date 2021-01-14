@@ -205,6 +205,38 @@ unloadButton.onclick = function(params) {
         });
     });
 
+    var commerceRuleTabID;
+    // SEARCH FOR COMMERCE RULE TAB
+    chrome.tabs.query({ currentWindow: true }, function(result) {
+        result.forEach(function(tab) {
+            //         do stuff here;
+            console.log("TABID");
+            console.log(tab.id);
+            console.log("TABNAME");
+            console.log(tab.name);
+            console.log("TABURL");
+            console.log(tab.url);
+            // if https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp <- look for this tab
+            if (tab.url.includes("https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp")) {
+                console.log("FOUND CORRECT TAB");
+                console.log(tab.id);
+                commerceRuleTabID = tab.id;
+                // chrome.tabs.sendMessage(tabs[tab.id], { greeting: "getCommerceFilename" }, function(response) {
+                //     console.log(response.commerceFileName);
+                // });
+            }
+        });
+
+        // MESSAGE COMMERCE RULE TAB CS
+        // TODO FIX 
+        // Error handling response: TypeError: Error in invocation of tabs.sendMessage(integer tabId, any message, optional object options, optional function responseCallback): No matching signature.
+        // at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/popup.js:231:21
+        chrome.tabs.sendMessage(result[commerceRuleTabID], { greeting: "getCommerceFilename" }, function(response) {
+            console.log("MESSAGE SENT");
+            // console.log(response.commerceFileName);
+        });
+    });
+
 }
 
 // LOAD ONCLICK

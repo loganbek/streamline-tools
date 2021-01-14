@@ -1766,6 +1766,42 @@ query prev tab for
 1/13/21
 
 - [ ] map unload click path
+POPUP
+  - `<button id="unload"> Unload BML <i class="material-icons md-18">keyboard_arrow_right</i><i class="material-icons md-18">keyboard_arrow_right</i></button>`
+
+- `unloadButton.onclick = function(params) {`
+
+    ```js
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, { greeting: "unload" }, function(response) {
+            //             console.log(response.filename);
+    - adminCommerceContent.js
+    ```
+
+```js
+
+//POPUP UNLOAD QUERY
+chrome.tabs.query({currentWindow: true}), function(tabs){
+    chrome.tabs.sendMessage(tabs[0].id, { greeting: "getCommerceFilename" }, function(response) {
+    consoleonsole.log(response.commerceFileName);
+    });
+});
+
+```
+
+```js
+
+chrome.tabs.query({currentWindow: true}, function(result) {
+    result.forEach(function(tab) {
+//         do stuff here;
+        console.log("TABID");
+        console.log(tab.id);
+        console.log("TABNAME");
+        console.log(tab.name);
+    });
+});
+```
+
 - [ ] different code pieces with console.log
 
 ####### NEXT MEETING
