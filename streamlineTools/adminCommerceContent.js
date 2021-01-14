@@ -229,8 +229,11 @@ chrome.runtime.onMessage.addListener(
             sendResponse({
                 filename: filename
             });
+        } else if (request.greeting == "commerceFilename") {
+            sendResponse({
+                filename: "commerceFileNameFromCS"
+            });
         }
-        // else if (request.greeting == "commerceFilename") {
 
         //     // GRAB COMM FN
         //     // var commerceFileName =
