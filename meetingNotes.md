@@ -1802,7 +1802,7 @@ chrome.tabs.query({currentWindow: true}, function(result) {
 });
 ```
 
-- [ ] different code pieces with console.log
+- [ ] break into adminCommerceRulesContent.js + adminCommerceActionsContent.js
 
 ####### NEXT MEETING
 

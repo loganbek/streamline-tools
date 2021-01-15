@@ -209,6 +209,8 @@ unloadButton.onclick = function(params) {
     var commerceRuleTabIndex;
     // SEARCH FOR COMMERCE RULE TAB
     chrome.tabs.query({ currentWindow: true }, function(result) {
+        console.log("RESULT");
+        console.log(result);
         result.forEach(function(tab) {
             //         do stuff here;
             console.log("TABID");
@@ -228,7 +230,7 @@ unloadButton.onclick = function(params) {
                 // chrome.tabs.sendMessage(tabs[tab.id], { greeting: "getCommerceFilename" }, function(response) {
                 //     console.log(response.commerceFileName);
                 // });
-                chrome.tabs.sendMessage(tab.id, { greeting: "getCommerceFilename" }, function(response) {
+                chrome.tabs.sendMessage(result[0].id, { greeting: "getCommerceFilename" }, function(response) {
                     console.log("MESSAGE SENT");
                     // console.log(response.commerceFileName);
                 });
