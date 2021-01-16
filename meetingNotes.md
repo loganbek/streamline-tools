@@ -1802,8 +1802,6 @@ chrome.tabs.query({currentWindow: true}, function(result) {
 });
 ```
 
-- [ ] break into adminCommerceRulesContent.js + adminCommerceActionsContent.js
-
 ####### NEXT MEETING
 
 STATUS UPDATE
@@ -1818,3 +1816,11 @@ Streamline Tools v1.0.0-beta <- Chrome Webstore Release
 - [ ] Status of Non Client Connected env??? - I know Oracle is prob klibby around this.
 
 - [ ] Webstore Process + assets
+
+1/16/20
+
+make streamline tools commerce actions and rules great finally
+
+- [ ] break into adminCommerceRulesContent.js + adminCommerceActionsContent.j
+
+- [ ] run through webstore process + assets
