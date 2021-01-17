@@ -1562,7 +1562,7 @@ button that opens define function before after in new tab instead of window
 
 - [ ] try to find way around having to click post load.
 
-Chrome Web Store Description
+####### Chrome Web Store Description
 <https://chrome.google.com/webstore/category/extensions?hl=en>
 
 Overview
@@ -1575,7 +1575,7 @@ Streamline your CPQ workflows, development, administration and maintenance.
 
 LOAD AND UNLOAD your BML scripts to and from Oracle CPQ Cloud.
 Use w/ your favorite Text Editor - Visual Studio Code.
-Git Versioning Control
+Manage your BML code w/ Git Versioning Control
 
 Please create any bugs/issues/feature requests [here](https://github.com/loganbek/streamlineTools/issues/new/choose).
 

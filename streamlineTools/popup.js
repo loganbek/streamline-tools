@@ -230,7 +230,14 @@ unloadButton.onclick = function(params) {
                 // chrome.tabs.sendMessage(tabs[tab.id], { greeting: "getCommerceFilename" }, function(response) {
                 //     console.log(response.commerceFileName);
                 // });
-                chrome.tabs.sendMessage(result[0].id, { greeting: "getCommerceFilename" }, function(response) {
+                chrome.tabs.sendMessage(result[0].id, { greeting: "getCommerceFilename" }, function(response) { // <-- correct signature but returns error - Unchecked runtime.lastError: Could not establish connection. Receiving end does not exist.
+                    // popup.js:187 ;
+                    // maybe https://stackoverflow.com/questions/54619817/how-to-fix-unchecked-runtime-lasterror-could-not-establish-connection-receivi
+
+                    //try background script for handler
+
+                    //
+
                     console.log("MESSAGE SENT");
                     // console.log(response.commerceFileName);
                 });
