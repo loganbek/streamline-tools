@@ -1821,6 +1821,17 @@ Streamline Tools v1.0.0-beta <- Chrome Webstore Release
 
 make streamline tools commerce actions and rules great finally
 
-- [ ] break into adminCommerceRulesContent.js + adminCommerceActionsContent.j
+- [ ] break into adminCommerceRulesContent.js + adminCommerceActionsContent.js
+
+###### COMM RULES URLS
+
+COMM RULE VARNAME PAGE - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?document_id=4653823&process_id=4653759>
+COMM RULE EDITOR PAGE - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_function.jsp>
+
+###### COMM ACTIONS URLS
+
+COMM ACTION FULL VARNAME LIST - <https://devmcnichols.bigmachines.com/admin/commerce/actions/list_actions.jsp?doc_id=4653823>
+COMM ACTION VARNAME PAGE - <https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=54983795&doc_id=4653823>
+COMM ACTUON EDITOR PAGE - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=54983795>
 
 - [ ] run through webstore process + assets
