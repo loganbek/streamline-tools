@@ -95,9 +95,15 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
             unloadTestButton.disabled = true;
             loadTestButton.disabled = true;
         }
-        if (url.includes("bigmachines.com/admin/commerce/rules") || url.includes("bigmachines.com/admin/commerce/actions")) {
+        if (url.includes("bigmachines.com/admin/commerce/rules") || url.includes("bigmachines.com/admin/commerce/actions")) { // <-- maybe break these up into adminCommerceRulesContent + adminCommerceActionsContent; 
             executeContentScript("adminCommerceContent.js");
         }
+        // if (url.includes("bigmachines.com/admin/commerce/rules")) {
+        //     executeContentScript("adminCommerceRulesContent.js")
+        // }
+        // if (url.includes("bigmachines.com/admin/commerce/actions")) {
+        //     executeContentScript("adminCommerceRulesActions.js");
+        // }
         if (url.includes("bigmachines.com/admin/configuration/rules")) {
             bmSiteType = "configuration";
             executeContentScript("adminConfigContent.js");
