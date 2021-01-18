@@ -236,7 +236,7 @@ unloadButton.onclick = function(params) {
 
                     //try background script for handler
 
-                    //
+                    // chrome.tab.sendMessage docs - continued dev
 
                     console.log("MESSAGE SENT");
                     // console.log(response.commerceFileName);
