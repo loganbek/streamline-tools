@@ -24,12 +24,22 @@ chrome.runtime.onMessage.addListener(
         if (request.greeting == "unload") {
             let unloadEvent = new CustomEvent("unloadCode", { detail: request.code });
             window.dispatchEvent(unloadEvent);
-            chrome.storage.sync.get(['commerceFileName'], function(result) {
-                console.log('Value currently is ' + result.key);
-                if (result.key !== undefined) {
-                    filename = result.key;
-                }
-            });
+            // chrome.storage.sync.get(['commerceFileName'], function(result) {
+            //     console.log('Value currently is ' + result.key);
+            //     if (result.key !== undefined) {
+            //         filename = result.key;
+            //     }
+            // });
+            // EDITOR PAGE CODE
+            if (document.getElementsByClassName("bottom-bar")[0].innerHTML.length > 0) {
+                let fileString = document.getElementsByClassName("bottom-bar")[0].innerHTML;
+                fileStringArray = fileString.split("&gt;");
+                console.log(fileStringArray);
+                console.log(fileStringArray[fileStringArray.length - 1]);
+                fileString = camelCase(fileStringArray[fileStringArray.length - 1]);
+                console.log(fileString);
+                filename = fileString;
+            };
             sendResponse({
                 filename: filename,
                 code: code
@@ -48,12 +58,32 @@ chrome.runtime.onMessage.addListener(
         }
     });
 
+// EDITOR PAGE CODE
+if (document.getElementsByClassName("bottom-bar")[0].innerHTML.length > 0) {
+    let fileString = document.getElementsByClassName("bottom-bar")[0].innerHTML;
+    fileStringArray = fileString.split("&gt;");
+    console.log(fileStringArray);
+    console.log(fileStringArray[fileStringArray.length - 1]);
+    fileString = camelCase(fileStringArray[fileStringArray.length - 1]);
+    console.log(fileString);
+};
 
-if (document.getElementsByName('varName').length > 0) {
-    filename = document.getElementsByName('varName')[0].value;
-    chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
-        console.log("you saved me!! comm rules");
-        console.log(filename);
-        // console.log(result.variable_name);
-    });
+// TO CAMELCASE FUNCTION
+function camelCase(str) {
+    return (str.slice(0, 1).toLowerCase() + str.slice(1))
+        .replace(/([-_ ]){1,}/g, ' ')
+        .split(/[-_ ]/)
+        .reduce((cur, acc) => {
+            return cur + acc[0].toUpperCase() + acc.substring(1);
+        });
 }
+
+// VARNAME PAGE CODE
+// if (document.getElementsByName('varName').length > 0) {
+//     filename = document.getElementsByName('varName')[0].value;
+//     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
+//         console.log("you saved me!! comm rules");
+//         console.log(filename);
+//         // console.log(result.variable_name);
+//     });
+// }
