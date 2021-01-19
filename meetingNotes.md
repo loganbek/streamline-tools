@@ -1842,3 +1842,14 @@ COMM ACTION EDITOR PAGE - <https://devmcnichols.bigmachines.com/admin/commerce/r
 
 WEBSTORE
 - [ ] run through webstore process + assets
+
+
+1/19/20
+
+COMM RULES
+finish testing comm rules
+debug constrain rules function - downloads some weird chrome partial file (non BML).
+other rules seem to work fine
+
+COMM ACTIONS
+apply similiar logic from comm rules content script
