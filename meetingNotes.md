@@ -1848,8 +1848,9 @@ WEBSTORE
 
 COMM RULES
 finish testing comm rules
-debug constrain rules function - downloads some weird chrome partial file (non BML).
-other rules seem to work fine
+-[x] debug constrain rules function - constrainMultipleFreightGridSelects - downloads some weird chrome partial file (non BML). Seems to work fine today. Keep on eye out for partial downloads bug.
+-[ ] look into automating command click on edit function click - LOW PRIORITY
+-[ ] rare scenario where underscore in BML filename. <- add fix to rmeove underscores
 
 COMM ACTIONS
 apply similiar logic from comm rules content script
