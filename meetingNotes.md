@@ -1851,4 +1851,4 @@ finish testing comm rules
 -[ ] rare scenario where underscore in BML filename. <- add fix to rmeove underscores
 
 COMM ACTIONS
-apply similiar logic from comm rules content script
+-[ ] apply similiar logic from comm rules content script
