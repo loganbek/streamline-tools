@@ -1822,7 +1822,7 @@ Streamline Tools v1.0.0-beta <- Chrome Webstore Release
 make streamline tools commerce actions and rules great finally
 
 - [x] break into adminCommerceRulesContent.js + adminCommerceActionsContent.js
-- [ ] try sending message from background script? 
+- [ ] try sending message from background script?
   <https://stackoverflow.com/questions/14245334/sendmessage-from-extension-background-or-popup-to-content-script-doesnt-work>
 
 ###### COMM RULES URLS
@@ -1838,11 +1838,9 @@ COMM ACTION FULL VARNAME LIST - <https://devmcnichols.bigmachines.com/admin/comm
 COMM ACTION VARNAME PAGE - <https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=54983795&doc_id=4653823>
 COMM ACTION EDITOR PAGE - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=54983795>
 
-
-
 WEBSTORE
-- [ ] run through webstore process + assets
 
+- [ ] run through webstore process + assets
 
 1/19/20
 
