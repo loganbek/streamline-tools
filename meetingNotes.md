@@ -1822,6 +1822,8 @@ Streamline Tools v1.0.0-beta <- Chrome Webstore Release
 make streamline tools commerce actions and rules great finally
 
 - [ ] break into adminCommerceRulesContent.js + adminCommerceActionsContent.js
+- [ ] try sending message from background script? 
+  <https://stackoverflow.com/questions/14245334/sendmessage-from-extension-background-or-popup-to-content-script-doesnt-work>
 
 ###### COMM RULES URLS
 
