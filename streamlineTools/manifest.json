@@ -24,7 +24,9 @@
         "jsonpath-1.0.2.js",
         "injected.js",
         "adminCommerceInjected.js",
-        "adminConfigInjected.js"
+        "adminConfigInjected.js",
+        "adminCommerceRulesInjected.js",
+        "adminCommerceActionsInjected.js"
     ],
     "page_action": {
         "default_popup": "popup.html",

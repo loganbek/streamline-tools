@@ -4,6 +4,40 @@
 var code = "";
 var filename;
 
+//Listen for the PassToBackground event
+window.addEventListener("PassToBackground", function(evt) {
+    code = evt.detail;
+}, false);
+
+//Listen for the PassCommentHeader event
+window.addEventListener("PassCommentHeader", function(evt) {
+    commentHeader = evt.detail;
+}, false);
+
+//Listen for the code event
+window.addEventListener("PassCodeToBackground", function(evt) {
+    code = evt.detail;
+}, false);
+
+//Listen for the testcode event
+window.addEventListener("PassTestCodeToBackground", function(evt) {
+    testCode = evt.detail;
+}, false);
+
+//Listen for the unloadCode event
+window.addEventListener("unloadCode", function(evt) {
+    code = evt.detail;
+}, false);
+
+function injectJs(link) {
+    let scr = document.createElement('script');
+    scr.type = "text/javascript";
+    scr.src = link;
+    document.getElementsByTagName('head')[0].appendChild(scr);
+}
+
+injectJs(chrome.extension.getURL('adminCommerceRulesInjected.js'));
+
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         // let filename2 = document.querySelectorAll("input[id^=x-auto]")[1].value;
@@ -38,7 +72,10 @@ chrome.runtime.onMessage.addListener(
                 console.log(fileStringArray[fileStringArray.length - 1]);
                 fileString = camelCase(fileStringArray[fileStringArray.length - 1]);
                 console.log(fileString);
-                filename = fileString;
+                let lc = fileString[0].toLowerCase();
+                console.log(fileString);
+                fileString = lc + fileString.substring(1);
+                console.log(fileString);
             };
             sendResponse({
                 filename: filename,
@@ -65,6 +102,10 @@ if (document.getElementsByClassName("bottom-bar")[0].innerHTML.length > 0) {
     console.log(fileStringArray);
     console.log(fileStringArray[fileStringArray.length - 1]);
     fileString = camelCase(fileStringArray[fileStringArray.length - 1]);
+    console.log(fileString);
+    let lc = fileString[0].toLowerCase();
+    console.log(fileString);
+    fileString = lc + fileString.substring(1);
     console.log(fileString);
 };
 
