@@ -76,6 +76,7 @@ chrome.runtime.onMessage.addListener(
                 console.log(fileString);
                 fileString = lc + fileString.substring(1);
                 console.log(fileString);
+                filename = fileString;
             };
             sendResponse({
                 filename: filename,
