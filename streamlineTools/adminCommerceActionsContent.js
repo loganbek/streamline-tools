@@ -85,9 +85,9 @@ chrome.runtime.onMessage.addListener(
                 console.log(fullTitle);
 
                 if (document.title.includes("After")) {
-                    fileString += ".beforeFormulas";
-                } else if (document.title.includes("Before")) {
                     fileString += ".afterFormulas";
+                } else if (document.title.includes("Before")) {
+                    fileString += ".beforeFormulas";
                 }
 
                 // ACTION_ID
@@ -120,34 +120,34 @@ chrome.runtime.onMessage.addListener(
     });
 
 // EDITOR PAGE CODE
-if (document.getElementsByClassName("bottom-bar")[0].innerHTML.length > 0) {
-    let fileString = document.getElementsByClassName("bottom-bar")[0].innerHTML;
-    fileStringArray = fileString.split("&gt;");
-    console.log(fileStringArray);
-    console.log(fileStringArray[fileStringArray.length - 1]);
-    fileString = camelCase(fileStringArray[fileStringArray.length - 1]);
-    console.log(fileString);
-    let lc = fileString[0].toLowerCase();
-    console.log(fileString);
-    fileString = lc + fileString.substring(1);
-    console.log(fileString);
+// if (document.getElementsByClassName("bottom-bar")[0].innerHTML.length > 0) {
+//     let fileString = document.getElementsByClassName("bottom-bar")[0].innerHTML;
+//     fileStringArray = fileString.split("&gt;");
+//     console.log(fileStringArray);
+//     console.log(fileStringArray[fileStringArray.length - 1]);
+//     fileString = camelCase(fileStringArray[fileStringArray.length - 1]);
+//     console.log(fileString);
+//     let lc = fileString[0].toLowerCase();
+//     console.log(fileString);
+//     fileString = lc + fileString.substring(1);
+//     console.log(fileString);
 
-    // ACTION SPECIFIC LOGIC (BEFORE/AFTER + action_id)
-    // LABEL.AFTER/BEFORE.ACTION_ID
+//     // ACTION SPECIFIC LOGIC (BEFORE/AFTER + action_id)
+//     // LABEL.AFTER/BEFORE.ACTION_ID
 
-    // BEFORE / AFTER
-    let fullTitle = document.getElementsByTagName("title");
-    console.log(fullTitle);
+//     // BEFORE / AFTER
+//     let fullTitle = document.getElementsByTagName("title");
+//     console.log(fullTitle);
 
-    if (document.title.includes("After")) {
-        fileString += ".afterFormulas";
-    } else if (document.title.includes("Before")) {
-        fileString += ".beforeFormulas";
-    }
+//     if (document.title.includes("After")) {
+//         fileString += ".afterFormulas";
+//     } else if (document.title.includes("Before")) {
+//         fileString += ".beforeFormulas";
+//     }
 
-    // ACTION_ID
-    console.log(document.url);
-};
+//     // ACTION_ID
+//     console.log(document.url);
+// };
 
 // TO CAMELCASE FUNCTION
 function camelCase(str) {
