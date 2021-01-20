@@ -140,9 +140,9 @@ if (document.getElementsByClassName("bottom-bar")[0].innerHTML.length > 0) {
     console.log(fullTitle);
 
     if (document.title.includes("After")) {
-        fileString += ".beforeFormulas";
-    } else if (document.title.includes("Before")) {
         fileString += ".afterFormulas";
+    } else if (document.title.includes("Before")) {
+        fileString += ".beforeFormulas";
     }
 
     // ACTION_ID

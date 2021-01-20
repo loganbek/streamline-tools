@@ -1861,5 +1861,10 @@ COMM ACTIONS
 - [ ] code quality / comments / console log
 - [ ] weave into master
 
--[ ] look into automating command click on edit function click - LOW PRIORITY
--[ ] rare scenario where underscore in BML filename. <- add fix to rmeove underscores
+- [ ] look into automating command click on edit function click - LOW PRIORITY
+- [ ] rare scenario where underscore in BML filename. <- add fix to rmeove underscores
+- [ ] look into commerce function scroll on load code
+- [ ] Please you test script alert fix
+- [ ] remove unused files + references
+- [ ] adminCommerceContent.js
+- [ ] adminCommerceInjected.js
