@@ -1851,4 +1851,15 @@ finish testing comm rules
 -[ ] rare scenario where underscore in BML filename. <- add fix to rmeove underscores
 
 COMM ACTIONS
--[ ] apply similiar logic from comm rules content script
+
+- [x] apply similiar logic from comm rules content script
+- [ ] comm actions testing
+
+1/20/20
+
+- [ ] thourougly test
+- [ ] code quality / comments / console log
+- [ ] weave into master
+
+-[ ] look into automating command click on edit function click - LOW PRIORITY
+-[ ] rare scenario where underscore in BML filename. <- add fix to rmeove underscores
