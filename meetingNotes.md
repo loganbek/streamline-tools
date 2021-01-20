@@ -1857,14 +1857,20 @@ COMM ACTIONS
 
 1/20/20
 
-- [ ] thourougly test
+- [x] test
 - [ ] code quality / comments / console log
 - [ ] weave into master
+
+
+TODO:
 
 - [ ] look into automating command click on edit function click - LOW PRIORITY
 - [ ] rare scenario where underscore in BML filename. <- add fix to rmeove underscores
 - [ ] look into commerce function scroll on load code
 - [ ] Please you test script alert fix
 - [ ] remove unused files + references
-- [ ] adminCommerceContent.js
-- [ ] adminCommerceInjected.js
+  - [ ] adminCommerceContent.js
+  - [ ] adminCommerceInjected.js\
+- [ ] util functions should file into utility folder
+- [ ] futher build out file structure for rule types
+- [ ] Github SSO
