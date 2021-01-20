@@ -76,6 +76,29 @@ chrome.runtime.onMessage.addListener(
                 console.log(fileString);
                 fileString = lc + fileString.substring(1);
                 console.log(fileString);
+
+                // ACTION SPECIFIC LOGIC (BEFORE/AFTER + action_id)
+                // LABEL.AFTER/BEFORE.ACTION_ID
+
+                // BEFORE / AFTER
+                let fullTitle = document.title;
+                console.log(fullTitle);
+
+                if (document.title.includes("After")) {
+                    fileString += ".beforeFormulas";
+                } else if (document.title.includes("Before")) {
+                    fileString += ".afterFormulas";
+                }
+
+                // ACTION_ID
+                // console.log(document.url);
+                // body > table > tbody > tr > td > form > input[type=hidden]:nth-child(10)
+                let actionElements = document.getElementsByName("action_id");
+                console.log(actionElements);
+                console.log(actionElements[0]);
+                console.log(actionElements[0].value);
+                fileString += "." + actionElements[0].value;
+                console.log(fileString);
                 filename = fileString;
             };
             sendResponse({
@@ -108,6 +131,22 @@ if (document.getElementsByClassName("bottom-bar")[0].innerHTML.length > 0) {
     console.log(fileString);
     fileString = lc + fileString.substring(1);
     console.log(fileString);
+
+    // ACTION SPECIFIC LOGIC (BEFORE/AFTER + action_id)
+    // LABEL.AFTER/BEFORE.ACTION_ID
+
+    // BEFORE / AFTER
+    let fullTitle = document.getElementsByTagName("title");
+    console.log(fullTitle);
+
+    if (document.title.includes("After")) {
+        fileString += ".beforeFormulas";
+    } else if (document.title.includes("Before")) {
+        fileString += ".afterFormulas";
+    }
+
+    // ACTION_ID
+    console.log(document.url);
 };
 
 // TO CAMELCASE FUNCTION
