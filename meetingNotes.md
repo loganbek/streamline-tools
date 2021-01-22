@@ -1881,23 +1881,32 @@ BEFORE RELEASE
   - [ ] remove commments
   - [ ] unused permission check
   - [ ] unued injections?
-  - [ ] 
+  - [ ] remove unused cs + inject
 
 Future Work
 
 ALL
+
 - [ ] Github SSO
 
 CONFIG
 
 - [ ] Double Click Fix if Possible. (UX)
+- [ ] overlay on load
+  - [ ] hide background code?
 
 COMMERCE
 
 - [ ] test script alert fix
 - [ ] CH
-- [ ] look into automating command click on edit function click
+- [ ] look into automating command click on edit function click (rules + config)
 
 UTILITY
 
 - [ ] util functions correctly file under "Utilities" subfolder
+
+- settings alternate to downloads folder
+
+printer friendly XSL (can we do something here)
+integration XSL
+file manager
