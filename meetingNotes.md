@@ -1847,7 +1847,6 @@ WEBSTORE
 COMM RULES
 finish testing comm rules
 -[x] debug constrain rules function - constrainMultipleFreightGridSelects - downloads some weird chrome partial file (non BML). Seems to work fine today. Keep on eye out for partial downloads bug.
--[ ] look into automating command click on edit function click - LOW PRIORITY
 -[ ] rare scenario where underscore in BML filename. <- add fix to rmeove underscores
 
 COMM ACTIONS
@@ -1864,7 +1863,7 @@ COMM ACTIONS
 TODO:
 
 - [ ] look into automating command click on edit function click - LOW PRIORITY
-- [ ] rare scenario where underscore in BML filename. <- add fix to rmeove underscores
+- [ ] rare scenario where underscore in BML filename. <- add fix to remove underscores
 - [ ] look into commerce function scroll on load code
 - [ ] Please you test script alert fix
 - [ ] remove unused files + references
@@ -1873,3 +1872,28 @@ TODO:
 - [ ] util functions should file into utility folder
 - [ ] futher build out file structure for rule types
 - [ ] Github SSO
+
+1/21+22/20
+
+BEFORE RELEASE
+
+- [ ] code cleanup
+  - [ ] remove commments
+  - [ ] unused permission check
+  - [ ] unued injections?
+  - [ ] 
+
+Future Work
+
+CONFIG
+
+- [ ] Double Click Fix if Possible. (UX)
+
+COMMERCE
+
+- [ ] test script alert fix
+- [ ] look into automating command click on edit function click
+
+UTILITY
+
+- [ ] util functions correctly file under "Utilities" subfolder
