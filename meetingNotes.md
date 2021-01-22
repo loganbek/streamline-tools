@@ -1885,6 +1885,9 @@ BEFORE RELEASE
 
 Future Work
 
+ALL
+- [ ] Github SSO
+
 CONFIG
 
 - [ ] Double Click Fix if Possible. (UX)
@@ -1892,6 +1895,7 @@ CONFIG
 COMMERCE
 
 - [ ] test script alert fix
+- [ ] CH
 - [ ] look into automating command click on edit function click
 
 UTILITY
