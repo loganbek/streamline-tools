@@ -1914,3 +1914,12 @@ file manager
 1/23/20
 
 Work on Chrome Web Store Copy + Make new release
+
+Streamline your CPQ workflows, development, administration and maintenance.
+
+LOAD AND UNLOAD your BML scripts to and from Oracle CPQ Cloud.
+Use w/ your favorite Text Editor - Visual Studio Code.
+Manage your BML code w/ Git Versioning Control
+
+Please create any bugs/issues/feature requests [here](https://github.com/loganbek/streamlineTools/issues/new/choose).
+
