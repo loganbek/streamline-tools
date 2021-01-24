@@ -1907,6 +1907,10 @@ UTILITY
 
 - settings alternate to downloads folder
 
+TESTING
+
+Testing framework to look into - <https://github.com/cypress-io/cypress>
+
 printer friendly XSL (can we do something here)
 integration XSL
 file manager
