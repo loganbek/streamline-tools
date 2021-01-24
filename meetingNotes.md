@@ -1923,3 +1923,43 @@ Manage your BML code w/ Git Versioning Control
 
 Please create any bugs/issues/feature requests [here](https://github.com/loganbek/streamlineTools/issues/new/choose).
 
+Strip and rip from other chome extensions.
+
+<https://developer.chrome.com/docs/webstore/publish>
+
+- [ ] register as chrome developer
+- [ ] Google Analytics ID
+- [ ] Graphic Assets
+- [x] Store icon
+
+128x128 pixels
+
+Please ensure icon follows image guidelines
+
+Global assets
+Global promo video
+Youtube URL
+Enter a YouTube video URL
+
+- [ ] Screenshots + promo tiles
+
+Up to a maximum of 5
+
+Screenshots
+1280x800 or 640x400
+JPEG or 24-bit PNG (no alpha)
+
+Small promo tile
+440x280 Canvas
+JPEG or 24-bit PNG (no alpha)
+
+
+Large promo tile
+920x680 Canvas
+JPEG or 24-bit PNG (no alpha)
+
+
+
+Marquee promo tile
+1400x560 Canvas
+JPEG or 24-bit PNG (no alpha)
