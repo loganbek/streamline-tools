@@ -1957,12 +1957,9 @@ Small promo tile
 440x280 Canvas
 JPEG or 24-bit PNG (no alpha)
 
-
 Large promo tile
 920x680 Canvas
 JPEG or 24-bit PNG (no alpha)
-
-
 
 Marquee promo tile
 1400x560 Canvas
