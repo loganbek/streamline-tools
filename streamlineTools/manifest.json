@@ -1,6 +1,6 @@
 {
     "name": "Streamline Tools",
-    "version": "0.5.0",
+    "version": "0.7.0",
     "description": "Streamline Tools for Oracle CPQ Cloud!",
     "permissions": [
         "downloads",
@@ -24,7 +24,9 @@
         "jsonpath-1.0.2.js",
         "injected.js",
         "adminCommerceInjected.js",
-        "adminConfigInjected.js"
+        "adminConfigInjected.js",
+        "adminCommerceRulesInjected.js",
+        "adminCommerceActionsInjected.js"
     ],
     "page_action": {
         "default_popup": "popup.html",

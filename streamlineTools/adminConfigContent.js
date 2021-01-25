@@ -120,6 +120,118 @@ chrome.runtime.onMessage.addListener(
         } else if (request.greeting == "load") {
             let loadEvent = new CustomEvent("loadCode", { detail: request.code });
             window.dispatchEvent(loadEvent);
+            var elem = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
+            console.log(elem);
+
+            // WIP: LOAD TRIALS
+            // console.log("parent.editArea.textarea.value = code;" + "parent.editArea.textareaFocused = true");
+            textarea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
+            // textarea.value = code;
+
+            // SIMULATE CLICK TRIALS - WIP
+            console.log("simulateClickTrials");
+            simulateClick(textarea);
+            // simulateClick(elem);
+
+            // textarea.onchange();
+
+            // windowHook = window;
+            // simulateClick(windowHook);
+            // simulateClick(window);
+            // simulateClick(textarea.parent.elem);
+
+            //SIMULATE CLICK W/ INTERVAL
+            // var interval = setInterval(function() {
+            //     // document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea").click();
+            // }, 5000);
+
+            // textarea.parent.click;
+            // textarea.parent.click();
+
+            // var elem = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
+            // console.log(elem);
+
+            // $elem.trigger('click');
+            // you do a $('#textid').focus();
+
+            // var iContentBody = $(".iframe-content").contents().find("body");
+            // console.log("iContentBody");
+            // console.log(iContentBody);
+            // var endLetterSequenceNo = iContentBody.find(".iframe-content p").text();
+
+            // elem.click;
+            // elem.click();
+
+            // elem.focus();
+
+            // var closestElem = getClosest(elem, '#editor');
+            // var closestResult = getClosest(elem, "#result");
+            // // var closestSelection = getClosest(elem, "#selection_field_text"); <- BREAKING
+            // // var closestContentHighlight = getClosest(elem, "#content_highlight"); <- BREAKING
+
+            // var closestContainer = getClosest(elem, "#container");
+
+            // var closestBody = getClosest(elem, "body");
+            // console.log(closestContentHighlight);
+            //#container
+            // document.querySelector("#editor").click;
+            // document.querySelector("#editor").click();
+
+            // var x = event.clientX; // Get the horizontal coordinate
+            // var y = event.clientY; // Get the vertical coordinate
+            // var coor = "X coords: " + x + ", Y coords: " + y;
+            // console.log(coor);
+
+            // var cX = event.clientX;
+            // var sX = event.screenX;
+            // var cY = event.clientY;
+            // var sY = event.screenY;
+            // var coords1 = "client - X: " + cX + ", Y coords: " + cY;
+            // var coords2 = "screen - X: " + sX + ", Y coords: " + sY;
+
+            //             <div id="selection_field" class="" style="display: block; font-family: monospace; font-size: 10pt; line-height: 15px; top: 15px; width: 2468px;"><span></span><strong></strong><span>
+            // </span></div>
+
+
+            // var closestCursor = getClosest("#cursor_pos"); // errors
+
+            // console.log(closestSelection);
+            // console.log(closestContainer);
+            // console.log(closestResult);
+            // console.log(closestElem);
+            // console.log(closestBody);
+            // console.log(closestCursor);
+
+            // closestCursor.click;
+            // closestCursor.click();
+            // closestElem.click;
+            // closestContentHighlight.click;
+            // closestContentHighlight.click();
+
+            // closestSelection.click;
+            // closestSelection.click();
+
+            // closestBody.click;
+            // closestBody.click();
+
+            // closestContainer.click;
+            // closestContainer.click();
+
+            // closestContainer.focus();
+
+            // elem.click;
+            // elem.click();
+
+            // document.getElementById('elementId').dispatchEvent(new MouseEvent("click",{bubbles: true, cancellable: true}));
+
+            // closestElem.dispatchEvent(new MouseEvent("click"), { bubbles: true, cancellable: true });
+            // closestResult.dispatchEvent(new MouseEvent("click"), { bubbles: true, cancellable: true });
+
+            // closestElem.click();
+            // closestElem.click;
+
+            // closestResult.click();
+            // closestResult.click;
         } else if (request.greeting == "loadTest") {
             console.log(request.code);
             let loadTestEvent = new CustomEvent("loadTestCode", { detail: request.code });
@@ -177,7 +289,7 @@ if (document.querySelector("#x-auto-3-input")) {
 
 chrome.storage.sync.set({ 'filename': 'filename' }, function() {
     console.log("you saved me!!");
-    console.log(result.variable_name);
+    // console.log(result.variable_name);
 });
 
 chrome.storage.sync.get(['filename'], function(result) {
@@ -186,3 +298,162 @@ chrome.storage.sync.get(['filename'], function(result) {
         console.log(result.variable_name);
     }
 });
+
+/**
+ * Get the closest matching element up the DOM tree.
+ * @private
+ * @param  {Element} elem     Starting element
+ * @param  {String}  selector Selector to match against
+ * @return {Boolean|Element}  Returns null if not match found
+ */
+var getClosest = function(elem, selector) {
+
+    // Element.matches() polyfill
+    if (!Element.prototype.matches) {
+        Element.prototype.matches =
+            Element.prototype.matchesSelector ||
+            Element.prototype.mozMatchesSelector ||
+            Element.prototype.msMatchesSelector ||
+            Element.prototype.oMatchesSelector ||
+            Element.prototype.webkitMatchesSelector ||
+            function(s) {
+                var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+                    i = matches.length;
+                while (--i >= 0 && matches.item(i) !== this) {}
+                return i > -1;
+            };
+    }
+
+    // Get closest match
+    for (; elem && elem !== document; elem = elem.parentNode) {
+        if (elem.matches(selector)) return elem;
+    }
+
+    return null;
+
+};
+
+/**
+ * Get all of an element's parent elements up the DOM tree
+ * @param  {Node}   elem     The element
+ * @param  {String} selector Selector to match against [optional]
+ * @return {Array}           The parent elements
+ */
+var getParents = function(elem, selector) {
+
+    // Element.matches() polyfill
+    if (!Element.prototype.matches) {
+        Element.prototype.matches =
+            Element.prototype.matchesSelector ||
+            Element.prototype.mozMatchesSelector ||
+            Element.prototype.msMatchesSelector ||
+            Element.prototype.oMatchesSelector ||
+            Element.prototype.webkitMatchesSelector ||
+            function(s) {
+                var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+                    i = matches.length;
+                while (--i >= 0 && matches.item(i) !== this) {}
+                return i > -1;
+            };
+    }
+
+    // Setup parents array
+    var parents = [];
+
+    // Get matching parent elements
+    for (; elem && elem !== document; elem = elem.parentNode) {
+
+        // Add matching parents to array
+        if (selector) {
+            if (elem.matches(selector)) {
+                parents.push(elem);
+            }
+        } else {
+            parents.push(elem);
+        }
+
+    }
+
+    return parents;
+
+};
+
+/**
+ * Get all of an element's parent elements up the DOM tree until a matching parent is found
+ * @param  {Node}   elem     The element
+ * @param  {String} parent   The selector for the parent to stop at
+ * @param  {String} selector The selector to filter against [optionals]
+ * @return {Array}           The parent elements
+ */
+var getParentsUntil = function(elem, parent, selector) {
+
+    // Element.matches() polyfill
+    if (!Element.prototype.matches) {
+        Element.prototype.matches =
+            Element.prototype.matchesSelector ||
+            Element.prototype.mozMatchesSelector ||
+            Element.prototype.msMatchesSelector ||
+            Element.prototype.oMatchesSelector ||
+            Element.prototype.webkitMatchesSelector ||
+            function(s) {
+                var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+                    i = matches.length;
+                while (--i >= 0 && matches.item(i) !== this) {}
+                return i > -1;
+            };
+    }
+
+    // Setup parents array
+    var parents = [];
+
+    // Get matching parent elements
+    for (; elem && elem !== document; elem = elem.parentNode) {
+
+        if (parent) {
+            if (elem.matches(parent)) break;
+        }
+
+        if (selector) {
+            if (elem.matches(selector)) {
+                parents.push(elem);
+            }
+            break;
+        }
+
+        parents.push(elem);
+
+    }
+
+    return parents;
+
+};
+
+
+// var elem = document.querySelector('#some-element');
+// var parents = getParents(elem, '.some-class');
+// var allParents = getParents(elem.parentNode);
+
+// var elem = document.querySelector('#example');
+// var parents = getClosest(elem.parentNode, '[data-sample]');
+
+// var elem = document.querySelector('#some-element');
+// var parentsUntil = getParentsUntil(elem, '.some-class');
+// var parentsUntilByFilter = getParentsUntil(elem, '.some-class', '[data-something]');
+// var allParentsUntil = getParentsUntil(elem);
+// var allParentsExcludingElem = getParentsUntil(elem.parentNode);
+
+/**
+ * Simulate a click event.
+ * @public
+ * @param {Element} elem  the element to simulate a click on
+ */
+var simulateClick = function(elem) {
+    // Create our event (with options)
+    var evt = new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window
+    });
+    // If cancelled, don't dispatch our event
+    var canceled = !elem.dispatchEvent(evt);
+};

@@ -1,4 +1,4 @@
-//ADMIN COMMERCE INJECT
+//ADMIN COMMERCE ACTIONS INJECT
 
 window.addEventListener('load', function() {
     main();

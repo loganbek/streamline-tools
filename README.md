@@ -1,4 +1,4 @@
-# Streamline Tools v0.5.0-alpha
+# Streamline Tools v0.7.0-alpha
 
 ![Logo](SLCPQ_LOGO_SITE.png)
 
@@ -22,16 +22,13 @@ Streamline Tools for Oracle CPQ Cloud
 
 8) Install the "CPQ DevKit" Extension for VSCode found [here](https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-o).
 
-9) Enable the Native File System API via [chrome://flags#native-file-system-api](chrome://flags#native-file-system-api) flag.
+9) Congratulations you've successfully installed Streamline Tools!
 
-10) Congratulations you've successfully installed Streamline Tools!
+<!-- 9) Enable the Native File System API via [chrome://flags#native-file-system-api](chrome://flags#native-file-system-api) flag. TODO: may be able to remove this -->
 
-# Windows Installation
+<!-- ### Windows Installation
 
- - Ensure you have downloaded and installed git [here](https://git-scm.com/download/win)
-
-
-
+- Ensure you have downloaded and installed git [here](https://git-scm.com/download/win) -->
 
 <!-- ## TroublShooting Steps
 

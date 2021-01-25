@@ -903,13 +903,13 @@ Listeners to use multi atribute selector
 - [x] rewrite unloadTestCode +
 - [x] loadTestCode
 
-**UTIL TEST TEXT AREA**
+UTIL TEST TEXT AREA
 
 ```html
 <textarea style="width: 242px; height: 44px;" autocomplete="off" id="ext-comp-1055" name="testScript" class=" x-form-textarea x-form-field"></textarea>
 ```
 
-**COMMERCE TEST TEXT AREA**
+COMMERCE TEST TEXT AREA
 
 ```html
 <textarea style="width: 242px; height: 44px;" autocomplete="off" id="ext-comp-1080" name="testScript" class=" x-form-textarea x-form-field "></textarea>
@@ -1001,7 +1001,7 @@ document.querySelectorAll('iframe').forEach( item =>
 - [ ] Onboarding Dev Nick for testing/dev - WIP
   - [ ] ok to provide devmcnichols credentials?
   - [ ] also going to start testing in other environments (pgrtest2 or devplantronics)?
-- [ ] Agree upon - 
+- [ ] Agree upon -
 
 ## Deliverables For Next Time
 
@@ -1013,7 +1013,6 @@ document.querySelectorAll('iframe').forEach( item =>
 - [ ] finish configuration/commerce/utilities subfolders (all under commerce currently)
 
 ## 11/23/20
-
 
 ```html
 <input type="text" class=" x-form-field x-form-text" id="x-auto-3-input" name="varName" tabindex="0" style="width: 340px;" readonly="" disabled="">
@@ -1068,7 +1067,7 @@ result.variable_name
 #### 11/25/20
 
 - [x] continue config file testing
-- [ ] installation w/ @nickthegreekgod
+- [x] installation w/ @nickthegreekgod
 - [ ] schedule weekly testing w/ @nickthegreekgod
 - [x] comm filename rules dev
 
@@ -1093,8 +1092,879 @@ result.variable_name
 - [ ] E2E config rules testing
 - [ ] E2E commerce rules testing
 - [ ] log install streamline tools on windows partition
+- [x] installation w/ @nickthegreekgod
+
+####### 11/30/20
+
+- [ ] commerce actions smoke
+
+- fn fix -
+- /html/body/table[5]/tbody/tr/td[3]/form[2]/div[1]/table/tbody/tr[3]/td[2]/text()
+
+##### v - 0.7.0-alpha
 
 TODO:
 
-- [ ] add util + config subdirectories
-- [ ] look into config load editor highting (pretty sure theres a quick fix)
+- [ ] add util subdirectory
+- [x] add configuration subdirectory
+  - ```html <span class="x-panel-header-text" id="ext-gen55">Util BML Library Function Editor: Properties &amp; Parameters</span>```
+
+TEMP NOTES
+
+```html
+<textarea id="textarea" wrap="off" onchange="editArea.execCommand(&quot;onchange&quot;);" onfocus="javascript:editArea.textareaFocused=true;" onblur="javascript:editArea.textareaFocused=false;" style="width: 492px; height: 2325px; font-family: monospace; font-size: 10pt; line-height: 15px; margin-left: 0px; margin-top: 0px;" classname="null hidden" class="null hidden" spellcheck="false"> </textarea>
+```
+
+```css
+#textarea
+```
+
+```js
+document.querySelector("#textarea")
+```
+
+<https://stackoverflow.com/questions/4374793/accessing-current-tab-dom-object-from-a-chrome-extension>
+
+12/1+2/20
+
+- [ ] comm rules/action fn fix research
+- [ ] add util subdirectory
+- [x] config folder different icon <- checkout if this happens on other comps (non-issue (local mac vscode icon extension likely));
+
+SMOKE TEST CONFIG
+<https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=4954262&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true>
+hideRecommendedPartsArraySet - recommendation rule
+
+- [x] unload
+  - [x] load but had syntax highlight issue + does not auto validate
+setProcessingSheetField - recommendation rule
+
+<https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=4889573&rule_type=2&pline_id=-1&segment_id=11&model_id=-1&fromList=true>
+constraintProductTypesWhenProductAccessories - constraint rule
+
+- [x] unload
+- [x] load but had syntax highlight issue + does not auto validate
+
+12/3/20
+
+- [x] CONFIG - auto validate HTML collection - i think config is 95% complete
+- [ ] COMM - actions filename - tabs query?
+- [ ] COMM - rules filename -
+- [ ] add util subdirectory
+
+MEETING 12/3/20 - MSTGA - Make Streameline Tools Great Again
+Reastablishing our tool in the DOMinance hierarchy
+Grappling w/ complexity
+eloquent js - <https://eloquentjavascript.net/00_intro.html>
+
+DEMO - CONFIG
+TODO CLEANUP:
+
+- [x] minor config text exitor highlighting issue (may need another click (or on change or on blur) event).
+- [ ] remove unused permissions from manifest.json
+- [ ] maybe remove step 9 from install
+- [ ] DRY up
+
+- [ ] commerce action naming worse case scenario display name + id . bml
+
+<https://gomakethings.com/climbing-up-and-down-the-dom-tree-with-vanilla-javascript/>
+
+12/4/20
+
+- [ ] config parent click trials
+document.querySelector("#editor")
+/html/body/div[1]
+document.querySelector("#editor")
+
+MEH
+
+12/5/20
+
+- [x] DOM traversal methods
+  - [ ] what combinations can you try?
+  - [ ] 3 methods + different hooks
+    - [ ]
+- [x] continued click trials
+  - [ ] can you try from content instead? - MEH
+
+12/6+7/20
+
+let objectA = {a: 1, b: 2};
+Object.assign(objectA, {b: 3, c: 4});
+console.log(objectA);
+// → {a: 1, b: 3, c: 4}
+
+Maybe useful for comm fn
+
+  something w/ cursor position or selection?
+
+<https://gomakethings.com/detecting-clicks-inside-an-element-with-vanilla-javascript/>
+
+12/8/20
+
+- look into mouse positioning b4 click
+- learn about click + event propogation
+- related target
+  <https://www.w3schools.com/jsref/event_relatedtarget.asp>
+- [ ] <https://hackernoon.com/creating-popup-chrome-extensions-that-interact-with-the-dom-27b943978daf>
+- z index
+- maybe jquery is worht a shot
+  - <https://stackoverflow.com/questions/29811284/get-click-position-on-the-window>
+  - <https://javascript.info/coordinates>
+
+  - <https://css-tricks.com/simulating-mouse-movement/>
+
+DEVMCNICHOLS CPQ VERSION
+Version: 20B Patch 4
+Copyright © 2014, 2020, Oracle and/or its affiliates. All rights reserved.
+Confidential & Proprietary
+Patent: U.S. 8,578,265 B2. Additional Patents Pending.
+Release Date: 11/04/2020
+Build Date: 11/04/2020
+Build Number: Release_R2020_B_Patch4 1104 09:58
+
+  12/9/20
+
+- another round of config trials
+  - look into mouse positioning b4 click
+- learn about click + event propogation
+- related target
+  <https://www.w3schools.com/jsref/event_relatedtarget.asp>
+- [ ] <https://hackernoon.com/creating-popup-chrome-extensions-that-interact-with-the-dom-27b943978daf>
+- z index
+- maybe jquery is worht a shot
+  - <https://stackoverflow.com/questions/29811284/get-click-position-on-the-window>
+  - <https://javascript.info/coordinates>
+
+  - <https://css-tricks.com/simulating-mouse-movement/>\
+
+recreate document.querySelector("#container")?
+
+- build util
+
+/html/body/div[1]/div[3]/div[2]/textarea
+
+<https://stackoverflow.com/questions/10596417/is-there-a-way-to-get-element-by-xpath-using-javascript-in-selenium-webdriver>
+
+```js
+function getElementByXpath(path) {
+  return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+}
+```
+
+console.log( getElementByXpath("//html[1]/body[1]/div[1]") );
+
+  textarea#textarea.null.hidden
+HTMLTextAreaElement
+HTMLElement
+Element
+Node
+EventTarget
+Object
+
+2021
+<https://blog.oauth.io/how-to-add-github-social-login-button/>
+<https://stackoverflow.com/questions/7237894/how-do-i-make-a-signup-with-github-button-like-the-one-on-coderwall>
+<https://eloquentjavascript.net/03_functions.html>
+  
+  ```html
+  <a class="btn btn-block btn-social btn-github">
+    <span class="fa fa-github"></span> Sign in with Github
+  </a>
+  ```
+
+<https://stackoverflow.com/questions/65091074/jquery-how-to-change-one-click-to-two-clicks-in-specific-case>
+
+COMMAND LINE MERGE
+Step 1: From your project repository, bring in the changes and test.
+
+git fetch origin
+git checkout -b v0.7.0-alpha origin/v0.7.0-alpha
+git merge master
+Step 2: Merge the changes and update on GitHub.
+
+git checkout master
+git merge --no-ff v0.7.0-alpha
+git push origin master
+
+12/12 + 13/20
+
+- config work
+- commerce work
+
+- look into mouse positioning b4 click
+- learn about click + event propogation
+- related target
+  <https://www.w3schools.com/jsref/event_relatedtarget.asp>
+- [ ] <https://hackernoon.com/creating-popup-chrome-extensions-that-interact-with-the-dom-27b943978daf>
+- z index
+- maybe jquery is worht a shot
+  - <https://stackoverflow.com/questions/29811284/get-click-position-on-the-window>
+  - <https://javascript.info/coordinates>
+
+  - <https://css-tricks.com/simulating-mouse-movement/>
+
+maybe re create this element
+
+```html
+<div id="selection_field" class="" style="display: block; font-family: monospace; font-size: 10pt; line-height: 15px; top: 15px; width: 2468px;"><span></span><strong></strong><span>
+            // </span></div>
+```
+
+updated desktop chrome - version
+Google Chrome is up to date
+Version 87.0.4280.88 (Official Build) (x86_64)
+
+- [x] check alert - injected.js - alert("Please Check - Use Test Script."); x3 on - email notification generator
+- test script - test
+
+- config grind
+
+- [x] config error - Error handling response: ReferenceError: result is not defined
+    at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/adminConfigContent.js:267:17
+adminConfigContent.js:272
+
+Visual Studio Code Update
+Version: 1.52.0
+Commit: 940b5f4bb5fa47866a54529ed759d95d09ee80be
+Date: 2020-12-10T22:46:53.673Z
+Electron: 9.3.5
+Chrome: 83.0.4103.122
+Node.js: 12.14.1
+V8: 8.3.110.13-electron.0
+OS: Darwin x64 19.6.0
+
+Meeting 12/17/20
+
+- [ ] parent.area
+- [ ] maybe key down
+  - var keyboardEvent = new KeyboardEvent('keypress', {bubbles:true});
+Object.defineProperty(keyboardEvent, 'charCode', {get:function(){return this.charCodeVal;}});
+- keyboardEvent.charCodeVal = [your char code];
+- document.body.dispatchEvent(keyboardEvent);
+- <https://stackoverflow.com/questions/1897333/firing-a-keyboard-event-on-chrome/23812767#23812767>
+- maybe remove null/hidden class from classList - .remove("foo");
+- <https://gomakethings.com/how-to-simulate-a-click-event-with-javascript/>
+
+INJECTED
+
+- [x] simulate click trial; NOGO
+- [x] simulate click trials w/ interval;
+- [x] simulate click trials w/o validate;
+- [ ] simulate click trials w/ validate interval;
+- [ ]
+
+CONTENT
+
+- [ ] simulate click trial; NOGO
+- [ ] simulate click trials w/ interval;
+- [ ] simulate click trials w/o validate;
+- [ ] simulate click trials w/ validate interval;
+
+- loadcode listener?
+
+jquery trigger?
+
+- post meet
+- work config til monday and then switch to comm
+
+12/20/20
+
+jquery trigger - <https://api.jquery.com/trigger/>
+jquery trigger handler - <https://api.jquery.com/triggerhandler/>
+<https://stackoverflow.com/questions/20928915/how-to-get-jquery-triggerclick-to-initiate-a-mouse-click>
+<https://stackoverflow.com/questions/3979041/jquery-triggerclick/54404180>
+<https://stackoverflow.com/questions/11486630/jquery-trigger-click-vs-click/11486648>
+
+this.find jquery
+
+```js
+$(".btn, .btn2").on('click',function () {
+    $($(".a")[0]).trigger('click'); // first element
+});
+
+$(".a").on('click', function (e){
+    alert(e.target);
+});​
+```
+
+```js
+$( "#foo" ).on( "click", function() {
+  alert( $( this ).text() );
+});
+$( "#foo" ).trigger( "click" );
+```
+
+```js
+$( "#foo" ).on( "custom", function( event, param1, param2 ) {
+  alert( param1 + "\n" + param2 );
+});
+$( "#foo").trigger( "custom", [ "Custom", "Event" ] );
+```
+
+TRIGGER TRIALS
+
+```js
+$( "#textrea" ).on( "click", function() {
+  alert( $( this ).text() );
+});
+$( "#textrea" ).trigger( "click" );
+```
+
+```js
+var jq = document.createElement('script');
+jq.src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js";
+document.getElementsByTagName('head')[0].appendChild(jq);
+// ... give time for script to load, then type (or see below for non wait option)
+jQuery.noConflict();
+```
+
+```js
+$('textarea').last().click();
+
+$('textarea').last().on( "click", function() {
+  alert( $( this ).text() );
+});
+
+$( "#textrea" ).last().trigger( "click" );
+
+```
+
+12/21+22/20
+
+commerce rules trial
+
+```js
+document.getElementsByName('varName')[0].value
+```
+
+- [ ] try chrome local instead of sync
+
+```JS
+chrome.storage.local.set({key: value}, function() {
+  console.log('Value is set to ' + value);
+});
+
+chrome.storage.local.get(['key'], function(result) {
+  console.log('Value currently is ' + result.key);
+});
+```
+
+- [ ] background script
+  - <https://developer.chrome.com/docs/extensions/reference/runtime/#method-sendMessage>
+- debugging
+  <https://stackoverflow.com/questions/3829150/google-chrome-extension-console-log-from-background-page>
+  <https://developer.chrome.com/docs/extensions/mv2/messaging/>
+
+```js
+// REQUEST FROM CONTENT SCRIPT
+chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
+  console.log(response.farewell);
+});
+```
+
+```js
+// EXTENSION TO CONTENT SCRIPT
+chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello"}, function(response) {
+    console.log(response.farewell);
+  });
+});
+```
+
+```js
+//RECEIVING END
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    console.log(sender.tab ?
+                "from a content script:" + sender.tab.url :
+                "from the extension");
+    if (request.greeting == "hello")
+      sendResponse({farewell: "goodbye"});
+  }
+);
+```
+
+- [x] comm fn rules functions
+  - works w/ click on previous tab
+    - [ ] query dom with message passing?
+- add [x] <https://devmcnichols.bigmachines.com/admin/commerce/actions/list_actions.jsp?doc_id=4653823> to page state matcher
+- [x] comm fn actions functions
+
+12/23/20
+
+###### ACTIONS TODO
+
+- [x] distinguish between before and after
+- IF TITLE CONTAINS
+- [ ] store varname without popup click - query previous tab in popup instead of save from content script
+  <https://developer.chrome.com/docs/extensions/reference/tabs/>
+
+###### RULES TODO
+
+- [ ] store varname without popup click
+
+###### CONFIG TODO
+
+- [ ] try to find way around having to click post load.
+
+Meeting 12/24/20
+
+Status Update
+
+###### Publishing to Chrome Webstore
+
+<https://developer.chrome.com/docs/webstore/publish/>
+Pay the $5 registration fee 2 Register as Chrome Web Store Developer
+<https://chrome.google.com/webstore/devconsole/register>
+
+##### Manifest V3
+
+<https://developer.chrome.com/docs/extensions/mv3/intro/>
+
+- Published on Monday, November 9, 2020
+
+new button for commerce actions and rules
+
+button that opens define function before after in new tab instead of window
+
+12/27/20
+
+####### ACTIONS TODO
+
+- [x] distinguish between before and after
+- IF TITLE CONTAINS
+- [ ] store varname without popup click - query previous tab in popup instead of save from content script
+  <https://developer.chrome.com/docs/extensions/reference/tabs/>
+  - define function link -
+
+```js  
+<a class="button-text" name="define_function" id="define_function" href="#">Define Function</a> <->
+```
+
+```html
+  <table onclick="javascript:editPreModifyFunction();bmCancelBubble(event)" onmouseover="bmButtonMouseOver(this,'javascript:editPreModifyFunction()')" onmousedown="bmButtonMouseDown(this,'javascript:editPreModifyFunction()')" onmouseup="bmButtonMouseUp(this,'javascript:editPreModifyFunction()')" onmouseout="bmButtonMouseOut(this,'javascript:editPreModifyFunction()')" class="plain-button" cellspacing="0" cellpadding="0" role="button" aria-label="Define Function" style="cursor: pointer;">
+ <tbody><tr>
+  <td class="button-left"><img class="button-left" src="/img/button10.gif"></td>
+  <td class="button-middle" nowrap="true"><div style="margin: 0px 0px 1px;"><a class="button-text" name="define_function" id="define_function" href="#">Define Function</a></div></td>  <td class="button-right"><img class="button-right" src="/img/button10.gif"></td>
+ </tr>
+</tbody></table>
+```
+
+12/27/20
+
+####### RULES TODO
+
+- [ ] store varname without popup click
+  - [ ] TODO: finish new tab query
+
+####### CONFIG TODO
+
+- [ ] try to find way around having to click post load.
+
+####### Chrome Web Store Description
+<https://chrome.google.com/webstore/category/extensions?hl=en>
+
+Overview
+
+GIF/Demo Video
+
+Chrome Web Store: <>
+
+Streamline your CPQ workflows, development, administration and maintenance.
+
+LOAD AND UNLOAD your BML scripts to and from Oracle CPQ Cloud.
+Use w/ your favorite Text Editor - Visual Studio Code.
+Manage your BML code w/ Git Versioning Control
+
+Please create any bugs/issues/feature requests [here](https://github.com/loganbek/streamlineTools/issues/new/choose).
+
+12/28/20
+
+Store listing
+Product details
+For all languages
+
+Title from package
+
+Streamline Tools
+Summary from package
+
+Streamline Tools for Oracle CPQ Cloud!
+Description*
+0 / 16000
+Focus on explaining what the item does and why users should install it
+Category*
+
+Developer Tools
+arrow_drop_downarrow_drop_down
+Language*
+
+English (United States)
+arrow_drop_downarrow_drop_down
+Specifying your item’s language will help users find it. If you support multiple languages, then you should internationalize your item. Learn more
+Graphic assets
+Screenshot ordering on this dashboard is not yet available. For now please use the old dashboard to order screenshots.
+
+Store icon
+
+128x128 pixels
+
+Please ensure icon follows image guidelines
+
+Global assets
+Global promo video
+Youtube URL
+Enter a YouTube video URL
+
+Screenshots
+
+Up to a maximum of 5
+
+1280x800 or 640x400
+
+JPEG or 24-bit PNG (no alpha)
+
+At least one is required
+
+Drop image here
+
+Small promo tile
+
+440x280 Canvas
+
+JPEG or 24-bit PNG (no alpha)
+
+Drop image here
+
+Large promo tile
+
+920x680 Canvas
+
+JPEG or 24-bit PNG (no alpha)
+
+Drop image here
+
+Marquee promo tile
+
+1400x560 Canvas
+
+JPEG or 24-bit PNG (no alpha)
+
+Drop image here
+
+Additional fields
+Official URL
+
+None
+arrow_drop_downarrow_drop_down
+Or Add a new site
+If your item is associated with a website that you own, select that website from the list. You can register as the owner for a site using Google Search Console.
+Homepage URL
+Homepage URL
+Link to website for your item
+
+Support URL
+Support URL
+Providing the URLs for description and support pages can improve your users’ experience and help make this item’s ratings and comments more meaningful.
+Mature content
+Examples of mature content include sexual and suggestive content, strong language, violence, or a focus on the consumption or sale of alcohol, tobacco, or drugs. Learn more
+Google analytics ID
+UA-
+Specify your Google Analytics ID here if you’d like to use Google Analytics to track your item
+
+12/31/20
+
+- [ ] finish rules tab query
+- [ ] finish actions tab query
+
+TODO LATER:
+
+####### RULES TODO
+
+- [ ] store varname without popup click
+  - [ ] TODO: finish new tab query
+  RULES
+    - [ ] 1st URL: <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?document_id=4653823&process_id=4653759>
+    - [ ] 2nd URL: <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_function.jsp>
+    - [ ] /html/body/div[1]/div/div[2]/div[2]/div[1]/div[2]/div[3]/div[2]/div[2]/div[1]/div/div/div/div/div[2]/div[3]/table/tbody/tr[2]/td[2]/em/button/text()
+    - [ ] document.querySelector("#x-auto-430 > tbody > tr:nth-child(2) > td.x-btn-mc > em > button")
+    - edit functoin button listener
+    - document.querySelector("#x-auto-430 > tbody > tr:nth-child(2) > td.x-btn-mc > em > button")
+    - 4 dif tabt titles
+      - Commerce Rule Editor
+      - <https://sung.codes/blog/2019/02/17/getting-dom-content-from-chrome-extension-2>
+      - maybe try out lastFocusedWindow
+
+  ACTIONS
+  - 1st URL - <https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=4723726&doc_id=4653823>
+    - 2nd URL - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=472372>
+    - 3rd URL - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_function.jsp>
+
+####### CONFIG TODO
+
+- [ ] try to find way around having to click post load.
+
+####### BOTH
+
+- [ ] use tab.title to further break out file structure (comm rules + actions)
+MEETING PRE/POST NEW YEAR
+- [ ] google analytics
+- [ ] web store assets
+
+use for context menu?
+
+START WEB STORE PROCESS
+NPM PACKAGE? - <https://docs.github.com/en/free-pro-team@latest/packages/guides/configuring-npm-for-use-with-github-packages>
+can invoke browser or page action to capture comm fn? - meh
+look into service workers and promises
+
+MV3 Deprecation API
+Sunset for deprecated APIs
+There are a number of APIs that have long been deprecated. Manifest V3 finally removes support for these deprecated APIs. These include:
+
+chrome.extension.sendRequest()
+chrome.extension.onRequest
+chrome.extension.onRequestExternal
+chrome.extension.lastError
+chrome.extension.getURL()
+chrome.extension.getExtensionTabs()
+chrome.tabs.Tab.selected
+chrome.tabs.sendRequest()
+chrome.tabs.getSelected()
+chrome.tabs.getAllInWindow()
+chrome.tabs.onSelectionChanged
+chrome.tabs.onActiveChanged
+chrome.tabs.onHighlightChanged
+As well as the undocumented:
+
+chrome.extension.sendMessage()
+chrome.extension.connect()
+chrome.extension.onConnect
+chrome.extension.onMessage
+If your extensions use any of these deprecated APIs, you’ll need to make the appropriate changes when you migrate to MV3.
+
+<https://developer.chrome.com/docs/extensions/mv3/mv3-migration-checklist/>
+
+- <https://www.udemy.com/course/google-chrome-extension/?couponCode=HAPPYNEWYEAR>
+
+query prev tab for
+
+```html
+<input type="text" class=" x-form-field x-form-text" id="x-auto-214-input" name="varName" tabindex="0" style="width: 260px;" readonly="" disabled="">
+```
+
+- BM sandbox ( no client ) for testing ? - im sure licensing is teh wurst
+
+1/11/21
+
+- popup unload on click - add check for url and then write 2 tab querys
+- content script listener w/ name query
+
+- [ ] tab query + send message to adminContentCommerce.js content script
+
+1/13/21
+
+- [ ] map unload click path
+POPUP
+  - `<button id="unload"> Unload BML <i class="material-icons md-18">keyboard_arrow_right</i><i class="material-icons md-18">keyboard_arrow_right</i></button>`
+
+- `unloadButton.onclick = function(params) {`
+
+    ```js
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, { greeting: "unload" }, function(response) {
+            //             console.log(response.filename);
+    - adminCommerceContent.js
+    ```
+
+```js
+
+//POPUP UNLOAD QUERY
+chrome.tabs.query({currentWindow: true}), function(tabs){
+    chrome.tabs.sendMessage(tabs[0].id, { greeting: "getCommerceFilename" }, function(response) {
+    consoleonsole.log(response.commerceFileName);
+    });
+});
+
+```
+
+```js
+
+chrome.tabs.query({currentWindow: true}, function(result) {
+    result.forEach(function(tab) {
+//         do stuff here;
+        console.log("TABID");
+        console.log(tab.id);
+        console.log("TABNAME");
+        console.log(tab.name);
+    });
+});
+```
+
+####### NEXT MEETING
+
+STATUS UPDATE
+
+- [ ]
+
+Streamline Tools v0.0.8-alpha
+Streamline Tools v1.0.0-beta <- Chrome Webstore Release
+<https://semver.org/>
+<https://git-scm.com/book/en/v2/Git-Basics-Tagging>
+
+- [ ] Status of Non Client Connected env??? - I know Oracle is prob klibby around this.
+
+- [ ] Webstore Process + assets
+
+1/18/20
+
+make streamline tools commerce actions and rules great finally
+
+- [x] break into adminCommerceRulesContent.js + adminCommerceActionsContent.js
+- [ ] try sending message from background script?
+  <https://stackoverflow.com/questions/14245334/sendmessage-from-extension-background-or-popup-to-content-script-doesnt-work>
+
+###### COMM RULES URLS
+
+COMM RULE VARNAME PAGE - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?document_id=4653823&process_id=4653759>
+COMM RULE EDITOR PAGE - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_function.jsp>
+
+```html document.getElementsByClassName("bottom-bar")[0].innerHTML;```
+
+###### COMM ACTIONS URLS
+
+COMM ACTION FULL VARNAME LIST - <https://devmcnichols.bigmachines.com/admin/commerce/actions/list_actions.jsp?doc_id=4653823>
+COMM ACTION VARNAME PAGE - <https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=54983795&doc_id=4653823>
+COMM ACTION EDITOR PAGE - <https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=54983795>
+
+WEBSTORE
+
+- [ ] run through webstore process + assets
+
+1/19/20
+
+COMM RULES
+finish testing comm rules
+-[x] debug constrain rules function - constrainMultipleFreightGridSelects - downloads some weird chrome partial file (non BML). Seems to work fine today. Keep on eye out for partial downloads bug.
+-[ ] rare scenario where underscore in BML filename. <- add fix to rmeove underscores
+
+COMM ACTIONS
+
+- [x] apply similiar logic from comm rules content script
+- [ ] comm actions testing
+
+1/20/20
+
+- [x] test
+- [ ] code quality / comments / console log
+- [ ] weave into master
+
+TODO:
+
+- [ ] look into automating command click on edit function click - LOW PRIORITY
+- [ ] rare scenario where underscore in BML filename. <- add fix to remove underscores
+- [ ] look into commerce function scroll on load code
+- [ ] Please you test script alert fix
+- [ ] remove unused files + references
+  - [ ] adminCommerceContent.js
+  - [ ] adminCommerceInjected.js\
+- [ ] util functions should file into utility folder
+- [ ] futher build out file structure for rule types
+- [ ] Github SSO
+
+1/21+22/20
+
+BEFORE RELEASE
+
+- [ ] code cleanup
+  - [ ] remove commments
+  - [ ] unused permission check
+  - [ ] unued injections?
+  - [ ] remove unused cs + inject
+
+Future Work
+
+ALL
+
+- [ ] Github SSO
+
+CONFIG
+
+- [ ] Double Click Fix if Possible. (UX)
+- [ ] overlay on load
+  - [ ] hide background code?
+
+COMMERCE
+
+- [ ] test script alert fix
+- [ ] CH
+- [ ] look into automating command click on edit function click (rules + config)
+
+UTILITY
+
+- [ ] util functions correctly file under "Utilities" subfolder
+
+- settings alternate to downloads folder
+
+TESTING
+
+Testing framework to look into - <https://github.com/cypress-io/cypress>
+
+printer friendly XSL (can we do something here)
+integration XSL
+file manager
+
+1/23+24/20
+
+Work on Chrome Web Store Copy + Make new release
+
+Streamline your CPQ workflows, development, administration and maintenance.
+
+<https://github.com/loganbek/streamlineTools/issues>
+
+####### DESCRIPTION - Focus on explaining what the item does and why users should install it
+LOAD AND UNLOAD your BML scripts to and from Oracle CPQ Cloud.
+Use w/ your favorite Text Editor - Visual Studio Code.
+Manage your BML code w/ Git Versioning Control
+
+Please create any bugs/issues/feature requests [here](https://github.com/loganbek/streamlineTools/issues/new/choose).
+
+Strip and rip from other chome extensions.
+
+<https://developer.chrome.com/docs/webstore/publish>
+
+- [ ] register as chrome developer
+- [ ] Google Analytics ID
+- [ ] Graphic Assets
+- [x] Store icon
+- [ ] Permission justification
+
+128x128 pixels
+
+Please ensure icon follows image guidelines
+
+Global assets
+Global promo video
+Youtube URL
+Enter a YouTube video URL
+
+- [ ] Screenshots + promo tiles
+
+Up to a maximum of 5 screenshots
+
+Screenshots
+1280x800 or 640x400
+JPEG or 24-bit PNG (no alpha)
+
+Small promo tile
+440x280 Canvas
+JPEG or 24-bit PNG (no alpha)
+
+Large promo tile
+920x680 Canvas
+JPEG or 24-bit PNG (no alpha)
+
+Marquee promo tile
+1400x560 Canvas
+JPEG or 24-bit PNG (no alpha)
