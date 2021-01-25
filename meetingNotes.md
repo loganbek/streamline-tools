@@ -1938,6 +1938,7 @@ Strip and rip from other chome extensions.
 - [ ] Google Analytics ID
 - [ ] Graphic Assets
 - [x] Store icon
+- [ ] Permission justification
 
 128x128 pixels
 
