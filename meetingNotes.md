@@ -1915,12 +1915,15 @@ printer friendly XSL (can we do something here)
 integration XSL
 file manager
 
-1/23/20
+1/23+24/20
 
 Work on Chrome Web Store Copy + Make new release
 
 Streamline your CPQ workflows, development, administration and maintenance.
 
+<https://github.com/loganbek/streamlineTools/issues>
+
+####### DESCRIPTION - Focus on explaining what the item does and why users should install it
 LOAD AND UNLOAD your BML scripts to and from Oracle CPQ Cloud.
 Use w/ your favorite Text Editor - Visual Studio Code.
 Manage your BML code w/ Git Versioning Control
@@ -1947,7 +1950,7 @@ Enter a YouTube video URL
 
 - [ ] Screenshots + promo tiles
 
-Up to a maximum of 5
+Up to a maximum of 5 screenshots
 
 Screenshots
 1280x800 or 640x400
