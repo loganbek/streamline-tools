@@ -1911,6 +1911,7 @@ TESTING
 
 Testing framework to look into - <https://github.com/cypress-io/cypress>
 
+OTHER AREAS OF SITE
 printer friendly XSL (can we do something here)
 integration XSL
 file manager
