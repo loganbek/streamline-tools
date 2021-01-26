@@ -1977,4 +1977,7 @@ JPEG or 24-bit PNG (no alpha)
   - [ ] fix alert x multiple
 - [ ] content.js
   - [ ] CH
+  - [ ] check util load validate
 - [ ] finish unused code + comment removal round 2
+
+Look @ other CWS extensions to get ideas for description, screenshots, + demo
