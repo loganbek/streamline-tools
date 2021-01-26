@@ -1,7 +1,5 @@
+// PRICING + UTIL CONTENT SCRIPT
 // let commentHeader = commentHeader || "";
-// if(typeof commentHeader !== 'undefined'){
-//     alert("Variable x is defined.");
-//   }
 var commentHeader = "";
 var code = "";
 var testCode = "";
@@ -78,9 +76,7 @@ chrome.runtime.onMessage.addListener(
             sendResponse({
                 filename: filename
             });
-            // return true;
         }
-        // return true;
     });
 
 
@@ -91,29 +87,3 @@ function newFunction(filename) {
     }
     return filename;
 }
-//MORE TECENT CONTENT SCRIPT MANIFEST
-// "content_scripts": [{
-//     "matches": ["*://*.bigmachines.com/spring/*"],
-//     "js": ["content.js"]
-// },
-// {
-//     "matches": ["*://*.bigmachines.com/admin/commerce/rules/*"],
-//     "js": ["content.js"]
-// },
-// {
-//     "matches": ["*://*.bigmachines.com/admin/configuration/rules/*"],
-//     "js": ["content.js"]
-// }
-// ],
-
-//OLD CONTENT SCRIPT MANIFEST
-// "content_scripts": [{
-//     "matches": [
-//         "*://*.bigmachines.com/*"
-//     ],
-//     "js": [
-//         "jsonpath-1.0.2.js",
-//         "content.js"
-//     ],
-//     "all_frames": true
-// }],
