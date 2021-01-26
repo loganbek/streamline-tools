@@ -1926,8 +1926,10 @@ Streamline your CPQ workflows, development, administration and maintenance.
 
 ####### DESCRIPTION - Focus on explaining what the item does and why users should install it
 LOAD AND UNLOAD your BML scripts to and from Oracle CPQ Cloud.
-Use w/ your favorite Text Editor - Visual Studio Code.
-Manage your BML code w/ Git Versioning Control
+Use with your favorite Text Editor - Visual Studio Code instead of the web based editors.
+Manage your BML code using Git Versioning Control. 
+Something about auto "check" and "validate" to improve code quality
+
 
 Please create any bugs/issues/feature requests [here](https://github.com/loganbek/streamlineTools/issues/new/choose).
 
@@ -1972,6 +1974,7 @@ JPEG or 24-bit PNG (no alpha)
 
 1/25+26/20
 
+- [ ] look through CPQ docs for copy
 - [ ] finish unused code + comment removal
 - [ ] injected.js
   - [ ] fix alert x multiple
