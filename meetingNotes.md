@@ -1969,3 +1969,12 @@ JPEG or 24-bit PNG (no alpha)
 Marquee promo tile
 1400x560 Canvas
 JPEG or 24-bit PNG (no alpha)
+
+1/25+26/20
+
+- [ ] finish unused code + comment removal
+- [ ] injected.js
+  - [ ] fix alert x multiple
+- [ ] content.js
+  - [ ] CH
+- [ ] finish unused code + comment removal round 2
