@@ -1928,7 +1928,7 @@ Streamline your CPQ workflows, development, administration and maintenance.
 LOAD AND UNLOAD your BML scripts to and from Oracle CPQ Cloud.
 Use with your favorite Text Editor - Visual Studio Code instead of the web based editors.
 Manage your BML code using Git Versioning Control. 
-Something about auto "check" and "validate" to improve code quality
+Auto "check" and "validate" to improve code quality and boost efficiency.
 
 
 Please create any bugs/issues/feature requests [here](https://github.com/loganbek/streamlineTools/issues/new/choose).
@@ -1938,7 +1938,7 @@ Strip and rip from other chome extensions.
 <https://developer.chrome.com/docs/webstore/publish>
 
 - [ ] register as chrome developer
-- [ ] Google Analytics ID
+- [x] Google Analytics ID - 260194142
 - [ ] Graphic Assets
 - [x] Store icon
 - [ ] Permission justification
