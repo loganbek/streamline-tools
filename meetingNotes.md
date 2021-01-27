@@ -1926,7 +1926,7 @@ Streamline your CPQ workflows, development, administration and maintenance.
 
 ####### DESCRIPTION - Focus on explaining what the item does and why users should install it
 
-Streamline your CPQ workflows, development, administration and maintenance.
+Streamline your Oracle CPQ workflows, development, administration and maintenance.
 LOAD AND UNLOAD your BML scripts to and from Oracle CPQ Cloud.
 Use with your favorite Text Editor - Visual Studio Code instead of the Big Machines web based editors.
 Manage your BML code using Git versioning control.
