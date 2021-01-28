@@ -1985,3 +1985,10 @@ JPEG or 24-bit PNG (no alpha)
 - [ ] finish unused code + comment removal round 2
 
 Look @ other CWS extensions to get ideas for description, screenshots, + demo
+
+1/27/20
+
+MEETING
+
+status update
+screen grabs (blur out dev minichy stuff)
