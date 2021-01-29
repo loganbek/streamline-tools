@@ -1992,3 +1992,7 @@ MEETING
 
 status update
 screen grabs (blur out dev minichy stuff)
+
+- [x] restore the rm contentscripts you should nt have rmd
+adminCommerceRulesContent.js
+adminCommerceRulesInjected.js
