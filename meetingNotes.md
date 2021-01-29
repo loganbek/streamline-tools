@@ -1927,7 +1927,7 @@ Streamline your CPQ workflows, development, administration and maintenance.
 ####### DESCRIPTION - Focus on explaining what the item does and why users should install it
 
 Streamline your Oracle CPQ workflows, development, administration and maintenance.
-LOAD AND UNLOAD your BML scripts to and from Oracle CPQ Cloud.
+LOAD and UNLOAD your BML scripts to and from Oracle CPQ Cloud.
 Use with your favorite Text Editor - Visual Studio Code instead of the Big Machines web based editors.
 Manage your BML code using Git versioning control.
 Auto "check" and "validate" to improve code quality and debugging efficiency.
@@ -1938,7 +1938,7 @@ Strip and rip from other chome extensions.
 
 <https://developer.chrome.com/docs/webstore/publish>
 
-- [ ] register as chrome developer
+- [x] register as chrome developer
 - [x] Google Analytics ID - 260194142
 - [ ] Graphic Assets
 - [x] Store icon
