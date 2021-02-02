@@ -1911,7 +1911,7 @@ TESTING
 
 Testing framework to look into - <https://github.com/cypress-io/cypress>
 
-OTHER AREAS OF SITE
+RESEARCH OTHER AREAS OF SITE
 printer friendly XSL (can we do something here)
 integration XSL
 file manager
@@ -1996,3 +1996,11 @@ screen grabs (blur out dev minichy stuff)
 - [x] restore the rm contentscripts you should nt have rmd
 adminCommerceRulesContent.js
 adminCommerceRulesInjected.js
+
+- [ ] fix remaining bugs and retest entire application
+- [ ] edit chrome web store assets and blur client information.
+- [ ] 
+
+Write a long description for the Web Store? Can we strip and rip copy from another chrome extension on the store - maybe the web dev app or another developer tool app.
+
+need to just let your consciousness stream and see if we can get some halfrway devent copy in dis bitch.
