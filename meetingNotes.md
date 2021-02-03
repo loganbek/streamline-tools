@@ -2002,5 +2002,3 @@ adminCommerceRulesInjected.js
 - [ ] 
 
 Write a long description for the Web Store? Can we strip and rip copy from another chrome extension on the store - maybe the web dev app or another developer tool app.
-
-need to just let your consciousness stream and see if we can get some halfrway devent copy in dis bitch.
