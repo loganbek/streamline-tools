@@ -2006,7 +2006,7 @@ Write a long description for the Web Store? Can we strip and rip copy from anoth
 
 List of final tasks before first release:
 
-- [ ] What else do you need to complete the Chrome Web Store Application Process
+- [ ] What else do you need to complete the Chrome Web Store Application Process?
   - [ ] permission cleanup
   - [ ] permission justification
   - [ ] edit chrome web store assets and blur client information.
