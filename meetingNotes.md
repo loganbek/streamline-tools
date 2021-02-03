@@ -1999,6 +1999,30 @@ adminCommerceRulesInjected.js
 
 - [ ] fix remaining bugs and retest entire application
 - [ ] edit chrome web store assets and blur client information.
-- [ ] 
 
 Write a long description for the Web Store? Can we strip and rip copy from another chrome extension on the store - maybe the web dev app or another developer tool app.
+
+2/2/21
+
+List of final tasks before first release:
+
+- [ ] What else do you need to complete the Chrome Web Store Application Process
+  - [ ] permission cleanup
+  - [ ] permission justification
+  - [ ] edit chrome web store assets and blur client information.
+  - [ ] email Chris copy + assets and get A OK
+  - [ ] submit first version for review
+
+- [ ] Dev/Bug Fixes
+  - [ ] look through CPQ docs for useable copy
+  - [ ] finish unused code + comment removal
+  - [ ] injected.js
+    - [ ] fix alert x multiple
+  - [ ] content.js
+    - [ ] CH
+    - [ ] check util load validate
+  - [ ] finish unused code + comment removal round 2
+
+MEETING 2/4/21
+
+Status Update
