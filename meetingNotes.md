@@ -2008,6 +2008,18 @@ List of final tasks before first release:
 
 - [ ] What else do you need to complete the Chrome Web Store Application Process?
   - [ ] permission cleanup
+    - [x]  current perms
+
+    ```json  "permissions": [
+        "downloads", // required for BML file downloads in Chrome (onDeterminingFilename specifically).
+        "activeTab", // req for access to current tab DOM.
+        "declarativeContent", //  req for page state matching + injecting scripts
+        "storage", // propbably can remove may need later (currently not used)
+        "file://*", // used for injection scripts
+        "tabs" // req for requesting specific tab info
+    ],
+    ```
+
   - [ ] permission justification
   - [ ] edit chrome web store assets and blur client information.
   - [ ] email Chris copy + assets and get A OK
@@ -2026,3 +2038,6 @@ List of final tasks before first release:
 MEETING 2/4/21
 
 Status Update
+
+- [ ]
+- [ ] Chris - status on non client environment? - Is this possible to get?
