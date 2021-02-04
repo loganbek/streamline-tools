@@ -2024,6 +2024,7 @@ List of final tasks before first release:
   - [ ] edit chrome web store assets and blur client information.
   - [ ] email Chris copy + assets and get A OK
   - [ ] submit first version for review
+  - [ ] review feedback and re-release
 
 - [ ] Dev/Bug Fixes
   - [ ] look through CPQ docs for useable copy
@@ -2039,5 +2040,5 @@ MEETING 2/4/21
 
 Status Update
 
-- [ ]
+- [ ] Preview Dev Console + Store Listing + Privacy Practices + Pricing & Distribution - <https://chrome.google.com/webstore/devconsole/ed6f5e47-5734-4a9b-be3f-7babc417c88e/dpedakjcalecgiigkhblajfgojjhdgoc/edit>
 - [ ] Chris - status on non client environment? - Is this possible to get?
