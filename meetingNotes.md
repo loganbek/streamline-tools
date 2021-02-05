@@ -2020,7 +2020,20 @@ List of final tasks before first release:
     ],
     ```
 
-  - [ ] permission justification + add to privacy practices.
+  - [x] permission justification + add to privacy practices.
+
+  The "downloads" permission is required in order to download the BML scripts locally.
+
+  The "activeTab" permission is required in order to access the current tab DOM and grab information such as the filename.
+
+  The "declarativeContent" permission is required in for the page state matcher and injecting content scripts.
+
+  The "storage" permission is used to store the filename and commentHeader in certain instances. It's also used to store options selections made by the user.
+
+  The "file://*" permission is required to executeContent + injection scripts.
+
+  The "tabs" permission is required for requesting specific tab info, much like the "activeTab" permission.
+
   - [ ] edit chrome web store assets and blur client information.
   - [ ] email Chris copy + assets and get A OK
   - [ ] submit first version for review
