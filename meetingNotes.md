@@ -2079,32 +2079,32 @@ Sample Exteion Description from Chrome Web Store
 Talend API Tester - Free Edition
 
 Visually interact with REST, SOAP and HTTP APIs.
-Welcome to Talend API Tester - Free Edition, formerly known as Restlet Client. Talend API Tester makes it easy to invoke, discover and test HTTP and REST APIs. 
+Welcome to Talend API Tester - Free Edition, formerly known as Restlet Client. Talend API Tester makes it easy to invoke, discover and test HTTP and REST APIs.
 
-Talend API Tester - Free Edition's main functions include: 
+Talend API Tester - Free Edition's main functions include:
 
-1. Send requests and inspect responses
+1.Send requests and inspect responses
 
 Talend API Tester - Free Edition handles all HTTP requests, no matter how complex. Requests can be made dynamic by inserting variables. Security and authentication are fully supported, as well as hypermedia and HTML forms. You can visualize, prettify and inspect HTTP responses.
 
-2. Validate API behavior
+2.Validate API behavior
 
 Whether you want to check that your API is behaving as specified, or you need to confirm how well third-party APIs are responding, Talend API Tester lets you perform many sorts of API response tests. Use assertions to validate values of headers, parts of the body or response time among others. Environments variables can also be created to increase the reusability of your tests.
 
-
 Key features:
 
-  - Interact with REST or simple HTTP APIs through a visual and easy-to-use UI
-  - View and search your call history. Edit and re-send requests from history.
+- Interact with REST or simple HTTP APIs through a visual and easy-to-use UI
+- View and search your call history. Edit and re-send requests from history.
   - Save and organize your requests into projects and services.
   - Build dynamic requests with custom variables, security and authentication.
-  - Visualise and inspect responses of different format (JSON, XML, HTML, images...) using different views (raw, pretty, preview) 
+  - Visualise and inspect responses of different format (JSON, XML, HTML, images...) using different views (raw, pretty, preview)
   - Validate responses with assertions (status, headers, XML and JSON body, response time...)
   - Easily import your Postman Collections, Swagger / OAS / OpenAPI and HAR (HTTP Archive).
-
 
 ---
 
 Why does Talend API Tester require "Read and change all your data on the websites you visit" and "Communicate with cooperating websites" permissions?
 
 Chrome extensions which need access to internet resources must have the resources declared in their manifest which can be a list of URLs or URL mask. For example, http://*/* allow access to any URL. Allowing access to any URL is a primary function of Talend API Tester. The URL mask with wildcards is interpreted by Chrome Web Store as Talend API Tester can read and change all your data on the websites you visit, without meaning that the app is doing something wrong.
+
+FUTURE: KEYMAP EXTENSIONS
