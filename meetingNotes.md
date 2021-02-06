@@ -1926,7 +1926,7 @@ Streamline your CPQ workflows, development, administration and maintenance.
 
 ####### DESCRIPTION - Focus on explaining what the item does and why users should install it
 
-Streamline your Oracle CPQ implementations, workflows, development, administration, and maintenance.
+Streamline your Oracle CPQ Cloud implementations, workflows, development, administration, and maintenance.
 LOAD and UNLOAD your BML scripts to and from Oracle CPQ Cloud.
 
 Compatible with:
@@ -1949,8 +1949,6 @@ Strip and rip from other chome extensions.
 
 <https://developer.chrome.com/docs/webstore/publish>
 
-- [x] register as chrome developer
-- [x] Google Analytics ID - 260194142
 - [ ] Graphic Assets
 - [x] Store icon
 - [ ] Permission justification
@@ -2018,6 +2016,8 @@ Write a long description for the Web Store? Can we strip and rip copy from anoth
 List of final tasks before first release:
 
 - [ ] What else do you need to complete the Chrome Web Store Application Process?
+  - [x] register as chrome developer
+  - [x] Google Analytics ID - 260194142
   - [ ] permission cleanup
     - [x]  current perms
 
@@ -2041,12 +2041,12 @@ List of final tasks before first release:
 
   The "storage" permission is used to store the filename and commentHeader in certain instances. It's also used to store options selections made by the user.
 
-  The "file://*" permission is required to executeContent + injection scripts.
+  The "file://*" permission is required to executeContent + injection scripts. // Not need I guess
 
   The "tabs" permission is required for requesting specific tab info, much like the "activeTab" permission.
 
   - [ ] edit chrome web store assets and blur client information.
-  - [ ] email Chris copy + assets and get A OK
+  - [x] email Chris copy + assets (TODO) and get A OK
   - [ ] submit first version for review
   - [ ] review feedback and re-release
 
@@ -2073,9 +2073,10 @@ Status Update
 
 MEETING 2/5/21
 
+Sample Exteion Description from Chrome Web Store
+
 Talend API Tester - Free Edition
 
-Sample Exteion Description from Chrome Web Store
 Visually interact with REST, SOAP and HTTP APIs.
 Welcome to Talend API Tester - Free Edition, formerly known as Restlet Client. Talend API Tester makes it easy to invoke, discover and test HTTP and REST APIs. 
 
