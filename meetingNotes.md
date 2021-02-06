@@ -1927,17 +1927,18 @@ Streamline your CPQ workflows, development, administration and maintenance.
 ####### DESCRIPTION - Focus on explaining what the item does and why users should install it
 
 Streamline your Oracle CPQ Cloud implementations, workflows, development, administration, and maintenance.
+
 LOAD and UNLOAD your BML scripts to and from Oracle CPQ Cloud.
 
 Compatible with:
 
-Configuration (Recommendations, Constraints, Hiding Attributes, Recommended Items) - Advanced Conditions
+- Configuration (Recommendations, Constraints, Hiding Attributes, Recommended Items) - Advanced Conditions
 
-Commerce Library Functions and Test Scripts + Actions (Advanced Modify - Before/After Formulas) + Rules (Constraint, Hiding, Validation - Advanced Conditions)
+- Commerce Library Functions and Test Scripts + Actions (Advanced Modify - Before/After Formulas) + Rules (Constraint, Hiding, Validation - Advanced Conditions)
 
-Utility Functions + Test Scripts
+- Utility Functions + Test Scripts
 
-Use with your favorite Text Editor - Visual Studio Code instead of the Big Machines web based editors.
+Use with your favorite Text Editor instead of the Big Machines web-based editors.
 
 Manage your BML code using Git versioning control.
 
