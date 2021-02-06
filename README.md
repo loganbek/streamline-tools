@@ -1,4 +1,4 @@
-# Streamline Tools v0.7.0-alpha
+# Streamline Tools v0.8.0-alpha
 
 ![Logo](SLCPQ_LOGO_SITE.png)
 
