@@ -1938,7 +1938,9 @@ Commerce Library Functions and Test Scripts + Actions (Advanced Modify - Before/
 Utility Functions + Test Scripts
 
 Use with your favorite Text Editor - Visual Studio Code instead of the Big Machines web based editors.
+
 Manage your BML code using Git versioning control.
+
 Auto "check" and "validate" to improve code quality and debugging efficiency.
 
 Please create any bugs/issues/feature requests [here](https://github.com/loganbek/streamlineTools/issues/new/choose).
