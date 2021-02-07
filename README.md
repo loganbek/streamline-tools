@@ -6,11 +6,11 @@ Streamline Tools for Oracle CPQ Cloud
 
 ## Installation Instructions
 
-<!-- ## Chrome Webstore
+<!-- ### Chrome Webstore
 
 1) You can add the latest version of Streamline Tools [here]().
 
-## Unpacked files in Chrome Developer Mode -->
+### Unpacked files in Chrome Developer Mode -->
 
 1) Download the latest version of Streamline Tools [here](https://github.com/loganbek/streamlineTools/releases).
 
