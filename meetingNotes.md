@@ -2070,7 +2070,9 @@ Email regarding remotely hosted code removal in mani v3
 Status Update
 
 - [ ] Preview Dev Console + Store Listing + Privacy Practices + Pricing & Distribution - <https://chrome.google.com/webstore/devconsole/ed6f5e47-5734-4a9b-be3f-7babc417c88e/dpedakjcalecgiigkhblajfgojjhdgoc/edit>
-- [ ] Chris - status on non client environment? - Is this possible to get?
+- [ ] Chris Q's
+  - status on non client environment? - Is this possible to get?
+  - what license would you like to release under?
 
 MEETING 2/5/21
 

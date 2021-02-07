@@ -2,7 +2,7 @@
 
 ![Logo](SLCPQ_LOGO_SITE.png)
 
-[![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/loganbek/streamlineTools/compare)
+[![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/loganbek/streamlineTools/pulls)
 [![Version](https://badge.fury.io/gh/tterb%2FHyde.svg)](https://badge.fury.io/gh/tterb%2FHyde)
 [![GitHub Release](https://img.shields.io/github/release/tterb/PlayMusic.svg?style=flat)](https://github.com/loganbek/streamlineTools/releases)
 [![Issues](https://img.shields.io/github/issues-raw/tterb/PlayMusic.svg?maxAge=25000)](https://github.com/loganbek/streamlineTools/issues)
@@ -49,3 +49,5 @@
 1) Hard Refresh/Clear Cache
     - `Ctrl + Shift + R` (Windows)
     - `Cmd + Shift + R` (Mac)
+
+2) Reinstall after filing a bug report [here](https://github.com/loganbek/streamlineTools/issues/new?assignees=loganbek&labels=&template=bug_report.md&title=). Please include any error logs.
