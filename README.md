@@ -1,8 +1,11 @@
-# Streamline Tools v0.8.0-alpha
+# Streamline Tools for Oracle CPQ Cloud
 
 ![Logo](SLCPQ_LOGO_SITE.png)
 
-Streamline Tools for Oracle CPQ Cloud
+[![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
+[![Version](https://badge.fury.io/gh/tterb%2FHyde.svg)](https://badge.fury.io/gh/tterb%2FHyde)
+[![GitHub Release](https://img.shields.io/github/release/tterb/PlayMusic.svg?style=flat)](https://github.com/loganbek/streamlineTools/releases)
+[![Issues](https://img.shields.io/github/issues-raw/tterb/PlayMusic.svg?maxAge=25000)](https://github.com/loganbek/streamlineTools/issues)
 
 ## Installation Instructions
 
@@ -36,7 +39,7 @@ Streamline Tools for Oracle CPQ Cloud
 
 - Ensure you have downloaded and installed git [here](https://git-scm.com/download/win) -->
 
-<!-- ## TroublShooting Steps
+<!-- #### TroublShooting Steps
 
 1) Hard Refresh/Clear Cache
 
