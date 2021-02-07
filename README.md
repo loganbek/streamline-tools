@@ -2,18 +2,23 @@
 
 ![Logo](SLCPQ_LOGO_SITE.png)
 
-[![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
+[![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/loganbek/streamlineTools/compare)
 [![Version](https://badge.fury.io/gh/tterb%2FHyde.svg)](https://badge.fury.io/gh/tterb%2FHyde)
 [![GitHub Release](https://img.shields.io/github/release/tterb/PlayMusic.svg?style=flat)](https://github.com/loganbek/streamlineTools/releases)
 [![Issues](https://img.shields.io/github/issues-raw/tterb/PlayMusic.svg?maxAge=25000)](https://github.com/loganbek/streamlineTools/issues)
+
+<!-- ## License
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
+[![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)   -->
 
 ## Installation Instructions
 
 <!-- ### Chrome Webstore
 
-1) You can add the latest version of Streamline Tools [here]().
+1) You can add the latest version of Streamline Tools [here](placeholder). -->
 
-### Unpacked files in Chrome Developer Mode -->
+### Unpacked folder using Chrome Developer Mode
 
 1) Download the latest version of Streamline Tools [here](https://github.com/loganbek/streamlineTools/releases).
 
@@ -39,9 +44,8 @@
 
 - Ensure you have downloaded and installed git [here](https://git-scm.com/download/win) -->
 
-<!-- #### TroublShooting Steps
+#### Troubleshooting Steps
 
 1) Hard Refresh/Clear Cache
-
-Ctrl + Shift + R
-Cmd + Shift + R -->
+    - `Ctrl + Shift + R` (Windows)
+    - `Cmd + Shift + R` (Mac)
