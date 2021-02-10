@@ -45,7 +45,7 @@
 
 - Ensure you have downloaded and installed git [here](https://git-scm.com/download/win) -->
 
-#### Troubleshooting Steps
+### Troubleshooting Steps
 
 1) Hard Refresh/Clear Cache
     - `Ctrl + Shift + R` (Windows)
