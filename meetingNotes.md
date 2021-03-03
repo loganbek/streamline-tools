@@ -2110,3 +2110,9 @@ Why does Talend API Tester require "Read and change all your data on the website
 Chrome extensions which need access to internet resources must have the resources declared in their manifest which can be a list of URLs or URL mask. For example, http://*/* allow access to any URL. Allowing access to any URL is a primary function of Talend API Tester. The URL mask with wildcards is interpreted by Chrome Web Store as Talend API Tester can read and change all your data on the websites you visit, without meaning that the app is doing something wrong.
 
 FUTURE: KEYMAP EXTENSIONS
+
+## 3/1/21
+
+- [ ] smoke test
+- [ ] functionality check
+- [ ] list of tasks before release
