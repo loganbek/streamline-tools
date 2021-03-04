@@ -2113,6 +2113,8 @@ FUTURE: KEYMAP EXTENSIONS
 
 ## 3/1/21
 
+- [ ] Chrome Web Store Review
+- [ ] blurr screenshots/assets
 - [ ] smoke test
 - [ ] functionality check
 - [ ] list of tasks before release
