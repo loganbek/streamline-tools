@@ -2113,8 +2113,12 @@ FUTURE: KEYMAP EXTENSIONS
 
 ## 3/1/21
 
-- [ ] Chrome Web Store Review
+- [ ] Chrome Web Store Review (near completion)
 - [ ] blurr screenshots/assets
 - [ ] smoke test
 - [ ] functionality check
+
+
 - [ ] list of tasks before release
+  - [ ] config extra click solution
+  - [ ] look for loading modal in editor and recreate onload in config
