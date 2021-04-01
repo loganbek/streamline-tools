@@ -2113,13 +2113,19 @@ FUTURE: KEYMAP EXTENSIONS
 
 ## 3/1-7/21
 
+## 5/1 Meeting Notes
+
+- [ ] review code base
 - [ ] Chrome Web Store Review (near completion)
-- [ ] blurr screenshots/assets
+- [ ] take + blurr screenshots/assets
 - [ ] smoke test
 - [ ] functionality check
+- [ ] devmcnichols login (password incorrect)
+
+
 
 
 - [ ] list of tasks before release
   - [ ] config extra click solution (new branch)
   - [ ] look for loading modal in editor and recreate onload in config
-  - [ ] discuss other config solutions @ next meetin
+  - [ ] discuss other config solutions @ next meeting
