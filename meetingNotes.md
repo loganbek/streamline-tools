@@ -2111,7 +2111,7 @@ Chrome extensions which need access to internet resources must have the resource
 
 FUTURE: KEYMAP EXTENSIONS
 
-## 3/1/21
+## 3/1-7/21
 
 - [ ] Chrome Web Store Review (near completion)
 - [ ] blurr screenshots/assets
@@ -2122,4 +2122,4 @@ FUTURE: KEYMAP EXTENSIONS
 - [ ] list of tasks before release
   - [ ] config extra click solution (new branch)
   - [ ] look for loading modal in editor and recreate onload in config
-  - [ ] discuss other config solutions @ next meeting
+  - [ ] discuss other config solutions @ next meetin
