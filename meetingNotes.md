@@ -2113,19 +2113,21 @@ FUTURE: KEYMAP EXTENSIONS
 
 ## 3/1-7/21
 
-## 5/1 Meeting Notes
+## 4/4 Meeting Notes
 
-- [ ] review code base
-- [ ] Chrome Web Store Review (near completion)
-- [ ] take + blurr screenshots/assets
-- [ ] smoke test
-- [ ] functionality check
-- [ ] devmcnichols login (password incorrect)
-
-
-
-
+- [x] devmcnichols login (password incorrect) - Chris - maybe env updates?
+- [ ] review code base (Logan)
+- [ ] Chrome Web Store Review (near completion) - Logan
+- [ ] take + blurr screenshots/assets - Logan
+- [ ] smoke test - Logan
+- [ ] functionality check - Logan
 - [ ] list of tasks before release
   - [ ] config extra click solution (new branch)
   - [ ] look for loading modal in editor and recreate onload in config
   - [ ] discuss other config solutions @ next meeting
+  - [ ] milestone texts throughout week
+
+## Other
+
+- [ ] Streamline Tools highering push spring/summer + resume session.
+
