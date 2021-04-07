@@ -2139,9 +2139,25 @@ FUTURE: KEYMAP EXTENSIONS
 
 ## 4/7/21
 
-- [ ] commerce pricing test
-- [ ] util lib test
-- [ ] 
+### COMMERCE LIBS
 
+- [ ] commerce pricing test
+
+> chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/content.js:55:25
+> > Error in event handler: ReferenceError: contentHeader is not defined at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/content.js:55:25
+
+### COMMERCE RULES
+
+### UTIL
+
+- [ ] util lib test
+
+> Unchecked runtime.lastError: Could not establish connection. Receiving end does not exist.
+> popup.js:88 unload clicked
+> popup.html:1 Unchecked runtime.lastError: The message port closed before a response was received.
+> popup.html:1 Error handling response: TypeError: Cannot read property 'code' of undefined
+> at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/popup.js:93:26
+
+- [ ] config
 
 ## 4/19/20 Streamline Tools Sync
