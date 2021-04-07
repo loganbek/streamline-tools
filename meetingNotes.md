@@ -2131,3 +2131,17 @@ FUTURE: KEYMAP EXTENSIONS
 
 - [ ] Streamline Tools highering push spring/summer + resume session.
 
+## 4/6/21
+
+- [ ] config loading modal planning
+  - [ ] ideally replicate modal from other editors on site.
+    - review other editors
+
+## 4/7/21
+
+- [ ] commerce pricing test
+- [ ] util lib test
+- [ ] 
+
+
+## 4/19/20 Streamline Tools Sync
