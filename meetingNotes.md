@@ -2160,4 +2160,28 @@ FUTURE: KEYMAP EXTENSIONS
 
 - [ ] config
 
+### OTHER 
+
+MD LINT
+
+TODO: fix for MD024
+
+```json
+"markdownlint.config": {
+    "default": true,
+    "MD007": { "indent": 4 }
+}
+```
+
+```json
+{
+    "git.autofetch": true,
+    "markdownlint.config": {
+        "default": true,
+        "no-inline-html": { "allowed_elements": ["pre"] },
+        "ul-indent": { "indent": 4 }
+    }
+}
+```
+
 ## 4/19/20 Streamline Tools Sync
