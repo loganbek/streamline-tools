@@ -2137,7 +2137,10 @@ FUTURE: KEYMAP EXTENSIONS
   - [ ] ideally replicate modal from other editors on site.
     - review other editors
 
-## 4/7/21
+## 4/7+8/21
+
+- [ ] config loading modal planning
+  - pricing function (106 requests pre validate, 110 post validate)
 
 ### COMMERCE LIBS
 
@@ -2160,11 +2163,11 @@ FUTURE: KEYMAP EXTENSIONS
 
 - [ ] config
 
-### OTHER 
+### OTHER
 
 MD LINT
 
-TODO: fix for MD024
+TODO: fix for MD024 (low priority)
 
 ```json
 "markdownlint.config": {
