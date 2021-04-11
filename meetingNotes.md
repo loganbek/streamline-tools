@@ -2167,6 +2167,14 @@ FUTURE: KEYMAP EXTENSIONS
 document.querySelector("#bmui-loading")
 ```
 
+```lang-xml
+/html/body/div[1]/div[4]
+```
+
+```xml
+//*[@id="bmui-loading"]
+```
+
 ## 4/7+11/21
 
 - [ ] config loading modal planning
