@@ -2129,18 +2129,52 @@ FUTURE: KEYMAP EXTENSIONS
 
 ## Other
 
-- [ ] Streamline Tools highering push spring/summer + resume session.
+- [ ] Streamline hireing push spring/summer + resume session.
 
 ## 4/6/21
 
 - [ ] config loading modal planning
   - [ ] ideally replicate modal from other editors on site.
     - review other editors
+      - pricing has loading modal on page load, maybe can use debugger to copy as is.
 
-## 4/7+8/21
+```html
+<div id="bmui-loading">
+    <div class="loading-indicator">
+        <img src="/img/default/loading.gif" style="width:16px;height:16px;" align="absmiddle">
+        <div id="bmui-message">&nbsp;Loading...</div>
+    </div>
+</div>
+```
+
+```css
+    color: black;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 8pt;
+    margin: 0;
+    position: absolute;
+    left: 45%;
+    top: 40%;
+    border: 1px solid #6593cf;
+    padding: 2px;
+    background: #c3daf9;
+    width: 150px;
+    text-align: center;
+    z-index: 20001;
+```
+
+```js
+document.querySelector("#bmui-loading")
+```
+
+## 4/7+11/21
 
 - [ ] config loading modal planning
   - pricing function (106 requests pre validate, 110 post validate)
+
+  - [ ] create modal
+    - [ ] loading gif
+    - [ ]
 
 ### COMMERCE LIBS
 
