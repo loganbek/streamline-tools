@@ -2137,6 +2137,15 @@ FUTURE: KEYMAP EXTENSIONS
   - [ ] ideally replicate modal from other editors on site.
     - review other editors
       - pricing has loading modal on page load, maybe can use debugger to copy as is.
+      - [x] same w/ config loading modal
+
+### CONFIG LOADING MODAL DEV STEPS
+
+- [ ] determine where to add modal within DOM
+- [ ] create loading modal w/ same styling
+- [ ] add to DOM
+- [ ] remove from DOM on click event
+
 
 ```html
 <div id="bmui-loading">
