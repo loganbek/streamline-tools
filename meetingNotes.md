@@ -2182,7 +2182,435 @@ document.querySelector("#bmui-loading")
 
   - [ ] create modal
     - [ ] loading gif
-    - [ ]
+    - [ ] top padding/margin?
+
+MODAL FROM PRICING FUNCTION
+
+```css
+#bmui-loading{
+    position:absolute;
+    left:45%;
+    top:40%;
+    border:1px solid #6593cf;
+    padding:2px;
+    background:#c3daf9;
+    width:150px;
+    text-align:center;
+    z-index:20001;
+}
+#bmui-loading .loading-indicator{
+    border:1px solid #a3bad9;
+    background:white repeat-x;
+    color:#003366;
+    font:bold 13px tahoma,arial,helvetica;
+    padding:10px;
+    margin:0;
+}
+```
+
+COMPUTED STYLE:
+
+```css
+align-content normal
+align-items normal
+align-self auto
+alignment-baseline auto
+all
+animation-delay 0s
+animation-direction normal
+animation-duration 0s
+animation-fill-mode none
+animation-iteration-count 1
+animation-name none
+animation-play-state running
+animation-timing-function ease
+appearance none
+aspect-ratio auto
+backdrop-filter none
+backface-visibility visible
+background-attachment scroll
+background-blend-mode normal
+background-clip border-box
+background-color rgb(195, 218, 249)
+background-image none
+background-origin padding-box
+background-position-x 0%
+background-position-y 0%
+background-repeat-x
+background-repeat-y
+background-size auto
+baseline-shift 0px
+block-size 54px
+border-block-end-color rgb(101, 147, 207)
+border-block-end-style solid
+border-block-end-width 1px
+border-block-start-color rgb(101, 147, 207)
+border-block-start-style solid
+border-block-start-width 1px
+border-bottom-color rgb(101, 147, 207)
+border-bottom-left-radius 0px
+border-bottom-right-radius 0px
+border-bottom-style solid
+border-bottom-width 1px
+border-collapse separate
+border-end-end-radius 0px
+border-end-start-radius 0px
+border-image-outset 0
+border-image-repeat stretch
+border-image-slice 100%
+border-image-source none
+border-image-width 1
+border-inline-end-color rgb(101, 147, 207)
+border-inline-end-style solid
+border-inline-end-width 1px
+border-inline-start-color rgb(101, 147, 207)
+border-inline-start-style solid
+border-inline-start-width 1px
+border-left-color rgb(101, 147, 207)
+border-left-style solid
+border-left-width 1px
+border-right-color rgb(101, 147, 207)
+border-right-style solid
+border-right-width 1px
+border-start-end-radius 0px
+border-start-start-radius 0px
+border-top-color rgb(101, 147, 207)
+border-top-left-radius 0px
+border-top-right-radius 0px
+border-top-style solid
+border-top-width 1px
+bottom 795.609px
+box-shadow none
+box-sizing content-box
+break-after auto
+break-before auto
+break-inside auto
+buffered-rendering auto
+caption-side top
+caret-color rgb(0, 0, 0)
+clear none
+clip auto
+clip-path none
+clip-rule nonzero
+color rgb(0, 0, 0)
+color-interpolation srgb
+color-interpolation-filters linearrgb
+color-rendering auto
+color-scheme normal
+column-count auto
+column-fill balance
+column-gap normal
+column-rule-color rgb(0, 0, 0)
+column-rule-style none
+column-rule-width 0px
+column-span none
+column-width auto
+contain none
+contain-intrinsic-size auto
+content normal
+content-visibility visible
+counter-increment none
+counter-reset none
+counter-set none
+cursor auto
+cx 0px
+cy 0px
+d none
+direction ltr
+display block
+dominant-baseline auto
+empty-cells show
+fill rgb(0, 0, 0)
+fill-opacity 1
+fill-rule nonzero
+filter none
+flex-basis auto
+flex-direction row
+flex-grow 0
+flex-shrink 1
+flex-wrap nowrap
+float none
+flood-color rgb(0, 0, 0)
+flood-opacity 1
+font-family "Helvetica Neue", Helvetica, Arial, sans-serif
+font-feature-settings normal
+font-kerning auto
+font-optical-sizing auto
+font-size 10.6667px
+font-stretch 100%
+font-style normal
+font-variant-caps normal
+font-variant-east-asian normal
+font-variant-ligatures normal
+font-variant-numeric normal
+font-variation-settings normal
+font-weight 400
+forced-color-adjust auto
+grid-auto-columns auto
+grid-auto-flow row
+grid-auto-rows auto
+grid-column-end auto
+grid-column-start auto
+grid-row-end auto
+grid-row-start auto
+grid-template-areas none
+grid-template-columns none
+grid-template-rows none
+height 54px
+hyphens manual
+image-orientation from-image
+image-rendering auto
+inline-size 150px
+inset-block-end 795.609px
+inset-block-start 570.391px
+inset-inline-end 1000.66px
+inset-inline-start 946.344px
+isolation auto
+justify-content normal
+justify-items normal
+justify-self auto
+left 946.344px
+letter-spacing normal
+lighting-color rgb(255, 255, 255)
+line-break auto
+line-height normal
+list-style-image none
+list-style-position outside
+list-style-type disc
+margin-block-end 0px
+margin-block-start 0px
+margin-bottom 0px
+margin-inline-end 0px
+margin-inline-start 0px
+margin-left 0px
+margin-right 0px
+margin-top 0px
+marker-end none
+marker-mid none
+marker-start none
+mask none
+mask-type luminance
+max-block-size none
+max-height none
+max-inline-size none
+max-width none
+min-block-size 0px
+min-height 0px
+min-inline-size 0px
+min-width 0px
+mix-blend-mode normal
+object-fit fill
+object-position 50% 50%
+offset-distance 0px
+offset-path none
+offset-rotate auto 0deg
+opacity 1
+order 0
+orphans 2
+outline-color rgb(0, 0, 0)
+outline-offset 0px
+outline-style none
+outline-width 0px
+overflow-anchor auto
+overflow-wrap normal
+overflow-x visible
+overflow-y visible
+overscroll-behavior-block auto
+overscroll-behavior-inline auto
+overscroll-behavior-x auto
+overscroll-behavior-y auto
+padding-block-end 2px
+padding-block-start 2px
+padding-bottom 2px
+padding-inline-end 2px
+padding-inline-start 2px
+padding-left 2px
+padding-right 2px
+padding-top 2px
+page auto
+page-orientation
+paint-order normal
+perspective none
+perspective-origin 78px 30px
+pointer-events auto
+position absolute
+quotes auto
+r 0px
+resize none
+right 1000.66px
+row-gap normal
+ruby-position over
+rx auto
+ry auto
+scroll-behavior auto
+scroll-margin-block-end 0px
+scroll-margin-block-start 0px
+scroll-margin-bottom 0px
+scroll-margin-inline-end 0px
+scroll-margin-inline-start 0px
+scroll-margin-left 0px
+scroll-margin-right 0px
+scroll-margin-top 0px
+scroll-padding-block-end auto
+scroll-padding-block-start auto
+scroll-padding-bottom auto
+scroll-padding-inline-end auto
+scroll-padding-inline-start auto
+scroll-padding-left auto
+scroll-padding-right auto
+scroll-padding-top auto
+scroll-snap-align none
+scroll-snap-stop normal
+scroll-snap-type none
+shape-image-threshold 0
+shape-margin 0px
+shape-outside none
+shape-rendering auto
+size
+speak normal
+stop-color rgb(0, 0, 0)
+stop-opacity 1
+stroke none
+stroke-dasharray none
+stroke-dashoffset 0px
+stroke-linecap butt
+stroke-linejoin miter
+stroke-miterlimit 4
+stroke-opacity 1
+stroke-width 1px
+tab-size 8
+table-layout auto
+text-align center
+text-align-last auto
+text-anchor start
+text-combine-upright none
+text-decoration-color rgb(0, 0, 0)
+text-decoration-line none
+text-decoration-skip-ink auto
+text-decoration-style solid
+text-decoration-thickness auto
+text-indent 0px
+text-orientation mixed
+text-overflow clip
+text-rendering auto
+text-shadow none
+text-size-adjust auto
+text-transform none
+text-underline-offset auto
+text-underline-position auto
+top 570.391px
+40% #bmui-loading
+touch-action auto
+transform none
+transform-box view-box
+transform-origin 78px 30px
+transform-style flat
+transition-delay 0s
+transition-duration 0s
+transition-property all
+transition-timing-function ease
+unicode-bidi normal
+user-select auto
+vector-effect none
+vertical-align baseline
+visibility visible
+white-space normal
+widows 2
+width 150px
+will-change auto
+word-break normal
+word-spacing 0px
+writing-mode horizontal-tb
+x 0px
+y 0px
+z-index 20001
+zoom 1
+-webkit-app-region none
+-webkit-border-horizontal-spacing 0px
+-webkit-border-vertical-spacing 0px
+-webkit-box-align stretch
+-webkit-box-decoration-break slice
+-webkit-box-direction normal
+-webkit-box-flex 0
+-webkit-box-ordinal-group 1
+-webkit-box-orient horizontal
+-webkit-box-pack start
+-webkit-box-reflect none
+-webkit-font-smoothing auto
+-webkit-highlight none
+-webkit-hyphenate-character auto
+-webkit-line-clamp none
+-webkit-locale "en-US"
+-webkit-mask-box-image-outset 0
+-webkit-mask-box-image-repeat stretch
+-webkit-mask-box-image-slice 0 fill
+-webkit-mask-box-image-source none
+-webkit-mask-box-image-width auto
+-webkit-mask-clip border-box
+-webkit-mask-composite source-over
+-webkit-mask-image none
+-webkit-mask-origin border-box
+-webkit-mask-position-x 0%
+-webkit-mask-position-y 0%
+-webkit-mask-repeat-x
+-webkit-mask-repeat-y
+-webkit-mask-size auto
+-webkit-perspective-origin-x
+-webkit-perspective-origin-y
+-webkit-print-color-adjust economy
+-webkit-rtl-ordering logical
+-webkit-tap-highlight-color rgba(0, 0, 0, 0.18)
+-webkit-text-combine none
+-webkit-text-decorations-in-effect none
+-webkit-text-emphasis-color rgb(0, 0, 0)
+-webkit-text-emphasis-position over right
+-webkit-text-emphasis-style none
+-webkit-text-fill-color rgb(0, 0, 0)
+-webkit-text-security none
+-webkit-text-stroke-color rgb(0, 0, 0)
+-webkit-text-stroke-width 0px
+-webkit-transform-origin-x
+-webkit-transform-origin-y
+-webkit-transform-origin-z
+-webkit-user-drag auto
+-webkit-user-modify read-only
+-webkit-border-image none
+-webkit-ruby-position before
+-webkit-text-orientation vertical-right
+```
+
+MODAL FROM CONFIG
+
+```html
+<div class="ext-el-mask-msg" style="display: block; left: 1014px; top: 694px;"><div>Loading...</div></div>
+```
+
+```css
+.ext-el-mask {
+    background-color: #ccc;
+}
+.ext-el-mask-msg {
+    border-color:#6593cf;
+    background-color:#c3daf9;
+    background-image:url(../images/default/box/tb-blue.gif);
+}
+.ext-el-mask-msg div {
+    background-color: white;
+    border-color:#a3bad9;
+    color:#222;
+    font:normal 11px tahoma, arial, helvetica, sans-serif;
+}
+.x-mask-loading div {
+    background-color:#fbfbfb;
+    background-image:url(../images/default/grid/loading.gif);
+}
+```
+
+`https://devmcnichols.bigmachines.com/gwt/gxt/css/gxt-all.css`
+
+```html
+<td class="x-btn-mc"><em class="" unselectable="on"><button class="x-btn-text " type="button" style="position: relative; width: 69px;" tabindex="0">Validate<img src="https://devmcnichols.bigmachines.com/gwt/ConfigRuleEditor/clear.cache.gif" style="width: 16px; height: 16px; background: url(&quot;https://devmcnichols.bigmachines.com/img/bmx/icons/spellcheck.png&quot;) 0px 0px no-repeat; position: absolute; left: -1px; top: -1px;" border="0" role="presentation" class=" x-btn-image"></button></em></td>
+```
 
 ### COMMERCE LIBS
 
@@ -2191,7 +2619,7 @@ document.querySelector("#bmui-loading")
 > chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/content.js:55:25
 > > Error in event handler: ReferenceError: contentHeader is not defined at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/content.js:55:25
 
-### COMMERCE RULES
+### COMMERCE RULESS
 
 ### UTIL
 
@@ -2229,4 +2657,4 @@ TODO: fix for MD024 (low priority)
 }
 ```
 
-## 4/19/20 Streamline Tools Sync
+## 4/12/20 Streamline Tools Sync
