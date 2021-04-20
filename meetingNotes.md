@@ -2675,10 +2675,22 @@ TODO: fix for MD024 (low priority)
 - [ ] validate
 
 - [ ]  Config Modal Loading Dialog development
-    - [ ]  Develop gameplan
-        - [ ]  Create HTML in content.js or injected.js script
-        - [ ]  On LOAD event add loading modal to <find where to append>?
-        - [ ]  On click event anywhere on page remove modal
-            - [ ]  Then click validate
-            
+  - [ ]  Develop gameplan
+    - [ ]  Create HTML in content.js or injected.js script
+    - [ ]  On LOAD event add loading modal to
+      - [ ] find where to append?
+      - [ ]  maybe use append child
+
+        ```jsx
+        var obj = document.createElement('div');
+        obj.id = "::img";
+        obj.style.cssText = 'position:absolute;top:300px;left:300px;width:200px;height:200px;-moz-border-radius:100px;border:1px  solid #ddd;-moz-box-shadow: 0px 0px 8px  #fff;display:none;';
+
+        document.getElementById("divInsteadOfDocument.Write").appendChild(obj);
+        /* You can also see how to set the the CSS in one go (using element.style.cssText).*/
+        ```
+
+    - [ ]  On click event anywhere on page remove modal
+      - [ ]  Then click validate
+
 ## 4/26/21 Streamline Tools Sync
