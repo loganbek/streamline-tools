@@ -2667,4 +2667,11 @@ TODO: fix for MD024 (low priority)
 }
 ```
 
-## 4/12/20 Streamline Tools Sync
+## 4/19/21 Config Modal DEV
+
+## 4/26/21 Streamline Tools Sync
+
+- [ ] reconstruct config loading modal
+  - [ ] steps to do this?
+- [ ] post click anywhere on page remove modal
+- [ ] validate
