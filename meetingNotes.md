@@ -2669,9 +2669,16 @@ TODO: fix for MD024 (low priority)
 
 ## 4/19/21 Config Modal DEV
 
-## 4/26/21 Streamline Tools Sync
-
 - [ ] reconstruct config loading modal
   - [ ] steps to do this?
 - [ ] post click anywhere on page remove modal
 - [ ] validate
+
+- [ ]  Config Modal Loading Dialog development
+    - [ ]  Develop gameplan
+        - [ ]  Create HTML in content.js or injected.js script
+        - [ ]  On LOAD event add loading modal to <find where to append>?
+        - [ ]  On click event anywhere on page remove modal
+            - [ ]  Then click validate
+            
+## 4/26/21 Streamline Tools Sync
