@@ -2693,4 +2693,11 @@ TODO: fix for MD024 (low priority)
     - [ ]  On click event anywhere on page remove modal
       - [ ]  Then click validate
 
+
+
+## Cleanup
+
+- [ ] rm adminConfigContent logging
+- [ ] rm adminConfigInjected logging
+
 ## 4/26/21 Streamline Tools Sync
