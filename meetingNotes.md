@@ -2756,3 +2756,8 @@ popup.html:1 Unchecked runtime.lastError: The message port closed before a respo
 popup.html:1 Error handling response: TypeError: Cannot read property 'code' of undefined
     at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/popup.js:93:26
 ```
+
+### Other Enhancements
+
+- [ ] improve troublshooting steps
+- [ ] 
