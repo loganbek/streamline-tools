@@ -2693,11 +2693,66 @@ TODO: fix for MD024 (low priority)
     - [ ]  On click event anywhere on page remove modal
       - [ ]  Then click validate
 
-
-
 ## Cleanup
 
 - [ ] rm adminConfigContent logging
 - [ ] rm adminConfigInjected logging
 
 ## 4/26/21 Streamline Tools Sync
+
+<https://www.notion.so/Streamline-Tools-Update-4-26-21-f518209b04704e63ad42be0a08193220>
+
+## Remaining Tasks (Development + Testing + Error fixes)
+
+### Utility Function
+
+- [ ]  fix error:
+
+```console
+from the extension
+VM285 content.js:48 greeting: unload
+VM285 content.js:54 CH
+6Error in event handler: ReferenceError: contentHeader is not defined
+    at <URL>
+VM285 content.js:45 from the extension
+VM285 content.js:48 greeting: filename
+VM285 content.js:45 from the extension
+VM285 content.js:48 greeting: unload
+VM285 content.js:54 CH
+```
+
+```console
+https://devmcnichols
+popup.js:35 devmcnichols
+popup.js:37 bigmachines
+popup.js:38 com/spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:%274220560%27,folder_id:%274133367%27,process_id:%27-1%27,doc_id:%27-1%27}&inputdata={appid:%27sampleApp%27,service:%27bmllibraryservice%27,operation:%27getLibPageData%27,version:%271
+popup.js:40 commerce
+popup.js:60 getMaxDiscount
+popup.js:88 unload clicked
+popup.html:1 Unchecked runtime.lastError: The message port closed before a response was received.
+popup.html:1 Error handling response: TypeError: Cannot read property 'code' of undefined
+    at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/popup.js:93:26
+```
+
+### Configuration (Recommendations, Constraints, Hiding Attributes, Recommended Items) - Advanced Conditions
+
+- [ ] test loading modal on all advanced condition types
+
+```json
+document.querySelector("#editor")
+```
+
+### Commerce Library Functions and Test Scripts + Actions (Advanced Modify - Before/After Formulas) + Rules (Constraint, Hiding, Validation - Advanced Conditions)
+
+- [ ]  fix error:
+
+```console
+Error in event handler: ReferenceError: contentHeader is not defined
+    at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/content.js:55:25
+```
+
+```console
+popup.html:1 Unchecked runtime.lastError: The message port closed before a response was received.
+popup.html:1 Error handling response: TypeError: Cannot read property 'code' of undefined
+    at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/popup.js:93:26
+```
