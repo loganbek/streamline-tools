@@ -1,0 +1,729 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+
+<head>
+    <title>Recommendation:&#32;Rule&#32;Editor</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/gwt/gxt/css/gxt-all.css" />
+    <link rel="stylesheet" type="text/css" href="/style/bmx.css" />
+    <link rel="stylesheet" type="text/css" href="/style/admintheme.css" />
+    <link rel="stylesheet" type="text/css" href="/style/bm-gxt.css" />
+
+    <script type="text/javascript" src="/js/FormCheck.js"></script>
+    <script type="text/javascript" src="/js/BmFormCheck.js"></script>
+    <script type="text/javascript" src="/js/BmSubmitForm.js"></script>
+    <script type="text/javascript" src="/js/ui/BmLinks.js"></script>
+    <script type="text/javascript" src="/js/ui/BmButton.js"></script>
+    <script type="text/javascript" src="/js/ui/StyleHandler.js"></script>
+    <script type="text/javascript" src="/js/common/Token.js"></script>
+    <script type="text/javascript" src="/js/common/LanguagePreference.js"></script>
+    <script type="text/javascript" src="/bmfsweb/jsmessage/message_en.js"></script>
+    <script type="text/javascript">
+        var _BM_USER_LANGUAGE = 'en';
+        var _BM_USER_CURRENCY = 'USD';
+        var _BM_USER_CURRENCY_SYMBOL = '$';
+        var _BM_USER_CURRENCY_FORMAT = '0';
+        var _BM_USER_LOGIN = 'CWilliams';
+        var _BM_USER_EMAIL = 'cwilliams@streamlinecpq.com';
+        var _BM_USER_COMPANY = 'DevMcNichols';
+        var _BM_USER_NUMBER_FORMAT = '0';
+        var _BM_CSRF_TOKEN = 'qg4oqVxylCIBSTECx0Z4LmB2n3X-3WXN8pPq3X6sNGUIa_zVRgcdPRGgtUA';
+        var _BM_HOST_COMPANY = 'devmcnichols';
+        var _BM_STORED_PRECISION = '4';
+        var userDateInfo = {
+            dateFormat: 'MM/dd/yyyy',
+            userTimeZoneId: 'America/Los_Angeles',
+            defaultTimeZoneId: 'America/New_York',
+            dateTimeFormat: 'MM/dd/yyyy HH:mm',
+            jQueryDateFormat: 'mm/dd/yy',
+            defaultTimeZone: 300,
+            userTimeZone: 480
+        };
+        var _BM_IS_IN_GLOBAL_DEBUG_MODE = false;
+        var _BM_USE_ALTA_HEADER = false;
+        var _BM_APPLY_IOS_SCROLL_FIX = true;
+        var _BM_USER_FULL_ACCESS = true;
+    </script>
+    <script type="text/javascript">
+        var _loadingImage = "/img/spinner_progress.gif";
+        closeLoadingDialog();
+    </script>
+    <script type='text/javascript'>
+        if (typeof(window.Bm) == 'undefined') window.Bm = {};
+        Bm.I18n = {
+            'SessionTimeout': {
+                continueButton: 'Continue&#32;Working',
+                expireMessage: 'Your&#32;session&#32;is&#32;about&#32;to&#32;expire.',
+                timeLeft: '%1&#32;seconds&#32;left.'
+            }
+        };
+    </script>
+    <script type='text/javascript' src='/js/common/SessionTimeout.js'></script>
+    <script type='text/javascript' src='/js/common/Overload.js'></script>
+    <script type='text/javascript'>
+        Bm.Overload.isOverload = false;
+        Bm.Overload.message = 'The&#32;environment&#32;is&#32;currently&#32;experiencing&#32;extremely&#32;high&#32;loads,&#32;otherwise&#32;known&#32;as&#32;&#34;Overcrowded&#32;Mode&#34;. The&#32;CPQ&#32;site&#32;will&#32;temporarily&#32;prevent&#32;users,&#32;integrations,&#32;and&#32;BML&#32;URL&#32;functions&#32;from&#32;creating&#32;new&#32;sessions. During&#32;this&#32;restriction&#32;period,&#32;the&#32;timeout&#32;of&#32;idle&#32;sessions&#32;is&#32;reduced&#32;to&#32;ensure&#32;active&#32;users&#32;can&#32;complete&#32;their&#32;Transactions. Administrators&#32;should&#32;delay&#32;scheduled&#32;events&#32;such&#32;as&#32;deployments,&#32;migrations&#32;or&#32;bulk&#32;operations&#32;to&#32;improve&#32;system&#32;performance.';
+    </script>
+    <script type="text/javascript" src="/gwt/ConfigRuleEditor/ConfigRuleEditor.nocache.js"></script>
+    <script type="text/javascript" src="/js/lib/edit_area/edit_area_full.js"></script>
+    <script type="text/javascript">
+        window.strings || (window.strings = {});
+        window.strings.$common || (window.strings.$common = {
+            "widthField_mustBePositive": "Width must be greater than 0.",
+            "gxt_numberField_nanText": "%1 is not a valid number",
+            "gxt_htmlEditor_boldTipTitle": "Bold",
+            "gxt_messageBox_cancel": "Cancel",
+            "bml_input_searchAttributesPrompt": "Search Attributes...",
+            "gxt_numberField_minText": "The minimum value for this field is %1",
+            "bml_funcWiz_functionCategory": "Function Category",
+            "bml_empty_library_functions": "No Functions Defined.",
+            "gxt_htmlEditor_decreaseFontSizeTipTitle": "Shrink Text",
+            "attributeCreator_attributeDropMessage": "Drop to create %1 attributes",
+            "gxt_dateField_maxText": "The date in this field must be before %1",
+            "bml_funcs_preview_header": "Preview Function",
+            "backButtonLabel": "Back",
+            "attribute_menuItemLabel": "Attributes",
+            "validateButtonLabel": "Validate",
+            "cancelButtonLabel": "Cancel",
+            "gxt_htmlEditor_underlineTipText": "Underline the selected text.",
+            "gxt_htmlEditor_justifyRightTipTitle": "Align Text Right",
+            "gxt_dateField_disabledDatesText": "Disabled",
+            "widthField_maximumWidthMessage": "The maximum pixel width for this field is %1px.",
+            "bml_debug_console_header": "Console",
+            "condGrid_addAtleastOneCriteria": "Add at least one criteria row.",
+            "gxt_datePicker_monthYearText": "Choose a month",
+            "previewButtonLabel": "Preview",
+            "gxt_gridView_sortDescText": "Sort Descending",
+            "gxt_listField_moveSelectedUp": "Move selected up",
+            "condGrid_atLeastOneAttrReq": "Please add at least one Condition Attribute.",
+            "gxt_datePicker_nextText": "Next Month",
+            "gxt_datePicker_todayTip": "%1",
+            "bml_func_removeFunc": "Remove Import",
+            "gxt_datePicker_okText": "OK",
+            "gxt_textField_regexText": null,
+            "gxt_groupingView_emptyGroupText": "(None)",
+            "bml_debug_elapsedTimePrompt": "Elapsed Time",
+            "widthField_minimumWidthMessage": "The minimum pixel width for this field is %1px.",
+            "condGrid_invalidToken": "Invalid token in row grouping:",
+            "gxt_themeSelector_blueTheme": "Blue Theme",
+            "varName": "Variable Name",
+            "gxt_pagingToolBar_beforePageText": "Page",
+            "condGrid_unMatchedParentheses": "Unmatched parentheses in summary",
+            "gxt_htmlEditor_boldTipText": "Make the selected text bold.",
+            "bml_expandToolsBtn": "Expand Tools",
+            "closeButtonLabel": "Close",
+            "updateButtonLabel": "Update",
+            "gxt_htmlEditor_linkTipText": "Make the selected text a hyperlink.",
+            "gxt_messageBox_ok": "OK",
+            "gxt_htmlEditor_olTipText": "Start a bulleted list.",
+            "condGrid_unMatchedClosingParentheses": "Unmatched closing parentheses",
+            "gxt_loadMask_msg": "Loading...",
+            "gxt_datePicker_prevText": "Previous Month",
+            "gxt_htmlEditor_sourceEditTipTitle": "Source Edit",
+            "gxt_grid_ddText": "%1 selected row(s)",
+            "gxt_htmlEditor_italicTipText": "Make the selected text italic.",
+            "gxt_htmlEditor_olTipTitle": "Bullet List",
+            "condGrid_rangeOperatorInvalid": "At least one row has a range operator but no range value.",
+            "gxt_dateField_minText": "The date in this field must be after %1",
+            "bml_collapseToolsBtn": "Collapse Tools",
+            "gxt_uploadField_browseText": "Browse...",
+            "help_spacerHeight": "This is the spacer height",
+            "condGrid_condSummaryHeading": "Condition Summary",
+            "bml_function_return_prompt": "Function should return type",
+            "bml_input_addAttributesWindowPrompt": "Attributes",
+            "gxt_messageBox_no": "No",
+            "gxt_listField_removeSelected": "Remove selected",
+            "gxt_htmlEditor_increaseFontSizeTipTitle": "Grow Text",
+            "loadingMessage": "Loading...",
+            "gxt_htmlEditor_justifyLeftTipText": "Align  text to the left.",
+            "gxt_tabPanelItem_closeText": "Close this tab",
+            "bml_funcWiz_function": "Function",
+            "condGrid_atleastOneRowIsInvalid": "At least one row is invalid",
+            "gxt_htmlEditor_justifyCenterTipText": "Center text in the editor.",
+            "condGrid_selectRowsInTable": "Select Rows in Table When",
+            "spacer_createDescription": "Add a new Spacer",
+            "updateAndBackButtonLabel": "Update and Back",
+            "gxt_pagingToolBar_emptyMsg": "No data to display",
+            "gxt_htmlEditor_backColorTipText": "Change the background color of the selected text.",
+            "translationsButtonLabel": "Translations",
+            "condGrid_col_attribute": "Attribute",
+            "attributeCreator_filterFieldEmptyText": "Filter Attributes...",
+            "attributeCreator_dialogTitle": "Attributes",
+            "gxt_htmlEditor_underlineTipTitle": "Underline",
+            "gxt_pagingToolBar_nextText": "Next Page",
+            "gxt_htmlEditor_justifyLeftTipTitle": "Align Text Left.",
+            "gxt_pagingToolBar_afterPageText": "of %1",
+            "gxt_dateField_disabledDaysText": "Disabled",
+            "condGrid_deleteRowToolTip": "Delete Row",
+            "gxt_borderLayout_splitTip": "Drag to resize.",
+            "bml_funcs_addFunctionsWindowPrompt": "Functions",
+            "gxt_updateManager_indicatorText": "gxt_updateManager_indicatorText",
+            "bml_funcs_searchFunctionsPrompt": "Search Functions...",
+            "gxt_listField_moveSelectedDown": "Move selected down",
+            "gxt_listField_addAll": "Add all",
+            "gxt_textField_emptyText": null,
+            "gxt_rowEditor_saveText": "Save",
+            "gxt_htmlEditor_sourceEditTipText": "Switch to source editing mode.",
+            "gxt_gridView_sortAscText": "Sort Ascending",
+            "gxt_htmlEditor_increaseFontSizeTipText": "Increase the font size.",
+            "gxt_datePicker_minText": "This date is before the minimum date",
+            "bml_debug_contextParamsField": "Context Parameters",
+            "widthField_required": "This field is required.",
+            "addButtonLabel": "Add",
+            "gxt_datePicker_disabledDaysText": null,
+            "gxt_htmlEditor_linkTipTitle": "Hyperlink",
+            "gxt_pagingToolBar_refreshText": "Refresh",
+            "gxt_gridView_columnsText": "Columns",
+            "gxt_htmlEditor_italicTipTitle": "Italic",
+            "bml_input_addAttributesBtn": "Add Attributes",
+            "gxt_groupingView_showGroupsText": "Show in Groups",
+            "varNameContentError": "%1 is not a valid Variable Name. Variable Name can only contain letters, numbers, or underscores.",
+            "spacer_XTemplate": "Spacer [%1px]",
+            "gxt_pagingToolBar_prevText": "Previous Page",
+            "bml_debug_run_btn": "Run",
+            "spacer_label": "Spacer",
+            "gxt_dateField_invalidText": "%1 is not a valid date - it must be in the format %2",
+            "gxt_listField_removeAll": "Remove all",
+            "addAndBackButtonLabel": "Add and Back",
+            "gxt_rowEditor_cancelText": "Cancel",
+            "gxt_pagingToolBar_firstText": "First Page",
+            "gxt_datePicker_cancelText": "Cancel",
+            "gxt_htmlEditor_ulTipText": "Start a numbered list-",
+            "appyButtonLabel": "Apply",
+            "gxt_htmlEditor_foreColorTipTitle": "Font Color",
+            "saveButtonLabel": "Save",
+            "spacer_heightFieldLabel": "Height (px)",
+            "colNameContentError": "'%1' is not a valid Column Name. Column Name can only contain letters, numbers, or underscores.",
+            "gxt_tabPanelItem_closeOtherText": "Close all other tabs",
+            "gxt_textField_maxLengthText": "The maximum length for this field is %1",
+            "varNameFirstCharError": "%1 is not a valid Variable Name. Variable Name must start with a letter.",
+            "gxt_rowEditor_tipTitleText": "Error",
+            "gxt_htmlEditor_ulTipTitle": "Numbered List",
+            "bml_input_removeInput": "Remove Attribute",
+            "gxt_datePicker_disabledDatesText": null,
+            "gxt_textField_minLengthText": "The minimum length for this field is %1",
+            "gxt_groupingView_groupByText": "Group By This Field",
+            "gxt_pagingToolBar_displayMsg": "Displaying %1 - %2 of %3",
+            "name": "Name",
+            "gxt_htmlEditor_justifyCenterTipTitle": "Center Text",
+            "gxt_listField_addSelected": "Add selected",
+            "gxt_htmlEditor_backColorTipTitle": "Text Hightlight Color",
+            "gxt_comboBox_loading": "Loading...",
+            "gxt_pagingToolBar_lastText": "Last Page",
+            "bml_funcs_addFuncsBtn": "Add Functions",
+            "gxt_htmlEditor_justifyRightTipText": "Align text to the right.",
+            "gxt_propertyColumnModel_nameText": "Name",
+            "condGrid_rangeValueInvalid": "At least one row has a range value but no range operator.",
+            "gxt_htmlEditor_foreColorTipText": "Change the Color of the selected text.",
+            "description": "Description",
+            "gxt_messageBox_yes": "Yes",
+            "condGrid_andAllBtn": "AND All",
+            "gxt_field_invalidText": "The value in this field is invalid",
+            "gxt_textField_blankText": "This field is required",
+            "colNameFirstCharError": "'%1' is not a valid Column Name. Column Name must start with a letter.",
+            "gxt_messageBox_close": "Close",
+            "widthField_badWidthPercentage": "Percentages cannot be greater than 100%.",
+            "condGrid_notAllRowsUsed": "Not all rows from grid are used in summary",
+            "gxt_datePicker_maxText": "This date is after the maximum date",
+            "condGrid_rowsInSummaryDoesNotMatch": "Rows in summary do not match rows in grid",
+            "condGrid_removeThisRow": "Deleting a row can cause the Row Grouping to become invalid. Are you sure you want to remove this row?",
+            "condGrid_rowGroupingBtn": "Row Grouping (Order of Operations)",
+            "gxt_rowEditor_dirtyText": "You need to commit or cancel your changes",
+            "gxt_datePicker_todayText": "Today",
+            "okButtonLabel": "Ok",
+            "gxt_datePicker_startDay": "0",
+            "condGrid_convertToAdvancedBtn": "Convert to Advanced Condition",
+            "gxt_numberField_maxText": "The maximum value for this field is %1",
+            "layout_menuItemLabel": "Layout",
+            "condGrid_confirmDialogTitle": "Confirm",
+            "saveAndCloseButtonLabel": "Save and Close",
+            "label": "Label",
+            "gxt_themeSelector_grayTheme": "Gray Theme",
+            "gxt_htmlEditor_createLinkText": "Please enter the URL for the link:",
+            "condGrid_orAllBtn": "OR All",
+            "layoutCreator_dialogTitle": "Layout Elements",
+            "gxt_htmlEditor_decreaseFontSizeTipText": "Decrease the font size.",
+            "gxt_propertyColumnModel_valueText": "Value",
+            "bml_insertIntoBml": "Insert into BML",
+            "bml_debug_clear_btn": "Clear",
+            "gxt_borderLayout_collapsibleSplitTip": "Drag to resize. Double click to hide.",
+            "condGrid_addRowBtn": "Add Row",
+            "gxt_numberField_negativeText": "The value must be greater or equal to 0"
+        });
+        window.strings['ConfigRuleEditor'] || (window.strings['ConfigRuleEditor'] = {
+            "selectTable": "Select Table",
+            "altStyleSheet": "Alternate Stylesheet",
+            "propertyEnum_valueToPopulate": "Value To Populate",
+            "constraintBehavior_tablebased_constrain": "Do Not Allow Values",
+            "card_blankHelp": "To edit the action, please select an attribute on the left.",
+            "actionTitle": "Action",
+            "tableConditions": "Specify Filter for Table Rows",
+            "bom_actionPanel": "Action: (Define Bill of Materials)",
+            "attrType_readOnly": "Read Only",
+            "bml_windowHeading": "Edit BML Advanced Function",
+            "recommendedItems": "Recommended Items",
+            "hiding": "Hiding Rule",
+            "valueToConstrain": "Table Column to Constrain Attribute Values",
+            "actionAttribute": "Action Attribute",
+            "messageType": "Message Type",
+            "targetCommerceProcess": "Target Commerce Process",
+            "reco_setType": "Set Type",
+            "valueType": "Value Type",
+            "dispprice_advanced": "ConfigRuleEditor_dispprice_advanced",
+            "setType_set": "Set",
+            "condGrid_alwaysTrue": "Always True",
+            "configFlow": "Configuration Flow",
+            "searchFlow_popupFunction": "Pop up window function in use",
+            "error_hidingFlow_assocRule": "Cannot add associated rule until the rule is saved.",
+            "deleteRowToolTip": "Delete Row",
+            "models": "Models",
+            "edit": "Edit",
+            "searchFlow_resultType": "Result Type",
+            "help_description": "This is the rule description.",
+            "bomMapping_subtitle": "Define BOM Mapping",
+            "bill": "Bill of Materials",
+            "hidingFlow_noAttributesError": "Add at least one action attribute.",
+            "spareType_advanced": "Advanced",
+            "attrType_singleSelectPickList": "ConfigRuleEditor_attrType_singleSelectPickList",
+            "input": "Input",
+            "spare_type": "Type",
+            "invalidStartEndDate": "Start/End dates must be valid.",
+            "reco_subtitle": "Values to Set",
+            "flow_arraySets": "Array Sets",
+            "flow_valueChange": "Value Change",
+            "price_addToTotalPrice": "Should this value be added into the total price?",
+            "spareSourceType_static": "Static Entry",
+            "varName": "Variable Name",
+            "condGrid_typeLabel": "Condition Type",
+            "remove_attribute": "Remove Attribute",
+            "price_actionPanel": "Action: (Define Price and Behavior)",
+            "setType_forcedSet": "Forced Set",
+            "addRow": "Add Row",
+            "tableConditionsTab": "Specify Filter for Table Rows Tab",
+            "viewEditBml": "View/Edit the BML Function",
+            "actionType_standard": "Standard",
+            "bomMappingtype": "Rule Type",
+            "bml_libFuncsTab": "Library Function(s)",
+            "price_priceText": "Price Amount",
+            "propertyEnum_setType": "Set Type",
+            "attribute": "Attribute",
+            "spare_noParts": "No Recommended Parts",
+            "spareSourceType_itemMaster": "Item Master",
+            "error_differentControlAttribute": "The array(s) used in the condition do not have the same control attribute as the array(s) used in the action.",
+            "ruleArea_selection": "Selection",
+            "flow_transitionalNode": "Transitional Node",
+            "bOMMappingType_tableBased": "Simple (Table-based)",
+            "confirmation_msg": "ConfigRuleEditor_confirmation_msg",
+            "column": "Column",
+            "setType_none": "None",
+            "spareSourceType_tableColumn": "Table Column",
+            "recoSourceTypeEnum_static": "Static",
+            "flow_startEndNode": "Start and End Node",
+            "error_qtyReq": "Quantity field is required.",
+            "statusPrompt": "Status",
+            "confirm": "Confirm",
+            "bml_debug_searchDataFieldLabel": "Search Data",
+            "flow_action": "Action",
+            "sourceType_tableColumn": "Table Column",
+            "constraintBehavior_constrain": "Do not allow selected values",
+            "attrType_date": "Date",
+            "cons_subtitleConstrainAllow": "Values to Constrain/Allow",
+            "rangeOperator": "Range Operator",
+            "card_attributeValue": "Attribute Value",
+            "price_dispToUser": "Display Price to user?",
+            "remove_attrSet": "Remove Array Set",
+            "debugger": "Test Table Results",
+            "warningChangingArrayControl": "You have changed to an array with a different control attribute. All arrays have been removed from tab '%1'",
+            "run": "Run",
+            "selectValues": "Select Values",
+            "bml_attributeTab": "Attributes",
+            "hidezero_yes": "Yes",
+            "status_inactive": "Inactive",
+            "error_editStyleSheet": "No stylesheet has been selected",
+            "operator": "Operator",
+            "spare_format": "Return Format",
+            "editFunc": "Edit Function",
+            "warning": "Warning",
+            "add": "Add",
+            "status_active": "Active",
+            "help_varName": "This is the rule variable name. It can contain only alpha-numeric (plus underscore) characters.",
+            "price_hideZeroPrice": "Hide Zero Price from user?",
+            "price_defaultMsg": "Define the Price amount, how this price will interact with the total configured price, and the message to display with this price",
+            "bom_noItems": "No Items",
+            "propertyType_quantity": "Quantity",
+            "constraintBehavior_allow": "Only allow selected values",
+            "dispprice_yes": "Yes",
+            "parts": "Parts",
+            "tableResultsTab": "Select Attributes to Populate Tab",
+            "debug_arrayValueColHeader": "Input Value",
+            "hidingFlow_actionTitle": "Action: (Define Attributes To Hide)",
+            "applyRuleTo": "Apply rule to",
+            "isAjaxPrompt": "Ajax Enabled",
+            "flow_flowAttribute": "Flow Attributes",
+            "startEndDateCheckboxLabel": "Edit Start/End Dates",
+            "recReturnTabLabel": "Map Bulk Recommendation",
+            "searchFlow_parameter": "Parameter",
+            "card_messageTitle": "Message to Display on User Side",
+            "flow_endNode": "End Node",
+            "spare_advFuncLabel": "Models/Parts",
+            "cons_behavior": "Constraint Behavior",
+            "rule": "Configuration Rule",
+            "attrType_boolean": "Boolean",
+            "card_messageLabel": "Static Text",
+            "flow_addAttribute": "Add Attribute",
+            "spare_comments": "Comments",
+            "reco_defaultMessage": "System recommendation",
+            "removedAllArraysFromAction": "You have changed to an array with a different control attribute. All arrays have been removed from the action.",
+            "bml_functionWizardTab": "Function Wizard",
+            "error_qtyDesc": "Description field is required.",
+            "desktop": "Desktop",
+            "cons_constrainValue": "Constrain Value",
+            "propertyType_price": "Price",
+            "invalidBoolean": "Boolean values must be either true or false.",
+            "searchFlow_editValueMapping": "Edit Value Mapping",
+            "removeRow": "Remove Row",
+            "searchFlow_resultsAction": "Search Flow Results Action",
+            "tableColumn": "Table Column",
+            "condGrid_unusedAttrDataType": "Data Type",
+            "pricebook": "Pricebook",
+            "spare_actionHelpText": "Recommended Items Rule enables you to associate extra sets of parts and models with products based on buyer-configured values.",
+            "mobile": "Mobile",
+            "searchFlow_editHTMLTemplate": "Edit HTML Template",
+            "setType": "Set Type",
+            "searchFlow_httpMethod": "HTTP Method",
+            "actionType": "Action Type",
+            "flow_addArraySets": "Add Array Sets",
+            "spare_modelErroMsg": "Enter Quantity for Model.",
+            "comment": "Comment",
+            "pricing": "Pricing",
+            "searchArraySetsPrompt": "Search Array Sets...",
+            "newRuleName": "New Rule",
+            "bml_ValidateBtn": "Validate",
+            "saveAndViewDetails": "Save and View Details",
+            "cons_subtitleConstrain": "Values to Constrain",
+            "searchFlow_get": "Get",
+            "tableConditionType": "Evaluate Row With",
+            "recommendation": "Recommendation",
+            "startDatePrompt": "Start Date",
+            "targetBOM": "Target BOM",
+            "flow_primaryStartNode": "Primary Start Node",
+            "hidezero_no": "No",
+            "searchFlow_attr_actionInput": "Action Input",
+            "output": "Output",
+            "bomMapping_actionHelpText": "BOM Mapping Rule enables you to map between BOM items and buyer-configured values.",
+            "debug_importFieldLabel": "Data Import",
+            "price": "Price",
+            "model": "Model",
+            "searchFlow_externalURL": "External URL",
+            "spare_mandatory": "Mandatory",
+            "bml_importBtn": "Import",
+            "bomMapping": "BOM Mapping",
+            "cons_defaultMessage": "Invalid selection",
+            "item": "Item",
+            "actionType_tableBased": "Table Lookup",
+            "hidingFlow_addAssocRecoRule": "Add Associated Recommendation Rule",
+            "spare_subtitle": "Define Recommended Items",
+            "confirmation": "ConfigRuleEditor_confirmation",
+            "spare_notFoundRecoItemsMsg": "Following Recommended Items are not found.",
+            "spareType_simple": "Simple",
+            "searchFlow_defineFunction": "Define Function",
+            "recoSourceTypeEnum_tableColumn": "Table Column",
+            "ruleArea_configuration": "Configuration",
+            "flow_processingEvent": "Processing Event",
+            "recoSourceTypeEnum_setType": "Static",
+            "flow_tabChange": "Tab Change",
+            "bom_advanced": "Advanced Bill of Materials -- Specify script that assembles a BOM string",
+            "ruleArea_both": "Both",
+            "propertyEnum_messageToUser": "Message To User",
+            "bom_simple": "Simple Bill of Materials -- Specify individual parts for the BOM",
+            "price_priceBehavior": "Price Behavior",
+            "endDatePrompt": "End Date",
+            "condGrid_unusedAttributes": "Unused Attributes",
+            "constraintBehavior_tablebased_allow": "Allow Values",
+            "bomConfigLabel": "From BOM to Launch Configuration",
+            "bml_debug_prodLineId": "Product Line Id",
+            "spare_splitItems": "Split Items",
+            "spare_noModels": "No Recommended Models",
+            "searchFlow_resultsUrl": "URL to send results",
+            "spareType_tableBased": "Table Lookup",
+            "searchFlow_functionEvaluateResults": "Function to evaluate results in use",
+            "propertyType_partNumber": "Item",
+            "searchFlow": "Search Flow",
+            "condGrid_unusedAttrDispType": "Display Type",
+            "convertToAdv": "Convert to Advanced Condition",
+            "messageToUser": "Message to User",
+            "selectTableTab": "Select Table Tab",
+            "propertiesPanelPrompt": "%1: %2",
+            "recoActionAttrLabel": "Attribute to Populate",
+            "spare_propertySource": "Property Source",
+            "format_advanced": "With Advanced Price and Comments (item1~quantity1~comment1~price1[~identifier1] [|^|item2~quantity2~comment2~price2[~identifier2] ]*)",
+            "error_qtyRange": "Quantity must be in the range of 1 to 99999 inclusive. Attempt to set value 0 failed.",
+            "propertyType_comment": "Comment",
+            "searchFlow_post": "Post",
+            "price_advanced": "Advanced",
+            "flow_lazy": "Load only active tab on page load",
+            "rangeValues": "Range Values",
+            "recoReturnTabLabel": "Select Attributes to Populate",
+            "spare_property": "Property",
+            "status_internal": "Internal",
+            "spare_propertyValue": "Property Value",
+            "partNumber": "Part Number",
+            "constraint": "Constraint",
+            "attributes": "Attributes",
+            "attrType_singleSelectMenu": "Single Select Menu",
+            "searchFlow_attr_regularAttribute": "Regular Attribute",
+            "layoutButton": "Layout",
+            "styleSheet": "Stylesheet",
+            "spare_partErroMsg": "Enter Quantity for Part.",
+            "error_partNumber": "Part Number is already selected. Please select another Part Number.",
+            "sourceType_configAttribute": "Attribute",
+            "addAttributes": "Add Attributes",
+            "flow_primaryStartEndNode": "Primary Start and End Node",
+            "revertToSimple": "Revert to Simple Value",
+            "constrainAll": "Constrain All",
+            "printerFrieldlyButton": "Printer Friendly Version",
+            "debug_arrayValuesHeader": "Array Attribute Values: %1",
+            "help_name": "This is the rule text name. It has no restrictions on special characters.",
+            "spareSourceType_configAttribute": "Attribute",
+            "defineBmlFunc": "Define BML Function",
+            "ajaxRuleWithArraysMsg": "Array attributes with Ajax enabled Condition or Action rules will exhibit Ajax behavior in JET UI only.",
+            "searchAttributePrompt": "Search Attributes...",
+            "create_layout_confirm": "You are about to create a new Mobile Layout based on the Desktop layout.",
+            "price_yes": "Yes",
+            "consReturnTabLabel": "Select Attributes to Constrain",
+            "propertyEnum_attributeToPopulate": "Attribute To Populate",
+            "flow_wizardNodeType": "Wizard Node Type",
+            "bml_invalidFavId": "Please enter a valid favorite item id.",
+            "price_userMsg": "User Message",
+            "price_no": "No",
+            "recItemsReturnTabLabel": "Map Item Properties",
+            "error_priceAmount": "Please enter a numeric value for Price Amount.",
+            "bOMMappingType_advanced": "Advanced",
+            "emailCopyButton": "Email a Copy",
+            "searchFlow_none": "None",
+            "jet_ui_only": "JET UI Only",
+            "bml_debuggerTab": "Debugger",
+            "consActionAttrLabel": "Attribute to Constrain",
+            "values": "Values",
+            "error": "Error",
+            "condGrid_simpleCondition": "Simple Condition",
+            "card_entryManager": "Entry Manager",
+            "new_mobile": "Create Mobile",
+            "flow_flowProperties": "Flow Properties",
+            "format_legacy": "Legacy Format (item1~quantity1[~item2~quantity2]*)",
+            "sourceType_static": "Static Entry",
+            "searchFlow_valueMappingErrorMsg": "Map at least one value.",
+            "valueToSet": "Table Column to Populate Attribute Values",
+            "value": "Value",
+            "remove_existing_bml_msg": "This action will remove any existing advanced BML for the action array attributes. Do you want to continue ?",
+            "bml_debug_funcInputs": "Function Inputs",
+            "errorOn": "There is an error in location '%1'",
+            "dispprice_no": "No",
+            "quantity": "Quantity",
+            "debug_defineValues": "Click to Define Values (%1)",
+            "clear": "Clear",
+            "actionType_bulkTableLookup": "Bulk Table Lookup",
+            "conditionPanelPrompt": "Condition",
+            "flow_all": "Load all tabs on page load",
+            "attrType_textField": "Text",
+            "hidingFlow_assocRecoRule": "Associated Recommendation Rule",
+            "attrType_multiSelectMenu": "Multi Select Menu",
+            "flow_noCurrentDisplayAttrs": "Flow Attributes are required.",
+            "condGrid_advancedCondition": "Advanced Condition",
+            "configBOMLabel": "From Configuration to BOM",
+            "flow_startNode": "Start Node",
+            "bml_debug_libraryInputs": "Library Inputs",
+            "errorOnDetails": "There is an error in location '%1' : %2"
+        });
+    </script>
+
+    <script type="text/javascript">
+        isI18n = false
+    </script>
+    <LINK REL="STYLESHEET" HREF="/style/defaultadmin.css" TYPE="text/css" />
+    <LINK REL="STYLESHEET" HREF="/bmfsweb/devmcnichols/navmenu/style/nav_menu.css" TYPE="text/css" />
+    <LINK REL="STYLESHEET" HREF="/bmfsweb/devmcnichols/navmenu/style/_alt_nav_menu.css" TYPE="text/css" />
+    <LINK REL="SHORTCUT ICON" HREF="/img/favicon.ico" TYPE="image/x-icon" />
+</head>
+
+<body>
+    <!-- Alta nav -->
+
+    <div id="hierarchy" style="display:none;"></div>
+
+    <input id="mod_mgr_run_tests" type="hidden" value="false" />
+    <a id="forScrollToTop" href="#"></a>
+    <script type='text/javascript' src='/bmfsweb/devmcnichols/image/javascript/bm-framework.js'></script>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr valign="top">
+
+            <td width="150" class="admin-img"></td>
+        </tr>
+    </table>
+    <table class="header-bordercolor" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+
+
+            <script language="JavaScript">
+                <!--
+                function MM_openBrWindow(theURL, winName, features) {
+                    window.open(theURL, winName, features);
+                }
+                //-->
+            </script>
+            <td width="0%" style='vertical-align: top' class='nav-left'>
+                <div class='nav-links'>
+                    <nobr>
+                        <a class="header-item" href="/commerce/display_company_profile.jsp?_bm_trail_refresh_=true"><img src="/bmfsweb/devmcnichols/image/Icons/images.png" border="0" alt="Product&nbsp;List" title="Product&nbsp;List" style="vertical-align: middle" /></a>&nbsp;<a class="header-item" href="/commerce/display_company_profile.jsp?_bm_trail_refresh_=true">Product&nbsp;List</a></nobr>
+                    <span class="header-char-delim">-</span> <a class="header-item" href="/commerce/buyside/config_drafts_list.jsp?_bm_trail_refresh_=true">Pending&nbsp;Configurations</a>
+                </div>
+            </td>
+            <td width="0%" style='vertical-align: top' class='nav-center'></td>
+            <td width="0%" style='vertical-align: top' class='nav-right'>
+                <div class='nav-links'>
+                    <nobr>
+                        <a class="header-item" href="/admin/index.jsp?_bm_trail_refresh_=true"><img src="/img/navigation/admin.gif" border="0" alt="Admin" title="Admin" style="vertical-align: middle" /></a>&nbsp;<a class="header-item" href="/admin/index.jsp?_bm_trail_refresh_=true">Admin</a></nobr>
+                    <span class="header-char-delim">-</span>
+                    <nobr>
+                        <a class="header-item" href="/commerce/buyside/commerce_manager.jsp?bm_cm_process_id=4653759&#38;from_hp=true&#38;_bm_trail_refresh_=true"><img src="/bmfsweb/devmcnichols/image/Icons/Inbox.png" border="0" alt="Transactions" title="Transactions" style="vertical-align: middle" /></a>&nbsp;<a class="header-item" href="/commerce/buyside/commerce_manager.jsp?bm_cm_process_id=4653759&#38;from_hp=true&#38;_bm_trail_refresh_=true">Transactions</a></nobr>
+                    <span class="header-char-delim">-</span>
+                    <nobr>
+                        <a class="header-item" href="/commerce/buyside/commerce_list.jsp?_bm_trail_refresh_=true"><img src="/bmfsweb/devmcnichols/image/Icons/star.png" border="0" alt="Favorites" title="Favorites" style="vertical-align: middle" /></a>&nbsp;<a class="header-item" href="/commerce/buyside/commerce_list.jsp?_bm_trail_refresh_=true">Favorites</a></nobr>
+                    <span class="header-char-delim">-</span>
+                    <nobr>
+                        <a class="header-item" href="https://support.oracle.com/cloud/faces/DocumentDisplay?id=1642278.2"><img src="/bmfsweb/devmcnichols/image/Icons/MessageBubble.png" border="0" alt="Support" title="Support" style="vertical-align: middle" /></a>&nbsp;<a class="header-item" href="https://support.oracle.com/cloud/faces/DocumentDisplay?id=1642278.2">Support</a></nobr>
+                    <span class="header-char-delim">-</span>
+                    <nobr>
+                        <a class="header-item" href="/commerce/profile/edit_profile.jsp?_bm_trail_refresh_=true&#38;navType=0"><img src="/img/navigation/profile.gif" border="0" alt="My&nbsp;Profile" title="My&nbsp;Profile" style="vertical-align: middle" /></a>&nbsp;<a class="header-item" href="/commerce/profile/edit_profile.jsp?_bm_trail_refresh_=true&#38;navType=0">My&nbsp;Profile</a></nobr>
+                    <script>
+                        function gotoHelp() {
+                            openHelpWindow('/admin/configuration/rules/edit_rule.jsp');
+                        };
+
+                        function gotoSpecificHelp(pageKey) {
+                            openHelpWindow('/admin/configuration/rules/edit_rule.jsp/' + pageKey);
+                        }
+
+                        function openHelpWindow(pageURL) {
+                            var url = '/help/help_redirect.jsp?pageURL=' + pageURL;
+                            window.open(url, 'BMHelpWindow', 'width=1100,height=600,toolbar=0,resizable=1');
+                        }
+                    </script><span class="header-char-delim">-</span>
+                    <nobr>
+                        <a class="header-item" href="javascript:gotoHelp()"><img src="/bmfsweb/devmcnichols/image/Icons/Help.png" border="0" alt="Help" title="Help" style="vertical-align: middle" /></a>&nbsp;<a class="header-item" href="javascript:gotoHelp()">Help</a></nobr>
+                    <span class="header-char-delim">-</span>
+                    <nobr>
+                        <a class="header-item" href="/logout.jsp?_bm_trail_refresh_=true"><img src="/bmfsweb/devmcnichols/image/Icons/SilverKey.png" border="0" alt="Log&nbsp;out" title="Log&nbsp;out" style="vertical-align: middle" /></a>&nbsp;<a class="header-item" href="/logout.jsp?_bm_trail_refresh_=true">Log&nbsp;out</a></nobr>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+    <table class="admin-bordercolor" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td>
+                <table class="topcolor" width="100%" border="0" cellspacing="0" cellpadding="5">
+                    <tr valign="top">
+                        <td width="0%" style='vertical-align: center' class='menuentry nav-left'></td>
+                        <td width="0%" style='vertical-align: center' class='menuentry nav-center'></td>
+                        <td width="100%" style='vertical-align: center' class='menuentry nav-right'>
+                            <div class='nav-links'>
+                                <nobr>
+                                    <a class="admin-sidebar-item" href="/admin/users/list_users.jsp?_bm_trail_refresh_=true"><img src="/img/navigation/user.gif" border="0" alt="Users" title="Users" style="vertical-align: middle" /></a>&nbsp;<a class="admin-sidebar-item" href="/admin/users/list_users.jsp?_bm_trail_refresh_=true">Users</a></nobr>
+                                <span class="admin-char-delim">|</span>
+                                <nobr>
+                                    <a class="admin-sidebar-item" href="/admin/groups/list_groups.jsp?_bm_trail_refresh_=true"><img src="/img/navigation/group.gif" border="0" alt="Groups" title="Groups" style="vertical-align: middle" /></a>&nbsp;<a class="admin-sidebar-item" href="/admin/groups/list_groups.jsp?_bm_trail_refresh_=true">Groups</a></nobr>
+                                <span class="admin-char-delim">|</span>
+                                <nobr>
+                                    <a class="admin-sidebar-item" href="/admin/parts/manage_parts.jsp?_bm_trail_refresh_=true"><img src="/img/navigation/parts.gif" border="0" alt="Parts" title="Parts" style="vertical-align: middle" /></a>&nbsp;<a class="admin-sidebar-item" href="/admin/parts/manage_parts.jsp?_bm_trail_refresh_=true">Parts</a></nobr>
+                                <span class="admin-char-delim">|</span>
+                                <nobr>
+                                    <a class="admin-sidebar-current" href="/admin/configuration/admin_config.jsp?_bm_trail_refresh_=true"><img src="/img/navigation/catalog.gif" border="0" alt="Catalog&nbsp;Definition" title="Catalog&nbsp;Definition" style="vertical-align: middle" /></a>&nbsp;<a class="admin-sidebar-current" href="/admin/configuration/admin_config.jsp?_bm_trail_refresh_=true">Catalog&nbsp;Definition</a></nobr>
+                                <span class="admin-char-delim">|</span>
+                                <nobr>
+                                    <a class="admin-sidebar-item" href="/admin/commerce/processes/list_processes.jsp?_bm_trail_refresh_=true"><img src="/img/navigation/commerce_process.gif" border="0" alt="Process&nbsp;Definition" title="Process&nbsp;Definition" style="vertical-align: middle" /></a>&nbsp;<a class="admin-sidebar-item" href="/admin/commerce/processes/list_processes.jsp?_bm_trail_refresh_=true">Process&nbsp;Definition</a></nobr>
+                                <span class="admin-char-delim">|</span>
+                                <nobr>
+                                    <a class="admin-sidebar-item" href="/admin/bmllib/list_functions.jsp?doc_id=4653823&#38;_bm_trail_refresh_=true"><img src="/bmfsweb/devmcnichols/image/Icons/book_add.png" border="0" alt="Commerce&nbsp;BML&nbsp;Libraries" title="Commerce&nbsp;BML&nbsp;Libraries" style="vertical-align: middle" /></a>&nbsp;<a class="admin-sidebar-item"
+                                        href="/admin/bmllib/list_functions.jsp?doc_id=4653823&#38;_bm_trail_refresh_=true">Commerce&nbsp;BML&nbsp;Libraries</a></nobr>
+                                <span class="admin-char-delim">|</span>
+                                <nobr>
+                                    <a class="admin-sidebar-item" href="/admin/bmllib/list_functions.jsp?_bm_trail_refresh_=true"><img src="/bmfsweb/devmcnichols/image/Icons/book_open.png" border="0" alt="BML&nbsp;Util&nbsp;Libraries" title="BML&nbsp;Util&nbsp;Libraries" style="vertical-align: middle" /></a>&nbsp;<a class="admin-sidebar-item"
+                                        href="/admin/bmllib/list_functions.jsp?_bm_trail_refresh_=true">BML&nbsp;Util&nbsp;Libraries</a></nobr>
+                                <span class="admin-char-delim">|</span>
+                                <nobr>
+                                    <a class="admin-sidebar-item" href="/admin/data-tables"><img src="/img/navigation/data_tables.gif" border="0" alt="Data&nbsp;Tables" title="Data&nbsp;Tables" style="vertical-align: middle" /></a>&nbsp;<a class="admin-sidebar-item" href="/admin/data-tables">Data&nbsp;Tables</a></nobr>
+                                <span class="admin-char-delim">|</span>
+                                <nobr>
+                                    <a class="admin-sidebar-item" href="/admin/filemanager/list_files.jsp?_bm_trail_refresh_=true"><img src="/img/navigation/file_manager.gif" border="0" alt="File&nbsp;Manager" title="File&nbsp;Manager" style="vertical-align: middle" /></a>&nbsp;<a class="admin-sidebar-item" href="/admin/filemanager/list_files.jsp?_bm_trail_refresh_=true">File&nbsp;Manager</a></nobr>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr style="height: 5px;">
+            <td></td>
+        </tr>
+    </table>
+    <table border=0 cellspacing=0 cellpadding=0 width=100% class='page-content'>
+        <tr valign="top">
+            <td class='dummy-td'>
+
+            </td>
+
+            <td width="*">
+
+
+
+
+                <div style="width: 960px; margin: auto" id="content"></div>
+            </td>
+        </tr>
+    </table>
+
+    </td>
+    </tr>
+    </table>
+
+
+    <script type="text/javascript">
+        $("input[name=first_name]").parent().prev().html("*First:");
+        $("input[name=last_name]").parent().prev().html("Last:");
+    </script>
+    <form name="_bm_trail_form_0" method="post" action="/commerce/display_company_profile.jsp"><input type="hidden" name="redirectUrl" value="/logout.jsp?_bm_trail_refresh_=true" /><input type="hidden" name="hash_param" value="" /><input type="hidden" name="token" value="KYxLhRXQxdA5w-cq47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU" /></form>
+    <form name="_bm_trail_form_1" method="post" action="/admin/configuration/admin_config.jsp"></form>
+    <form name="_bm_trail_form_2" method="post" action="/admin/catalog/products/list_prdfamilies.jsp"><input type="hidden" name="ref_id" value="11" /><input type="hidden" name="attribute_category" value="2" /><input type="hidden" name="rule_type" value="1" /><input type="hidden" name="_fromQlink" value="0" /><input type="hidden" name="ref_category"
+            value="1" /><input type="hidden" name="ref_type" value="2" /><input type="hidden" name="segment_id" value="11" /></form>
+    <form name="_bm_trail_form_3" method="post" action="/admin/configuration/rules/list_rules.jsp"><input type="hidden" name="ref_id" value="11" /><input type="hidden" name="rule_id" value="5027206" /><input type="hidden" name="attribute_category" value="2" /><input type="hidden" name="rule_type" value="1" /><input type="hidden" name="fromList"
+            value="true" /><input type="hidden" name="_fromQlink" value="0" /><input type="hidden" name="pline_id" value="-1" /><input type="hidden" name="ref_category" value="1" /><input type="hidden" name="model_id" value="-1" /><input type="hidden" name="ref_type"
+            value="2" /><input type="hidden" name="segment_id" value="11" /></form>
+    <form name="_bm_trail_form_4" method="post" action="/admin/configuration/rules/edit_rule.jsp"><input type="hidden" name="rule_id" value="5027206" /><input type="hidden" name="rule_type" value="1" /><input type="hidden" name="fromList" value="true" /><input type="hidden" name="pline_id" value="-1" /><input type="hidden" name="model_id" value="-1"
+        /><input type="hidden" name="segment_id" value="11" /></form>
+    <table style="left: 0; top: 0; height: 100px; width: 300px; background-color: #FFFFFF; border:1px #000000 solid; visibility:hidden; position:absolute; z-index:1000;" id="_bmProcessingDialog" cellpadding="15" cellspacing="0">
+        <tr>
+            <td width="100%" align="center" nowrap="true" valign="bottom"><b>Processing...&#32;&#32;Please&#32;Wait.</b></td>
+        </tr>
+        <tr>
+            <td align="center" valign="top"><img id="_processingBarImage" src="/img/trans.gif" />
+                <div id="processDialogClose"><a href="#" onclick="document.getElementById('_bmProcessingDialog').style.visibility = 'hidden'">Close</a></div>
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript" src="/theme/js/common/mobile/ScrollableMobileIframesFix.js"></script>
+
+    <script type="text/javascript">
+        window.trailForm = document._bm_trail_form_3;
+    </script>
+
+    <script defer="defer" src="/js/ie11Check.js"></script>
+</body>
+
+</html>

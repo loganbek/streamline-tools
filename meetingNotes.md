@@ -2670,7 +2670,7 @@ TODO: fix for MD024 (low priority)
 ## 4/19/21 Config Modal DEV
 
 - [ ] reconstruct config loading modal
-  - [ ] steps to do this?
+- [ ] review DOM to determine modal parent
 - [ ] post click anywhere on page remove modal
 - [ ] validate
 
