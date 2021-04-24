@@ -2738,7 +2738,7 @@ popup.html:1 Error handling response: TypeError: Cannot read property 'code' of 
 
 - [ ] test loading modal on all advanced condition types
 
-```json
+```js
 document.querySelector("#editor")
 ```
 
@@ -2760,4 +2760,8 @@ popup.html:1 Error handling response: TypeError: Cannot read property 'code' of 
 ### Other Enhancements
 
 - [ ] improve troublshooting steps
-- [ ] 
+- [ ] auto command (alt) click view/edit button
+
+```html
+<button class="x-btn-text " type="button" style="position: relative; width: 157px;" tabindex="0">View/Edit the BML Function<img src="https://devmcnichols.bigmachines.com/gwt/ConfigRuleEditor/clear.cache.gif" style="width: 16px; height: 16px; background: url(&quot;https://devmcnichols.bigmachines.com/img/bmx/icons/script_edit.png&quot;) 0px 0px no-repeat; position: absolute; left: 0px; top: -1px;" border="0" role="presentation" class=" x-btn-image"></button>
+```
