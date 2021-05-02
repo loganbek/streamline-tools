@@ -52,4 +52,4 @@
     - `Ctrl + Shift + R` (Windows)
     - `Cmd + Shift + R` (Mac)
 
-2) Reload and then reinstall after filing a bug report [here](https://github.com/loganbek/streamlineTools/issues/new?assignees=loganbek&labels=&template=bug_report.md&title=). Please include any error logs from the console.
+2) Remove the extension and then reinstall it after filing a bug report [here](https://github.com/loganbek/streamlineTools/issues/new?assignees=loganbek&labels=&template=bug_report.md&title=). Please include any error logs from the console.
