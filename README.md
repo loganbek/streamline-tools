@@ -1,6 +1,6 @@
 # Streamline Tools for Oracle CPQ Cloud
 
-![Logo](SLCPQ_LOGO_SITE.png)
+![streamlinecpqlogo](SLCPQ_LOGO_SITE.png)
 
 <!-- BADGING 
 [![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/loganbek/streamlineTools/pulls)
@@ -24,7 +24,7 @@
 
 1) Download the latest version of Streamline Tools [here](https://github.com/loganbek/streamlineTools/releases).
 
-2) Unzip the file into a streamLineTools folder.
+2) Extract the files into their own directory.
 
 3) Go to "chrome://extensions/" in your browser.
 
@@ -32,7 +32,7 @@
 
 5) Press the "Load unpacked" button.
 
-6) Select the unzipped streamLineTools folder.
+6) Select the folder with the extracted files.
 
 7) Open your local "Downloads" folder in Visual Studio Code.
 
@@ -46,10 +46,10 @@
 
 - Ensure you have downloaded and installed git [here](https://git-scm.com/download/win) -->
 
-#### Troubleshooting Steps
+## Troubleshooting Steps
 
 1) Hard Refresh/Clear Cache
     - `Ctrl + Shift + R` (Windows)
     - `Cmd + Shift + R` (Mac)
 
-2) Reinstall after filing a bug report [here](https://github.com/loganbek/streamlineTools/issues/new?assignees=loganbek&labels=&template=bug_report.md&title=). Please include any error logs.
+2) Reload and then reinstall after filing a bug report [here](https://github.com/loganbek/streamlineTools/issues/new?assignees=loganbek&labels=&template=bug_report.md&title=). Please include any error logs from the console.
