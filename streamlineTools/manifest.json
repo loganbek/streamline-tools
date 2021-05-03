@@ -1,7 +1,7 @@
 {
     "name": "Streamline Tools",
-    "version": "0.7.0",
-    "description": "Streamline Tools for Oracle CPQ Cloud!",
+    "version": "0.8.0",
+    "description": "Streamline Tools helps streamline your Oracle CPQ Cloud BML development, administration, maintenance, and support tasks.",
     "permissions": [
         "downloads",
         "activeTab",

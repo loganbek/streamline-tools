@@ -1911,6 +1911,7 @@ TESTING
 
 Testing framework to look into - <https://github.com/cypress-io/cypress>
 
+RESEARCH OTHER AREAS OF SITE
 printer friendly XSL (can we do something here)
 integration XSL
 file manager
@@ -1924,9 +1925,24 @@ Streamline your CPQ workflows, development, administration and maintenance.
 <https://github.com/loganbek/streamlineTools/issues>
 
 ####### DESCRIPTION - Focus on explaining what the item does and why users should install it
-LOAD AND UNLOAD your BML scripts to and from Oracle CPQ Cloud.
-Use w/ your favorite Text Editor - Visual Studio Code.
-Manage your BML code w/ Git Versioning Control
+
+Streamline your Oracle CPQ Cloud implementations, workflows, development, administration, and maintenance.
+
+LOAD and UNLOAD your BML scripts to and from Oracle CPQ Cloud.
+
+Compatible with:
+
+- Configuration (Recommendations, Constraints, Hiding Attributes, Recommended Items) - Advanced Conditions
+
+- Commerce Library Functions and Test Scripts + Actions (Advanced Modify - Before/After Formulas) + Rules (Constraint, Hiding, Validation - Advanced Conditions)
+
+- Utility Functions + Test Scripts
+
+Use with your favorite Text Editor instead of the Big Machines web-based editors.
+
+Manage your BML code using Git versioning control.
+
+Auto "check" and "validate" to improve code quality and debugging efficiency.
 
 Please create any bugs/issues/feature requests [here](https://github.com/loganbek/streamlineTools/issues/new/choose).
 
@@ -1934,8 +1950,6 @@ Strip and rip from other chome extensions.
 
 <https://developer.chrome.com/docs/webstore/publish>
 
-- [ ] register as chrome developer
-- [ ] Google Analytics ID
 - [ ] Graphic Assets
 - [x] Store icon
 - [ ] Permission justification
@@ -1968,3 +1982,885 @@ JPEG or 24-bit PNG (no alpha)
 Marquee promo tile
 1400x560 Canvas
 JPEG or 24-bit PNG (no alpha)
+
+1/25+26/20
+
+- [ ] look through CPQ docs for copy
+- [ ] finish unused code + comment removal
+- [ ] injected.js
+  - [ ] fix alert x multiple
+- [ ] content.js
+  - [ ] CH
+  - [ ] check util load validate
+- [ ] finish unused code + comment removal round 2
+
+Look @ other CWS extensions to get ideas for description, screenshots, + demo
+
+1/27/20
+
+MEETING
+
+status update
+screen grabs (blur out dev minichy stuff)
+
+- [x] restore the rm contentscripts you should nt have rmd
+adminCommerceRulesContent.js
+adminCommerceRulesInjected.js
+
+- [ ] fix remaining bugs and retest entire application
+- [ ] edit chrome web store assets and blur client information.
+
+Write a long description for the Web Store? Can we strip and rip copy from another chrome extension on the store - maybe the web dev app or another developer tool app.
+
+2/2/21
+
+List of final tasks before first release:
+
+- [ ] What else do you need to complete the Chrome Web Store Application Process?
+  - [x] register as chrome developer
+  - [x] Google Analytics ID - 260194142
+  - [ ] permission cleanup
+    - [x]  current perms
+
+    ```json  "permissions": [
+        "downloads", // required for BML file downloads in Chrome (onDeterminingFilename specifically).
+        "activeTab", // req for access to current tab DOM.
+        "declarativeContent", //  req for page state matching + injecting scripts
+        "storage", // propbably can remove may need later (currently not used)
+        "file://*", // used for injection scripts
+        "tabs" // req for requesting specific tab info
+    ],
+    ```
+
+  - [x] permission justification + add to privacy practices.
+
+  The "downloads" permission is required in order to download the BML scripts locally.
+
+  The "activeTab" permission is required in order to access the current tab DOM and grab information such as the filename.
+
+  The "declarativeContent" permission is required in for the page state matcher and injecting content scripts.
+
+  The "storage" permission is used to store the filename and commentHeader in certain instances. It's also used to store options selections made by the user.
+
+  The "file://*" permission is required to executeContent + injection scripts. // Not need I guess
+
+  The "tabs" permission is required for requesting specific tab info, much like the "activeTab" permission.
+
+  - [ ] edit chrome web store assets and blur client information.
+  - [x] email Chris copy + assets (TODO) and get A OK
+  - [ ] submit first version for review
+  - [ ] review feedback and re-release
+
+- [ ] Dev/Bug Fixes
+  - [ ] look through CPQ docs for useable copy
+  - [ ] finish unused code + comment removal
+  - [ ] injected.js
+    - [ ] fix alert x multiple
+  - [ ] content.js
+    - [ ] CH
+    - [ ] check util load validate
+  - [ ] finish unused code + comment removal round 2
+
+<https://chrome.google.com/webstore/category/extensions?hl=en>
+
+Other:
+
+Email regarding remotely hosted code removal in mani v3
+
+Status Update
+
+- [ ] Preview Dev Console + Store Listing + Privacy Practices + Pricing & Distribution - <https://chrome.google.com/webstore/devconsole/ed6f5e47-5734-4a9b-be3f-7babc417c88e/dpedakjcalecgiigkhblajfgojjhdgoc/edit>
+- [ ] Chris Q's
+  - status on non client environment? - Is this possible to get?
+  - what license would you like to release under?
+
+MEETING 2/5/21
+
+Sample Exteion Description from Chrome Web Store
+
+Talend API Tester - Free Edition
+
+Visually interact with REST, SOAP and HTTP APIs.
+Welcome to Talend API Tester - Free Edition, formerly known as Restlet Client. Talend API Tester makes it easy to invoke, discover and test HTTP and REST APIs.
+
+Talend API Tester - Free Edition's main functions include:
+
+1.Send requests and inspect responses
+
+Talend API Tester - Free Edition handles all HTTP requests, no matter how complex. Requests can be made dynamic by inserting variables. Security and authentication are fully supported, as well as hypermedia and HTML forms. You can visualize, prettify and inspect HTTP responses.
+
+2.Validate API behavior
+
+Whether you want to check that your API is behaving as specified, or you need to confirm how well third-party APIs are responding, Talend API Tester lets you perform many sorts of API response tests. Use assertions to validate values of headers, parts of the body or response time among others. Environments variables can also be created to increase the reusability of your tests.
+
+Key features:
+
+- Interact with REST or simple HTTP APIs through a visual and easy-to-use UI
+- View and search your call history. Edit and re-send requests from history.
+  - Save and organize your requests into projects and services.
+  - Build dynamic requests with custom variables, security and authentication.
+  - Visualise and inspect responses of different format (JSON, XML, HTML, images...) using different views (raw, pretty, preview)
+  - Validate responses with assertions (status, headers, XML and JSON body, response time...)
+  - Easily import your Postman Collections, Swagger / OAS / OpenAPI and HAR (HTTP Archive).
+
+---
+
+Why does Talend API Tester require "Read and change all your data on the websites you visit" and "Communicate with cooperating websites" permissions?
+
+Chrome extensions which need access to internet resources must have the resources declared in their manifest which can be a list of URLs or URL mask. For example, http://*/* allow access to any URL. Allowing access to any URL is a primary function of Talend API Tester. The URL mask with wildcards is interpreted by Chrome Web Store as Talend API Tester can read and change all your data on the websites you visit, without meaning that the app is doing something wrong.
+
+FUTURE: KEYMAP EXTENSIONS
+
+## 3/1-7/21
+
+## 4/4 Meeting Notes
+
+- [x] devmcnichols login (password incorrect) - Chris - maybe env updates?
+- [ ] review code base (Logan)
+- [ ] Chrome Web Store Review (near completion) - Logan
+- [ ] take + blurr screenshots/assets - Logan
+- [ ] smoke test - Logan
+- [ ] functionality check - Logan
+- [ ] list of tasks before release
+  - [ ] config extra click solution (new branch)
+  - [ ] look for loading modal in editor and recreate onload in config
+  - [ ] discuss other config solutions @ next meeting
+  - [ ] milestone texts throughout week
+
+## Other
+
+- [ ] Streamline hireing push spring/summer + resume session.
+
+## 4/6/21
+
+- [ ] config loading modal planning
+  - [ ] ideally replicate modal from other editors on site.
+    - [x] review other editors
+      - [x] pricing has loading modal on page load, maybe can use debugger to copy as is.
+      - [x] same w/ config loading modal
+
+### CONFIG LOADING MODAL DEV STEPS
+
+- [ ] determine where to add modal within DOM
+  - [ ] try within div w/ `id="editor"` or `id="result"`
+  - [ ] `/html/body/div[6]/div[12]`
+- [ ] create loading modal w/ same styling
+- [ ] add to DOM
+- [ ] remove from DOM on click event
+
+```html
+<div id="bmui-loading">
+    <div class="loading-indicator">
+        <img src="/img/default/loading.gif" style="width:16px;height:16px;" align="absmiddle">
+        <div id="bmui-message">&nbsp;Loading...</div>
+    </div>
+</div>
+```
+
+```css
+    color: black;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 8pt;
+    margin: 0;
+    position: absolute;
+    left: 45%;
+    top: 40%;
+    border: 1px solid #6593cf;
+    padding: 2px;
+    background: #c3daf9;
+    width: 150px;
+    text-align: center;
+    z-index: 20001;
+```
+
+```js
+document.querySelector("#bmui-loading")
+```
+
+```lang-xml
+/html/body/div[1]/div[4]
+```
+
+```xml
+//*[@id="bmui-loading"]
+```
+
+## 4/7+11/21
+
+- [ ] config loading modal planning
+  - pricing function (106 requests pre validate, 110 post validate)
+
+  - [ ] create modal
+    - [ ] loading gif
+    - [ ] top padding/margin?
+
+MODAL FROM PRICING FUNCTION
+
+```css
+#bmui-loading{
+    position:absolute;
+    left:45%;
+    top:40%;
+    border:1px solid #6593cf;
+    padding:2px;
+    background:#c3daf9;
+    width:150px;
+    text-align:center;
+    z-index:20001;
+}
+#bmui-loading .loading-indicator{
+    border:1px solid #a3bad9;
+    background:white repeat-x;
+    color:#003366;
+    font:bold 13px tahoma,arial,helvetica;
+    padding:10px;
+    margin:0;
+}
+```
+
+COMPUTED STYLE:
+
+```css
+align-content normal
+align-items normal
+align-self auto
+alignment-baseline auto
+all
+animation-delay 0s
+animation-direction normal
+animation-duration 0s
+animation-fill-mode none
+animation-iteration-count 1
+animation-name none
+animation-play-state running
+animation-timing-function ease
+appearance none
+aspect-ratio auto
+backdrop-filter none
+backface-visibility visible
+background-attachment scroll
+background-blend-mode normal
+background-clip border-box
+background-color rgb(195, 218, 249)
+background-image none
+background-origin padding-box
+background-position-x 0%
+background-position-y 0%
+background-repeat-x
+background-repeat-y
+background-size auto
+baseline-shift 0px
+block-size 54px
+border-block-end-color rgb(101, 147, 207)
+border-block-end-style solid
+border-block-end-width 1px
+border-block-start-color rgb(101, 147, 207)
+border-block-start-style solid
+border-block-start-width 1px
+border-bottom-color rgb(101, 147, 207)
+border-bottom-left-radius 0px
+border-bottom-right-radius 0px
+border-bottom-style solid
+border-bottom-width 1px
+border-collapse separate
+border-end-end-radius 0px
+border-end-start-radius 0px
+border-image-outset 0
+border-image-repeat stretch
+border-image-slice 100%
+border-image-source none
+border-image-width 1
+border-inline-end-color rgb(101, 147, 207)
+border-inline-end-style solid
+border-inline-end-width 1px
+border-inline-start-color rgb(101, 147, 207)
+border-inline-start-style solid
+border-inline-start-width 1px
+border-left-color rgb(101, 147, 207)
+border-left-style solid
+border-left-width 1px
+border-right-color rgb(101, 147, 207)
+border-right-style solid
+border-right-width 1px
+border-start-end-radius 0px
+border-start-start-radius 0px
+border-top-color rgb(101, 147, 207)
+border-top-left-radius 0px
+border-top-right-radius 0px
+border-top-style solid
+border-top-width 1px
+bottom 795.609px
+box-shadow none
+box-sizing content-box
+break-after auto
+break-before auto
+break-inside auto
+buffered-rendering auto
+caption-side top
+caret-color rgb(0, 0, 0)
+clear none
+clip auto
+clip-path none
+clip-rule nonzero
+color rgb(0, 0, 0)
+color-interpolation srgb
+color-interpolation-filters linearrgb
+color-rendering auto
+color-scheme normal
+column-count auto
+column-fill balance
+column-gap normal
+column-rule-color rgb(0, 0, 0)
+column-rule-style none
+column-rule-width 0px
+column-span none
+column-width auto
+contain none
+contain-intrinsic-size auto
+content normal
+content-visibility visible
+counter-increment none
+counter-reset none
+counter-set none
+cursor auto
+cx 0px
+cy 0px
+d none
+direction ltr
+display block
+dominant-baseline auto
+empty-cells show
+fill rgb(0, 0, 0)
+fill-opacity 1
+fill-rule nonzero
+filter none
+flex-basis auto
+flex-direction row
+flex-grow 0
+flex-shrink 1
+flex-wrap nowrap
+float none
+flood-color rgb(0, 0, 0)
+flood-opacity 1
+font-family "Helvetica Neue", Helvetica, Arial, sans-serif
+font-feature-settings normal
+font-kerning auto
+font-optical-sizing auto
+font-size 10.6667px
+font-stretch 100%
+font-style normal
+font-variant-caps normal
+font-variant-east-asian normal
+font-variant-ligatures normal
+font-variant-numeric normal
+font-variation-settings normal
+font-weight 400
+forced-color-adjust auto
+grid-auto-columns auto
+grid-auto-flow row
+grid-auto-rows auto
+grid-column-end auto
+grid-column-start auto
+grid-row-end auto
+grid-row-start auto
+grid-template-areas none
+grid-template-columns none
+grid-template-rows none
+height 54px
+hyphens manual
+image-orientation from-image
+image-rendering auto
+inline-size 150px
+inset-block-end 795.609px
+inset-block-start 570.391px
+inset-inline-end 1000.66px
+inset-inline-start 946.344px
+isolation auto
+justify-content normal
+justify-items normal
+justify-self auto
+left 946.344px
+letter-spacing normal
+lighting-color rgb(255, 255, 255)
+line-break auto
+line-height normal
+list-style-image none
+list-style-position outside
+list-style-type disc
+margin-block-end 0px
+margin-block-start 0px
+margin-bottom 0px
+margin-inline-end 0px
+margin-inline-start 0px
+margin-left 0px
+margin-right 0px
+margin-top 0px
+marker-end none
+marker-mid none
+marker-start none
+mask none
+mask-type luminance
+max-block-size none
+max-height none
+max-inline-size none
+max-width none
+min-block-size 0px
+min-height 0px
+min-inline-size 0px
+min-width 0px
+mix-blend-mode normal
+object-fit fill
+object-position 50% 50%
+offset-distance 0px
+offset-path none
+offset-rotate auto 0deg
+opacity 1
+order 0
+orphans 2
+outline-color rgb(0, 0, 0)
+outline-offset 0px
+outline-style none
+outline-width 0px
+overflow-anchor auto
+overflow-wrap normal
+overflow-x visible
+overflow-y visible
+overscroll-behavior-block auto
+overscroll-behavior-inline auto
+overscroll-behavior-x auto
+overscroll-behavior-y auto
+padding-block-end 2px
+padding-block-start 2px
+padding-bottom 2px
+padding-inline-end 2px
+padding-inline-start 2px
+padding-left 2px
+padding-right 2px
+padding-top 2px
+page auto
+page-orientation
+paint-order normal
+perspective none
+perspective-origin 78px 30px
+pointer-events auto
+position absolute
+quotes auto
+r 0px
+resize none
+right 1000.66px
+row-gap normal
+ruby-position over
+rx auto
+ry auto
+scroll-behavior auto
+scroll-margin-block-end 0px
+scroll-margin-block-start 0px
+scroll-margin-bottom 0px
+scroll-margin-inline-end 0px
+scroll-margin-inline-start 0px
+scroll-margin-left 0px
+scroll-margin-right 0px
+scroll-margin-top 0px
+scroll-padding-block-end auto
+scroll-padding-block-start auto
+scroll-padding-bottom auto
+scroll-padding-inline-end auto
+scroll-padding-inline-start auto
+scroll-padding-left auto
+scroll-padding-right auto
+scroll-padding-top auto
+scroll-snap-align none
+scroll-snap-stop normal
+scroll-snap-type none
+shape-image-threshold 0
+shape-margin 0px
+shape-outside none
+shape-rendering auto
+size
+speak normal
+stop-color rgb(0, 0, 0)
+stop-opacity 1
+stroke none
+stroke-dasharray none
+stroke-dashoffset 0px
+stroke-linecap butt
+stroke-linejoin miter
+stroke-miterlimit 4
+stroke-opacity 1
+stroke-width 1px
+tab-size 8
+table-layout auto
+text-align center
+text-align-last auto
+text-anchor start
+text-combine-upright none
+text-decoration-color rgb(0, 0, 0)
+text-decoration-line none
+text-decoration-skip-ink auto
+text-decoration-style solid
+text-decoration-thickness auto
+text-indent 0px
+text-orientation mixed
+text-overflow clip
+text-rendering auto
+text-shadow none
+text-size-adjust auto
+text-transform none
+text-underline-offset auto
+text-underline-position auto
+top 570.391px
+40% #bmui-loading
+touch-action auto
+transform none
+transform-box view-box
+transform-origin 78px 30px
+transform-style flat
+transition-delay 0s
+transition-duration 0s
+transition-property all
+transition-timing-function ease
+unicode-bidi normal
+user-select auto
+vector-effect none
+vertical-align baseline
+visibility visible
+white-space normal
+widows 2
+width 150px
+will-change auto
+word-break normal
+word-spacing 0px
+writing-mode horizontal-tb
+x 0px
+y 0px
+z-index 20001
+zoom 1
+-webkit-app-region none
+-webkit-border-horizontal-spacing 0px
+-webkit-border-vertical-spacing 0px
+-webkit-box-align stretch
+-webkit-box-decoration-break slice
+-webkit-box-direction normal
+-webkit-box-flex 0
+-webkit-box-ordinal-group 1
+-webkit-box-orient horizontal
+-webkit-box-pack start
+-webkit-box-reflect none
+-webkit-font-smoothing auto
+-webkit-highlight none
+-webkit-hyphenate-character auto
+-webkit-line-clamp none
+-webkit-locale "en-US"
+-webkit-mask-box-image-outset 0
+-webkit-mask-box-image-repeat stretch
+-webkit-mask-box-image-slice 0 fill
+-webkit-mask-box-image-source none
+-webkit-mask-box-image-width auto
+-webkit-mask-clip border-box
+-webkit-mask-composite source-over
+-webkit-mask-image none
+-webkit-mask-origin border-box
+-webkit-mask-position-x 0%
+-webkit-mask-position-y 0%
+-webkit-mask-repeat-x
+-webkit-mask-repeat-y
+-webkit-mask-size auto
+-webkit-perspective-origin-x
+-webkit-perspective-origin-y
+-webkit-print-color-adjust economy
+-webkit-rtl-ordering logical
+-webkit-tap-highlight-color rgba(0, 0, 0, 0.18)
+-webkit-text-combine none
+-webkit-text-decorations-in-effect none
+-webkit-text-emphasis-color rgb(0, 0, 0)
+-webkit-text-emphasis-position over right
+-webkit-text-emphasis-style none
+-webkit-text-fill-color rgb(0, 0, 0)
+-webkit-text-security none
+-webkit-text-stroke-color rgb(0, 0, 0)
+-webkit-text-stroke-width 0px
+-webkit-transform-origin-x
+-webkit-transform-origin-y
+-webkit-transform-origin-z
+-webkit-user-drag auto
+-webkit-user-modify read-only
+-webkit-border-image none
+-webkit-ruby-position before
+-webkit-text-orientation vertical-right
+```
+
+MODAL FROM CONFIG
+
+```html
+<div class="ext-el-mask-msg" style="display: block; left: 1014px; top: 694px;"><div>Loading...</div></div>
+```
+
+```css
+.ext-el-mask {
+    background-color: #ccc;
+}
+.ext-el-mask-msg {
+    border-color:#6593cf;
+    background-color:#c3daf9;
+    background-image:url(../images/default/box/tb-blue.gif);
+}
+.ext-el-mask-msg div {
+    background-color: white;
+    border-color:#a3bad9;
+    color:#222;
+    font:normal 11px tahoma, arial, helvetica, sans-serif;
+}
+.x-mask-loading div {
+    background-color:#fbfbfb;
+    background-image:url(../images/default/grid/loading.gif);
+}
+```
+
+`https://devmcnichols.bigmachines.com/gwt/gxt/css/gxt-all.css`
+
+```html
+<td class="x-btn-mc"><em class="" unselectable="on"><button class="x-btn-text " type="button" style="position: relative; width: 69px;" tabindex="0">Validate<img src="https://devmcnichols.bigmachines.com/gwt/ConfigRuleEditor/clear.cache.gif" style="width: 16px; height: 16px; background: url(&quot;https://devmcnichols.bigmachines.com/img/bmx/icons/spellcheck.png&quot;) 0px 0px no-repeat; position: absolute; left: -1px; top: -1px;" border="0" role="presentation" class=" x-btn-image"></button></em></td>
+```
+
+### COMMERCE LIBS
+
+- [ ] commerce pricing test
+
+> chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/content.js:55:25
+> > Error in event handler: ReferenceError: contentHeader is not defined at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/content.js:55:25
+
+### COMMERCE RULESS
+
+### UTIL
+
+- [ ] util lib test
+
+> Unchecked runtime.lastError: Could not establish connection. Receiving end does not exist.
+> popup.js:88 unload clicked
+> popup.html:1 Unchecked runtime.lastError: The message port closed before a response was received.
+> popup.html:1 Error handling response: TypeError: Cannot read property 'code' of undefined
+> at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/popup.js:93:26
+
+- [ ] config
+
+### OTHER
+
+MD LINT
+
+TODO: fix for MD024 (low priority)
+
+```json
+"markdownlint.config": {
+    "default": true,
+    "MD007": { "indent": 4 }
+}
+```
+
+```json
+{
+    "git.autofetch": true,
+    "markdownlint.config": {
+        "default": true,
+        "no-inline-html": { "allowed_elements": ["pre"] },
+        "ul-indent": { "indent": 4 }
+    }
+}
+```
+
+## 4/19/21 Config Modal DEV
+
+- [ ] reconstruct config loading modal
+- [ ] review DOM to determine modal parent
+- [ ] post click anywhere on page remove modal
+- [ ] validate
+
+- [ ]  Config Modal Loading Dialog development
+  - [ ]  Develop gameplan
+    - [ ]  Create HTML in content.js or injected.js script
+    - [ ]  On LOAD event add loading modal to
+      - [ ] find where to append?
+      - [ ]  maybe use append child
+
+        ```jsx
+        var obj = document.createElement('div');
+        obj.id = "::img";
+        obj.style.cssText = 'position:absolute;top:300px;left:300px;width:200px;height:200px;-moz-border-radius:100px;border:1px  solid #ddd;-moz-box-shadow: 0px 0px 8px  #fff;display:none;';
+
+        document.getElementById("divInsteadOfDocument.Write").appendChild(obj);
+        /* You can also see how to set the the CSS in one go (using element.style.cssText).*/
+        ```
+
+    - [ ]  On click event anywhere on page remove modal
+      - [ ]  Then click validate
+
+## Cleanup
+
+- [ ] rm adminConfigContent logging
+- [ ] rm adminConfigInjected logging
+
+## 4/26/21 Streamline Tools Sync
+
+<https://www.notion.so/Streamline-Tools-Update-4-26-21-f518209b04704e63ad42be0a08193220>
+
+## Remaining Tasks (Development + Testing + Error fixes)
+
+### Utility Function
+
+- [ ]  fix error:
+
+```console
+from the extension
+VM285 content.js:48 greeting: unload
+VM285 content.js:54 CH
+6Error in event handler: ReferenceError: contentHeader is not defined
+    at <URL>
+VM285 content.js:45 from the extension
+VM285 content.js:48 greeting: filename
+VM285 content.js:45 from the extension
+VM285 content.js:48 greeting: unload
+VM285 content.js:54 CH
+```
+
+```console
+https://devmcnichols
+popup.js:35 devmcnichols
+popup.js:37 bigmachines
+popup.js:38 com/spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:%274220560%27,folder_id:%274133367%27,process_id:%27-1%27,doc_id:%27-1%27}&inputdata={appid:%27sampleApp%27,service:%27bmllibraryservice%27,operation:%27getLibPageData%27,version:%271
+popup.js:40 commerce
+popup.js:60 getMaxDiscount
+popup.js:88 unload clicked
+popup.html:1 Unchecked runtime.lastError: The message port closed before a response was received.
+popup.html:1 Error handling response: TypeError: Cannot read property 'code' of undefined
+    at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/popup.js:93:26
+```
+
+### Configuration (Recommendations, Constraints, Hiding Attributes, Recommended Items) - Advanced Conditions
+
+- [ ] test loading modal on all advanced condition types
+
+```js
+document.querySelector("#editor")
+```
+
+### Commerce Library Functions and Test Scripts + Actions (Advanced Modify - Before/After Formulas) + Rules (Constraint, Hiding, Validation - Advanced Conditions)
+
+- [ ]  fix error:
+
+```console
+Error in event handler: ReferenceError: contentHeader is not defined
+    at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/content.js:55:25
+```
+
+```console
+popup.html:1 Unchecked runtime.lastError: The message port closed before a response was received.
+popup.html:1 Error handling response: TypeError: Cannot read property 'code' of undefined
+    at chrome-extension://emnmnbbfkjncmideeepckbclmilhcboc/popup.js:93:26
+```
+
+### Other Enhancements
+
+- [ ] improve troublshooting steps
+- [ ] auto command (alt) click view/edit button
+
+```html
+<button class="x-btn-text " type="button" style="position: relative; width: 157px;" tabindex="0">View/Edit the BML Function<img src="https://devmcnichols.bigmachines.com/gwt/ConfigRuleEditor/clear.cache.gif" style="width: 16px; height: 16px; background: url(&quot;https://devmcnichols.bigmachines.com/img/bmx/icons/script_edit.png&quot;) 0px 0px no-repeat; position: absolute; left: 0px; top: -1px;" border="0" role="presentation" class=" x-btn-image"></button>
+```
+
+RESOURCES COPY
+ Resource Gathering
+
+## Chrome Extension
+
+<https://www.youtube.com/watch?time_continue=2&v=bmxr75CV36A&feature=emb_logo>
+
+<https://developer.chrome.com/extensions/getstarted>
+
+<https://developer.chrome.com/extensions/api_index>
+
+<https://developer.chrome.com/extensions/overview>
+
+<https://developer.chrome.com/extensions/declarativeContent>
+
+<https://developer.chrome.com/extensions/content_scripts>
+
+asynch js call to local file system - <https://web.dev/native-file-system/>
+
+<https://developer.chrome.com/apps/fileSystem>
+
+<https://developer.chrome.com/apps/app_codelab_filesystem>
+
+<https://github.com/loganbek/text-editor>
+
+<https://developer.chrome.com/extensions/messaging>
+
+<https://stackoverflow.com/questions/45379920/loading-libraries-for-use-in-a-content-script>
+
+<https://developer.chrome.com/extensions/options#:~:text=A%20user%20can%20view%20an,then%20selection%20the%20options%20link.>
+
+You are going to need to write a Chrome extension that exposes an API to your website. This is the easy part. You inject a content script to your website, and then use `chrome.extension.sendMessage` to communicate back to your extension.
+
+The hard part is to actually open the bat file from your extension. With NPAPI, this would have been easy, since you could just write a C++ plugin that calls CreateProcess or something. Contrary to what you said, it's a pretty good solution. But unfortunately, NPAPI isn't an option, since it's being deprecated.
+
+So what you should do is to use Native Messaging. Basically, it's a Chrome API that allows extensions to exchange messages with native applications using standard input and output streams.
+
+Read more about it here: <https://developer.chrome.com/extensions/messaging#native-messaging-host>
+
+Content scripts are less trustworthy than the extension background page (e.g., a malicious web page might be able to compromise the renderer process where the content scripts run). Assume that messages from a content script might have been crafted by an attacker and make sure to validate and sanitize all input.
+
+```javascript
+
+chrome.tabs.sendMessage(tab.id, {greeting: "hello"}, function(response) {
+  // JSON.parse does not evaluate the attacker's scripts.
+  var resp = JSON.parse(response.farewell);
+});
+
+chrome.tabs.sendMessage(tab.id, {greeting: "hello"}, function(response) {
+  // innerText does not let the attacker inject HTML elements.
+  document.getElementById("resp").innerText = response.farewell;
+});
+
+```
+
+### Extension Logic
+
+- [x] manifest.json
+- [ ] background.js
+- [ ] contentscript.js
+
+### UI
+
+- [x] popup.html
+- [ ] popup.js
+- [x] options.html
+- [ ] options.js
+
+### Color Scheme
+
+- [ ] #80CFE2 - lightest blue
+- [ ] #00A0C6 - lighter blue
+- [ ] #0C5FA8 - light blue
+- [ ] #60017C - purple
+- [ ] #AC057E - pink
+- [ ] #F0037F - hot pink
+- [ ] #4F1E72 - purp2
+
+### Github API
+
+<https://developer.github.com/v3/>
+
+### VSCode/Text Editor
+
+<https://code.visualstudio.com/api>
+
+#### VSCode BML Extension
+
+<https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-o&utm_source=www.vsixhub.com>
+
+### BigMachines
+
+Pricing Function URL - <https://devmcnichols.bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:%274658213%27,folder_id:%27-1%27,process_id:%274653759%27,doc_id:%274653823%27}&inputdata={appid:%27sampleApp%27,service:%27bmllibraryservice%27,operation:%27getLibPageData%27,version:%271.0%27,header:%27%27,params:%20{componentid:%27libraryEditorPage%27,uicmd:%27defineComponent%27,%20id:%274658213%27,folder_id:%27-1%27,process_id:%274653759%27,doc_id:%274653823%27}}&token=pyrJ5oRVa-f9q9NpJ4L8q8rI3_U>
+
+### JS util libs - TBD
+
+jQuery?
+maybe FE lib
