@@ -129,8 +129,8 @@ chrome.runtime.onMessage.addListener(
             // textarea.value = code;
 
             // SIMULATE CLICK TRIALS - WIP
-            console.log("simulateClickTrials");
-            simulateClick(textarea);
+            // console.log("simulateClickTrials");
+            // simulateClick(textarea);
             // simulateClick(elem);
 
             // textarea.onchange();

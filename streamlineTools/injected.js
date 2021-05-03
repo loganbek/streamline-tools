@@ -91,9 +91,6 @@ window.addEventListener('load', function() {
 
 
 function main() {
-
-    // if (typeof jsonRespStr !== undefined) {
-    //         alert(typeof jsonRespStr);
     let message = jsonPath(jsonRespStr, "$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data");
     let message1 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[0].value");
     let message3 = jsonPath(jsonRespStr, "x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[1].value");
@@ -128,7 +125,6 @@ window.addEventListener("loadCode", function(evt) {
     frame_bm_script.editArea.textareaFocused = true;
 
     //Perform Validation
-    // document.getElementById('ext-gen22').click();
     document.getElementsByClassName('bmx-spellcheck')[0].click();
 }, false);
 
@@ -147,22 +143,8 @@ window.addEventListener("loadTestCode",
         } else if (commTestScript2) {
             commTestScript2.value = code;
         }
-        // alert(commTestScript, commTestScript2, utilTestScript);
-        //RUN DEBUGGER
-        // <button class="x-btn-text bmx-debug" type="button" id="ext-gen268">Run</button>
-        // document.getElementById('ext-gen268').click();
-        // nodeList = document.getElementsByName("testScript");
-        // nodeList.foreach(element => alert(nodeList.value));
-        // for (var value of nodeList.values()) {
-        //     alert(value.value);
-        // }
-        // testScript = nodeList[0];
-        // let textareaLoadTestCode = document.querySelector('textarea[name="testScript"]');
-        // console.log(textareaLoadTestCode.value);
-        // textareaLoadTestCode.value = code;
-
+        // RUN DEBUGGER
         document.getElementsByClassName('bmx-debug')[1].click();
-        // alert(document.getElementsByClassName('bmx-debug'));
     }, false);
 
 window.addEventListener("unloadTestCode",
@@ -170,9 +152,6 @@ window.addEventListener("unloadTestCode",
         let testScript;
         let useTestScript = document.getElementById('useScript').checked;
         if (useTestScript) {
-            // new multi attribute code
-            // const collection = document.querySelectorAll(`[id^="ext-comp-"][name="testScript"]`);
-            // collection.forEach(element => alert(element.innerText));
 
             let commTestScript = document.getElementById('ext-comp-1080');
             let utilTestScript = document.getElementById('ext-comp-1040');
@@ -185,18 +164,9 @@ window.addEventListener("unloadTestCode",
             } else if (commTestScript2) {
                 testScript = commTestScript2.value;
             }
-            // let textarea = document.querySelector('textarea[name="testScript"]');
-            // console.log(textarea.value);
-            // textarea.value = code;
-            // // nodeList = document.getElementsByName("testScript");
-            // testScript = textarea.value;
-            // alert(testScript);
             if (testScript == "") {
                 testScript = "\n";
             }
-            // }
-            // alert("commTestScript: " + commTestScript);
-            // alert("utilTestScript: " + utilTestScript);
             let event = new CustomEvent("PassTestCodeToBackground", { detail: testScript });
             window.dispatchEvent(event);
         } else {
