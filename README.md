@@ -41,7 +41,7 @@
 
     <!-- `code -a ~/Downloads/bigmachines` -->
 
-8) Install the "CPQ DevKit" Extension for VSCode found [here](https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-o) or by running `code --install-extension CPQConsultant.cpq-devkit-o` on the command line.
+8) Install the latest version of "CPQ DevKit" Extension for VSCode found [here](https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-o) or by running `code --install-extension CPQConsultant.cpq-devkit-o` on the command line.
 
 9) Congratulations you've successfully installed Streamline Tools!
 
