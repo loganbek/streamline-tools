@@ -16,8 +16,8 @@
 
 ## Prerequisites
 
-- [ ] [Google Chrome](https://www.google.com/chrome/).
-- [ ] [Visual Studio Code](https://code.visualstudio.com/Download).
+- [ ] [Google Chrome](https://www.google.com/chrome/)
+- [ ] [Visual Studio Code](https://code.visualstudio.com/Download)
 
 ## Installation Instructions
 
@@ -27,9 +27,11 @@
 
 2) Extract the files into their own directory.
 
-3) Navigate to `chrome://extensions/` in your browser's address bar.
+    <!-- 3) Navigate to `chrome://extensions/` in your browser's address bar. -->
 
-4) Enable Developer Mode.
+3) Click the Chrome menu icon and select Extensions from the More Tools menu.
+
+4) Enable Developer Mode in the upper right-hand corner.
 
 5) Press the "Load unpacked" button.
 
@@ -37,21 +39,23 @@
 
 7) Open your local "Downloads" folder in Visual Studio Code.
 
+    <!-- `code -a ~/Downloads/bigmachines` -->
+
 8) Install the "CPQ DevKit" Extension for VSCode found [here](https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-o) or by running `code --install-extension CPQConsultant.cpq-devkit-o` on the command line.
 
 9) Congratulations you've successfully installed Streamline Tools!
 
-<!-- 9) Enable the Native File System API via [chrome://flags#native-file-system-api](chrome://flags#native-file-system-api) flag. TODO: may be able to remove this -->
+    <!-- 9) Enable the Native File System API via [chrome://flags#native-file-system-api](chrome://flags#native-file-system-api) flag. TODO: may be able to remove this -->
 
-<!-- ### Windows Installation
+    <!-- ### Windows Installation
 
-- Ensure you have downloaded and installed git [here](https://git-scm.com/download/win) -->
+    - Ensure you have downloaded and installed git [here](https://git-scm.com/download/win) -->
 
 ### Chrome Webstore
 
 Coming soon...
 
-<!-- 1) You can add the latest version of Streamline Tools [here](placeholder). -->
+    <!-- 1) You can add the latest version of Streamline Tools [here](placeholder). -->
 
 ## Troubleshooting Steps
 
@@ -61,6 +65,6 @@ Coming soon...
 
 2) Remove the extension and then reinstall it after filing a bug report [here](https://github.com/loganbek/streamlineTools/issues/new?assignees=loganbek&labels=&template=bug_report.md&title=). Please include any error logs from the console.
 
-<!-- ## Known Issues 
-- [ ] N/A
--->
+    <!-- ## Known & Reported Issues
+    - [ ] N/A :innocent:
+    -->
