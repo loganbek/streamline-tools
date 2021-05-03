@@ -14,11 +14,12 @@
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
 [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)   -->
 
+## Prerequisites
+
+- [ ] [Google Chrome](https://www.google.com/chrome/).
+- [ ] [Visual Studio Code](https://code.visualstudio.com/Download).
+
 ## Installation Instructions
-
-<!-- ### Chrome Webstore
-
-1) You can add the latest version of Streamline Tools [here](placeholder). -->
 
 ### Unpacked folder using Chrome Developer Mode
 
@@ -26,7 +27,7 @@
 
 2) Extract the files into their own directory.
 
-3) Go to "chrome://extensions/" in your browser.
+3) Navigate to `chrome://extensions/` in your browser's address bar.
 
 4) Enable Developer Mode.
 
@@ -45,6 +46,12 @@
 <!-- ### Windows Installation
 
 - Ensure you have downloaded and installed git [here](https://git-scm.com/download/win) -->
+
+### Chrome Webstore
+
+Coming soon...
+
+<!-- 1) You can add the latest version of Streamline Tools [here](placeholder). -->
 
 ## Troubleshooting Steps
 
