@@ -39,6 +39,6 @@ Streamline Tools for Oracle CPQ Cloud
 Ctrl + Shift + R
 Cmd + Shift + R -->
 
-<!-- ## Development
+<!-- ## Development Tools
 
 - run `standard | snazzy` to lint. -->
