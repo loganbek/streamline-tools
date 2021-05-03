@@ -16,8 +16,8 @@
 
 ## Prerequisites
 
-- [ ] [Google Chrome](https://www.google.com/chrome/)
-- [ ] [Visual Studio Code](https://code.visualstudio.com/Download)
+- [Google Chrome](https://www.google.com/chrome/)
+- [Visual Studio Code](https://code.visualstudio.com/Download)
 
 ## Installation Instructions
 
