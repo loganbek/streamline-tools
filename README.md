@@ -1,5 +1,7 @@
 # Streamline Tools v0.7.0-alpha
 
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
 ![Logo](SLCPQ_LOGO_SITE.png)
 
 Streamline Tools for Oracle CPQ Cloud
@@ -36,3 +38,7 @@ Streamline Tools for Oracle CPQ Cloud
 
 Ctrl + Shift + R
 Cmd + Shift + R -->
+
+<!-- ## Development
+
+- run `standard | snazzy` to lint. -->
