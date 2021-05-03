@@ -41,6 +41,6 @@ Cmd + Shift + R -->
 
 ## Development Tools
 
-- run `npx standard | snazzy` to lint && `npx standard --fix` to format.
+- Run `npx standard | snazzy` to lint & `npx standard --fix` to correct errors.
 
-<!-- maybe add to npm test script in package.json so we run on `npm test` instead. -->
+<!-- maybe add to npm test script in package.json so we run on `npm test` instead. Also look into pre-commit hook https://standardjs.com/#is-there-a-git-pre-commit-hook -->
