@@ -1,4 +1,4 @@
-# Streamline Tools for Oracle CPQ Cloud
+# Streamline Tools for Oracle CPQ Cloud 
 
 ![streamlinecpqlogo](SLCPQ_LOGO_SITE.png)
 
@@ -45,17 +45,19 @@
 
 9) Congratulations you've successfully installed Streamline Tools!
 
-    <!-- 9) Enable the Native File System API via [chrome://flags#native-file-system-api](chrome://flags#native-file-system-api) flag. TODO: may be able to remove this -->
+<!-- 9) Enable the Native File System API via [chrome://flags#native-file-system-api](chrome://flags#native-file-system-api) flag. TODO: may be able to remove this -->
 
-    <!-- ### Windows Installation
+<!-- ### Windows Installation -->
 
-    - Ensure you have downloaded and installed git [here](https://git-scm.com/download/win) -->
+<!-- - Ensure you have downloaded and installed git [here](https://git-scm.com/download/win) -->
 
 ### Chrome Webstore
 
 Coming soon...
 
-    <!-- 1) You can add the latest version of Streamline Tools [here](placeholder). -->
+<!-- - You can add the latest version of Streamline Tools [here](placeholder). -->
+
+## Tips, Tricks, & Shortcuts
 
 ## Troubleshooting Steps
 
@@ -65,6 +67,6 @@ Coming soon...
 
 2) Remove the extension and then reinstall it after filing a bug report [here](https://github.com/loganbek/streamlineTools/issues/new?assignees=loganbek&labels=&template=bug_report.md&title=). Please include any error logs from the console.
 
-    <!-- ## Known & Reported Issues
-    - [ ] N/A :innocent:
-    -->
+<!-- ## Known & Reported Issues
+
+- [ ] N/A :innocent: -->
