@@ -43,7 +43,7 @@ Cmd + Shift + R -->
 
 - Run `npx standard | npx standard-summary | npx snazzy` to display a concise list of style errors.
 
-- Run `npx standard | npx snazzy` to display a detailed list of style errors.
+- Run `npx standard --verbose | npx snazzy` to display a detailed list of style errors.
 
 - Run `npx standard --fix` to correct most style errors.
 
