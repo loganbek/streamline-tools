@@ -1970,3 +1970,6 @@ Marquee promo tile
 JPEG or 24-bit PNG (no alpha)
 
 <!-- https://docs.npmjs.com/creating-and-publishing-scoped-public-packages -->
+
+<!-- [] cleanup messy code -->
+<!-- [] chrome dev tool todo -->
