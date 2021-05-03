@@ -1968,3 +1968,5 @@ JPEG or 24-bit PNG (no alpha)
 Marquee promo tile
 1400x560 Canvas
 JPEG or 24-bit PNG (no alpha)
+
+<!-- https://docs.npmjs.com/creating-and-publishing-scoped-public-packages -->
