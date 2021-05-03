@@ -39,6 +39,8 @@ Streamline Tools for Oracle CPQ Cloud
 Ctrl + Shift + R
 Cmd + Shift + R -->
 
-<!-- ## Development Tools
+## Development Tools
 
-- run `standard | snazzy` to lint. -->
+- run `npx standard | snazzy` to lint && `npx standard --fix` to format.
+
+<!-- maybe add to npm test script in package.json so we run on `npm test` instead. -->
