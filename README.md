@@ -57,7 +57,7 @@ Coming soon...
 
 <!-- - You can add the latest version of Streamline Tools [here](placeholder). -->
 
-## Tips, Tricks, & Shortcuts
+<!-- ## Tips, Tricks, & Shortcuts -->
 
 ## Troubleshooting Steps
 
