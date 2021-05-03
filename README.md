@@ -44,3 +44,5 @@ Cmd + Shift + R -->
 - Run `npx standard | snazzy` to lint & `npx standard --fix` to correct errors.
 
 <!-- maybe add to npm test script in package.json so we run on `npm test` instead. Also look into pre-commit hook https://standardjs.com/#is-there-a-git-pre-commit-hook -->
+
+<!-- `npx standard | standard-summary` - https://www.npmjs.com/package/standard-summary -->

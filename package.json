@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "snazzy": "^9.0.0",
-    "standard": "^16.0.3"
+    "standard": "^16.0.3",
+    "standard-summary": "^1.0.0"
   }
 }
