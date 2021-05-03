@@ -128,6 +128,8 @@ chrome.runtime.onMessage.addListener(
             textarea = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
             // textarea.value = code;
 
+            // TODO config-modal fix on LOAD
+
             // SIMULATE CLICK TRIALS - WIP
             console.log("simulateClickTrials");
             simulateClick(textarea);

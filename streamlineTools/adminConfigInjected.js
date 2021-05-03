@@ -216,6 +216,8 @@ window.addEventListener("loadCode", function(evt) {
     var elem = document.getElementsByTagName("iframe")[1].contentDocument.querySelector("#textarea");
     console.log(elem);
 
+    // TODO config-modal fix on LOAD + cleanup
+
     // SIMULATE CLICK TRIALS - WIP
     // console.log("simulateClickTrials");
     // simulateClick(textarea);
