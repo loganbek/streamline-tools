@@ -81,8 +81,7 @@ chrome.runtime.onMessage.addListener(
       console.log(elem)
       textarea = document.getElementsByTagName('iframe')[1].contentDocument.querySelector('#textarea')
       // TODO config-modal fix on LOAD
-
-      /
+      displayConfigModal()
     } else if (request.greeting == 'loadTest') {
       console.log(request.code)
       const loadTestEvent = new CustomEvent('loadTestCode', { detail: request.code })
@@ -124,3 +123,39 @@ if (document.querySelector('#x-auto-3-input')) {
 //     console.log(result.variable_name)
 //   }
 // })
+
+function displayConfigModal(){
+  // CONFIG MODAL STEPS
+
+  // BUILD MODAL DOM
+
+  // document.body.onload = addElement
+
+  // function addElement () {
+  //   // create a new div element
+  //   const newDiv = document.createElement("div");
+
+  //   // and give it some content
+  //   const newContent = document.createTextNode("Hi there and greetings!");
+
+  //   // add the text node to the newly created div
+  //   newDiv.appendChild(newContent);
+
+  //   // add the newly created element and its content into the DOM
+  //   const currentDiv = document.getElementById("div1");
+  //   document.body.insertBefore(newDiv, currentDiv);
+  // }
+
+  // BM PAGE DOM SELECTOR
+  // configLoadingModalHook = getElementById('temp')
+  // APPEND CHILD/DISPLAY
+  // configLoadingModalHook.appendChild()
+
+}
+
+// CONFIG MODAL LISTENER + REMOVAL
+
+// LISTEN FOR CLICK EVENT 
+
+  // ONCLICK() REMOVE 
+  // configLoadingModalHook.removeChild()
