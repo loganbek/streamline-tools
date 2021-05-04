@@ -2643,30 +2643,6 @@ MODAL FROM CONFIG
 
 - [ ] config
 
-### OTHER
-
-MD LINT
-
-TODO: fix for MD024 (low priority)
-
-```json
-"markdownlint.config": {
-    "default": true,
-    "MD007": { "indent": 4 }
-}
-```
-
-```json
-{
-    "git.autofetch": true,
-    "markdownlint.config": {
-        "default": true,
-        "no-inline-html": { "allowed_elements": ["pre"] },
-        "ul-indent": { "indent": 4 }
-    }
-}
-```
-
 ## 4/19/21 Config Modal DEV
 
 - [ ] reconstruct config loading modal
