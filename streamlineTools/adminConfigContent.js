@@ -125,9 +125,41 @@ if (document.querySelector('#x-auto-3-input')) {
 // })
 
 function displayConfigModal(){
+
+    // MODAL FROM CONFIG
+
+  // HTML
+
+  // ```html
+  // <div class="ext-el-mask-msg" style="display: block; left: 1014px; top: 694px;"><div>Loading...</div></div>
+  // ```
+
+  // CSS
+
+  //   ```css
+  // .ext-el-mask {
+  //     background-color: #ccc;
+  // }
+  // .ext-el-mask-msg {
+  //     border-color:#6593cf;
+  //     background-color:#c3daf9;
+  //     background-image:url(../images/default/box/tb-blue.gif);
+  // }
+  // .ext-el-mask-msg div {
+  //     background-color: white;
+  //     border-color:#a3bad9;
+  //     color:#222;
+  //     font:normal 11px tahoma, arial, helvetica, sans-serif;
+  // }
+  // .x-mask-loading div {
+  //     background-color:#fbfbfb;
+  //     background-image:url(../images/default/grid/loading.gif);
+  // }
+  // ```
+
   // CONFIG MODAL STEPS
 
-  // BUILD MODAL DOM
+  // 1) BUILD MODAL DOM
 
   // document.body.onload = addElement
 
@@ -146,12 +178,16 @@ function displayConfigModal(){
   //   document.body.insertBefore(newDiv, currentDiv);
   // }
 
-  // BM PAGE DOM SELECTOR
+  // 2) BM PAGE DOM SELECTOR
   // configLoadingModalHook = getElementById('temp')
-  // APPEND CHILD/DISPLAY
+   
+  // 3) APPEND CHILD/DISPLAY
   // configLoadingModalHook.appendChild()
 
 }
+
+
+// MB OUTSIDE displayConfigModal()
 
 // CONFIG MODAL LISTENER + REMOVAL
 
