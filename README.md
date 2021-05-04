@@ -61,11 +61,20 @@ Coming soon...
 
 ## Development Tools
 
-- Run `npx standard | npx standard-summary | npx snazzy` to display a concise list of style errors.
+- Run `source .bashrc` and then 
+
+    - Run `lint-concise` to display a concise list of style errors.
+
+    - Run `lint-verbose` to display a detailed list of style errors.
+
+    - Run `lint-fix` to correct most style errors.
+
+<!-- switched to alias in .bashrc -->
+<!-- - Run `npx standard | npx standard-summary | npx snazzy` to display a concise list of style errors.
 
 - Run `npx standard --verbose | npx snazzy` to display a detailed list of style errors.
 
-- Run `npx standard --fix` to correct most style errors.
+- Run `npx standard --fix` to correct most style errors. -->
 
 <!-- maybe add to npm test script in package.json so we run on `npm test` instead. Also look into pre-commit hook https://standardjs.com/#is-there-a-git-pre-commit-hook -->
 
