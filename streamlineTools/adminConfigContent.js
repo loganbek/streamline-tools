@@ -131,8 +131,8 @@ chrome.runtime.onMessage.addListener(
             // TODO config-modal fix on LOAD
 
             // SIMULATE CLICK TRIALS - WIP
-            console.log("simulateClickTrials");
-            simulateClick(textarea);
+            // console.log("simulateClickTrials");
+            // simulateClick(textarea);
             // simulateClick(elem);
 
             // textarea.onchange();
