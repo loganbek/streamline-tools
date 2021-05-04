@@ -5,12 +5,12 @@ var filename = filename || ''
 if (document.getElementById('#x-auto-3-input')) {
   filename = document.getElementById('#x-auto-3-input').value
   // document.querySelector("#x-auto-3-input")
-  console.log(filename)
+  // console.log(filename)
 }
 
 if (window.document.getElementById('#x-auto-3-input')) {
   filename = window.document.getElementById('#x-auto-3-input').value
-  console.log(filename)
+  // console.log(filename)
 }
 
 window.addEventListener('unloadCode', function (evt) {
@@ -50,14 +50,14 @@ injectJs(chrome.extension.getURL('adminConfigInjected.js'))
 
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
-    console.log(filename)
+    // // console.log(filename)
     if (filename === '') {
       filename = 'setSupplierDescriptionBeforeReady'
     }
-    console.log(sender.tab
+    // console.log(sender.tab
       ? 'from a content script:' + sender.tab.url
       : 'from the extension')
-    console.log(request.greeting
+    // console.log(request.greeting
       ? 'greeting: ' + request.greeting
       : 'nogreeting')
     if (request.greeting == 'unload') {
@@ -78,12 +78,12 @@ chrome.runtime.onMessage.addListener(
       const loadEvent = new CustomEvent('loadCode', { detail: request.code })
       window.dispatchEvent(loadEvent)
       const elem = document.getElementsByTagName('iframe')[1].contentDocument.querySelector('#textarea')
-      console.log(elem)
+      // console.log(elem)
       textarea = document.getElementsByTagName('iframe')[1].contentDocument.querySelector('#textarea')
       // TODO config-modal fix on LOAD
       displayConfigModal()
     } else if (request.greeting == 'loadTest') {
-      console.log(request.code)
+      // console.log(request.code)
       const loadTestEvent = new CustomEvent('loadTestCode', { detail: request.code })
       window.dispatchEvent(loadTestEvent)
     } else if (request.greeting == 'filename') {
@@ -113,14 +113,14 @@ if (document.querySelector('#x-auto-3-input')) {
 }
 
 // chrome.storage.sync.set({ filename: 'filename' }, function () {
-//   console.log('you saved me!!')
-//   // console.log(result.variable_name);
+//   // console.log('you saved me!!')
+//   // // console.log(result.variable_name);
 // })
 
 // chrome.storage.sync.get(['filename'], function (result) {
 //   if (result.variable_name == undefined) {
-//     console.log('I am retrieved!!')
-//     console.log(result.variable_name)
+//     // console.log('I am retrieved!!')
+//     // console.log(result.variable_name)
 //   }
 // })
 
