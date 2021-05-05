@@ -55,11 +55,11 @@ chrome.runtime.onMessage.addListener(
       filename = 'setSupplierDescriptionBeforeReady'
     }
     // console.log(sender.tab
-      ? 'from a content script:' + sender.tab.url
-      : 'from the extension')
+      // ? 'from a content script:' + sender.tab.url
+      // : 'from the extension')
     // console.log(request.greeting
-      ? 'greeting: ' + request.greeting
-      : 'nogreeting')
+      // ? 'greeting: ' + request.greeting
+      // : 'nogreeting')
     if (request.greeting == 'unload') {
       const unloadEvent = new CustomEvent('unloadCode', { detail: request.code })
       window.dispatchEvent(unloadEvent)
