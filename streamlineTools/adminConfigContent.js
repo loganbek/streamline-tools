@@ -185,12 +185,12 @@ function displayConfigModal () {
 
   // TODO add styles from css to both elements
 
-  let outerDiv = document.createElement('div')
+  let modalDiv = document.createElement('div')
 
-  outerDiv.className = 'ext-el-mask-msg'
-  outerDiv.style.display = 'block'
-  outerDiv.style.left = '1014px'
-  outerDiv.style.top = '694px'
+  modalDiv.className = 'ext-el-mask-msg'
+  modalDiv.style.display = 'block'
+  modalDiv.style.left = '1014px'
+  modalDiv.style.top = '694px'
 
   // inButton.style.height = "200px";
   // inButton.style.width = "400px";
@@ -222,17 +222,20 @@ function displayConfigModal () {
   // }
 
   // 2) BM PAGE DOM SELECTOR
-  // configLoadingModalHook = getElementById('temp')
+  modalHook = getElementById('temp') // TODO figure out proper modalHook
 
-  // 3) APPEND CHILD/DISPLAY
-  // configLoadingModalHook.appendChild()
-}
+  // 3) APPEND MODAL
+  modalHook.appendChild(modalDiv)
+
 
 // MB OUTSIDE displayConfigModal()
 
-// CONFIG MODAL LISTENER + REMOVAL
+// CONFIG MODAL CLICK LISTENER
+target.addEventListener(`click`, modalClickHAndler, {once : true});
 
-// LISTEN FOR CLICK EVENT
+}
 
-// ONCLICK() REMOVE
-// configLoadingModalHook.removeChild()
+function modalClickHAndler(){
+  // REMOVE MODAL
+  modalHook.removeChild()
+}
