@@ -20,24 +20,40 @@ window.addEventListener('unloadCode', function (evt) {
 })
 
 // Listen for the PassToBackground event
-window.addEventListener('PassToBackground', function (evt) {
-  code = evt.detail
-}, false)
+window.addEventListener(
+  'PassToBackground',
+  function (evt) {
+    code = evt.detail
+  },
+  false
+)
 
 // Listen for the PassCommentHeader event
-window.addEventListener('PassCommentHeader', function (evt) {
-  commentHeader = evt.detail
-}, false)
+window.addEventListener(
+  'PassCommentHeader',
+  function (evt) {
+    commentHeader = evt.detail
+  },
+  false
+)
 
 // Listen for the code event
-window.addEventListener('PassCodeToBackground', function (evt) {
-  code = evt.detail
-}, false)
+window.addEventListener(
+  'PassCodeToBackground',
+  function (evt) {
+    code = evt.detail
+  },
+  false
+)
 
 // Listen for the testcode event
-window.addEventListener('PassTestCodeToBackground', function (evt) {
-  testCode = evt.detail
-}, false)
+window.addEventListener(
+  'PassTestCodeToBackground',
+  function (evt) {
+    testCode = evt.detail
+  },
+  false
+)
 
 function injectJs (link) {
   const scr = document.createElement('script')
@@ -48,52 +64,59 @@ function injectJs (link) {
 
 injectJs(chrome.extension.getURL('adminConfigInjected.js'))
 
-chrome.runtime.onMessage.addListener(
-  function (request, sender, sendResponse) {
-    // // console.log(filename)
-    if (filename === '') {
-      filename = 'setSupplierDescriptionBeforeReady'
-    }
-    // console.log(sender.tab
-      // ? 'from a content script:' + sender.tab.url
-      // : 'from the extension')
-    // console.log(request.greeting
-      // ? 'greeting: ' + request.greeting
-      // : 'nogreeting')
-    if (request.greeting == 'unload') {
-      const unloadEvent = new CustomEvent('unloadCode', { detail: request.code })
-      window.dispatchEvent(unloadEvent)
-      sendResponse({
-        filename: filename,
-        code: code
-      })
-    } else if (request.greeting == 'unloadTest') {
-      const unloadTestEvent = new CustomEvent('unloadTestCode', { detail: request.code })
-      window.dispatchEvent(unloadTestEvent)
-      sendResponse({
-        filename: filename,
-        testCode: testCode
-      })
-    } else if (request.greeting == 'load') {
-      const loadEvent = new CustomEvent('loadCode', { detail: request.code })
-      window.dispatchEvent(loadEvent)
-      const elem = document.getElementsByTagName('iframe')[1].contentDocument.querySelector('#textarea')
-      // console.log(elem)
-      textarea = document.getElementsByTagName('iframe')[1].contentDocument.querySelector('#textarea')
-      // TODO config-modal fix on LOAD
-      displayConfigModal()
-    } else if (request.greeting == 'loadTest') {
-      // console.log(request.code)
-      const loadTestEvent = new CustomEvent('loadTestCode', { detail: request.code })
-      window.dispatchEvent(loadTestEvent)
-    } else if (request.greeting == 'filename') {
-      sendResponse({
-        filename: filename
-      })
-      // return true;
-    }
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  // // console.log(filename)
+  if (filename === '') {
+    filename = 'setSupplierDescriptionBeforeReady'
+  }
+  // console.log(sender.tab
+  // ? 'from a content script:' + sender.tab.url
+  // : 'from the extension')
+  // console.log(request.greeting
+  // ? 'greeting: ' + request.greeting
+  // : 'nogreeting')
+  if (request.greeting == 'unload') {
+    const unloadEvent = new CustomEvent('unloadCode', { detail: request.code })
+    window.dispatchEvent(unloadEvent)
+    sendResponse({
+      filename: filename,
+      code: code
+    })
+  } else if (request.greeting == 'unloadTest') {
+    const unloadTestEvent = new CustomEvent('unloadTestCode', {
+      detail: request.code
+    })
+    window.dispatchEvent(unloadTestEvent)
+    sendResponse({
+      filename: filename,
+      testCode: testCode
+    })
+  } else if (request.greeting == 'load') {
+    const loadEvent = new CustomEvent('loadCode', { detail: request.code })
+    window.dispatchEvent(loadEvent)
+    const elem = document
+      .getElementsByTagName('iframe')[1]
+      .contentDocument.querySelector('#textarea')
+    // console.log(elem)
+    textarea = document
+      .getElementsByTagName('iframe')[1]
+      .contentDocument.querySelector('#textarea')
+    // TODO config-modal fix on LOAD
+    displayConfigModal()
+  } else if (request.greeting == 'loadTest') {
+    // console.log(request.code)
+    const loadTestEvent = new CustomEvent('loadTestCode', {
+      detail: request.code
+    })
+    window.dispatchEvent(loadTestEvent)
+  } else if (request.greeting == 'filename') {
+    sendResponse({
+      filename: filename
+    })
     // return true;
-  })
+  }
+  // return true;
+})
 
 function getElementsStartsWithId (id) {
   const children = document.body.getElementsByTagName('*')
@@ -101,12 +124,12 @@ function getElementsStartsWithId (id) {
   let child
   for (let i = 0, length = children.length; i < length; i++) {
     child = children[i]
-    if (child.id.substr(0, id.length) == id) { elements.push(child) }
+    if (child.id.substr(0, id.length) == id) {
+      elements.push(child)
+    }
   }
   return elements
 }
-
-
 
 if (document.querySelector('#x-auto-3-input')) {
   filename = document.querySelector('#x-auto-3-input').value
@@ -124,9 +147,8 @@ if (document.querySelector('#x-auto-3-input')) {
 //   }
 // })
 
-function displayConfigModal(){
-
-    // MODAL FROM CONFIG
+function displayConfigModal () {
+  // MODAL FROM CONFIG
 
   // HTML
 
@@ -161,6 +183,27 @@ function displayConfigModal(){
 
   // 1) BUILD MODAL DOM
 
+  // TODO add styles from css to both elements
+
+  let outerDiv = document.createElement('div')
+
+  outerDiv.className = 'ext-el-mask-msg'
+  outerDiv.style.display = 'block'
+  outerDiv.style.left = '1014px'
+  outerDiv.style.top = '694px'
+
+  // inButton.style.height = "200px";
+  // inButton.style.width = "400px";
+  // inButton.style.position = "fixed";
+  // inButton.style.top = "50%";
+  // inButton.style.left = "50%";
+  // inButton.style.marginLeft = -1 * (this.width / 2);
+  // inButton.style.marginTop = -1 * (this.height / 2);
+
+  let innerDiv = document.createElement('div')
+
+  innerDiv.innerText = 'Loading...'
+
   // document.body.onload = addElement
 
   // function addElement () {
@@ -180,18 +223,16 @@ function displayConfigModal(){
 
   // 2) BM PAGE DOM SELECTOR
   // configLoadingModalHook = getElementById('temp')
-   
+
   // 3) APPEND CHILD/DISPLAY
   // configLoadingModalHook.appendChild()
-
 }
-
 
 // MB OUTSIDE displayConfigModal()
 
 // CONFIG MODAL LISTENER + REMOVAL
 
-// LISTEN FOR CLICK EVENT 
+// LISTEN FOR CLICK EVENT
 
-  // ONCLICK() REMOVE 
-  // configLoadingModalHook.removeChild()
+// ONCLICK() REMOVE
+// configLoadingModalHook.removeChild()
