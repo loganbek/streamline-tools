@@ -19,7 +19,7 @@
 
 2) Extract the files into their own directory.
 
-    <!-- 3) Navigate to `chrome://extensions/` in your browser's address bar. -->
+<!-- 3) Navigate to `chrome://extensions/` in your browser's address bar. -->
 
 3) Click the Chrome menu icon and select Extensions from the More Tools menu.
 
@@ -31,7 +31,7 @@
 
 7) Open your local "Downloads" folder in Visual Studio Code.
 
-    <!-- `code -a ~/Downloads/bigmachines` -->
+<!-- `code -a ~/Downloads/bigmachines` -->
 
 8) Install the latest version of "CPQ DevKit" Extension for VSCode found [here](https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-o) or by running `code --install-extension CPQConsultant.cpq-devkit-o` on the command line.
 
