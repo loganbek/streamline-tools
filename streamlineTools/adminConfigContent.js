@@ -227,15 +227,14 @@ function displayConfigModal () {
   // 3) APPEND MODAL
   modalHook.appendChild(modalDiv)
 
+  // MB OUTSIDE displayConfigModal()
 
-// MB OUTSIDE displayConfigModal()
-
-// CONFIG MODAL CLICK LISTENER
-target.addEventListener(`click`, modalClickHAndler, {once : true});
-
+  // CONFIG MODAL CLICK LISTENER
+  target.addEventListener(`click`, modalClickHAndler, { once: true })
 }
 
-function modalClickHAndler(){
+// TODO FINISH CLICK HANDLER
+function modalClickHAndler () {
   // REMOVE MODAL
   modalHook.removeChild()
 }
