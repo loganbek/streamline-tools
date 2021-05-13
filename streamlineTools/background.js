@@ -9,19 +9,32 @@ chrome.runtime.onInstalled.addListener(function () {
   //   //   console.log('The color is green.');
   //   // });
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
-    chrome.declarativeContent.onPageChanged.addRules([{
-      conditions: [new chrome.declarativeContent.PageStateMatcher({
-        pageUrl: { hostSuffix: 'bigmachines.com' },
-        // pageUrl: { pathContains: 'bigmachines.com/spring' },
-        // https://devmcnichols.bigmachines.com/admin/commerce/actions/list_actions.jsp?doc_id=4653823m/admin/commerce/rules/edit_rule_inputs.jsp|bigmachines.com/admin/configuration/rules/edit_rule.jsp' },
-        pageUrl: { urlMatches: 'bigmachines.com/spring|bigmachines.com/admin/commerce/rules/|bigmachines.com/admin/commerce/actions|bigmachines.com/admin/configuration/rules/' }
-        // pageUrl: { urlContains: 'bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp' },
-        // pageUrl: { hostSuffix: 'bigmachines.com' },
-      })],
-      actions: [new chrome.declarativeContent.ShowPageAction()]
-    }])
+    chrome.declarativeContent.onPageChanged.addRules([
+      {
+        conditions: [
+          new chrome.declarativeContent.PageStateMatcher({
+            pageUrl: { hostSuffix: 'bigmachines.com' },
+            // pageUrl: { pathContains: 'bigmachines.com/spring' },
+            // https://devmcnichols.bigmachines.com/admin/commerce/actions/list_actions.jsp?doc_id=4653823m/admin/commerce/rules/edit_rule_inputs.jsp|bigmachines.com/admin/configuration/rules/edit_rule.jsp' },
+            pageUrl: {
+              urlMatches:
+                'bigmachines.com/spring|bigmachines.com/admin/commerce/rules/|bigmachines.com/admin/commerce/actions|bigmachines.com/admin/configuration/rules/'
+            }
+            // pageUrl: { urlContains: 'bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp' },
+            // pageUrl: { hostSuffix: 'bigmachines.com' },
+          })
+        ],
+        actions: [new chrome.declarativeContent.ShowPageAction()]
+      }
+    ])
   })
 })
+
+// KEYBOARD COMMANDS
+
+// _execute_page_action - handled automatically
+
+//
 
 // if (document.getElementsByName('varName')[0]) {
 //     filename = document.getElementsByName('varName')[0].value;
