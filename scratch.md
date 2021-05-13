@@ -3059,3 +3059,5 @@ CE Shortcuts Guide (dev)
 <https://developer.chrome.com/docs/extensions/reference/commands/>
 
 <https://dev.to/paulasantamaria/chrome-extensions-adding-a-badge-644>
+
+in chrome vs. global command scropes?
