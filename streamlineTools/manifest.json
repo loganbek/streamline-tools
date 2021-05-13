@@ -1,47 +1,54 @@
 {
-    "name": "Streamline Tools",
-    "version": "0.8.0",
-    "description": "Streamline Tools helps streamline your Oracle CPQ Cloud BML development, administration, maintenance, and support tasks.",
-    "permissions": [
-        "downloads",
-        "activeTab",
-        "declarativeContent",
-        "storage",
-        "file://*",
-        "tabs"
-    ],
-    "options_ui": {
-        "page": "options.html",
-        "open_in_tab": true
-    },
-    "background": {
-        "scripts": [
-            "background.js"
-        ],
-        "persistent": false
-    },
-    "web_accessible_resources": [
-        "jsonpath-1.0.2.js",
-        "injected.js",
-        "adminCommerceInjected.js",
-        "adminConfigInjected.js",
-        "adminCommerceRulesInjected.js",
-        "adminCommerceActionsInjected.js"
-    ],
-    "page_action": {
-        "default_popup": "popup.html",
-        "default_icon": {
-            "16": "images/streamline16.png",
-            "32": "images/streamline32.png",
-            "48": "images/streamline48.png",
-            "128": "images/streamline128.png"
-        }
-    },
-    "icons": {
-        "16": "images/streamline16.png",
-        "32": "images/streamline32.png",
-        "48": "images/streamline48.png",
-        "128": "images/streamline128.png"
-    },
-    "manifest_version": 2
+  "name": "Streamline Tools",
+  "version": "0.8.0",
+  "description": "Streamline Tools helps streamline your Oracle CPQ Cloud BML development, administration, maintenance, and support tasks.",
+  "permissions": [
+    "downloads",
+    "activeTab",
+    "declarativeContent",
+    "storage",
+    "file://*",
+    "tabs"
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "web_accessible_resources": [
+    "jsonpath-1.0.2.js",
+    "injected.js",
+    "adminCommerceInjected.js",
+    "adminConfigInjected.js",
+    "adminCommerceRulesInjected.js",
+    "adminCommerceActionsInjected.js"
+  ],
+  "page_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/streamline16.png",
+      "32": "images/streamline32.png",
+      "48": "images/streamline48.png",
+      "128": "images/streamline128.png"
+    }
+  },
+  "icons": {
+    "16": "images/streamline16.png",
+    "32": "images/streamline32.png",
+    "48": "images/streamline48.png",
+    "128": "images/streamline128.png"
+  },
+  "manifest_version": 2,
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+1",
+        "mac": "Command+Shift+1"
+      },
+      "description": "open Streamline Tools Popup"
+    }
+  }
 }
