@@ -48,10 +48,14 @@ chrome.commands.onCommand.addListener(function (command) {
 
 function unloadBML () {
   alert('UNLOAD COMMAND')
+  // unloadButton.click()
+  chrome.pageAction.show()
+  // chrome.declarativeContent.ShowPageAction()
 }
 
 function loadBML () {
   alert('LOAD COMMAND')
+  // loadButton.click()
 }
 
 // ----------------------------------------------------------------
