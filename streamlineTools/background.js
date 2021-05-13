@@ -49,8 +49,12 @@ chrome.commands.onCommand.addListener(function (command) {
 function unloadBML () {
   alert('UNLOAD COMMAND')
   // unloadButton.click()
-  chrome.pageAction.show()
+  // chrome.pageAction.show()
   // chrome.declarativeContent.ShowPageAction()
+  // chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+  //   lastTabId = tabs[0].id
+  //   chrome.pageAction.show(lastTabId)
+  // })
 }
 
 function loadBML () {
