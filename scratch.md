@@ -3046,3 +3046,13 @@ Launch Chrome w/ Remote Debugging
     `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222`
 
 <https://github.com/Microsoft/vscode-chrome-debug#other-optional-launch-config-fields>
+
+## CE Shortcuts
+
+CE Shortcuts Guide (user)-
+<https://obie.ai/blog/how-to-add-and-remove-custom-keyboard-shortcuts-and-hotkeys-for-a-chrome-extension-in-5-seconds-flat/>
+
+CE Shortcuts Guide (dev)
+<https://dev.to/paulasantamaria/adding-shortcuts-to-your-chrome-extension-2i20>
+
+<chrome://extensions/shortcuts>
