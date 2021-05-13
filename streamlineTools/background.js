@@ -30,11 +30,31 @@ chrome.runtime.onInstalled.addListener(function () {
   })
 })
 
-// KEYBOARD COMMANDS
-
+// KEYBOARD COMMAND LISTENER
 // _execute_page_action - handled automatically
+// unload_bml + load_bml
+chrome.commands.onCommand.addListener(function (command) {
+  switch (command) {
+    case 'unload_bml':
+      unloadBML()
+      break
+    case 'load_bml':
+      loadBML()
+      break
+    default:
+      console.log(`Command ${command} not found`)
+  }
+})
 
-//
+function unloadBML () {
+  alert('UNLOAD COMMAND')
+}
+
+function loadBML () {
+  alert('LOAD COMMAND')
+}
+
+// ----------------------------------------------------------------
 
 // if (document.getElementsByName('varName')[0]) {
 //     filename = document.getElementsByName('varName')[0].value;
