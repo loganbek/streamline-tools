@@ -3057,3 +3057,5 @@ CE Shortcuts Guide (dev)
 
 <chrome://extensions/shortcuts>
 <https://developer.chrome.com/docs/extensions/reference/commands/>
+
+<https://dev.to/paulasantamaria/chrome-extensions-adding-a-badge-644>
