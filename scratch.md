@@ -3056,3 +3056,4 @@ CE Shortcuts Guide (dev)
 <https://dev.to/paulasantamaria/adding-shortcuts-to-your-chrome-extension-2i20>
 
 <chrome://extensions/shortcuts>
+<https://developer.chrome.com/docs/extensions/reference/commands/>
