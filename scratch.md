@@ -3060,4 +3060,7 @@ CE Shortcuts Guide (dev)
 
 <https://dev.to/paulasantamaria/chrome-extensions-adding-a-badge-644>
 
-in chrome vs. global command scropes?
+- pageactions cannot have badges
+  <https://developer.chrome.com/docs/extensions/reference/pageAction/>
+
+  shrotcut - chrome vs. global command scropes?

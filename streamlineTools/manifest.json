@@ -57,7 +57,7 @@
     },
     "load_bml": {
       "suggested_key": {
-        "default": "Ctrl+Shift+3"
+        "default": "Ctrl+Shift+6"
       },
       "description": "Triggers LOAD BML on current Tab"
     }
