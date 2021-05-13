@@ -45,8 +45,7 @@
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
-        "default": "Ctrl+Shift+1",
-        "mac": "Command+Shift+1"
+        "default": "Ctrl+Shift+1"
       },
       "description": "open Streamline Tools Popup"
     }
