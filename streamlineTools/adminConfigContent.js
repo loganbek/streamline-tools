@@ -222,7 +222,10 @@ function displayConfigModal () {
   // }
 
   // 2) BM PAGE DOM SELECTOR
-  modalHook = getElementById('temp') // TODO figure out proper modalHook
+  // modalHook = getElementById('temp') // TODO figure out proper modalHook
+  modalHook = document.getElementsByClassName(
+    'x-window x-component x-window-maximized x-masked'
+  )[0] // new modalHook
 
   // 3) APPEND MODAL
   modalHook.appendChild(modalDiv)
