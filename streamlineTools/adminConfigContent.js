@@ -188,20 +188,48 @@ function displayConfigModal () {
   let modalDiv = document.createElement('div')
 
   modalDiv.className = 'ext-el-mask-msg'
+  // color: black;
+  // font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  // font-size: 8pt;
+  // visibility: visible;
+  // margin: 0;
+  // z-index: 101;
+  // position: absolute;
+  // border: 1px solid;
+  // background: repeat-x 0 -16px;
+  // padding: 2px;
+  // border-color: #6593cf;
+  // background-color: #c3daf9;
+  // background-image: url(../images/default/box/tb-blue.gif);
+  // display: block;
+  // left: 955px;
+  // top: 726px;
+  modalDiv.style.color = 'black'
+  modalDiv.style.fontFamily = 'Helvetica Neue, Helvetica, Ariel, sans-serif'
+  modalDiv.style.visibility = 'visible'
+  modalDiv.style.margin = '0'
+  modalDiv.style.zIndex = '101'
+  modalDiv.style.position = 'absolute'
+  modalDiv.style.border = '1px solid'
+  modalDiv.style.background = 'repeat-x 0 -16px'
+  modalDiv.style.padding = '2px'
+  modalDiv.style.borderColor = '#6593cf'
+  modalDiv.style.backgroundColor = '#c3daf9'
+  modalDiv.style.backgroundImage = 'url(../images/default/box/tb-blue.gif)'
   modalDiv.style.display = 'block'
   modalDiv.style.left = '1014px'
   modalDiv.style.top = '694px'
 
-  // inButton.style.height = "200px";
-  // inButton.style.width = "400px";
-  // inButton.style.position = "fixed";
-  // inButton.style.top = "50%";
-  // inButton.style.left = "50%";
-  // inButton.style.marginLeft = -1 * (this.width / 2);
-  // inButton.style.marginTop = -1 * (this.height / 2);
-
   let innerDiv = document.createElement('div')
-
+  modalDiv.style.visibility = 'visible'
+  modalDiv.style.margin = '0'
+  modalDiv.style.padding = '5px 10px 5px 10px'
+  modalDiv.style.border = '1px solid'
+  modalDiv.style.cursor = 'wait'
+  modalDiv.style.backgroundColor = 'white'
+  modalDiv.style.borderColor = '#a3bad9'
+  modalDiv.style.color = '#222'
+  modalDiv.style.font = 'normal 11px tahoma, arial, helvetica, sansCerif'
   innerDiv.innerText = 'Loading...'
 
   // document.body.onload = addElement
