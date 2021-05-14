@@ -3064,3 +3064,66 @@ CE Shortcuts Guide (dev)
   <https://developer.chrome.com/docs/extensions/reference/pageAction/>
 
   shrotcut - chrome vs. global command scropes?
+
+`<div class="ext-el-mask" style="display: block;"></div>`
+copy styles ext-el-mask
+
+```css
+color: black;
+font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+font-size: 8pt;
+visibility: visible;
+margin: 0;
+padding: 0;
+z-index: 100;
+position: absolute;
+top: 0;
+left: 0;
+opacity: 0.5;
+width: 100%;
+height: 100%;
+zoom: 1;
+background-color: #ccc;
+display: block;
+```
+
+`<div class="ext-el-mask-msg" style="display: block; left: 955px; top: 726px;"><div>Loading...</div></div>`
+copy styles - ext-el-mask-msg
+
+```css
+color: black;
+font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+font-size: 8pt;
+visibility: visible;
+margin: 0;
+z-index: 101;
+position: absolute;
+border: 1px solid;
+background: repeat-x 0 -16px;
+padding: 2px;
+border-color: #6593cf;
+background-color: #c3daf9;
+background-image: url(../images/default/box/tb-blue.gif);
+display: block;
+left: 955px;
+top: 726px;
+```
+
+copy styles - div
+
+```css
+visibility: visible;
+margin: 0;
+padding: 5px 10px 5px 10px;
+border: 1px solid;
+cursor: wait;
+background-color: white;
+border-color: #a3bad9;
+color: #222;
+font: normal 11px tahoma, arial, helvetica, sans-serif;
+```
+
+configModalHook - #x-auto-154
+or class=" x-window x-component x-window-maximized x-masked"
+
+`document.getElementsByClassName(" x-window x-component x-window-maximized x-masked")[0]`
