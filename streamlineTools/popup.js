@@ -1,16 +1,16 @@
 'use strict'
 
 // VARS
-let fileName
-let commentHeader
-let url
+// let fileName
+// let commentHeader
+// let url
 let bmSiteSubDomain
 let bmSiteType
-let header
+// let header
 
 // FLAGS
-const unloaded = false
-const unloadedTest = false
+// const unloaded = false
+// const unloadedTest = false
 
 // BUTTONS
 const unloadButton = document.getElementById('unload')
@@ -29,22 +29,28 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
   const sub = parts[0]
   const domain = parts[1]
   const type = parts[2]
-  console.log(sub)
+  // console.log(sub)
   const bmSiteParts = sub.split('//')
   const bmSite = bmSiteParts[1]
-  console.log(bmSite)
+  // console.log(bmSite)
   bmSiteSubDomain = bmSite
-  console.log(domain)
-  console.log(type)
+  // console.log(domain)
+  // console.log(type)
   bmSiteType = 'commerce'
-  console.log(bmSiteType)
+  // console.log(bmSiteType)
   if (url !== undefined) {
     // UNLOAD/LOAD TEST BML DISABLING
-    if (url.includes('bigmachines.com/admin/commerce/rules') || url.includes('bigmachines.com/admin/configuration/rules') || url.includes('bigmachines.com/admin/commerce/actions')) {
+    if (
+      url.includes('bigmachines.com/admin/commerce/rules') ||
+      url.includes('bigmachines.com/admin/configuration/rules') ||
+      url.includes('bigmachines.com/admin/commerce/actions')
+    ) {
       unloadTestButton.disabled = true
       loadTestButton.disabled = true
     }
-    if (url.includes('bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp')) {
+    if (
+      url.includes('bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp')
+    ) {
       executeContentScript('adminCommerceActionsContent.js')
     } else if (url.includes('bigmachines.com/admin/commerce/rules')) {
       executeContentScript('adminCommerceRulesContent.js')
@@ -54,9 +60,11 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     }
   }
   if (url.includes('bigmachines.com/spring/')) {
-    chrome.tabs.sendMessage(tabs[0].id, { greeting: 'filename' }, function (response) {
+    chrome.tabs.sendMessage(tabs[0].id, { greeting: 'filename' }, function (
+      response
+    ) {
       if (response !== undefined) {
-        console.log(response.filename)
+        // console.log(response.filename)
         fileName = response.filename
       }
     })
@@ -77,7 +85,8 @@ logsButton.disabled = true
 // DOWNLOAD FILENAME
 chrome.downloads.onDeterminingFilename.addListener(function (item, suggest) {
   suggest({
-    filename: 'bigmachines/' + bmSiteSubDomain + '/' + bmSiteType + '/' + item.filename,
+    filename:
+      'bigmachines/' + bmSiteSubDomain + '/' + bmSiteType + '/' + item.filename,
     conflictAction: 'overwrite'
   })
 })
@@ -88,7 +97,9 @@ unloadButton.onclick = function (params) {
   const unloaded = true
 
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unload' }, function (response) {
+    chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unload' }, function (
+      response
+    ) {
       if (response.code && response.filename) {
         saveText(response.filename + '.bml', response.code)
       }
@@ -98,18 +109,22 @@ unloadButton.onclick = function (params) {
 
 // LOAD ONCLICK
 let fileHandle
-loadButton.addEventListener('click', async (e) => {
+loadButton.addEventListener('click', async e => {
   // fileHandle = await window.chooseFileSystemEntries();
-  [fileHandle] = await window.showOpenFilePicker()
+  ;[fileHandle] = await window.showOpenFilePicker()
   console.log(fileHandle)
   const file = await fileHandle.getFile()
   const contents = await file.text()
   console.log(contents)
 
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, { greeting: 'load', code: contents }, function (response) {
-      console.log(response)
-    })
+    chrome.tabs.sendMessage(
+      tabs[0].id,
+      { greeting: 'load', code: contents },
+      function (response) {
+        console.log(response)
+      }
+    )
   })
 })
 
@@ -119,7 +134,9 @@ unloadTestButton.onclick = function (params) {
   const unloadedTest = true
 
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unloadTest' }, function (response) {
+    chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unloadTest' }, function (
+      response
+    ) {
       console.log(response.filename)
       console.log(response.testCode)
       if (response.testCode && response.filename) {
@@ -131,32 +148,41 @@ unloadTestButton.onclick = function (params) {
 
 // LOAD TEST ONCLICK
 let fileHandle2
-loadTestButton.addEventListener('click', async (e) => {
+loadTestButton.addEventListener('click', async e => {
   const options = {
-    types: [{
-      accept: {
-        'bml/plain': '.test.bml'
+    types: [
+      {
+        accept: {
+          'bml/plain': '.test.bml'
+        }
       }
-    }],
+    ],
     excludeAcceptAllOption: true
-  };
-    //    [fileHandle2] = await window.showOpenFilePicker(options);
-  [fileHandle2] = await window.showOpenFilePicker()
+  }
+  //    [fileHandle2] = await window.showOpenFilePicker(options);
+  ;[fileHandle2] = await window.showOpenFilePicker()
   console.log(fileHandle2)
   const file = await fileHandle2.getFile()
   const contents = await file.text()
 
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, { greeting: 'loadTest', code: contents }, function (response) {
-      console.log(response)
-    })
+    chrome.tabs.sendMessage(
+      tabs[0].id,
+      { greeting: 'loadTest', code: contents },
+      function (response) {
+        console.log(response)
+      }
+    )
   })
 })
 
 // FILE SAVE
 function saveText (filename, text) {
   const tempElem = document.createElement('a')
-  tempElem.setAttribute('href', 'data:bml/plain;charset=utf-8,' + encodeURIComponent(text))
+  tempElem.setAttribute(
+    'href',
+    'data:bml/plain;charset=utf-8,' + encodeURIComponent(text)
+  )
   tempElem.setAttribute('download', filename)
   tempElem.click()
 }

@@ -185,7 +185,7 @@ function displayConfigModal () {
 
   // TODO add styles from css to both elements
 
-  let modalDiv = document.createElement('div')
+  const modalDiv = document.createElement('div')
 
   modalDiv.className = 'ext-el-mask-msg'
   // color: black;
@@ -220,7 +220,7 @@ function displayConfigModal () {
   modalDiv.style.left = '1014px'
   modalDiv.style.top = '694px'
 
-  let innerDiv = document.createElement('div')
+  const innerDiv = document.createElement('div')
   modalDiv.style.visibility = 'visible'
   modalDiv.style.margin = '0'
   modalDiv.style.padding = '5px 10px 5px 10px'
@@ -261,7 +261,7 @@ function displayConfigModal () {
   // MB OUTSIDE displayConfigModal()
 
   // CONFIG MODAL CLICK LISTENER
-  target.addEventListener(`click`, modalClickHAndler, { once: true })
+  target.addEventListener('click', modalClickHAndler, { once: true })
 }
 
 // TODO FINISH CLICK HANDLER

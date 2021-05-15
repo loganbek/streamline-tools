@@ -3142,3 +3142,59 @@ document.getElementsByClassName(
   ' x-window x-component x-window-maximized x-masked'
 )[0]
 ```
+
+#### CLEANUP
+
+```sh
+➜ lint-concise
+standard: Use JavaScript Standard Style (https://standardjs.com)
+33     'chrome' is not defined
+29     Expected '===' and instead saw '=='
+29     'CustomEvent' is not defined
+25     'code' is not defined
+25     Unexpected tab character
+18     'fileStringArray' is not defined
+18     'textAreaCode' is not defined
+12     'testCommerceCode' is not defined
+10     'textarea' is not defined
+6      'iframes' is not defined
+6      'alert' is not defined
+4      'commentHeader' is not defined
+4      'textArea' is assigned a value but never used
+4      Opening curly brace does not appear on the same line as controlling statement
+3      Unexpected var, use let or const instead
+3      'modalHook' is not defined
+3      'testConfigCode' is not defined
+3      'jsonRespStr' is not defined
+3      'frame_bm_script' is not defined
+2      'testCode' is not defined
+2      'detail1' is not defined
+2      'elem' is assigned a value but never used
+2      'divXWindow' is not defined
+2      'buttonCollection' is not defined
+2      Unexpected mix of '&&' and '||'
+2      Do not access Object.prototype method 'hasOwnProperty' from target object
+2      'unloaded' is assigned a value but never used
+2      'unloadedTest' is assigned a value but never used
+1      'filenameAfter' is defined but never used
+1      'filenameBefore' is defined but never used
+1      'filename' was used before it was defined
+1      'getElementsStartsWithId' is defined but never used
+1      'target' is not defined
+1      Expected '!==' and instead saw '!='
+1      'validateButton' is not defined
+1      Duplicate key 'pageUrl'
+1      'contentHeader' is not defined
+1      Unnecessary escape character
+1      eval can be harmful
+1      'message1' is assigned a value but never used
+1      'message3' is assigned a value but never used
+1      'message2' is assigned a value but never used
+1      Identifier 'save_options' is not in camel case
+1      Identifier 'restore_options' is not in camel case
+1      'commentHeader' is defined but never used
+1      'url' is defined but never used
+1      'header' is defined but never used
+1      'fileName' is assigned a value but never used
+1      'options' is assigned a value but never used
+```

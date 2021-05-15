@@ -3,7 +3,6 @@ window.addEventListener('load', function () {
 })
 
 window.addEventListener('unloadCode', function (evt) {
-
   document.getElementsByRegex = function (pattern) {
     const arrElements = [] // to accumulate matching elements
     const re = new RegExp(pattern) // the regex to match with
