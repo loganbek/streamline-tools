@@ -1746,7 +1746,7 @@ Category*
 
 Developer Tools
 arrow_drop_downarrow_drop_down
-Language\*
+Language
 
 English (United States)
 arrow_drop_downarrow_drop_down
@@ -2321,7 +2321,7 @@ FUTURE: KEYMAP EXTENSIONS
 ```
 
 ```css
-color: black;
+/* color: black;
 font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 font-size: 8pt;
 margin: 0;
@@ -2333,7 +2333,7 @@ padding: 2px;
 background: #c3daf9;
 width: 150px;
 text-align: center;
-z-index: 20001;
+z-index: 20001; */
 ```
 
 ```js
@@ -2385,7 +2385,7 @@ MODAL FROM PRICING FUNCTION
 COMPUTED STYLE:
 
 ```css
-align-content normal
+/* align-content normal
 align-items normal
 align-self auto
 alignment-baseline auto
@@ -2750,7 +2750,7 @@ zoom 1
 -webkit-user-modify read-only
 -webkit-border-image none
 -webkit-ruby-position before
--webkit-text-orientation vertical-right
+-webkit-text-orientation vertical-right */
 ```
 
 MODAL FROM CONFIG
@@ -3069,61 +3069,76 @@ CE Shortcuts Guide (dev)
 copy styles ext-el-mask
 
 ```css
-color: black;
-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-font-size: 8pt;
-visibility: visible;
-margin: 0;
-padding: 0;
-z-index: 100;
-position: absolute;
-top: 0;
-left: 0;
-opacity: 0.5;
-width: 100%;
-height: 100%;
-zoom: 1;
-background-color: #ccc;
-display: block;
+div.ext-el-mask {
+  color: black;
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
+  font-size: 8pt;
+  visibility: visible;
+  margin: 0;
+  padding: 0;
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
+  width: 100%;
+  height: 100%;
+  zoom: 1;
+  background-color: #ccc;
+  display: block;
+}
 ```
 
-`<div class="ext-el-mask-msg" style="display: block; left: 955px; top: 726px;"><div>Loading...</div></div>`
+```html
+<div class="ext-el-mask-msg" style="display: block; left: 955px; top: 726px;">
+  <div>Loading...</div>
+</div>
+```
+
 copy styles - ext-el-mask-msg
 
 ```css
-color: black;
-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-font-size: 8pt;
-visibility: visible;
-margin: 0;
-z-index: 101;
-position: absolute;
-border: 1px solid;
-background: repeat-x 0 -16px;
-padding: 2px;
-border-color: #6593cf;
-background-color: #c3daf9;
-background-image: url(../images/default/box/tb-blue.gif);
-display: block;
-left: 955px;
-top: 726px;
+div.ext-el-mask-msg {
+  color: black;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 8pt;
+  visibility: visible;
+  margin: 0;
+  z-index: 101;
+  position: absolute;
+  border: 1px solid;
+  background: repeat-x 0 -16px;
+  padding: 2px;
+  border-color: #6593cf;
+  background-color: #c3daf9;
+  background-image: url(../images/default/box/tb-blue.gif);
+  display: block;
+  left: 955px;
+  top: 726px;
+}
 ```
 
 copy styles - div
 
 ```css
-visibility: visible;
-margin: 0;
-padding: 5px 10px 5px 10px;
-border: 1px solid;
-cursor: wait;
-background-color: white;
-border-color: #a3bad9;
-color: #222;
-font: normal 11px tahoma, arial, helvetica, sans-serif;
+.ext-el-mask-msg > div {
+  visibility: visible;
+  margin: 0;
+  padding: 5px 10px 5px 10px;
+  border: 1px solid;
+  cursor: wait;
+  background-color: white;
+  border-color: #a3bad9;
+  color: #222;
+  font: normal 11px tahoma, arial, helvetica, sans-serif;
+}
 ```
 
 configModalHook - #x-auto-154
 or class=" x-window x-component x-window-maximized x-masked"
 
-`document.getElementsByClassName(" x-window x-component x-window-maximized x-masked")[0]`
+```js
+document.getElementsByClassName(
+  ' x-window x-component x-window-maximized x-masked'
+)[0]
+```
