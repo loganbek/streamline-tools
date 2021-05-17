@@ -5,11 +5,13 @@
 [![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/loganbek/streamlineTools/pulls)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/loganbek/streamlineTools/graphs/commit-activity)
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/loganbek/streamline-tools)
+
 
 ## Prerequisites
 
-- [Google Chrome](https://www.google.com/chrome/)
-- [Visual Studio Code](https://code.visualstudio.com/Download)
+- [Google Chrome Browser](https://www.google.com/chrome/)
+- [Visual Studio Code IDE](https://code.visualstudio.com/Download)
 
 ## Installation Instructions
 
