@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Popup Page Starter Template</title>
+  <title>Streamline Tools Basic Page</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="css/index.css">
 </head>
+
 <body>
   <section class="content">
-    <img src="images/graphic.png" alt="Welcome Graphic"/>
-    <h1>Popup Page Starter Template</h1>
-    <p>
-      This is a basic popup Chrome extension (with some basic styling added) toggled by clicking the extension's icon or pressing <b>Ctrl + Shift + O</b>. Please read the <b>README.md</b> for more information.
-    </p>
+    <button id="unload"> Unload BML <i class="material-icons md-18">keyboard_arrow_right</i><i
+        class="material-icons md-18">keyboard_arrow_right</i></button>
+    <button id="load"><i class="material-icons md-18">keyboard_arrow_left</i><i
+        class="material-icons md-18">keyboard_arrow_left</i> Load BML </button>
+    <button id="unloadTest"> Unload Test BML <i class="material-icons md-18">keyboard_arrow_right</i><i
+        class="material-icons md-18">keyboard_arrow_right</i></button>
+    <button id="loadTest"><i class="material-icons md-18">keyboard_arrow_left</i><i
+        class="material-icons md-18">keyboard_arrow_left</i> Load Test BML </button>
+    <button id="options"><i class="material-icons md-18">settings</i> Options </button>
+    <button id="logs"><i class="material-icons md-18">assignment</i> Logs </button>
+    <script src="js/scripts.js"></script>
+
+    <div id="footer"></div>
   </section>
 </body>
+
 </html>

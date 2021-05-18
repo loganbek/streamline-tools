@@ -89,12 +89,17 @@ Coming soon...
 ## Known & Reported Issues
 
 - [ ] None.
+
   <!-- <https://github.com/marketplace/actions/auto-issue-list-in-readme> -->
 
 ---
 
 ## TODO
 
-- [ ] test ext w/o changes
-- [ ] popup.js -> index.js
-- [ ] comment out CSS
+- [x] test ext w/o changes
+- [x] ~~_*popup.html -> index.html*_~~ [2021-05-18T01:08:33]
+- [x] comment out CSS
+- [x] ~~_*add old CSS*_~~ [Tue, May 18, 2021 1:16 AM]
+- [ ] content script code from other basic template?
+- [ ] look for message passing or chrome sync
+- [ ] ensure config modal works properly
