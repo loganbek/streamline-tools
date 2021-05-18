@@ -9,6 +9,13 @@
     "48": "images/streamline48.png",
     "128": "images/streamline128.png"
   },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-script.js"]
+    }
+  ],
+  "web_accessible_resources": ["inject-script.js"],
   "browser_action": {
     "default_icon": {
       "16": "images/streamline16.png",
@@ -19,6 +26,7 @@
     "default_popup": "index.html",
     "default_title": "Open Popup"
   },
+  "permissions": ["tabs", "activeTab"],
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
