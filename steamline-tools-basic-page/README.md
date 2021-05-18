@@ -1,10 +1,12 @@
 # Streamline Tools for Oracle CPQ Cloud
 
-![Streamline Tools](SLCPQ_LOGO_SITE.png)
+![Streamline Tools](images/SLCPQ_LOGO_SITE.png)
 
 [![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/loganbek/streamlineTools/pulls)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/loganbek/streamlineTools/graphs/commit-activity)
+
+<!-- ![Available in Chrome Webstore](images/available-in-CWS-md-border.png) -->
 
 ## Prerequisites
 
@@ -55,11 +57,10 @@ Coming soon...
 
 ### Defaults
 
-<!-- (TBD) -->
-
 - `Cmd/Ctrl + Shift + 1` - Show Streamline Tools
-- `TBD` - Unload BML
-- `TBD` - Load BML
+
+<!-- - `TBD` - Unload BML
+- `TBD` - Load BML -->
 
 ### Custom
 
@@ -87,5 +88,13 @@ Coming soon...
 
 ## Known & Reported Issues
 
-- [ ] N/A :innocent:
+- [ ] None.
   <!-- <https://github.com/marketplace/actions/auto-issue-list-in-readme> -->
+
+---
+
+## TODO
+
+- [ ] test ext w/o changes
+- [ ] popup.js -> index.js
+- [ ] comment out CSS
