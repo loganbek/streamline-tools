@@ -3202,3 +3202,25 @@ standard: Use JavaScript Standard Style (https://standardjs.com)
 1      'fileName' is assigned a value but never used
 1      'options' is assigned a value but never used
 ```
+
+<https://www.freecodecamp.org/news/chrome-extension-with-parcel-tailwind/>
+<https://www.freecodecamp.org/news/chrome-extension-message-passing-essentials/>
+
+```js
+<script type="text/javascript">
+var _BM_USER_LANGUAGE='en';
+var _BM_USER_CURRENCY='USD';
+var _BM_USER_CURRENCY_SYMBOL='$';
+var _BM_USER_CURRENCY_FORMAT='0';
+var _BM_USER_LOGIN='CWilliams';
+var _BM_USER_EMAIL='cwilliams@streamlinecpq.com';
+var _BM_USER_COMPANY='DevMcNichols';
+var _BM_USER_NUMBER_FORMAT='0';
+var _BM_CSRF_TOKEN='jkJm-_SD5nEWBsGBm0X5DwvQOlp0lBArQy-vPudC-ESjrSFgnqNilNGSFIw';
+var _BM_HOST_COMPANY='devmcnichols';
+var _BM_STORED_PRECISION='4';var userDateInfo = { dateFormat : 'MM/dd/yyyy', userTimeZoneId : 'America/Los_Angeles', defaultTimeZoneId : 'America/New_York', dateTimeFormat : 'MM/dd/yyyy HH:mm', jQueryDateFormat : 'mm/dd/yy', defaultTimeZone : 300, userTimeZone : 480 };var _BM_IS_IN_GLOBAL_DEBUG_MODE=false;var _BM_USE_ALTA_HEADER=false;var _BM_APPLY_IOS_SCROLL_FIX=true;var _BM_USER_FULL_ACCESS=true;</script>
+```
+
+Maybe useful later for showing current user + versioning
+
+look into using tailwind.css
