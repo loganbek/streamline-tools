@@ -1,6 +1,6 @@
 # Streamline Tools for Oracle CPQ Cloud
 
-![streamlinecpqlogo](SLCPQ_LOGO_SITE.png)
+![Streamline Tools](SLCPQ_LOGO_SITE.png)
 
 [![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/loganbek/streamlineTools/pulls)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)

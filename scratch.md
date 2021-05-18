@@ -6,7 +6,7 @@
 
 Things to focus on for sundays meeting:
 
-1. How to get code out of editor. Maybe in hidden attribute. Look into webservice call.
+1. How to get code out of editor. Maybe in hidden attribute. Look into webservices call.
 
 2. Test out native file sys API.
 
@@ -1057,10 +1057,12 @@ LOW PRIORITY - - [ ] look into moving back to line 1 in editor on load.
     [attribute$=”str”] Selector: The [attribute$=”value”] selector is used to select those elements whose attribute value ends with a specified value str.
     [attribute*=”str”] Selector: The [attribute*=”str”] selector is used to select that elements whose attribute value contains the specified sub string str. This example shows how to use a wildcard to select all div with a class that contains str. This could be at the start, the end or in the middle of the class.
 
-        multi contains selector?
+```css
+        <!-- multi contains selector? -->
         div[class^="tocolor-"], div[class*=" tocolor-"] { <- something like this maybe
 
     }
+```
 
 - editAreas
 - [x] add in (site) folder - devmcnichols, etc.
@@ -3043,7 +3045,9 @@ VSCode Chrome Extension Debugging
 <https://www.freecodecamp.org/news/how-to-set-up-the-debugger-for-chrome-extension-in-visual-studio-code-c0b3e5937c01/>
 Launch Chrome w/ Remote Debugging
 
+```sh
     `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222`
+```
 
 <https://github.com/Microsoft/vscode-chrome-debug#other-optional-launch-config-fields>
 
@@ -3143,7 +3147,7 @@ document.getElementsByClassName(
 )[0]
 ```
 
-#### CLEANUP
+### CLEANUP
 
 ```sh
 ➜ lint-concise
