@@ -3224,3 +3224,14 @@ var _BM_STORED_PRECISION='4';var userDateInfo = { dateFormat : 'MM/dd/yyyy', use
 Maybe useful later for showing current user + versioning
 
 look into using tailwind.css
+
+<https://smashingmagazine.com/2017/04/browser-extension-edge-chrome-firefox-opera-brave-vivaldi/>
+
+<!-- OLD options -->
+
+```json
+"options_ui": {
+"page": "options.html",
+"open_in_tab": true
+},
+```

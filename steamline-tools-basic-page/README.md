@@ -100,6 +100,12 @@ Coming soon...
 - [x] ~~_*popup.html -> index.html*_~~ [2021-05-18T01:08:33]
 - [x] comment out CSS
 - [x] ~~_*add old CSS*_~~ [Tue, May 18, 2021 1:16 AM]
-- [ ] content script code from other basic template?
-- [ ] look for message passing or chrome sync
+  <!-- ! - [ ] content script code from other basic template? -->
+- [x] ~~_look for message passing or chrome sync_~~ [Tue, May 18, 2021 8:58 AM]
+- [x] ~~_options.html_~~ [Tue, May 18, 2021 11:41 AM]
+- [x] ~~_options.js_~~ [Tue, May 18, 2021 11:41 AM]
+- [ ] options.css
 - [ ] ensure config modal works properly
+- [ ] hotloading to speed up testing
+- [ ] badge
+- [ ] auto issues list -> readme
