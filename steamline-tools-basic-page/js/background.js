@@ -1,5 +1,5 @@
-window.fileVars = {}
+window.bmlFileVars = {}
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  window.fileVars[sender.tab.id] = message.essential || null
+  window.bmlFileVars[sender.tab.id] = message.essential || null
 })

@@ -14,7 +14,8 @@
     "open_in_tab": false
   },
   "background": {
-    "scripts": ["js/hot-reload.js", "background.js"]
+    "scripts": ["js/hot-reload.js", "js/background.js"],
+    "persistant": false
   },
   "content_scripts": [
     {

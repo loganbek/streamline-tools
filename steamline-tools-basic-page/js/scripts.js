@@ -11,10 +11,6 @@ document.addEventListener('DOMContentLoaded', event => {
 
 function getFooter () {
   return (
-    '<footer><p>' +
-    manifest.name +
-    '</p><p>v.' +
-    manifest.version +
-    '</p></footer>'
+    '<footer><p>' + manifest.name + ' ' + manifest.version + '</p></footer>'
   )
 }

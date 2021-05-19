@@ -2,6 +2,7 @@
 // BML FILE
 let fileName = 'fileName.bml'
 let fileContent = '// empty fileContent'
+let backgoundPage
 
 // BUTTONS
 const unloadButton = document.getElementById('unload')
@@ -39,14 +40,14 @@ optionsButton.addEventListener('options', ev => {
 })
 
 window.addEventListener('DOMContentLoaded', () => {
-  let backgroundPage = chrome.extension.getBackgroundPage()
+  backgroundPage = chrome.runtime.getBackgroundPage()
   queryForFile()
 })
 
 function queryForFile () {
   chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
     let currentTabId = tabs[0].currentTabId
-    let currentFile = backgroundPage.fileVars[currentTabId]
+    let currentFile = backgroundPage.bmlFileVars[currentTabId]
     fileName = currentFile.fileName
     fileContent = currentFile.fileContent
   })
