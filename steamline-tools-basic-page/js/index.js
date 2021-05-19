@@ -34,7 +34,8 @@ loadTestButton.addEventListener('click', ev => {
 })
 
 optionsButton.addEventListener('options', ev => {
-  window.location = '/options.html'
+  // window.location = '/options.html'
+  chrome.runtime.openOptionsPage()
 })
 
 window.addEventListener('DOMContentLoaded', () => {
