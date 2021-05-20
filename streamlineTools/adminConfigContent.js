@@ -1,22 +1,25 @@
-let code = ''
-let testCode = ''
+// let code
+// let testCode
+var code = ''
+var testCode = ''
 var filename = filename || ''
 
 if (document.getElementById('#x-auto-3-input')) {
   filename = document.getElementById('#x-auto-3-input').value
   // document.querySelector("#x-auto-3-input")
-  // console.log(filename)
+  console.log('line 8 - filename - ' + filename)
 }
 
 if (window.document.getElementById('#x-auto-3-input')) {
   filename = window.document.getElementById('#x-auto-3-input').value
-  // console.log(filename)
+  console.log('line 13 - filename - ' + filename)
 }
 
 window.addEventListener('unloadCode', function (evt) {
   detail1 = '@#$@#'
   const event = new CustomEvent('PassCodeToBackground', { detail: detail1 })
   window.dispatchEvent(event)
+  console.log('line 13 - event -' + event)
 })
 
 // Listen for the PassToBackground event
@@ -24,6 +27,7 @@ window.addEventListener(
   'PassToBackground',
   function (evt) {
     code = evt.detail
+    console.log('line 28 - evt.detail' + evt.detail)
   },
   false
 )
@@ -33,6 +37,7 @@ window.addEventListener(
   'PassCommentHeader',
   function (evt) {
     commentHeader = evt.detail
+    console.log('line 38 - commentHeader' + commentHeader)
   },
   false
 )
@@ -42,6 +47,7 @@ window.addEventListener(
   'PassCodeToBackground',
   function (evt) {
     code = evt.detail
+    console.log('line 48 - code' + code)
   },
   false
 )
@@ -51,6 +57,7 @@ window.addEventListener(
   'PassTestCodeToBackground',
   function (evt) {
     testCode = evt.detail
+    console.log('line 58 - testCode' + testCode)
   },
   false
 )
@@ -66,9 +73,9 @@ injectJs(chrome.extension.getURL('adminConfigInjected.js'))
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   // // console.log(filename)
-  if (filename === '') {
-    filename = 'setSupplierDescriptionBeforeReady'
-  }
+  // if (filename === '') {
+  //   filename = 'setSupplierDescriptionBeforeReady'
+  // }
   // console.log(sender.tab
   // ? 'from a content script:' + sender.tab.url
   // : 'from the extension')
@@ -182,9 +189,6 @@ function displayConfigModal () {
   // CONFIG MODAL STEPS
 
   // 1) BUILD MODAL DOM
-
-  // TODO add styles from css to both elements
-
   const modalDiv = document.createElement('div')
 
   modalDiv.className = 'ext-el-mask-msg'
@@ -250,16 +254,23 @@ function displayConfigModal () {
   // }
 
   // 2) BM PAGE DOM SELECTOR
-  // modalHook = getElementById('temp') // TODO figure out proper modalHook
+  // modalHook = getElementById('temp')
   modalHook = document.getElementsByClassName(
     'x-window x-component x-window-maximized x-masked'
   )[0] // new modalHook
 
+  modalHookTest = document.getElementsByClassName(
+    'x-window x-component x-window-maximized x-masked'
+  )
+
+  console.log(modalHookTest)
+
   // 3) APPEND MODAL
-  modalHook.appendChild(modalDiv)
+  // modalHook.appendChild(modalDiv)
 
   // MB OUTSIDE displayConfigModal()
-
+  target = document.getElementById('editor')
+  console.log(target)
   // CONFIG MODAL CLICK LISTENER
   target.addEventListener('click', modalClickHAndler, { once: true })
 }
@@ -269,3 +280,19 @@ function modalClickHAndler () {
   // REMOVE MODAL
   modalHook.removeChild()
 }
+
+let editorHook = document.getElementById('editor')
+
+console.log(editorHook)
+
+// var walker = document.createTreeWalker(
+//   editorHook,
+//   NodeFilter.SHOW_ELEMENT // only elements
+// )
+// while (walker.nextNode()) {
+//   let current = walker.currentNode
+//   console.log(
+//     current.tagName,
+//     [...current.attributes].map(({ value, name }) => `${name}=${value}`).join()
+//   )
+// }
