@@ -108,7 +108,7 @@ window.addEventListener(
     // modalDiv.style.top = '694px'
 
     // * INNER DIV STYLE
-    const innerDiv = document.createElement('div')
+    // const innerDiv = document.createElement('div')
     // modalDiv.style.visibility = 'visible'
     // modalDiv.style.margin = '0'
     // modalDiv.style.padding = '5px 10px 5px 10px'
@@ -120,7 +120,7 @@ window.addEventListener(
     // modalDiv.style.font = 'normal 11px tahoma, arial, helvetica, sansCerif'
     // innerDiv.innerText = 'Loading...'
 
-    textarea.onchange()
+    // textarea.onchange()
 
     // console.log('x-toolbar-right')
     divXWindow = document.getElementsByClassName('x-toolbar-right')
@@ -156,4 +156,28 @@ function main () {
 
   const event = new CustomEvent('PassToBackground', { code })
   window.dispatchEvent(event)
+}
+
+/**
+ * @param {String} HTML representing a single element
+ * @return {Element}
+ */
+function htmlToElement (html) {
+  var template = document.createElement('template')
+  html = html.trim() // Never return a text node of whitespace as the result
+  template.innerHTML = html
+  return template.content.firstChild
+}
+
+// var td = htmlToElement('<td>foo</td>'),
+//   div = htmlToElement('<div><span>nested</span> <span>stuff</span></div>')
+
+/**
+ * @param {String} HTML representing any number of sibling elements
+ * @return {NodeList}
+ */
+function htmlToElements (html) {
+  var template = document.createElement('template')
+  template.innerHTML = html
+  return template.content.childNodes
 }

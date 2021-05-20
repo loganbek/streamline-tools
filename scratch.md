@@ -3069,7 +3069,10 @@ CE Shortcuts Guide (dev)
 
   shrotcut - chrome vs. global command scropes?
 
-`<div class="ext-el-mask" style="display: block;"></div>`
+```html
+<div class="ext-el-mask" style="display: block;"></div>
+```
+
 copy styles ext-el-mask
 
 ```css
@@ -3091,6 +3094,14 @@ div.ext-el-mask {
   background-color: #ccc;
   display: block;
 }
+```
+
+```html
+<div class="ext-el-mask" style="display: block;">
+  <div class="ext-el-mask-msg" style="display: block; left: 955px; top: 726px;">
+    <div>Loading...</div>
+  </div>
+</div>
 ```
 
 ```html
