@@ -1,82 +1,81 @@
 body {
-    background-color: #EEEEEE;
+  background-color: #eeeeee;
 }
 
 i {
-    vertical-align: text-top;
+  vertical-align: text-top;
 }
 
 button:active {
-    box-shadow: 0 1px #666;
-    transform: translateY(4px);
+  box-shadow: 0 1px #666;
+  transform: translateY(4px);
 }
 
 #unload {
-    border-color: #80CFE2;
-    color: #80CFE2;
+  border-color: #80cfe2;
+  color: #80cfe2;
 }
 
 #unload:hover:enabled {
-    color: #FFFFFF;
-    background-color: #80CFE2;
+  color: #ffffff;
+  background-color: #80cfe2;
 }
 
 #load {
-    border-color: #00A0C6;
-    color: #00A0C6;
+  border-color: #00a0c6;
+  color: #00a0c6;
 }
 
 #load:hover:enabled {
-    color: #FFFFFF;
-    background-color: #00A0C6;
+  color: #ffffff;
+  background-color: #00a0c6;
 }
 
 #unloadTest {
-    border-color: #0C5FA8;
-    color: #0C5FA8;
+  border-color: #0c5fa8;
+  color: #0c5fa8;
 }
 
 #unloadTest:hover:enabled {
-    color: #FFFFFF;
-    background-color: #0C5FA8;
+  color: #ffffff;
+  background-color: #0c5fa8;
 }
 
 #loadTest {
-    border-color: #60017C;
-    color: #60017C;
+  border-color: #60017c;
+  color: #60017c;
 }
 
 #loadTest:hover:enabled {
-    color: #FFFFFF;
-    background-color: #60017C;
+  color: #ffffff;
+  background-color: #60017c;
 }
 
 #options {
-    color: #AD047E;
-    border-color: #AD047E;
-    /* min-width: 75px; */
-    display: inline-block;
-    /* text-decoration: none !important; */
+  color: #ad047e;
+  border-color: #ad047e;
+  /* min-width: 75px; */
+  display: inline-block;
+  /* text-decoration: none !important; */
 }
 
 #options:hover:enabled {
-    color: #FFFFFF;
-    background-color: #AD047E;
+  color: #ffffff;
+  background-color: #ad047e;
 }
 
 #logs {
-    color: #F0037F;
-    border-color: #F0037F;
-    /* min-width: 75px; */
-    /* float: right; */
-    display: inline-block;
+  color: #f0037f;
+  border-color: #f0037f;
+  /* min-width: 75px; */
+  /* float: right; */
+  display: inline-block;
 }
 
 #logs:hover:enabled {
-    color: #FFFFFF;
-    background-color: #F0037F;
+  color: #ffffff;
+  background-color: #f0037f;
 }
-
 
 /* Streamline Colors
 - [ ] #80CFE2 - lightest blue - UNLOAD BML
@@ -87,70 +86,70 @@ button:active {
 - [ ] #F0037F - hot pink - logs
 */
 
-
 /* Rules for sizing the icon. */
 
 .material-icons.md-18 {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 .material-icons.md-24 {
-    font-size: 24px;
+  font-size: 24px;
 }
 
 .material-icons.md-36 {
-    font-size: 36px;
+  font-size: 36px;
 }
 
 .material-icons.md-48 {
-    font-size: 48px;
+  font-size: 48px;
 }
-
 
 /* Rules for using icons as black on a light background. */
 
 .material-icons.md-dark {
-    color: rgba(0, 0, 0, 0.54);
+  color: rgba(0, 0, 0, 0.54);
 }
 
 .material-icons.md-dark.md-inactive {
-    color: rgba(0, 0, 0, 0.26);
+  color: rgba(0, 0, 0, 0.26);
 }
-
 
 /* Rules for using icons as white on a dark background. */
 
 .material-icons.md-light {
-    color: rgba(255, 255, 255, 1);
+  color: rgba(255, 255, 255, 1);
 }
 
 .material-icons.md-light.md-inactive {
-    color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.3);
 }
 
 button {
-    min-width: 175px;
-    margin: 7px;
-    padding: 1px;
-    text-align: center;
-    cursor: pointer;
-    outline: none;
-    color: #EEEEEE;
-    background-color: #FFFFFF;
-    border: 1px;
-    border-radius: 7px;
-    box-shadow: 0 5px #999;
-    font-size: 16px;
-    min-height: 24px;
-    vertical-align: middle;
+  min-width: 170px;
+  margin: 7px;
+  padding: 1px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #eeeeee;
+  background-color: #ffffff;
+  border: 1px;
+  border-radius: 7px;
+  box-shadow: 0 5px #999;
+  font-size: 16px;
+  min-height: 24px;
+  vertical-align: middle;
 }
 
 button:disabled {
-    /* color: #EEEEEE; */
-    cursor: no-drop;
+  /* color: #EEEEEE; */
+  cursor: no-drop;
 }
-
 
 /* button:hover:disabled {
     background-color: #FFFFFF;
 } */
+
+footer {
+  text-align: center;
+}

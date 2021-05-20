@@ -1,7 +1,5 @@
 // * Footer Information from manifest
 let manifest = chrome.runtime.getManifest()
-console.log(manifest.name)
-console.log(manifest.version)
 
 document.addEventListener('DOMContentLoaded', event => {
   let attachedFooter = (document.getElementById(

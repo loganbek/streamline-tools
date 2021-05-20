@@ -13,7 +13,6 @@ chrome.runtime.onInstalled.addListener(function () {
       {
         conditions: [
           new chrome.declarativeContent.PageStateMatcher({
-            // pageUrl: { hostSuffix: 'bigmachines.com' },
             pageUrl: {
               urlMatches:
                 'bigmachines.com/admin/configuration/rules/edit_rule.jsp|bigmachines.com/spring/'

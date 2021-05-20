@@ -3,23 +3,29 @@
 // Saves options to chrome.storage
 function save_options () {
   const includeCommentHeader = document.getElementById('includeCommentHeader')
-  chrome.storage.sync.set({
-    includeCommentHeader: includeCommentHeader
-  }, function () {
-    // Update status to let user know options were saved.
-    const status = document.getElementById('status')
-    status.textContent = 'Options saved.'
-    setTimeout(function () {
-      status.textContent = ''
-    }, 750)
-  })
+  chrome.storage.sync.set(
+    {
+      includeCommentHeader: includeCommentHeader
+    },
+    function () {
+      // Update status to let user know options were saved.
+      const status = document.getElementById('status')
+      status.textContent = 'Options saved.'
+      setTimeout(function () {
+        status.textContent = ''
+      }, 750)
+    }
+  )
 }
 
 // Restores state using the preferences stored in chrome.storage.
 function restore_options () {
-  chrome.storage.sync.get({
-    includeCommentHeader: false
-  }, function (items) {})
+  chrome.storage.sync.get(
+    {
+      includeCommentHeader: false
+    },
+    function (items) {}
+  )
 }
 
 if (document.readyState !== 'loading') {
@@ -33,11 +39,23 @@ if (document.readyState !== 'loading') {
 }
 
 // document.addEventListener('DOMContentLoaded', restore_options);
-document.getElementById('save').addEventListener('click',
-  save_options)
+document.getElementById('save').addEventListener('click', save_options)
 
 // BACK HANDLER
 document.getElementById('back').onclick = function (params) {
   // alert("optionsClicked");
   window.location = '/popup.html'
+}
+
+// * Footer Information from manifest
+let manifest = chrome.runtime.getManifest()
+
+document.addEventListener('DOMContentLoaded', event => {
+  let attachedFooter = (document.getElementById(
+    'footer'
+  ).innerHTML = getFooter())
+})
+
+function getFooter () {
+  return '<p>' + manifest.name + ' ' + manifest.version + '</p>'
 }

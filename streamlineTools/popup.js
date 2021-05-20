@@ -192,3 +192,16 @@ optionsButton.onclick = function (params) {
   // alert("optionsClicked");
   window.location = '/options.html'
 }
+
+// * Footer Information from manifest
+let manifest = chrome.runtime.getManifest()
+
+document.addEventListener('DOMContentLoaded', event => {
+  let attachedFooter = (document.getElementById(
+    'footer'
+  ).innerHTML = getFooter())
+})
+
+function getFooter () {
+  return '<p>' + manifest.name + ' ' + manifest.version + '</p>'
+}
