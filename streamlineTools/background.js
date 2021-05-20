@@ -19,6 +19,9 @@ chrome.runtime.onInstalled.addListener(function () {
             pageUrl: {
               urlMatches:
                 'bigmachines.com/spring|bigmachines.com/admin/commerce/rules/|bigmachines.com/admin/commerce/actions|bigmachines.com/admin/configuration/rules/'
+            },
+            pageURL: {
+              urlMatches: `bigmachines.com/`
             }
             // pageUrl: { urlContains: 'bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp' },
             // pageUrl: { hostSuffix: 'bigmachines.com' },
