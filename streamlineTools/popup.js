@@ -191,6 +191,7 @@ function saveText (filename, text) {
 optionsButton.onclick = function (params) {
   // alert("optionsClicked");
   window.location = '/options.html'
+  // chrome.runtime.openOptionsPage()
 }
 
 // * Footer Information from manifest

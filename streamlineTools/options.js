@@ -45,6 +45,8 @@ document.getElementById('save').addEventListener('click', save_options)
 document.getElementById('back').onclick = function (params) {
   // alert("optionsClicked");
   window.location = '/popup.html'
+  // chrome.pageAction.show(chrome.tabs.getCurrentTab())
+  // chrome.pageAction.getPopup()
 }
 
 // * Footer Information from manifest
