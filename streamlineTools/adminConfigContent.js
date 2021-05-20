@@ -154,136 +154,136 @@ if (document.querySelector('#x-auto-3-input')) {
 //   }
 // })
 
-function displayConfigModal () {
-  // MODAL FROM CONFIG
+// function displayConfigModal () {
+// MODAL FROM CONFIG
 
-  // HTML
+// HTML
 
-  // ```html
-  // <div class="ext-el-mask-msg" style="display: block; left: 1014px; top: 694px;"><div>Loading...</div></div>
-  // ```
+// ```html
+// <div class="ext-el-mask-msg" style="display: block; left: 1014px; top: 694px;"><div>Loading...</div></div>
+// ```
 
-  // CSS
+// CSS
 
-  //   ```css
-  // .ext-el-mask {
-  //     background-color: #ccc;
-  // }
-  // .ext-el-mask-msg {
-  //     border-color:#6593cf;
-  //     background-color:#c3daf9;
-  //     background-image:url(../images/default/box/tb-blue.gif);
-  // }
-  // .ext-el-mask-msg div {
-  //     background-color: white;
-  //     border-color:#a3bad9;
-  //     color:#222;
-  //     font:normal 11px tahoma, arial, helvetica, sans-serif;
-  // }
-  // .x-mask-loading div {
-  //     background-color:#fbfbfb;
-  //     background-image:url(../images/default/grid/loading.gif);
-  // }
-  // ```
+//   ```css
+// .ext-el-mask {
+//     background-color: #ccc;
+// }
+// .ext-el-mask-msg {
+//     border-color:#6593cf;
+//     background-color:#c3daf9;
+//     background-image:url(../images/default/box/tb-blue.gif);
+// }
+// .ext-el-mask-msg div {
+//     background-color: white;
+//     border-color:#a3bad9;
+//     color:#222;
+//     font:normal 11px tahoma, arial, helvetica, sans-serif;
+// }
+// .x-mask-loading div {
+//     background-color:#fbfbfb;
+//     background-image:url(../images/default/grid/loading.gif);
+// }
+// ```
 
-  // CONFIG MODAL STEPS
+// CONFIG MODAL STEPS
 
-  // 1) BUILD MODAL DOM
-  const modalDiv = document.createElement('div')
+// 1) BUILD MODAL DOM
+//   const modalDiv = document.createElement('div')
 
-  modalDiv.className = 'ext-el-mask-msg'
-  // color: black;
-  // font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  // font-size: 8pt;
-  // visibility: visible;
-  // margin: 0;
-  // z-index: 101;
-  // position: absolute;
-  // border: 1px solid;
-  // background: repeat-x 0 -16px;
-  // padding: 2px;
-  // border-color: #6593cf;
-  // background-color: #c3daf9;
-  // background-image: url(../images/default/box/tb-blue.gif);
-  // display: block;
-  // left: 955px;
-  // top: 726px;
-  modalDiv.style.color = 'black'
-  modalDiv.style.fontFamily = 'Helvetica Neue, Helvetica, Ariel, sans-serif'
-  modalDiv.style.visibility = 'visible'
-  modalDiv.style.margin = '0'
-  modalDiv.style.zIndex = '101'
-  modalDiv.style.position = 'absolute'
-  modalDiv.style.border = '1px solid'
-  modalDiv.style.background = 'repeat-x 0 -16px'
-  modalDiv.style.padding = '2px'
-  modalDiv.style.borderColor = '#6593cf'
-  modalDiv.style.backgroundColor = '#c3daf9'
-  modalDiv.style.backgroundImage = 'url(../images/default/box/tb-blue.gif)'
-  modalDiv.style.display = 'block'
-  modalDiv.style.left = '1014px'
-  modalDiv.style.top = '694px'
+//   modalDiv.className = 'ext-el-mask-msg'
+//   // color: black;
+//   // font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+//   // font-size: 8pt;
+//   // visibility: visible;
+//   // margin: 0;
+//   // z-index: 101;
+//   // position: absolute;
+//   // border: 1px solid;
+//   // background: repeat-x 0 -16px;
+//   // padding: 2px;
+//   // border-color: #6593cf;
+//   // background-color: #c3daf9;
+//   // background-image: url(../images/default/box/tb-blue.gif);
+//   // display: block;
+//   // left: 955px;
+//   // top: 726px;
+//   modalDiv.style.color = 'black'
+//   modalDiv.style.fontFamily = 'Helvetica Neue, Helvetica, Ariel, sans-serif'
+//   modalDiv.style.visibility = 'visible'
+//   modalDiv.style.margin = '0'
+//   modalDiv.style.zIndex = '101'
+//   modalDiv.style.position = 'absolute'
+//   modalDiv.style.border = '1px solid'
+//   modalDiv.style.background = 'repeat-x 0 -16px'
+//   modalDiv.style.padding = '2px'
+//   modalDiv.style.borderColor = '#6593cf'
+//   modalDiv.style.backgroundColor = '#c3daf9'
+//   modalDiv.style.backgroundImage = 'url(../images/default/box/tb-blue.gif)'
+//   modalDiv.style.display = 'block'
+//   modalDiv.style.left = '1014px'
+//   modalDiv.style.top = '694px'
 
-  const innerDiv = document.createElement('div')
-  modalDiv.style.visibility = 'visible'
-  modalDiv.style.margin = '0'
-  modalDiv.style.padding = '5px 10px 5px 10px'
-  modalDiv.style.border = '1px solid'
-  modalDiv.style.cursor = 'wait'
-  modalDiv.style.backgroundColor = 'white'
-  modalDiv.style.borderColor = '#a3bad9'
-  modalDiv.style.color = '#222'
-  modalDiv.style.font = 'normal 11px tahoma, arial, helvetica, sansCerif'
-  innerDiv.innerText = 'Loading...'
+//   const innerDiv = document.createElement('div')
+//   modalDiv.style.visibility = 'visible'
+//   modalDiv.style.margin = '0'
+//   modalDiv.style.padding = '5px 10px 5px 10px'
+//   modalDiv.style.border = '1px solid'
+//   modalDiv.style.cursor = 'wait'
+//   modalDiv.style.backgroundColor = 'white'
+//   modalDiv.style.borderColor = '#a3bad9'
+//   modalDiv.style.color = '#222'
+//   modalDiv.style.font = 'normal 11px tahoma, arial, helvetica, sansCerif'
+//   innerDiv.innerText = 'Loading...'
 
-  // document.body.onload = addElement
+//   // document.body.onload = addElement
 
-  // function addElement () {
-  //   // create a new div element
-  //   const newDiv = document.createElement("div");
+//   // function addElement () {
+//   //   // create a new div element
+//   //   const newDiv = document.createElement("div");
 
-  //   // and give it some content
-  //   const newContent = document.createTextNode("Hi there and greetings!");
+//   //   // and give it some content
+//   //   const newContent = document.createTextNode("Hi there and greetings!");
 
-  //   // add the text node to the newly created div
-  //   newDiv.appendChild(newContent);
+//   //   // add the text node to the newly created div
+//   //   newDiv.appendChild(newContent);
 
-  //   // add the newly created element and its content into the DOM
-  //   const currentDiv = document.getElementById("div1");
-  //   document.body.insertBefore(newDiv, currentDiv);
-  // }
+//   //   // add the newly created element and its content into the DOM
+//   //   const currentDiv = document.getElementById("div1");
+//   //   document.body.insertBefore(newDiv, currentDiv);
+//   // }
 
-  // 2) BM PAGE DOM SELECTOR
-  // modalHook = getElementById('temp')
-  modalHook = document.getElementsByClassName(
-    'x-window x-component x-window-maximized x-masked'
-  )[0] // new modalHook
+//   // 2) BM PAGE DOM SELECTOR
+//   // modalHook = getElementById('temp')
+//   modalHook = document.getElementsByClassName(
+//     'x-window x-component x-window-maximized x-masked'
+//   )[0] // new modalHook
 
-  modalHookTest = document.getElementsByClassName(
-    'x-window x-component x-window-maximized x-masked'
-  )
+//   modalHookTest = document.getElementsByClassName(
+//     'x-window x-component x-window-maximized x-masked'
+//   )
 
-  console.log(modalHookTest)
+//   console.log(modalHookTest)
 
-  // 3) APPEND MODAL
-  // modalHook.appendChild(modalDiv)
+//   // 3) APPEND MODAL
+//   // modalHook.appendChild(modalDiv)
 
-  // MB OUTSIDE displayConfigModal()
-  target = document.getElementById('editor')
-  console.log(target)
-  // CONFIG MODAL CLICK LISTENER
-  target.addEventListener('click', modalClickHAndler, { once: true })
-}
+//   // MB OUTSIDE displayConfigModal()
+//   target = document.getElementById('editor')
+//   console.log(target)
+//   // CONFIG MODAL CLICK LISTENER
+//   target.addEventListener('click', modalClickHAndler, { once: true })
+// }
 
-// TODO FINISH CLICK HANDLER
-function modalClickHAndler () {
-  // REMOVE MODAL
-  modalHook.removeChild()
-}
+// // TODO FINISH CLICK HANDLER
+// function modalClickHAndler () {
+//   // REMOVE MODAL
+//   modalHook.removeChild()
+// }
 
-let editorHook = document.getElementById('editor')
+// let editorHook = document.getElementById('editor')
 
-console.log(editorHook)
+// console.log(editorHook)
 
 // var walker = document.createTreeWalker(
 //   editorHook,
