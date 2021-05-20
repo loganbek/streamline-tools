@@ -14,7 +14,7 @@
     "open_in_tab": false
   },
   "background": {
-    "scripts": ["js/hot-reload.js", "js/background.js"],
+    "scripts": ["js/hot-reload.js", "background.js"],
     "persistant": false
   },
   "content_scripts": [
@@ -34,7 +34,7 @@
     "default_popup": "index.html",
     "default_title": "Open Popup"
   },
-  "permissions": ["tabs", "activeTab"],
+  "permissions": ["tabs", "activeTab", "background"],
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {

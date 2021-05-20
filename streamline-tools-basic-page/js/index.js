@@ -1,3 +1,4 @@
+'use strict'
 // Possibly Integrate w/ scripts.js
 // BML FILE
 let fileName = 'fileName.bml'
@@ -40,7 +41,9 @@ optionsButton.addEventListener('options', ev => {
 })
 
 window.addEventListener('DOMContentLoaded', () => {
-  backgroundPage = chrome.runtime.getBackgroundPage()
+  backgroundPage = chrome.runtime.getBackgroundPage().promise.then(value => {
+    console.log(value)
+  })
   queryForFile()
 })
 
