@@ -108,8 +108,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     textarea = document
       .getElementsByTagName('iframe')[1]
       .contentDocument.querySelector('#textarea')
-    // TODO config-modal fix on LOAD
-    displayConfigModal()
   } else if (request.greeting == 'loadTest') {
     // console.log(request.code)
     const loadTestEvent = new CustomEvent('loadTestCode', {
