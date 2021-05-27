@@ -3649,20 +3649,20 @@ TODO v1 and Beyond
 - [ ] maybe add recommend setup and usage
 - [ ] remove hot-reload from release version
 - [ ] logs access/generation from bm-framework?
-- [ ] first options to add? 
+- [ ] first options to add?
 - [ ] is it useful to display _BM_USER_ vars information in app, maybe login, email, company, host company, bm user full access?
 - [ ] effort to port over to other browsers
   - [ ] edge, firefox, safari, + others
   - [ ] What do most bigmachine admins use? Chrome + Edge?
 - [ ] testing? Will cost a lot up front but may improve dev speed/quality later
 - [ ] think about bringing in react + tailwind
-- [ ] MAybe can log this? : BigMachines Critical Framework Error: Timed out looking for _BM_HOST_COMPANY. Try putting the reference to bm-framework.js in the footer. If that still doesn't help you may need to manually set _BM_HOST_COMPANY in the header."
+- [ ] MAybe can log this? : BigMachines Critical Framework Error: Timed out looking for _BM_HOST_COMPANY. Try putting the reference to bm-framework.js in the footer. If that still doesn't help you may need to manually set_BM_HOST_COMPANY in the header."
 - [ ] found match?
 - [ ] "Problem initiating BigMachines JavaScript framework. File "+ i + " has not been configured.
 - [ ] bm framework search?
-- [ ]   me.show_log 
-- [ ]   https://stackoverflow.com/questions/7287061/log-in-to-my-web-from-a-chrome-extension
-- [ ]   
+- [ ]   me.show_log
+- [ ]   <https://stackoverflow.com/questions/7287061/log-in-to-my-web-from-a-chrome-extension>
+- [ ]
 
 ``` js
 var _BM_USER_LANGUAGE='en';
@@ -3678,99 +3678,90 @@ var _BM_HOST_COMPANY='devmcnichols';
 var _BM_STORED_PRECISION='4';var userDateInfo = { dateFormat : 'MM/dd/yyyy', userTimeZoneId : 'America/Los_Angeles', defaultTimeZoneId : 'America/New_York', dateTimeFormat : 'MM/dd/yyyy HH:mm', jQueryDateFormat : 'mm/dd/yy', defaultTimeZone : 300, userTimeZone : 480 };var _BM_IS_IN_GLOBAL_DEBUG_MODE=false;var _BM_USE_ALTA_HEADER=false;var _BM_APPLY_IOS_SCROLL_FIX=true;var _BM_USER_FULL_ACCESS=true;</script>
 ```
 
-
+```js
 <head>
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
     <title>Welcome to DevMcNichols</title>
-    
-
-    
-
-
-
-
-
 <script>
 if (navigator.appName=="Netscape"){
-	window.captureEvents(Event.KEYPRESS);
+ window.captureEvents(Event.KEYPRESS);
 }
 
 function SearchSNOnReturnKey(e) {
-	return bmSubmitOnUpdate(e, '/commerce/parts/serial_number_search_results.jsp', document.bmform_serial_number, bmSNValidateForm);
+ return bmSubmitOnUpdate(e, '/commerce/parts/serial_number_search_results.jsp', document.bmform_serial_number, bmSNValidateForm);
 }
 
 function SearchPNOnReturnKey(e) {
-	if (typeof document.forms['bmform_parts_attr_search'] != 'undefined'){
-		return bmSubmitOnUpdate(e, '/commerce/parts/part_search_results.jsp', document.bmform_parts_attr_search, bmPNValidateForm);
-	}
-	return bmSubmitOnUpdate(e, '/commerce/parts/part_search_results.jsp', document.bm_parts_attribute_search_form, bmPNValidateForm);
+ if (typeof document.forms['bmform_parts_attr_search'] != 'undefined'){
+  return bmSubmitOnUpdate(e, '/commerce/parts/part_search_results.jsp', document.bmform_parts_attr_search, bmPNValidateForm);
+ }
+ return bmSubmitOnUpdate(e, '/commerce/parts/part_search_results.jsp', document.bm_parts_attribute_search_form, bmPNValidateForm);
 }
 
 function SearchKeywordOnReturnKey(e) {
-	return bmSubmitOnUpdate(e, '/commerce/parts/part_search_results.jsp', document.bmform_parts_search_keyword, bmKeywordValidateForm);
+ return bmSubmitOnUpdate(e, '/commerce/parts/part_search_results.jsp', document.bmform_parts_search_keyword, bmKeywordValidateForm);
 }
 /**
  * Validation for Serial Number group.
  **/
 function bmSNValidateForm(form) {
-	setPriceBook(form);
+ setPriceBook(form);
 
-	validateSnCustomAttribute(form);
+ validateSnCustomAttribute(form);
 
-	// perform number/integer validation
-	validateSnAttrNumber(form);
-	
-	if (form.serial_number != undefined) { 
-		if( form.serial_number.value != "" ) {
-			return true;
-		}
-	}
-	// perform checking to make sure at least 1 form field is filled
-	if (validateSnAttrCheck(form)) {
-		return true;
-	}
-	bmErrorString += "Please fill in at least one search attribute.\n";
-	return false;
+ // perform number/integer validation
+ validateSnAttrNumber(form);
+ 
+ if (form.serial_number != undefined) { 
+  if( form.serial_number.value != "" ) {
+   return true;
+  }
+ }
+ // perform checking to make sure at least 1 form field is filled
+ if (validateSnAttrCheck(form)) {
+  return true;
+ }
+ bmErrorString += "Please fill in at least one search attribute.\n";
+ return false;
 }
 
 /**
  * Validation for Part Search by Keyword group.
  **/
 function bmKeywordValidateForm(form) {
-	setPriceBook(form);
+ setPriceBook(form);
 
-	if( form.companies.selectedIndex == -1 ) {
-		bmErrorString += "You must select at least one company to search on.\n";
-	}
-	if (form.q != undefined) {
-		if(form.q.value == "" ) {
-			bmErrorString += "The keyword input field cannot be blank.\n";
-		}
-	}
+ if( form.companies.selectedIndex == -1 ) {
+  bmErrorString += "You must select at least one company to search on.\n";
+ }
+ if (form.q != undefined) {
+  if(form.q.value == "" ) {
+   bmErrorString += "The keyword input field cannot be blank.\n";
+  }
+ }
 }
 
 /**
  * Validation for Part Number group.
  **/
 function bmPNValidateForm(form) {
-	setPriceBook(form);
+ setPriceBook(form);
  
- 	if (form.query != undefined) { 
-		if( form.query.value != "" ) {
-	    	selectEmptyMs(form);    
-			return true;
-		}
-	}
-	
-	// perform checking to make sure at least 1 form field is filled
-	if (validatePnAttrCheck(form)) {
-		return true;
-	}
-	
-	bmErrorString += "Please fill in at least one search attribute.\n";
-	selectEmptyMs(form);
+  if (form.query != undefined) { 
+  if( form.query.value != "" ) {
+      selectEmptyMs(form);    
+   return true;
+  }
+ }
+ 
+ // perform checking to make sure at least 1 form field is filled
+ if (validatePnAttrCheck(form)) {
+  return true;
+ }
+ 
+ bmErrorString += "Please fill in at least one search attribute.\n";
+ selectEmptyMs(form);
 }
 
 /*
@@ -3778,21 +3769,21 @@ function bmPNValidateForm(form) {
  *   Assumption: only 2 part multiselect attributes available: field16 and field17
  */
 function selectEmptyMs(aForm) {
-	var partSearchForm = aForm;
-	if (partSearchForm == null) {
-		return ;
-	}
-	
-	if (partSearchForm.elements != null && partSearchForm.elements.length > 0) {
-		for (var i=0; i < partSearchForm.elements.length; i++) { 
-			if (partSearchForm.elements[i].name == 'field16' || partSearchForm.elements[i].name == 'field17') { 
-				var multiSelect =  partSearchForm.elements[i]; 
-				if (multiSelect.value == "") { 
-					multiSelect.options[0].selected = true;
-				} 
-			}
-		}
-	} 
+ var partSearchForm = aForm;
+ if (partSearchForm == null) {
+  return ;
+ }
+ 
+ if (partSearchForm.elements != null && partSearchForm.elements.length > 0) {
+  for (var i=0; i < partSearchForm.elements.length; i++) { 
+   if (partSearchForm.elements[i].name == 'field16' || partSearchForm.elements[i].name == 'field17') { 
+    var multiSelect =  partSearchForm.elements[i]; 
+    if (multiSelect.value == "") { 
+     multiSelect.options[0].selected = true;
+    } 
+   }
+  }
+ } 
 } 
 
 /**
@@ -3802,30 +3793,30 @@ function selectEmptyMs(aForm) {
  *   Assumption: only 2 part multiselect attributes available: field16 and field17
  */
 function isFirstEmptyMsOptionSelected(fieldName, form) {
-	var partSearchForm = form;
-	if (partSearchForm == null) {
-		return false;
-	}
-	var result = false;
-	if (partSearchForm.elements != null && partSearchForm.elements.length > 0) {
-		for (var i=0; i < partSearchForm.elements.length; i++) { 
-			if (partSearchForm.elements[i].name == fieldName) { 
-				var multiSelect =  partSearchForm.elements[i]; 
-				if (multiSelect.value == "") { 
-					if (multiSelect.options[0].selected == true) {
-						result = true;
-					}  
-					for(var x=1; x < multiSelect.options.length; x++) {
-						if (multiSelect.options[x].selected == true) {
-							result = false;
-							break;
-						}
-					}
-				} 
-			}
-		}
-	} 
-	return result;
+ var partSearchForm = form;
+ if (partSearchForm == null) {
+  return false;
+ }
+ var result = false;
+ if (partSearchForm.elements != null && partSearchForm.elements.length > 0) {
+  for (var i=0; i < partSearchForm.elements.length; i++) { 
+   if (partSearchForm.elements[i].name == fieldName) { 
+    var multiSelect =  partSearchForm.elements[i]; 
+    if (multiSelect.value == "") { 
+     if (multiSelect.options[0].selected == true) {
+      result = true;
+     }  
+     for(var x=1; x < multiSelect.options.length; x++) {
+      if (multiSelect.options[x].selected == true) {
+       result = false;
+       break;
+      }
+     }
+    } 
+   }
+  }
+ } 
+ return result;
 } 
 </script>
 <link rel="stylesheet" type="text/css" href="/style/commerce/buyside/jquery.autocomplete.css">
@@ -3875,11 +3866,11 @@ var _BM_USER_GROUPS = userGroupsArray;
 <script type="text/javascript" src="/js/common/Overload.js"></script>
 <script type="text/javascript">Bm.Overload.isOverload = false;Bm.Overload.message = 'The&#32;environment&#32;is&#32;currently&#32;experiencing&#32;extremely&#32;high&#32;loads,&#32;otherwise&#32;known&#32;as&#32;&#34;Overcrowded&#32;Mode&#34;. The&#32;CPQ&#32;site&#32;will&#32;temporarily&#32;prevent&#32;users,&#32;integrations,&#32;and&#32;BML&#32;URL&#32;functions&#32;from&#32;creating&#32;new&#32;sessions. During&#32;this&#32;restriction&#32;period,&#32;the&#32;timeout&#32;of&#32;idle&#32;sessions&#32;is&#32;reduced&#32;to&#32;ensure&#32;active&#32;users&#32;can&#32;complete&#32;their&#32;Transactions. Administrators&#32;should&#32;delay&#32;scheduled&#32;events&#32;such&#32;as&#32;deployments,&#32;migrations&#32;or&#32;bulk&#32;operations&#32;to&#32;improve&#32;system&#32;performance.';</script>
 
-	<script type="text/javascript" src="/bmfsweb/devmcnichols/homepage/js/definition/11_1601726793890.js"></script>
+ <script type="text/javascript" src="/bmfsweb/devmcnichols/homepage/js/definition/11_1601726793890.js"></script>
 <script type="text/javascript" src="/bmfsweb/devmcnichols/homepage/js/definition/11_4764341_1601726793890.js"></script>
 <script type="text/javascript" src="/bmfsweb/devmcnichols/homepage/js/definition/11_4764319_1601726793890.js"></script>
 
-	<script type="text/javascript" src="/bmfsweb/devmcnichols/homepage/js/devmcnichols_Hp_Alt.js"></script>
+ <script type="text/javascript" src="/bmfsweb/devmcnichols/homepage/js/devmcnichols_Hp_Alt.js"></script>
 
 
 <script type="text/javascript">
@@ -3935,7 +3926,6 @@ function openPasswordHelper() {
 
 - [ ] extension clipboard + snippets?
 
-
 ``` js
 function copyToClipboard(pipelineLink) {
     const input = document.createElement("input");
@@ -3974,8 +3964,8 @@ function createNotification(pipelineName, pipelineLocation) {
 
 bm browser action?
 
-"clipboardRead"	Required if the extension uses document.execCommand('paste').	Read data you copy and paste
-"clipboardWrite"	Indicates the extension uses document.execCommand('copy') or document.execCommand('cut').	Modify data you copy and paste
+"clipboardRead" Required if the extension uses document.execCommand('paste'). Read data you copy and paste
+"clipboardWrite" Indicates the extension uses document.execCommand('copy') or document.execCommand('cut'). Modify data you copy and paste
 
 enabled
 boolean
@@ -4000,8 +3990,8 @@ open
 open(downloadId: number): void
 Open the downloaded file now if the DownloadItem is complete; otherwise returns an error through runtime.lastError. Requires the "downloads.open" permission in addition to the "downloads" permission. An onChanged event will fire when the item is opened for the first time.
 
-https://developer.chrome.com/docs/extensions/reference/downloads/
-https://developer.chrome.com/docs/extensions/reference/debugger/
+<https://developer.chrome.com/docs/extensions/reference/downloads/>
+<https://developer.chrome.com/docs/extensions/reference/debugger/>
 onInstalled
 onInstalled.addListener(listener: function)
 Fired when an app or extension has been installed.
@@ -4011,19 +4001,24 @@ listener
 function
 The listener parameter should be a function that looks like this:
 
+```js
 (info: ExtensionInfo) => {...}
-info
+infos
 ExtensionInfo
 get
 get(id: string): Promise<object>
 get(id: string, callback?: function): void
+```
+
 Promise
 Returns information about the installed extension, app, or theme that has the given ID.
 
-
+```js
 createAppShortcut
 createAppShortcut(id: string): Promise<object>
 createAppShortcut(id: string, callback?: function): void
+```
+
 Promise
 Display options to create shortcuts for an app. On Mac, only packaged app shortcuts can be created.
 
@@ -4031,7 +4026,6 @@ PARAMETERS
 id
 string
 This should be the id from an app item of management.ExtensionInfo.
-
 
 ExtensionInstallType
 How the extension was installed. One of
@@ -4050,7 +4044,7 @@ The type of this extension, app, or theme.
 ENUM
 "extension", "hosted_app", "packaged_app", "legacy_packaged_app", "theme", or "login_screen_extension"
 
-https://developer.chrome.com/docs/extensions/mv3/devguide/
+<https://developer.chrome.com/docs/extensions/mv3/devguide/>
 Events
 onButtonClicked
 onButtonClicked.addListener(listener: function)
@@ -4083,7 +4077,7 @@ Since Windows and Linux use different default line endings, Git may report a lar
 
 Typically adding or modifying a .gitattributes file in your repository is the most reliable way to solve this problem. Committing this file to source control will help others and allows you to vary behaviors by repository as appropriate. For example, adding the following to .gitattributes file to the root of your repository will force everything to be LF, except for Windows batch files that require CRLF:
 
-* text=auto eol=lf
+- text=auto eol=lf
 *.{cmd,[cC][mM][dD]} text eol=crlf
 *.{bat,[bB][aA][tT]} text eol=crlf
 Note that this works in Git v2.10+, so if you are running into problems, be sure you've got a recent Git client installed. You can add other file types in your repository that require CRLF to this same file.
@@ -4115,8 +4109,8 @@ Try to avoid these situations whenever possible.
 Known issues#
 There are a few extension problems that could be resolved with some added functionality for Workspace Extensions. The following table is a list of known issues under consideration:
 
-Problem	Description
-Cannot access attached devices from Workspace extension	Extensions that access locally attached devices will be unable to connect to them when running remotely. We are investigating the best approach to solve this problem.
+Problem Description
+Cannot access attached devices from Workspace extension Extensions that access locally attached devices will be unable to connect to them when running remotely. We are investigating the best approach to solve this problem.
 
 Using native Node.js modules#
 Native modules bundled with (or dynamically acquired for) a VS Code extension must be recompiled using Electron's electron-rebuild. However, VS Code Server runs a standard (non-Electron) version of Node.js, which can cause binaries to fail when used remotely.
@@ -4128,7 +4122,6 @@ Check to see if vscode.extensions.getExtension('your.extensionId').extensionKind
 You may also want to add support for non-x86_64 targets and Alpine Linux at the same time by following similar logic.
 You can find the "modules" version VS Code uses by going to Help > Developer Tools and typing process.versions.modules in the console. However, to make sure native modules work seamlessly in different Node.js environments, you may want to compile the native modules against all possible Node.js "modules" versions and platforms you want support (Electron Node.js, official Node.js Windows/Darwin/Linux, all versions). The node-tree-sitter module is a good example of a module that does this well.
 
-
 Communicating between extensions using commands#
 Some extensions return APIs as a part of their activation that are intended for use by other extensions (via vscode.extension.getExtension(extensionName).exports). While these will work if all extensions involved are on the same side (either all UI Extensions or all Workspace Extensions), these will not work between UI and Workspace Extensions.
 
@@ -4136,3 +4129,6 @@ Fortunately, VS Code automatically routes any executed commands to the correct e
 
 If you have a set of extensions that need to interact with one another, exposing functionality using a private command can help you avoid unexpected impacts. However, any objects you pass in as parameters will be "stringified" (JSON.stringify) before being transmitted, so the object cannot have cyclic references and will end up as a "plain old JavaScript object" on the other side.
 
+<https://stackoverflow.com/questions/7287061/log-in-to-my-web-from-a-chrome-extension>
+
+<https://www.aspsnippets.com/Articles/Open-Show-jQuery-UI-Dialog-Modal-Popup-on-Button-Click.aspx>
