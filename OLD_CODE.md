@@ -1,3 +1,4 @@
+# OLD CODE
   
   ```js
   // console.log(document.getElementsByTagName('iframe')[1])
@@ -74,73 +75,73 @@
 // CSS Matching
 // PageStateMatcher.css conditions must be compound selectors, meaning that you can't include combinators like whitespace or ">" in your selectors. This helps Chrome match the selectors more efficiently.
 
-// Compound Selectors (OK)	Complex Selectors (Not OK)
-// a	div p
-// iframe.special[src^='http']	p>span.highlight
-// ns|*	p + ol
-// #abcd:checked	p::first-line
+// Compound Selectors (OK) Complex Selectors (Not OK)
+// a div p
+// iframe.special[src^='http'] p>span.highlight
+// ns|* p + ol
+// #abcd:checked p::first-line
 // CSS conditions only match displayed elements: if an element that matches your selector is display:none or one of its parent elements is display:none, it doesn't cause the condition to match. Elements styled with visibility:hidden, positioned off-screen, or hidden by other elements can still make your condition match.
 
 // Matches if the conditions of the UrlFilter are fulfilled for the top-level URL of the page.
 
-// string	(optional) hostContains
+// string (optional) hostContains
 // Matches if the host name of the URL contains a specified string. To test whether a host name component has a prefix 'foo', use hostContains: '.foo'. This matches 'www.foobar.com' and 'foo.com', because an implicit dot is added at the beginning of the host name. Similarly, hostContains can be used to match against component suffix ('foo.') and to exactly match against components ('.foo.'). Suffix- and exact-matching for the last components need to be done separately using hostSuffix, because no implicit dot is added at the end of the host name.
 
-// string	(optional) hostEquals
+// string (optional) hostEquals
 // Matches if the host name of the URL is equal to a specified string.
 
-// string	(optional) hostPrefix
+// string (optional) hostPrefix
 // Matches if the host name of the URL starts with a specified string.
 
-// string	(optional) hostSuffix
+// string (optional) hostSuffix
 // Matches if the host name of the URL ends with a specified string.
 
-// string	(optional) pathContains
+// string (optional) pathContains
 // Matches if the path segment of the URL contains a specified string.
 
-// string	(optional) pathEquals
+// string (optional) pathEquals
 // Matches if the path segment of the URL is equal to a specified string.
 
-// string	(optional) pathPrefix
+// string (optional) pathPrefix
 // Matches if the path segment of the URL starts with a specified string.
 
-// string	(optional) pathSuffix
+// string (optional) pathSuffix
 // Matches if the path segment of the URL ends with a specified string.
 
-// string	(optional) queryContains
+// string (optional) queryContains
 // Matches if the query segment of the URL contains a specified string.
 
-// string	(optional) queryEquals
+// string (optional) queryEquals
 // Matches if the query segment of the URL is equal to a specified string.
 
-// string	(optional) queryPrefix
+// string (optional) queryPrefix
 // Matches if the query segment of the URL starts with a specified string.
 
-// string	(optional) querySuffix
+// string (optional) querySuffix
 // Matches if the query segment of the URL ends with a specified string.
 
-// string	(optional) urlContains
+// string (optional) urlContains
 // Matches if the URL (without fragment identifier) contains a specified string. Port numbers are stripped from the URL if they match the default port number.
 
-// string	(optional) urlEquals
+// string (optional) urlEquals
 // Matches if the URL (without fragment identifier) is equal to a specified string. Port numbers are stripped from the URL if they match the default port number.
 
-// string	(optional) urlMatches
+// string (optional) urlMatches
 // Matches if the URL (without fragment identifier) matches a specified regular expression. Port numbers are stripped from the URL if they match the default port number. The regular expressions use the RE2 syntax.
 
-// string	(optional) originAndPathMatches
+// string (optional) originAndPathMatches
 // Matches if the URL without query segment and fragment identifier matches a specified regular expression. Port numbers are stripped from the URL if they match the default port number. The regular expressions use the RE2 syntax.
 
-// string	(optional) urlPrefix
+// string (optional) urlPrefix
 // Matches if the URL (without fragment identifier) starts with a specified string. Port numbers are stripped from the URL if they match the default port number.
 
-// string	(optional) urlSuffix
+// string (optional) urlSuffix
 // Matches if the URL (without fragment identifier) ends with a specified string. Port numbers are stripped from the URL if they match the default port number.
 
-// array of string	(optional) schemes
+// array of string (optional) schemes
 // Matches if the scheme of the URL is equal to any of the schemes specified in the array.
 
-// array of integer or array of integer	(optional) ports
+// array of integer or array of integer (optional) ports
 // Matches if the port of the URL is contained in any of the specified port lists. For example [80, 443, [1000, 1200]] matches all requests on port 80, 443 and in the range 1000-1200.
 
 // chrome.browserAction.setBadgeText({ text: 'ON' });
