@@ -26,7 +26,9 @@ document.addEventListener('click', function (evnt) {
   console.log('bodyModalHook2')
   console.log(bodyModalHook2)
   // window.click()
+  if(bodyModalHook2[0].querySelector('.ext-el-mask')){
   bodyModalHook2[0].querySelector('.ext-el-mask').remove()
+  }
   bodyModalHook2[0].click()
 })
 
