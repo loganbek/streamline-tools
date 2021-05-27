@@ -1,3 +1,4 @@
+# STUB | SHELL LINT
 shopt -s expand_aliases
 
 # LINT ALIASES

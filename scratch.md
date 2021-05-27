@@ -4132,3 +4132,12 @@ If you have a set of extensions that need to interact with one another, exposing
 <https://stackoverflow.com/questions/7287061/log-in-to-my-web-from-a-chrome-extension>
 
 <https://www.aspsnippets.com/Articles/Open-Show-jQuery-UI-Dialog-Modal-Popup-on-Button-Click.aspx>
+
+<!-- ANCHOR - Used to indicate a section in your file
+TODO - An item that is awaiting completion
+FIXME - An item that requires a bugfix
+STUB - Used for generated default snippets
+NOTE - An important note for a specific code section
+REVIEW - An item that requires additional review
+SECTION - Used to define a region (See 'Hierarchical anchors')
+LINK - Used to link to a file that can be opened within the editor (See 'Link Anchors') -->

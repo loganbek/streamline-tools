@@ -1,3 +1,5 @@
+/* STUB | ADMIN CONFIG INJECTED */
+
 //GLOBAL CLICK LISTNER
 document.addEventListener('click', function (evnt) {
   console.log(evnt.target.id)

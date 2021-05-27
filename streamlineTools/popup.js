@@ -1,3 +1,5 @@
+/* STUB | POPUP SCRIPT */
+
 'use strict'
 
 // VARS

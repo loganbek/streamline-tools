@@ -1,4 +1,5 @@
-// PRICING + UTIL CONTENT SCRIPT
+/* STUB | PRICING + UTIL CONTENT SCRIPT */
+
 // let commentHeader = commentHeader || "";
 var commentHeader = '' 
 var code = ''

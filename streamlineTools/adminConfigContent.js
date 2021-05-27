@@ -1,3 +1,5 @@
+/* ANCHOR ADMIN CONFIG CONTENT */
+
 // let code
 // let testCode
 var code = ''

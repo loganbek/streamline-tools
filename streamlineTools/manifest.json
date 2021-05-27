@@ -47,19 +47,19 @@
       "suggested_key": {
         "default": "Ctrl+Shift+1"
       },
-      "description": "Opens Streamline Tools Popup"
+      "description": "Opens Streamline Tools Extension"
     },
     "unload_bml": {
       "suggested_key": {
         "default": "Ctrl+Right"
       },
-      "description": "Triggers UNLOAD BML function current Tab"
+      "description": "Triggers UNLOAD BML function for the current tab editor"
     },
     "load_bml": {
       "suggested_key": {
         "default": "Ctrl+Left"
       },
-      "description": "Triggers LOAD BML function on current Tab"
+      "description": "Triggers LOAD BML function for the current tab editor"
     }
   }
 }

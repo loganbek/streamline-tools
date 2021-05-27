@@ -1,3 +1,5 @@
+/* STUB | OPTIONS SCRIPT */
+
 'use strict'
 
 // Saves options to chrome.storage
