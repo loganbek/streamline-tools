@@ -120,12 +120,3 @@ function camelCase (str) {
     })
 }
 
-// VARNAME PAGE CODE
-// if (document.getElementsByName('varName').length > 0) {
-//     filename = document.getElementsByName('varName')[0].value;
-//     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
-//         console.log("you saved me!! comm rules");
-//         console.log(filename);
-//         // console.log(result.variable_name);
-//     });
-// }

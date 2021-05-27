@@ -1,4 +1,4 @@
-// ADMIN COMMERCE ACTIONS CONTENT
+// STUB | ADMIN COMMERCE ACTIONS CONTENT
 
 // VARS
 let code = ''
@@ -40,15 +40,7 @@ injectJs(chrome.extension.getURL('adminCommerceRulesInjected.js'))
 
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
-    // let filename2 = document.querySelectorAll("input[id^=x-auto]")[1].value;
-    // alert(filename2);
-    // let ruleName = document.querySelector("input[name='variable_name']").value;
-    // alert(ruleName);
-    // let ruleType = window.name;
-    // alert(ruleType);
-    // let filename = ruleName + "." + ruleType;
-    // alert(filename);
-    // let filename = "commerceRuleName";
+    
     console.log(sender.tab
       ? 'from a content script:' + sender.tab.url
       : 'from the extension')
@@ -58,13 +50,7 @@ chrome.runtime.onMessage.addListener(
     if (request.greeting == 'unload') {
       const unloadEvent = new CustomEvent('unloadCode', { detail: request.code })
       window.dispatchEvent(unloadEvent)
-      // chrome.storage.sync.get(['commerceFileName'], function(result) {
-      //     console.log('Value currently is ' + result.key);
-      //     if (result.key !== undefined) {
-      //         filename = result.key;
-      //     }
-      // });
-      // EDITOR PAGE CODE
+     
       if (document.getElementsByClassName('bottom-bar')[0].innerHTML.length > 0) {
         let fileString = document.getElementsByClassName('bottom-bar')[0].innerHTML
         fileStringArray = fileString.split('&gt;')
@@ -119,37 +105,6 @@ chrome.runtime.onMessage.addListener(
     }
   })
 
-// EDITOR PAGE CODE
-// if (document.getElementsByClassName("bottom-bar")[0].innerHTML.length > 0) {
-//     let fileString = document.getElementsByClassName("bottom-bar")[0].innerHTML;
-//     fileStringArray = fileString.split("&gt;");
-//     console.log(fileStringArray);
-//     console.log(fileStringArray[fileStringArray.length - 1]);
-//     fileString = camelCase(fileStringArray[fileStringArray.length - 1]);
-//     console.log(fileString);
-//     let lc = fileString[0].toLowerCase();
-//     console.log(fileString);
-//     fileString = lc + fileString.substring(1);
-//     console.log(fileString);
-
-//     // ACTION SPECIFIC LOGIC (BEFORE/AFTER + action_id)
-//     // LABEL.AFTER/BEFORE.ACTION_ID
-
-//     // BEFORE / AFTER
-//     let fullTitle = document.getElementsByTagName("title");
-//     console.log(fullTitle);
-
-//     if (document.title.includes("After")) {
-//         fileString += ".afterFormulas";
-//     } else if (document.title.includes("Before")) {
-//         fileString += ".beforeFormulas";
-//     }
-
-//     // ACTION_ID
-//     console.log(document.url);
-// };
-
-// TO CAMELCASE FUNCTION
 function camelCase (str) {
   return (str.slice(0, 1).toLowerCase() + str.slice(1))
     .replace(/([-_ ]){1,}/g, ' ')
@@ -159,12 +114,3 @@ function camelCase (str) {
     })
 }
 
-// VARNAME PAGE CODE
-// if (document.getElementsByName('varName').length > 0) {
-//     filename = document.getElementsByName('varName')[0].value;
-//     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
-//         console.log("you saved me!! comm rules");
-//         console.log(filename);
-//         // console.log(result.variable_name);
-//     });
-// }
