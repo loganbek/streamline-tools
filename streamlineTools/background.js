@@ -29,6 +29,7 @@ chrome.runtime.onInstalled.addListener(function () {
 // _execute_page_action - handled automatically
 // unload_bml + load_bml
 chrome.commands.onCommand.addListener(function (command) {
+  // const direction = command.split('-')[1];
   switch (command) {
     case 'unload_bml':
       unloadBML()
@@ -50,6 +51,13 @@ function unloadBML () {
   //   lastTabId = tabs[0].id
   //   chrome.pageAction.show(lastTabId)
   // })
+  chrome.commands.onCommand.addListener(function (command) {
+    const direction = command.split('-')[1];
+
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, { direction });
+  });
+});
 }
 
 function loadBML () {
