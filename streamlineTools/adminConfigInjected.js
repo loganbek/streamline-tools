@@ -57,17 +57,6 @@ window.addEventListener('unloadCode', function (evt) {
     return arrElements // return matching elements
   }
 
-  // console.log(document.getElementsByTagName('iframe')[1])
-  // console.log('CONTENT DOCUMENT')
-  // console.log(document.getElementsByTagName('iframe')[1].contentDocument)
-  // console.log(document.getElementsByTagName('iframe')[1].contentDocument.innerHTML)
-  // console.log(document.getElementsByTagName('iframe')[1].contentDocument.html)
-  // console.log(document.getElementsByTagName('iframe')[1].contentDocument.body.querySelector('#textarea').parent)
-  // console.log('CONTENT WINDOW')
-  // console.log(document.getElementsByTagName('iframe')[1].contentWindow.window)
-  // console.log(document.getElementsByTagName('iframe')[1].contentWindow.innerHTML)
-  // console.log(document.getElementsByTagName('iframe')[1].contentWindow.html)
-  // console.log(document.getElementsByTagName('iframe')[1].contentDocument.querySelector('#textarea').value)
   textAreaCode = document
     .getElementsByTagName('iframe')[1]
     .contentDocument.querySelector('#textarea').value
@@ -136,88 +125,9 @@ window.addEventListener(
 
     bodyModalHook[0].appendChild(loadingDiv)
 
-    // console.log(bodyModalHook[0].getElementsByTagName('iframe'))
-    // TEXT AREA ONCHANGE
-    // console.log('TEXTAREA ONCHANGE()')
-    // function customOnClickEvent (event) {
-    //   console.log(document.querySelector('.ext-el-mask'))
-    //   document.querySelector('.ext-el-mask').remove()
-    // }
+ 
 
-    // // *REMOVE MODAL CODE
-    // // window.addEventListener('click', customOnClickEvent)
-
-    // // *watch for element creation in the whole HTML document
-    // document.arrive('.test-elem', function () {
-    //   // *'this' refers to the newly created element
-    // })
-
-    // // *this will attach arrive event to all elements in the NodeList
-    // document
-    //   .getElementsByClassName('.container-1')
-    //   .arrive('.test-elem', function () {
-    //     // *'this' refers to the newly created element
-    //   })
-    // // *Make sure to remove listeners when they are no longer needed, it's better for performance:
-
-    // // *unbind all arrive events on document element
-    // $(document).unbindArrive()
-
-    // // *unbind all arrive events on document element which are watching for ".test-elem" selector
-    // $(document).unbindArrive('.test-elem')
-
-    // // *unbind only a specific callback
-    // $(document).unbindArrive(callbackFunc)
-
-    // // *unbind only a specific callback on ".test-elem" selector
-    // $(document).unbindArrive('.test-elem', callbackFunc)
-
-    // // *unbind all arrive events
-    // Arrive.unbindAllArrive()
-
-    // * MODAL DIV STYLE
-    // const modalDiv = document.createElement('div')
-    // modalDiv.className = 'ext-el-mask-msg'
-    // modalDiv.style.color = 'black'
-    // modalDiv.style.fontFamily = 'Helvetica Neue, Helvetica, Ariel, sans-serif'
-    // modalDiv.style.visibility = 'visible'
-    // modalDiv.style.margin = '0'
-    // modalDiv.style.zIndex = '101'
-    // modalDiv.style.position = 'absolute'
-    // modalDiv.style.border = '1px solid'
-    // modalDiv.style.background = 'repeat-x 0 -16px'
-    // modalDiv.style.padding = '2px'
-    // modalDiv.style.borderColor = '#6593cf'
-    // modalDiv.style.backgroundColor = '#c3daf9'
-    // modalDiv.style.backgroundImage = 'url(../images/default/box/tb-blue.gif)'
-    // modalDiv.style.display = 'block'
-    // modalDiv.style.left = '1014px'
-    // modalDiv.style.top = '694px'
-
-    // * INNER DIV STYLE
-    // const innerDiv = document.createElement('div')
-    // modalDiv.style.visibility = 'visible'
-    // modalDiv.style.margin = '0'
-    // modalDiv.style.padding = '5px 10px 5px 10px'
-    // modalDiv.style.border = '1px solid'
-    // modalDiv.style.cursor = 'wait'
-    // modalDiv.style.backgroundColor = 'white'
-    // modalDiv.style.borderColor = '#a3bad9'
-    // modalDiv.style.color = '#222'
-    // modalDiv.style.font = 'normal 11px tahoma, arial, helvetica, sansCerif'
-    // innerDiv.innerText = 'Loading...'
-
-    // textarea.onchange()
-
-    // console.log('x-toolbar-right')
     divXWindow = document.getElementsByClassName('x-toolbar-right')
-    // console.log(divXWindow)
-
-    // for (const item of divXWindow) {
-    //   // console.log(item)
-    //   item.click()
-    // }
-
     const elem = document
       .getElementsByTagName('iframe')[1]
       .contentDocument.querySelector('#textarea')

@@ -1,5 +1,6 @@
 /* STUB | INJECTED COMMERCE + UTIL LIB SCRIPT
-/* FIXME */
+/* FIXME CHECK USAGE */
+/* REVIEW + LINK */
 function jsonPath (obj, expr, arg) {
   var P = {
     resultType: arg && arg.resultType || 'VALUE',
