@@ -1,8 +1,8 @@
 // PRICING + UTIL CONTENT SCRIPT
 // let commentHeader = commentHeader || "";
-let commentHeader = ''
-let code = ''
-let testCode = ''
+var commentHeader = '' 
+var code = ''
+var testCode = ''
 
 // Listen for the PassToBackground event
 window.addEventListener('PassToBackground', function (evt) {
@@ -42,17 +42,17 @@ chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
     let filename = document.getElementById('variableName').value
     filename = newFunction(filename)
-    console.log(sender.tab
+   /* console.log(sender.tab
       ? 'from a content script:' + sender.tab.url
       : 'from the extension')
     console.log(request.greeting
       ? 'greeting: ' + request.greeting
-      : 'nogreeting')
+      : 'nogreeting') */
     if (request.greeting == 'unload') {
       const unloadEvent = new CustomEvent('unloadCode', { detail: request.code })
       window.dispatchEvent(unloadEvent)
-      console.log('CH')
-      console.log(contentHeader)
+      // console.log('CH')
+      // console.log(contentHeader)
       if (!code.startsWith(commentHeader)) {
         code = commentHeader + '\n\n' + code
       }
@@ -71,7 +71,7 @@ chrome.runtime.onMessage.addListener(
       const loadEvent = new CustomEvent('loadCode', { detail: request.code })
       window.dispatchEvent(loadEvent)
     } else if (request.greeting == 'loadTest') {
-      console.log(request.code)
+      // console.log(request.code)
       const loadTestEvent = new CustomEvent('loadTestCode', { detail: request.code })
       window.dispatchEvent(loadTestEvent)
     } else if (request.greeting == 'filename') {
