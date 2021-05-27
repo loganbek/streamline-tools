@@ -1,3 +1,5 @@
+/* STUB | HOT RELOAD */
+
 const filesInDirectory = dir =>
   new Promise(resolve =>
     dir.createReader().readEntries(entries =>
