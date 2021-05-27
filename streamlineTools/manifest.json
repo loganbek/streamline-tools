@@ -1,6 +1,6 @@
 {
   "name": "Streamline Tools",
-  "version": "0.8.0",
+  "version": "1.0.0",
   "description": "Streamline Tools helps streamline your Oracle CPQ Cloud BML development, administration, maintenance, and support tasks.",
   "permissions": [
     "downloads",
@@ -51,15 +51,15 @@
     },
     "unload_bml": {
       "suggested_key": {
-        "default": "Ctrl+Shift+2"
+        "default": "Ctrl+Right"
       },
-      "description": "Triggers Unload BML on current Tab"
+      "description": "Triggers UNLOAD BML function current Tab"
     },
     "load_bml": {
       "suggested_key": {
-        "default": "Ctrl+Shift+6"
+        "default": "Ctrl+Left"
       },
-      "description": "Triggers LOAD BML on current Tab"
+      "description": "Triggers LOAD BML function on current Tab"
     }
   }
 }
