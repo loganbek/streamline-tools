@@ -4156,3 +4156,28 @@ streamine tools colors for config modal
 
   new jet interface knockout js modal is cleaner
   file dialogue photo
+
+```css
+}.ext-el-mask {
+    background-color: #ccc;
+}
+.ext-el-mask-msg {
+    border-color:#6593cf;
+    background-color:#c3daf9;
+    background-image:url(../images/default/box/tb-blue.gif);
+}
+.ext-el-mask-msg div {
+    background-color: white;
+    border-color:#a3bad9;
+    color:#222;
+    font:normal 11px tahoma, arial, helvetica, sans-serif;
+}
+.x-mask-loading div {
+    background-color:#fbfbfb;
+    background-image:url(../images/default/grid/loading.gif);
+}
+```
+
+```html
+<div class="x-shadow" style="display: block; z-index: 1013; left: -4px; top: 3px; width: 1272px; height: 1016px;"><div class="xst"><div class="xstl"></div><div class="xstc" style="width: 1260px;"></div><div class="xstr"></div></div><div class="xsc" style="height: 1004px;"><div class="xsml"></div><div class="xsmc" style="width: 1260px;"></div><div class="xsmr"></div></div><div class="xsb"><div class="xsbl"></div><div class="xsbc" style="width: 1260px;"></div><div class="xsbr"></div></div></div>
+```
