@@ -4141,3 +4141,18 @@ NOTE - An important note for a specific code section
 REVIEW - An item that requires additional review
 SECTION - Used to define a region (See 'Hierarchical anchors')
 LINK - Used to link to a file that can be opened within the editor (See 'Link Anchors') -->
+
+
+# NOTE meeting 5/27
+light gray for config modal
+translucent background - reference 
+
+Loading... Click me!
+  C   click to edit
+
+streamine tools colors for config modal
+
+  more opaque
+
+  new jet interface knockout js modal is cleaner
+  file dialogue photo

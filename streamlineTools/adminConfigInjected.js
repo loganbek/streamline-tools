@@ -2,8 +2,8 @@
 
 //GLOBAL CLICK LISTNER
 document.addEventListener('click', function (evnt) {
-  console.log(evnt.target.id)
-  console.log('global click')
+  //console.log(evnt.target.id)
+  //console.log('global click')
   // Arrive.unbindAllArrive()
 
   // console.log('removing loading dialog...')
@@ -13,23 +13,25 @@ document.addEventListener('click', function (evnt) {
   // bodyModalHook[0].src += ''
 
   let bodyElement2 = document.getElementsByTagName('body')
-  console.log('bodyElement2')
-  console.log(bodyElement2)
+  //console.log('bodyElement2')
+  //console.log(bodyElement2)
 
-  console.log(bodyElement2[0])
+  //console.log(bodyElement2[0])
   // bodyModalHook = bodyElement[0].getElementsByClassName(
   //   '.x-window x-component x-window-maximized x-masked'
   // )
   bodyModalHook2 = bodyElement2[0].getElementsByClassName(
     ' x-window x-component  x-window-maximized'
   )
-  console.log('bodyModalHook2')
-  console.log(bodyModalHook2)
+  //console.log('bodyModalHook2')
+  //console.log(bodyModalHook2)
   // window.click()
   if(bodyModalHook2[0].querySelector('.ext-el-mask')){
   bodyModalHook2[0].querySelector('.ext-el-mask').remove()
   }
   bodyModalHook2[0].click()
+
+  Arrive.unbindAllArrive()
 })
 
 window.addEventListener('load', function () {
@@ -101,7 +103,7 @@ window.addEventListener(
     bodyModalHook = bodyElement[0].getElementsByClassName(
       ' x-window x-component  x-window-maximized'
     )
-    console.log(bodyModalHook)
+    // console.log(bodyModalHook)
 
     // loadingDiv = htmlToElement(
     //   '<div class="ext-el-mask" style="display: block;"><div class="ext-el-mask-msg" style="display: block; left: 955px; top: 726px;"><div>Loading...</div></div></div>'
@@ -109,7 +111,7 @@ window.addEventListener(
 
     document.arrive('.ext-el-mask', function () {
       // console.log('removing loading dialog...')
-      console.log('inside arrive')
+      // console.log('inside arrive')
       // bodyModalHook[0].querySelector('.ext-el-mask').remove()
       // console.log('dialog removed')
       //frame reload
@@ -141,6 +143,10 @@ window.addEventListener(
         // console.log('found validate button')
         validateButton = item
       }
+    }
+
+    focusMethod = function getFocus() {
+      document.getElementById("bodyModalHook[0]").focus();
     }
     // validateButton.click();
   },
