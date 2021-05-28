@@ -51,13 +51,13 @@
     },
     "unload_bml": {
       "suggested_key": {
-        "default": "Ctrl+Right"
+        "default": "Ctrl+Shift+Right"
       },
       "description": "Triggers UNLOAD BML function for the current tab editor"
     },
     "load_bml": {
       "suggested_key": {
-        "default": "Ctrl+Left"
+        "default": "Ctrl+Shift+Left"
       },
       "description": "Triggers LOAD BML function for the current tab editor"
     }

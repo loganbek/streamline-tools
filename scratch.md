@@ -4181,3 +4181,35 @@ streamine tools colors for config modal
 ```html
 <div class="x-shadow" style="display: block; z-index: 1013; left: -4px; top: 3px; width: 1272px; height: 1016px;"><div class="xst"><div class="xstl"></div><div class="xstc" style="width: 1260px;"></div><div class="xstr"></div></div><div class="xsc" style="height: 1004px;"><div class="xsml"></div><div class="xsmc" style="width: 1260px;"></div><div class="xsmr"></div></div><div class="xsb"><div class="xsbl"></div><div class="xsbc" style="width: 1260px;"></div><div class="xsbr"></div></div></div>
 ```
+
+<https://github.com/orbitbot/chrome-extensions-examples/blob/master/pageaction_by_content/background.js>
+maybe use for psm dom matching
+
+update
+chrome.tabs.update(integer tabId, object updateProperties, function callback)
+Modifies the properties of a tab. Properties that are not specified in updateProperties are not modified. Note: This function can be used without requesting the 'tabs' permission in the manifest.
+
+Parameters
+tabId ( optional integer )
+Defaults to the selected tab of the current window.
+updateProperties ( object )
+url ( optional string )
+A URL to navigate the tab to.
+active ( optional boolean )
+Whether the tab should be active.
+highlighted ( optional boolean )
+Adds or removes the tab from the current selection.
+pinned ( optional boolean )
+Whether the tab should be pinned.
+openerTabId ( optional integer )
+The ID of the tab that opened this tab. If specified, the opener tab must be in the same window as this tab.
+callback ( optional function )
+Callback
+If you specify the callback parameter, it should specify a function that looks like this:
+
+function(Tab tab) {...};
+tab ( optional Tab )
+Details about the updated tab, or null if the 'tabs' permission has not been requested.
+
+add changelog + release drafter
+

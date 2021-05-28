@@ -94,6 +94,5 @@ function newFunction (filename) {
 
     chrome.runtime.onMessage.addListener(function (message) {
         const { direction } = message;
-        direction === 'load_bml' ? leftArrow.click() : rightArrow.click();
+        direction === 'unload_bml' ? leftArrow.click() : rightArrow.click();
     });
-}

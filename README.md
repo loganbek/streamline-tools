@@ -61,8 +61,9 @@ Coming soon...
 <!-- (TBD) -->
 
 - `Cmd/Ctrl + Shift + 1` - Show Streamline Tools UI
-- `TBD` - Unload BML
-- `TBD` - Load BML
+
+<!-- - `Ctrl+Left` - Unload BML
+- `Ctrl+Right` - Load BML -->
 
 ### Custom
 

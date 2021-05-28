@@ -49,17 +49,25 @@ function unloadBML () {
   //   lastTabId = tabs[0].id
   //   chrome.pageAction.show(lastTabId)
   // })
-  chrome.commands.onCommand.addListener(function (command) {
-    const direction = command.split('-')[1];
+  // chrome.extension.sendRequest("show_page_action");
+  // chrome.extension.onRequest.addListener(function (request, sender) {
+  //   if (request == "show_page_action") {
+      chrome.pageAction.show(tabs[0].id);
+      // chrome.tabs.update(integer tabId, object updateProperties, function callback)
+  //   }
+  // });
+}  
 
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, { direction });
-  });
-});
-}
+// chrome.commands.onCommand.addListener(function (command) {
+//     const direction = command.split('-')[1];
+
+//     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+//       chrome.tabs.sendMessage(tabs[0].id, { "Right" });
+//   });
+// });
 
 function loadBML () {
-  alert('LOAD COMMAND')
+  // alert('LOAD COMMAND')
   // loadButton.click()
 }
 
