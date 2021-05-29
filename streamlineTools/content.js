@@ -94,6 +94,24 @@ function newFunction (filename) {
 
     chrome.runtime.onMessage.addListener(function (message) {
         const { direction } = message;
-        direction === 'load_bml' ? leftArrow.click() : rightArrow.click();
+        direction === 'load_bml' ? pageAction.show(): console.log("unlload")
     });
-}
+
+    // document.onkeydown = function(e) {
+    //     switch(e.which) {
+    //         case 37: // left
+    //         break;
+    
+    //         case 38: // up
+    //         break;
+    
+    //         case 39: // right
+    //         break;
+    
+    //         case 40: // down
+    //         break;
+    
+    //         default: return; // exit this handler for other keys
+    //     }
+    //     e.preventDefault(); // prevent the default action (scroll / move caret)
+    // };
