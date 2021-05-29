@@ -1,6 +1,8 @@
 /* STUB | ADMIN CONFIG INJECTED */
 
 //GLOBAL CLICK LISTNER
+
+var toggleModalPass = false
 document.addEventListener('click', function (evnt) {
   //console.log(evnt.target.id)
   //console.log('global click')
@@ -26,10 +28,49 @@ document.addEventListener('click', function (evnt) {
   //console.log('bodyModalHook2')
   //console.log(bodyModalHook2)
   // window.click()
-  if(bodyModalHook2[0].querySelector('.ext-el-mask')){
-  bodyModalHook2[0].querySelector('.ext-el-mask').remove()
+  // if(bodyModalHook2[0] && bodyModalHook2[0].querySelectorAll('.ext-el-mask') != null){
+  // bodyModalHook2[0].querySelectorAll('.ext-el-mask').forEach(e => e.parentNode.removeChild(e));
+  // }
+  // if(bodyModalHook2[0] && bodyModalHook2[0].querySelector('.ext-el-mask')){
+  // // bodyModalHook2[0].querySelector('.ext-el-mask').remove()
+  // }
+  // bodyModalHook2[0].click()
+  // setTimeout(() => {
+  //   console.log(bodyModalHook2[0].querySelectorAll('.ext-el-mask'))
+
+  //   // closeLoadingDialog()
+  // }, 5000);
+  // bodyModalHook2[0].click()
+  // document.body.click
+  buttonCollection = document.getElementsByClassName('x-btn-text ')
+  console.log(buttonCollection)
+  // // oop through collection and check for "Validate"
+  for (const item of buttonCollection) {
+    if (item.innerText === 'Validate') {
+      console.log('found validate button')
+      validateButton = item
+      validateButton.id = "valid"
+      console.log(item)
+    }
   }
-  bodyModalHook2[0].click()
+
+  validateButton.click
+
+  if (toggleModalPass) {
+    if (
+      bodyModalHook2[0] &&
+      bodyModalHook2[0].querySelectorAll('.ext-el-mask') != null
+    ) {
+      bodyModalHook2[0]
+        .querySelectorAll('.ext-el-mask')
+        .forEach(e => e.parentNode.removeChild(e))
+      document.body.click
+    }
+    toggleModalPass = false
+  } else {
+    toggleModalPass = true
+    document.body.click
+  }
 
   Arrive.unbindAllArrive()
 })
@@ -88,15 +129,15 @@ window.addEventListener(
       .getElementsByTagName('iframe')[1]
       .contentDocument.querySelector('#textarea')
     textarea.value = code
-    console.log('loadCode listener')
+    // console.log('loadCode listener')
     modalHookTest = document.getElementsByClassName(
       'x-window x-component x-window-maximized x-masked'
     )
 
-    console.log(modalHookTest)
+    // console.log(modalHookTest)
 
     let bodyElement = document.getElementsByTagName('body')
-    console.log(bodyElement[0])
+    // console.log(bodyElement[0])
     // bodyModalHook = bodyElement[0].getElementsByClassName(
     //   '.x-window x-component x-window-maximized x-masked'
     // )
@@ -123,34 +164,62 @@ window.addEventListener(
     // let editorHook = document.getElementById('editor')
 
     // console.log(editorHook)
-    loadingDiv = htmlToElement(
+    var loadingDiv = htmlToElement(
       '<div class="ext-el-mask" style="display: block;"><div class="ext-el-mask-msg" style="display: block; left: 655px; top: 626px;"><div>Loading...</div></div></div>'
     )
+    // var loadingDiv = htmlToElement('<div class="ext-el-mask"  style="display: block; left: 655px; top: 626px;"><img src="/img/spinner_progress.gif" /></div>')
+    // var _loadingImage = "/img/spinner_progress.gif";closeLoadingDialog();
 
-    bodyModalHook[0].appendChild(loadingDiv)
+    if (bodyModalHook[0]) {
+      bodyModalHook[0].appendChild(loadingDiv)
+      // maybe check sibling and remove
+      let current = document.querySelector('.ext-el-mask')
+      if(current.previousElementSibling.className === "ext-el-mask"){
+      let prevSiblings = current.previousElementSibling
+      console.log(prevSiblings)
+      console.log("sib")
+      }
+      document.body.click
+    }
 
- 
+    // if(toggleModalPass){
+    //   document.body.click
+    // }
+
+    // if(bodyModalHook[0]){
+    // // bodyModalHook[0].click()
+    // // }
+    // setTimeout(() => {
+    //   console.log(bodyModalHook[0].querySelectorAll('.ext-el-mask'))
+
+    //   // document.body.click()
+    // }, 500);
+    // if(bodyModalHook[0]){
+    // // bodyModalHook[0].click()
+    // }
+
+    // document.body.click()
 
     divXWindow = document.getElementsByClassName('x-toolbar-right')
     const elem = document
       .getElementsByTagName('iframe')[1]
       .contentDocument.querySelector('#textarea')
     // console.log(elem)
-    buttonCollection = document.getElementsByClassName('x-btn-text ')
-    // oop through collection and check for "Validate"
-    for (const item of buttonCollection) {
-      if (item.innerText === 'Validate') {
-        // console.log('found validate button')
-        validateButton = item
-      }
-    }
+    // buttonCollection = document.getElementsByClassName('x-btn-text ')
+    // // oop through collection and check for "Validate"
+    // for (const item of buttonCollection) {
+    //   if (item.innerText === 'Validate') {
+    //     // console.log('found validate button')
+    //     validateButton = item
+    //   }
+    // }
 
-    focusMethod = function getFocus() {
-      document.getElementById("bodyModalHook[0]").focus();
-    }
+    // focusMethod = function getFocus() {
+    //   document.getElementById("bodyModalHook[0]").focus();
+    // }
     // validateButton.click();
   },
-  false
+  false //
 )
 
 function main () {
