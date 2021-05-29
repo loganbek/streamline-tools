@@ -54,9 +54,11 @@ chrome.runtime.onMessage.addListener(
       window.dispatchEvent(unloadEvent)
       // console.log('CH')
       // console.log(contentHeader)
+      if(code !== null){
       if (!code.startsWith(commentHeader)) {
         code = commentHeader + '\n\n' + code
       }
+    }
       sendResponse({
         filename: filename,
         code: code
@@ -92,7 +94,9 @@ function newFunction (filename) {
 // COMMAN API LISTENER TODO: FINISH
 // PARTIAL PIPING CMDS
 
+    //FIXME
     chrome.runtime.onMessage.addListener(function (message) {
-        const { direction } = message;
-        direction === 'unload_bml' ? leftArrow.click() : rightArrow.click();
-    });
+        const { direction } = message
+        direction === 'unload_bml' ? "unload_bml received - content.js" : "load_bml received - content.js"
+        // console.log(direction)
+    })
