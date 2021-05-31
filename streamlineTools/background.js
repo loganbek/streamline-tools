@@ -13,7 +13,7 @@ chrome.runtime.onInstalled.addListener(function () {
           new chrome.declarativeContent.PageStateMatcher({
             pageUrl: {
               urlMatches:
-                'bigmachines.com/admin/configuration/rules/edit_rule.jsp|bigmachines.com/spring/'
+                'bigmachines.com/admin/configuration/rules/edit_rule.jsp|bigmachines.com/spring/|bigmachines.com/admin/commerce/rules/|bigmachines.com/admin/commerce/actions/edit_action.jsp'
             }
           })
         ],
@@ -52,11 +52,11 @@ function unloadBML () {
   // chrome.extension.sendRequest("show_page_action");
   // chrome.extension.onRequest.addListener(function (request, sender) {
   //   if (request == "show_page_action") {
-      chrome.pageAction.show(tabs[0].id);
-      // chrome.tabs.update(integer tabId, object updateProperties, function callback)
+  chrome.pageAction.show(tabs[0].id)
+  // chrome.tabs.update(integer tabId, object updateProperties, function callback)
   //   }
   // });
-}  
+}
 
 // chrome.commands.onCommand.addListener(function (command) {
 //     const direction = command.split('-')[1];
@@ -70,4 +70,3 @@ function loadBML () {
   // alert('LOAD COMMAND')
   // loadButton.click()
 }
-

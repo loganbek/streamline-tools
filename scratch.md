@@ -3982,7 +3982,7 @@ showDefaultFolder
 showDefaultFolder(): void
 Show the default Downloads folder in a file manager.
 
-setShelfEnabled
+setShelfEnabled [x]
 setShelfEnabled(enabled: boolean): void
 Enable or disable the gray shelf at the bottom of every window associated with the current browser profile. The shelf will be disabled as long as at least one extension has disabled it. Enabling the shelf while at least one other extension has disabled it will return an error through runtime.lastError. Requires the "downloads.shelf" permission in addition to the "downloads" permission.
 
@@ -4142,10 +4142,10 @@ REVIEW - An item that requires additional review
 SECTION - Used to define a region (See 'Hierarchical anchors')
 LINK - Used to link to a file that can be opened within the editor (See 'Link Anchors') -->
 
+### NOTE meeting 5/27
 
-# NOTE meeting 5/27
 light gray for config modal
-translucent background - reference 
+translucent background - reference
 
 Loading... Click me!
   C   click to edit
@@ -4213,3 +4213,292 @@ Details about the updated tab, or null if the 'tabs' permission has not been req
 
 add changelog + release drafter
 
+```html
+<div class='loading-indicator'>
+```
+
+<https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=6112520&doc_id=4653823>
+
+Auto command click advanced modify before and after "Define Function"
+
+```js
+let beforeFormulasButton = document.querySelector("#general > table > tbody > tr:nth-child(20) > td.form-input > table > tbody > tr:nth-child(2) > td:nth-child(2) > table");
+
+if (beforeFormulasButton.getAttribute("onclick").includes("editPreModify")){
+  console.log("correctButton")
+}
+
+```
+
+editPreModify - Before
+
+```html
+<table onclick="javascript:editPreModifyFunction();bmCancelBubble(event)" onmouseover="bmButtonMouseOver(this,'javascript:editPreModifyFunction()')" onmousedown="bmButtonMouseDown(this,'javascript:editPreModifyFunction()')" onmouseup="bmButtonMouseUp(this,'javascript:editPreModifyFunction()')" onmouseout="bmButtonMouseOut(this,'javascript:editPreModifyFunction()')" class="plain-button" cellspacing="0" cellpadding="0" role="button" aria-label="Define Function" style="cursor: pointer;">
+ <tbody><tr>
+  <td class="button-left"><img class="button-left" src="/img/button10.gif"></td>
+  <td class="button-middle" nowrap="true"><div style="margin:0px 0px 1px 0px;"><a class="button-text" name="define_function" id="define_function" href="#">Define Function</a></div></td>  <td class="button-right"><img class="button-right" src="/img/button10.gif"></td>
+ </tr>
+</tbody></table>
+```
+
+editModify - After
+
+```js
+let afterForumulasButton = document.querySelector('#general > table > tbody > tr:nth-child(22) > td.form-input > table > tbody > tr:nth-child(2) > td:nth-child(2) > table')
+
+if(afterFormulasButton.getAttribute("onclick").includes("editModify")){
+  console.log("correctButton")
+}
+```
+
+```html
+<table onclick="javascript:editModifyFunction();bmCancelBubble(event)" onmouseover="bmButtonMouseOver(this,'javascript:editModifyFunction()')" onmousedown="bmButtonMouseDown(this,'javascript:editModifyFunction()')" onmouseup="bmButtonMouseUp(this,'javascript:editModifyFunction()')" onmouseout="bmButtonMouseOut(this,'javascript:editModifyFunction()')" class="plain-button" cellspacing="0" cellpadding="0" role="button" aria-label="Define Function" style="cursor: pointer;">
+ <tbody><tr>
+  <td class="button-left"><img class="button-left" src="/img/button10.gif"></td>
+  <td class="button-middle" nowrap="true"><div style="margin: 0px 0px 1px;"><a class="button-text" name="define_function" id="define_function" href="#">Define Function</a></div></td>  <td class="button-right"><img class="button-right" src="/img/button10.gif"></td>
+ </tr>
+</tbody></table>
+```
+
+```js
+document.getElementAttribute('onclick').value;
+
+element.addEventListener('click', function (e) {
+  console.log(e.shiftKey); // shift
+  console.log(e.ctrlKey); // ctrl
+  console.log(e.altKey); // alt
+  console.log(e.metaKey); // command/windows (meta) key
+});
+// ="javascript:editModifyFunction();bmCancelBubble(event)"
+```
+
+```js
+
+//cmd + ctrl
+document.addEventListener('click', function (e) {
+  if (e.ctrlKey || e.metaKey) {
+    console.log('With ctrl or cmd or windows, do something...');
+    return;
+  }
+});
+
+```js
+event.initMouseEvent(type, canBubble, cancelable, view, 
+                     detail, screenX, screenY, clientX, clientY, 
+                     ctrlKey, altKey, shiftKey, metaKey, 
+                     button, relatedTarget);
+
+
+        function simulateClick() {
+    // create a new mouse event
+    var evt = document.createEvent("MouseEvents");
+
+    // initialize all the parameters of the event
+    evt.initMouseEvent("click", true, true, window,
+      0, 0, 0, 0, 0,
+      false, false, false, false,  // ctrl, alt, shift, meta
+      0, null);
+
+    var cb = document.getElementById("checkbox");
+
+    // actually fire the event on the `cb` element
+    var canceled = !cb.dispatchEvent(evt);
+
+    // if the event was cancelled...
+    if(canceled) {
+        //...
+    }
+}
+  ```
+
+```js
+
+(Modified version to make it work without prototype.js)
+
+function simulate(element, eventName)
+{
+    var options = extend(defaultOptions, arguments[2] || {});
+    var oEvent, eventType = null;
+
+    for (var name in eventMatchers)
+    {
+        if (eventMatchers[name].test(eventName)) { eventType = name; break; }
+    }
+
+    if (!eventType)
+        throw new SyntaxError('Only HTMLEvents and MouseEvents interfaces are supported');
+
+    if (document.createEvent)
+    {
+        oEvent = document.createEvent(eventType);
+        if (eventType == 'HTMLEvents')
+        {
+            oEvent.initEvent(eventName, options.bubbles, options.cancelable);
+        }
+        else
+        {
+            oEvent.initMouseEvent(eventName, options.bubbles, options.cancelable, document.defaultView,
+            options.button, options.pointerX, options.pointerY, options.pointerX, options.pointerY,
+            options.ctrlKey, options.altKey, options.shiftKey, options.metaKey, options.button, element);
+        }
+        element.dispatchEvent(oEvent);
+    }
+    else
+    {
+        options.clientX = options.pointerX;
+        options.clientY = options.pointerY;
+        var evt = document.createEventObject();
+        oEvent = extend(evt, options);
+        element.fireEvent('on' + eventName, oEvent);
+    }
+    return element;
+}
+
+function extend(destination, source) {
+    for (var property in source)
+      destination[property] = source[property];
+    return destination;
+}
+
+var eventMatchers = {
+    'HTMLEvents': /^(?:load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll)$/,
+    'MouseEvents': /^(?:click|dblclick|mouse(?:down|up|over|move|out))$/
+}
+var defaultOptions = {
+    pointerX: 0,
+    pointerY: 0,
+    button: 0,
+    ctrlKey: false,
+    altKey: false,
+    shiftKey: false,
+    metaKey: false,
+    bubbles: true,
+    cancelable: true
+}
+```
+
+```js
+simulate(document.getElementById("btn"), "click");
+<!-- Note that as a third parameter you can pass in 'options'. The options you don't specify are taken from the defaultOptions (see bottom of the script). So if you for example want to specify mouse coordinates you can do something like: -->
+
+simulate(document.getElementById("btn"), "click", { pointerX: 123, pointerY: 321 })
+```
+
+```js
+function simulatedClick(target, options) {
+
+  var event = target.ownerDocument.createEvent('MouseEvents'),
+      options = options || {},
+      opts = { // These are the default values, set up for un-modified left clicks
+        type: 'click',
+        canBubble: true,
+        cancelable: true,
+        view: target.ownerDocument.defaultView,
+        detail: 1,
+        screenX: 0, //The coordinates within the entire page
+        screenY: 0,
+        clientX: 0, //The coordinates within the viewport
+        clientY: 0,
+        ctrlKey: false,
+        altKey: false,
+        shiftKey: false,
+        metaKey: false, //I *think* 'meta' is 'Cmd/Apple' on Mac, and 'Windows key' on Win. Not sure, though!
+        button: 0, //0 = left, 1 = middle, 2 = right
+        relatedTarget: null,
+      };
+
+  //Merge the options with the defaults
+  for (var key in options) {
+    if (options.hasOwnProperty(key)) {
+      opts[key] = options[key];
+    }
+  }
+
+  //Pass in the options
+  event.initMouseEvent(
+      opts.type,
+      opts.canBubble,
+      opts.cancelable,
+      opts.view,
+      opts.detail,
+      opts.screenX,
+      opts.screenY,
+      opts.clientX,
+      opts.clientY,
+      opts.ctrlKey,
+      opts.altKey,
+      opts.shiftKey,
+      opts.metaKey,
+      opts.button,
+      opts.relatedTarget
+  );
+
+  //Fire the event
+  target.dispatchEvent(event);
+}
+
+function simulatedClick(target, options) {
+
+  var event = target.ownerDocument.createEvent('MouseEvents'),
+      options = options || {},
+      opts = { // These are the default values, set up for un-modified left clicks
+        type: 'click',
+        canBubble: true,
+        cancelable: true,
+        view: target.ownerDocument.defaultView,
+        detail: 1,
+        screenX: 0, //The coordinates within the entire page
+        screenY: 0,
+        clientX: 0, //The coordinates within the viewport
+        clientY: 0,
+        ctrlKey: false,
+        altKey: false,
+        shiftKey: false,
+        metaKey: false, //I *think* 'meta' is 'Cmd/Apple' on Mac, and 'Windows key' on Win. Not sure, though!
+        button: 0, //0 = left, 1 = middle, 2 = right
+        relatedTarget: null,
+      };
+
+  //Merge the options with the defaults
+  for (var key in options) {
+    if (options.hasOwnProperty(key)) {
+      opts[key] = options[key];
+    }
+  }
+
+  //Pass in the options
+  event.initMouseEvent(
+      opts.type,
+      opts.canBubble,
+      opts.cancelable,
+      opts.view,
+      opts.detail,
+      opts.screenX,
+      opts.screenY,
+      opts.clientX,
+      opts.clientY,
+      opts.ctrlKey,
+      opts.altKey,
+      opts.shiftKey,
+      opts.metaKey,
+      opts.button,
+      opts.relatedTarget
+  );
+
+  //Fire the event
+  target.dispatchEvent(event);
+}
+
+Puppetry or Jest for testing
+starting w/ puppetry
+https://github.com/puppeteer/puppeteer/tree/6522e4f524bdbc1f1b9d040772acf862517ed507/utils/browser
+
+make setShelfEnabled in option.html
+add download success to UI
+  - what should this look like?
+
+
+check on CH
+
+work on alt command click - comm advanced
+not needed for config

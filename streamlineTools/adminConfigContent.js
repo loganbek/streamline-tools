@@ -66,15 +66,16 @@ window.addEventListener(
 
 function injectJs (link) {
   const scr = document.createElement('script')
+  scr.id = 'configInject'
   scr.type = 'text/javascript'
   scr.src = link
+  scr.class = 'configInject'
   document.getElementsByTagName('head')[0].appendChild(scr)
 }
 
 injectJs(chrome.extension.getURL('adminConfigInjected.js'))
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
- 
   if (request.greeting == 'unload') {
     const unloadEvent = new CustomEvent('unloadCode', { detail: request.code })
     window.dispatchEvent(unloadEvent)
@@ -92,6 +93,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       testCode: testCode
     })
   } else if (request.greeting == 'load') {
+    if (document.getElementById('configInject')) {
+      document.getElementById('configInject').remove()
+    }
     const loadEvent = new CustomEvent('loadCode', { detail: request.code })
     window.dispatchEvent(loadEvent)
     const elem = document
@@ -132,4 +136,3 @@ function getElementsStartsWithId (id) {
 if (document.querySelector('#x-auto-3-input')) {
   filename = document.querySelector('#x-auto-3-input').value
 }
-

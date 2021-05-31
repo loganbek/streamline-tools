@@ -81,6 +81,10 @@ function executeContentScript (contentScriptName) {
   })
 }
 
+// TODO: add to options
+// DISSABLE DOWNLOADS SHELF
+chrome.downloads.setShelfEnabled(true)
+
 // TODO: EXTERNAL LOG LINKING
 logsButton.disabled = true
 
@@ -197,10 +201,10 @@ optionsButton.onclick = function (params) {
 }
 
 // * Footer Information from manifest
-let manifest = chrome.runtime.getManifest()
+const manifest = chrome.runtime.getManifest()
 
 document.addEventListener('DOMContentLoaded', event => {
-  let attachedFooter = (document.getElementById(
+  const attachedFooter = (document.getElementById(
     'footer'
   ).innerHTML = getFooter())
 })

@@ -4,8 +4,6 @@ window.addEventListener('load', function () {
   main()
 })
 
-
-
 window.addEventListener('unloadCode', function (evt) {
   // #textarea
   iframes = document.getElementsByTagName('iframe')
@@ -27,7 +25,6 @@ window.addEventListener('unloadCode', function (evt) {
 window.addEventListener('loadCode', function (evt) {
   code = evt.detail
 
-
   textarea = document.getElementsByTagName('iframe')[0].contentDocument.querySelector('#textarea')
   textarea.value = code
 
@@ -37,12 +34,9 @@ window.addEventListener('loadCode', function (evt) {
 function main () {
   const textArea = document.getElementById('textarea')
 
-
   code = document.querySelector('#textarea').value
   alert(code)
 
   const event = new CustomEvent('PassToBackground', { code })
   window.dispatchEvent(event)
-
-
 }

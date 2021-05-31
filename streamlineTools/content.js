@@ -1,9 +1,9 @@
 /* STUB | PRICING + UTIL CONTENT SCRIPT */
 
 // let commentHeader = commentHeader || "";
-var commentHeader = '' 
-var code = ''
-var testCode = ''
+let commentHeader = ''
+let code = ''
+let testCode = ''
 
 // Listen for the PassToBackground event
 window.addEventListener('PassToBackground', function (evt) {
@@ -43,7 +43,7 @@ chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
     let filename = document.getElementById('variableName').value
     filename = newFunction(filename)
-   /* console.log(sender.tab
+    /* console.log(sender.tab
       ? 'from a content script:' + sender.tab.url
       : 'from the extension')
     console.log(request.greeting
@@ -54,11 +54,11 @@ chrome.runtime.onMessage.addListener(
       window.dispatchEvent(unloadEvent)
       // console.log('CH')
       // console.log(contentHeader)
-      if(code !== null){
-      if (!code.startsWith(commentHeader)) {
-        code = commentHeader + '\n\n' + code
+      if (code !== null) {
+        if (!code.startsWith(commentHeader)) {
+          code = commentHeader + '\n\n' + code
+        }
       }
-    }
       sendResponse({
         filename: filename,
         code: code
@@ -94,9 +94,9 @@ function newFunction (filename) {
 // COMMAN API LISTENER TODO: FINISH
 // PARTIAL PIPING CMDS
 
-    //FIXME
-    chrome.runtime.onMessage.addListener(function (message) {
-        const { direction } = message
-        direction === 'unload_bml' ? "unload_bml received - content.js" : "load_bml received - content.js"
-        // console.log(direction)
-    })
+// FIXME
+chrome.runtime.onMessage.addListener(function (message) {
+  const { direction } = message
+  direction === 'unload_bml' ? 'unload_bml received - content.js' : 'load_bml received - content.js'
+  // console.log(direction)
+})

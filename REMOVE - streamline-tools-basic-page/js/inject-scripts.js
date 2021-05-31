@@ -1,10 +1,10 @@
 function parseEssentialDetails () {
-  let main = {}
+  const main = {}
   main.bmlFileVars = JSON.parse(JSON.stringify(window.bmlFileVars)) || null
   return main
 }
 
 setInterval(() => {
-  let essential = parseEssentialDetails()
+  const essential = parseEssentialDetails()
   window.postMessage({ type: 'FROM_PAGE', essential })
 }, 500)

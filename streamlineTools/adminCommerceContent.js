@@ -1,13 +1,11 @@
 /* STUB | ADMIN COMMERCE CONTENT */
 
-
 let code = ''
 let testCode = ''
 // var filename = filename || "";
 let filename
 let filenameAfter
 let filenameBefore
-
 
 window.addEventListener('PassToBackground', function (evt) {
   code = evt.detail
@@ -42,11 +40,8 @@ function injectJs (link) {
 
 injectJs(chrome.extension.getURL('adminCommerceInjected.js'))
 
-
-
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
-  
     console.log(sender.tab
       ? 'from a content script:' + sender.tab.url
       : 'from the extension')
@@ -56,14 +51,14 @@ chrome.runtime.onMessage.addListener(
     if (request.greeting == 'unload') {
       const unloadEvent = new CustomEvent('unloadCode', { detail: request.code })
       window.dispatchEvent(unloadEvent)
-      
+
       chrome.storage.sync.get(['commerceFileName'], function (result) {
         console.log('Value currently is ' + result.key)
         if (result.key !== undefined) {
           filename = result.key
         }
       })
-    
+
       sendResponse({
         filename: filename,
         code: code
@@ -93,12 +88,12 @@ chrome.runtime.onMessage.addListener(
       })
     }
 
-  //  :nth-child(3) > td.form-input > input[type=hidden]
-  console.log(filename)
-
-  // console.log(commActionFileName);
-  chrome.storage.sync.set({ commerceFileName: filename }, function () {
-    console.log('you saved me!! comm action')
+    //  :nth-child(3) > td.form-input > input[type=hidden]
     console.log(filename)
+
+    // console.log(commActionFileName);
+    chrome.storage.sync.set({ commerceFileName: filename }, function () {
+      console.log('you saved me!! comm action')
+      console.log(filename)
+    })
   })
-})

@@ -4,6 +4,7 @@
   "description": "Streamline Tools helps streamline your Oracle CPQ Cloud BML development, administration, maintenance, and support tasks.",
   "permissions": [
     "downloads",
+    "downloads.shelf",
     "activeTab",
     "declarativeContent",
     "storage",
@@ -16,7 +17,7 @@
   },
   "background": {
     "scripts": ["background.js", "hot-reload.js"],
-    "persistent": false
+    "persistent": true
   },
   "web_accessible_resources": [
     "jsonpath-1.0.2.js",

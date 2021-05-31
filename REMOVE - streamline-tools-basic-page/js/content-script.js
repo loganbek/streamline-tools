@@ -1,7 +1,7 @@
 // TODO: Compare to previous version of Streamline Tools
 function injectScript (filePath, tag) {
-  let node = document.getElementsByTagName(tag)[0]
-  let script = document.createElement('script')
+  const node = document.getElementsByTagName(tag)[0]
+  const script = document.createElement('script')
   script.setAttribute('type', 'text/javascript')
   script.setAttribute('src', filePath)
   node.appendChild(script)

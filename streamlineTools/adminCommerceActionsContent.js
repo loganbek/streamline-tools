@@ -40,7 +40,6 @@ injectJs(chrome.extension.getURL('adminCommerceRulesInjected.js'))
 
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
-    
     console.log(sender.tab
       ? 'from a content script:' + sender.tab.url
       : 'from the extension')
@@ -50,7 +49,7 @@ chrome.runtime.onMessage.addListener(
     if (request.greeting == 'unload') {
       const unloadEvent = new CustomEvent('unloadCode', { detail: request.code })
       window.dispatchEvent(unloadEvent)
-     
+
       if (document.getElementsByClassName('bottom-bar')[0].innerHTML.length > 0) {
         let fileString = document.getElementsByClassName('bottom-bar')[0].innerHTML
         fileStringArray = fileString.split('&gt;')
@@ -113,4 +112,3 @@ function camelCase (str) {
       return cur + acc[0].toUpperCase() + acc.substring(1)
     })
 }
-

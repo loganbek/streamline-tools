@@ -49,8 +49,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function queryForFile () {
   chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-    let currentTabId = tabs[0].currentTabId
-    let currentFile = backgroundPage.bmlFileVars[currentTabId]
+    const currentTabId = tabs[0].currentTabId
+    const currentFile = backgroundPage.bmlFileVars[currentTabId]
     fileName = currentFile.fileName
     fileContent = currentFile.fileContent
   })

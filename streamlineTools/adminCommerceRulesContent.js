@@ -119,4 +119,3 @@ function camelCase (str) {
       return cur + acc[0].toUpperCase() + acc.substring(1)
     })
 }
-
