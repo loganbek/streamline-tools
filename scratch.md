@@ -4491,6 +4491,7 @@ function simulatedClick(target, options) {
 
 Puppetry or Jest for testing
 starting w/ puppetry
+https://github.com/puppeteer/puppeteer/tree/6522e4f524bdbc1f1b9d040772acf862517ed507/utils/browser
 
 make setShelfEnabled in option.html
 add download success to UI

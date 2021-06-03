@@ -70,10 +70,23 @@ function injectJs (link) {
   scr.type = 'text/javascript'
   scr.src = link
   scr.class = 'configInject'
+  
   document.getElementsByTagName('head')[0].appendChild(scr)
 }
 
-injectJs(chrome.extension.getURL('adminConfigInjected.js'))
+console.log("script present")
+console.log(document.getElementById("adminConfig"))
+
+
+if(!document.getElementById("adminConfig")){
+  injectJs(chrome.extension.getURL('adminConfigInjected.js'))
+}
+
+// function isLoadedScript(lib) {
+//   return document.querySelectorAll('[src="' + lib + '"]').length > 0
+// }
+
+// var len = $('script[src="<external JS>"]').length;
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.greeting == 'unload') {
@@ -120,18 +133,18 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   // return true;
 })
 
-function getElementsStartsWithId (id) {
-  const children = document.body.getElementsByTagName('*')
-  const elements = []
-  let child
-  for (let i = 0, length = children.length; i < length; i++) {
-    child = children[i]
-    if (child.id.substr(0, id.length) == id) {
-      elements.push(child)
-    }
-  }
-  return elements
-}
+// function getElementsStartsWithId (id) {
+//   const children = document.body.getElementsByTagName('*')
+//   const elements = []
+//   let child
+//   for (let i = 0, length = children.length; i < length; i++) {
+//     child = children[i]
+//     if (child.id.substr(0, id.length) == id) {
+//       elements.push(child)
+//     }
+//   }
+//   return elements
+// }
 
 if (document.querySelector('#x-auto-3-input')) {
   filename = document.querySelector('#x-auto-3-input').value
