@@ -1,0 +1,16 @@
+{
+  "initialized": false,
+  "commitedAt": 0,
+  "hasRemote": true,
+  "remoteRepository": "https://github.comloganbek/streamline-tools-puppetry-testing",
+  "configUsername": "",
+  "configEmail": "",
+  "credentialsAuthMethod": "accessToken",
+  "credentialsAccessToken": "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",
+  "credentialsProvider": "",
+  "credentialsUsername": "loganbek",
+  "credentialsPassword": "",
+  "puppetry": "3.2.5",
+  "savedAt": 1622374879,
+  "modified": false
+}

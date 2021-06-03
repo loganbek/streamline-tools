@@ -1,0 +1,24 @@
+{
+  "title": null,
+  "timeout": 50000,
+  "snippets": true,
+  "description": null,
+  "savedAt": null,
+  "loadedAt": 1622374885,
+  "modified": true,
+  "filename": ".snippets.json",
+  "targets": {},
+  "groups": {
+    "snippets": {
+      "editing": false,
+      "id": "snippets",
+      "key": "snippets",
+      "title": "Snippets",
+      "tests": {},
+      "disabled": false,
+      "expanded": false,
+      "adding": false
+    }
+  },
+  "puppetry": "3.2.5"
+}

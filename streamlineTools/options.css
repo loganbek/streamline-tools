@@ -1,3 +1,42 @@
+/* STUB | OPTIONS CSS */
+
 #logo {
-    width: 300px;
+  width: 180px;
+}
+
+button {
+  min-width: 170px;
+  margin: 7px;
+  padding: 1px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #000;
+  background-color: #ffffff;
+  border: 1px;
+  border-radius: 7px;
+  box-shadow: 0 5px #999;
+  font-size: 16px;
+  min-height: 24px;
+  vertical-align: middle;
+}
+
+button:active {
+  box-shadow: 0 1px #666;
+  transform: translateY(4px);
+}
+
+body {
+  max-width: 200px;
+  height: 259px;
+  background-color: #eeeeee;
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 92%;
+  vertical-align: middle;
 }

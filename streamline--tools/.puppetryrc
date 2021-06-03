@@ -1,0 +1,42 @@
+{
+  "name": "Streamline Tools",
+  "appPanels": {
+    "suite": {
+      "panes": [
+        "groups"
+      ]
+    },
+    "settings": {
+      "panes": []
+    }
+  },
+  "groups": {
+    "snippets": {
+      "key": "snippets",
+      "value": true,
+      "tests": {}
+    },
+    "1sa5kpb47wii": {
+      "key": "1sa5kpb47wii",
+      "value": true,
+      "tests": {
+        "1sa5kpb48h6g": {
+          "key": "1sa5kpb48h6g",
+          "value": true
+        }
+      }
+    }
+  },
+  "savedAt": 1622375849,
+  "modified": false,
+  "lastOpenSuite": "streamline-tools.json",
+  "variables": {},
+  "targets": {},
+  "environments": [
+    "test",
+    "stage",
+    "production"
+  ],
+  "projectDirectory": "/Users/loganbek/wrkdir/streamline-tools/streamline--tools",
+  "puppetry": "3.2.5"
+}
