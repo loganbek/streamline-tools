@@ -179,21 +179,30 @@ document.addEventListener('click', function (evnt) {
   // if (toggleModalPass) {
   if (
     bodyModalHook2[0] &&
-      bodyModalHook2[0].querySelectorAll('.ext-el-mask') != null
+      bodyModalHook2[0].querySelectorAll('.ext-el-mask-msg') != null
   ) {
     bodyModalHook2[0]
-      .querySelectorAll('.ext-el-mask')
+      .querySelectorAll('.ext-el-mask-msg')
       .forEach(e => e.parentNode.removeChild(e))
   }
 
-  // if (
-  //   bodyModalHook2[0] &&
-  //     bodyModalHook2[0].querySelectorAll('.ext-el-mask3') != null
-  // ) {
-  //   bodyModalHook2[0]
-  //     .querySelectorAll('.ext-el-mask3')
-  //     .forEach(e => e.parentNode.removeChild(e))
-  // }
+  if (
+    bodyModalHook2[0] &&
+      bodyModalHook2[0].querySelectorAll('#configModalLoadMsg') != null
+  ) {
+    bodyModalHook2[0]
+      .querySelectorAll('#configModalLoadMsg')
+      .forEach(e => e.parentNode.removeChild(e))
+  }
+
+  if (
+  bodyModalHook2[0] &&
+  bodyModalHook2[0].querySelectorAll('#configModalLoad') != null
+) {
+bodyModalHook2[0]
+  .querySelectorAll('#configModalLoad')
+  .forEach(e => e.parentNode.removeChild(e))
+}
       // simulatedClick(document.querySelector('#x-auto-122 > div.x-window-bwrap'))
   
   //   toggleModalPass = false

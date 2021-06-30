@@ -77,9 +77,21 @@ function injectJs (link) {
 console.log("script present")
 console.log(document.getElementById("adminConfig"))
 
+var injectedPresent = false
 
-if(!document.getElementById("adminConfig")){
+if(!injectedPresent){
   injectJs(chrome.extension.getURL('adminConfigInjected.js'))
+}
+
+var injectedScripts = document.getElementsByClassName("configInject")
+
+for (let i = 0; i < injectedScripts.length; i++){
+  if (injectedScripts[i].src === "adminConfigInjected.js"){
+    injectedPresent = true
+    break
+  }else{
+    injectedPresent = false
+  }
 }
 
 // function isLoadedScript(lib) {
