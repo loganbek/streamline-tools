@@ -1,5 +1,6 @@
 /* STUB | ADMIN CONFIG INJECTED */
 
+const loadingDiv = htmlToElement('<div class="ext-el-mask-msg" style="display: block; left: 530px; top: 531px;"><div>Loading...</div></div>')
 function simulatedClick(target, options) {
 
   var event = target.ownerDocument.createEvent('MouseEvents'),
@@ -90,7 +91,7 @@ document.addEventListener('click', function (evnt) {
   //   '.x-window x-component x-window-maximized x-masked'
   // )
   bodyModalHook2 = bodyElement2[0].getElementsByClassName(
-    ' x-window x-component  x-window-maximized'
+    ' x-modal x-component'
   )
   // console.log('bodyModalHook2')
   // console.log(bodyModalHook2)
@@ -100,8 +101,9 @@ document.addEventListener('click', function (evnt) {
   }
   if (bodyModalHook2[0] && bodyModalHook2[0].querySelector('.ext-el-mask')) {
     bodyModalHook2[0].querySelector('.ext-el-mask').remove()
-    
   }
+
+  
   // if (bodyModalHook2[0] && bodyModalHook2[0].querySelector('.ext-el-mask-msg')) {
   //   bodyModalHook2[0].querySelectorAll('.ext-el-mask-msg').forEach(e => e.parentNode.removeChild(e))
     // bodyModalHook2[0].querySelector("#x-auto-122 > div.ext-el-mask-msg").outerHTML=" "
@@ -177,32 +179,32 @@ document.addEventListener('click', function (evnt) {
   // console.log(validateButton)
 
   // if (toggleModalPass) {
-  if (
-    bodyModalHook2[0] &&
-      bodyModalHook2[0].querySelectorAll('.ext-el-mask-msg') != null
-  ) {
-    bodyModalHook2[0]
-      .querySelectorAll('.ext-el-mask-msg')
-      .forEach(e => e.parentNode.removeChild(e))
-  }
+//   if (
+//     bodyModalHook2[0] &&
+//       bodyModalHook2[0].querySelectorAll('.ext-el-mask-msg') != null
+//   ) {
+//     bodyModalHook2[0]
+//       .querySelectorAll('.ext-el-mask-msg')
+//       .forEach(e => e.parentNode.removeChild(e))
+//   }
 
-  if (
-    bodyModalHook2[0] &&
-      bodyModalHook2[0].querySelectorAll('#configModalLoadMsg') != null
-  ) {
-    bodyModalHook2[0]
-      .querySelectorAll('#configModalLoadMsg')
-      .forEach(e => e.parentNode.removeChild(e))
-  }
+//   if (
+//     bodyModalHook2[0] &&
+//       bodyModalHook2[0].querySelectorAll('#configModalLoadMsg') != null
+//   ) {
+//     bodyModalHook2[0]
+//       .querySelectorAll('#configModalLoadMsg')
+//       .forEach(e => e.parentNode.removeChild(e))
+//   }
 
-  if (
-  bodyModalHook2[0] &&
-  bodyModalHook2[0].querySelectorAll('#configModalLoad') != null
-) {
-bodyModalHook2[0]
-  .querySelectorAll('#configModalLoad')
-  .forEach(e => e.parentNode.removeChild(e))
-}
+//   if (
+//   bodyModalHook2[0] &&
+//   bodyModalHook2[0].querySelectorAll('#configModalLoad') != null
+// ) {
+// bodyModalHook2[0]
+//   .querySelectorAll('#configModalLoad')
+//   .forEach(e => e.parentNode.removeChild(e))
+// }
       // simulatedClick(document.querySelector('#x-auto-122 > div.x-window-bwrap'))
   
   //   toggleModalPass = false
@@ -348,11 +350,12 @@ window.addEventListener(
     // bodyModalHook = bodyElement[0].getElementsByClassName(
     //   '.x-window x-component x-window-maximized x-masked'
     // )
-    bodyModalHook = bodyElement[0].getElementsByClassName(
-      ' x-window x-component  x-window-maximized'
-    )
+    // bodyModalHookOld = bodyElement[0].getElementsByClassName(
+    //   ' x-window x-component  x-window-maximized'
+    // )
     // console.log(bodyModalHook)
-
+    // bodyModalHook = document.getElementsByClassName('x-resizable-handle-southwest')
+    bodyModalHook = bodyElement[0].getElementsByClassName('x-window x-component  x-window-maximized')
     // loadingDiv = htmlToElement(
     //   '<div class="ext-el-mask" style="display: block;"><div class="ext-el-mask-msg" style="display: block; left: 955px; top: 726px;"><div>Loading...</div></div></div>'
     // )
@@ -404,9 +407,9 @@ window.addEventListener(
     // let editorHook = document.getElementById('editor')
 
     // console.log(editorHook)
-    const loadingDiv = htmlToElement(
-      '<div id ="configModalLoad" class="ext-el-mask" style="display: block;"><div id ="configModalLoadMsg" class="ext-el-mask-msg" style="display: block; left: 655px; top: 626px;"><div>Loading...</div></div></div>'
-    )
+    // const loadingDivOLD = htmlToElement(
+    //   '<div id ="configModalLoad" class="ext-el-mask" style="display: block;"><div id ="configModalLoadMsg" class="ext-el-mask-msg" style="display: block; left: 655px; top: 626px;"><div>Loading...</div></div></div>'
+    // )
 
     // const loadingDiv2 = htmlToElement('<div class="ext-el-mask-msg" style="display: block; left: 409px; top: 505px;"><div>Loading...</div></div>')
     // var loadingDiv = htmlToElement('<div class="ext-el-mask"  style="display: block; left: 655px; top: 626px;"><img src="/img/spinner_progress.gif" /></div>')
@@ -423,8 +426,9 @@ window.addEventListener(
     //   }
 
 
-      if(bodyModalHook[0] && (!bodyModalHook[0].innerHTML.includes('<div class="ext-el-mask" id ="configModalLoad" style="display: block;"><div class="ext-el-mask-msg" id="configModalLoadMsg" style="display: block; left: 655px; top: 626px;"><div>Loading...</div></div></div>'))){
-        bodyModalHook[0].appendChild(loadingDiv)
+      if(bodyModalHook[0] && (!bodyModalHook[0].innerHTML.includes(loadingDiv))) {
+        // bodyModalHook[0].parentElement.insertBefore(loadingDiv, bodyModalHook[0])
+        insertAfter(loadingDiv, bodyModalHook[0])
       }
 //       const currModal = document.querySelector('.ext-el-mask-msg')
 
@@ -602,6 +606,14 @@ function htmlToElements (html) {
   const template = document.createElement('template')
   template.innerHTML = html
   return template.content.childNodes
+}
+/**
+ * 
+ * @param {Node} newNode 
+ * @param {Node} existingNode 
+ */
+function insertAfter(newNode, existingNode) {
+  existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
 }
 
 /*
