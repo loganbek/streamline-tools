@@ -12,4 +12,4 @@ currently being supported with security updates.
 
 ## Reporting a Vulnerability
 
-Please report any vulnerabilities to loganbek@gmail.com
+Please report any vulnerabilities to logan@bekconsulting.info
