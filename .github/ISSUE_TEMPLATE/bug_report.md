@@ -31,7 +31,12 @@ If applicable, add screenshots to help explain your problem.
 - Version [e.g. 22]
 
 **Error Logs**
-You can find useful error logs to attach in the bigmachines console, chrome extension popup.js console, and extension error pages.
+You can find useful error logs to attach in the
+
+1) browser console
+2) bigmachines console(s)
+3) chrome extension popup.js console
+4) extension error pages
 
 **Additional context**
 Add any other context about the problem here.
