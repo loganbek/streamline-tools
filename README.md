@@ -62,8 +62,8 @@ Coming soon...
 
 - `Cmd/Ctrl + Shift + 1` - Show Streamline Tools UI
 
-<!-- - `Ctrl+Left` - Unload BML
-- `Ctrl+Right` - Load BML -->
+- `Ctrl+Left` - Unload BML
+- `Ctrl+Right` - Load BML
 
 ### Custom
 
@@ -84,7 +84,7 @@ Coming soon...
 
 ## Development Tools
 
-- Run `source .bashrc` and then
+- Run `source .bashrc` (bash) or `setopt` (zsh) and then
   - Run `lint-concise` to display a concise list of style errors.
   - Run `lint-verbose` to display a detailed list of style errors.
   - Run `lint-fix` to correct most style errors.
