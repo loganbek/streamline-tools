@@ -1,11 +1,16 @@
 {
   "devDependencies": {
+    "minimist": "1.2.6",
     "snazzy": "^9.0.0",
     "standard": "^16.0.3",
-    "standard-summary": "^1.0.0",
-    "minimist": "1.2.6"
+    "standard-summary": "^1.0.0"
   },
   "standard": {
-    "globals": ["chrome"]
+    "globals": [
+      "chrome"
+    ]
+  },
+  "dependencies": {
+    "puppeteer": "^16.1.0"
   }
 }
