@@ -4489,6 +4489,8 @@ function simulatedClick(target, options) {
   target.dispatchEvent(event);
 }
 
+```
+
 Puppetry or Jest for testing
 starting w/ puppetry
 https://github.com/puppeteer/puppeteer/tree/6522e4f524bdbc1f1b9d040772acf862517ed507/utils/browser
@@ -4502,3 +4504,21 @@ check on CH
 
 work on alt command click - comm advanced
 not needed for config
+
+
+## 8/13/22
+- [ ] check code + add comments
+  - [ ] general folder structure/architecture
+  - [ ] config
+  - [ ] commerce
+  - [ ] are there any easy adds?
+  - [ ] update mv2 to mv3.
+  - [ ] chrome webstore submission - get an inital version in master.
+  - [ ] add to chrome webstore
+
+- [ ] get puppeteer working for unit tests
+- [ ] look into github sso for authentication
+- [ ] 
+
+- [ ] download success in UI - green checkmark badge 5s
+- [ ] download faily in UI - red x badge 5s
