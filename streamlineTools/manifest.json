@@ -16,8 +16,9 @@
     "open_in_tab": false
   },
   "background": {
-    "scripts": ["background.js", "hot-reload.js"],
-    "persistent": true
+    "persistent": false,
+    "service_worker": "background.js",
+    "type": "module"
   },
   "web_accessible_resources": [
     "jsonpath-1.0.2.js",
@@ -42,7 +43,7 @@
     "48": "images/streamline48.png",
     "128": "images/streamline128.png"
   },
-  "manifest_version": 2,
+  "manifest_version": 3,
   "commands": {
     "_execute_page_action": {
       "suggested_key": {
