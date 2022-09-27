@@ -31,15 +31,15 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
   const sub = parts[0]
   const domain = parts[1]
   const type = parts[2]
-  // console.log(sub)
+  console.log(sub)
   const bmSiteParts = sub.split('//')
   const bmSite = bmSiteParts[1]
-  // console.log(bmSite)
+  console.log(bmSite)
   bmSiteSubDomain = bmSite
-  // console.log(domain)
-  // console.log(type)
+  console.log(domain)
+  console.log(type)
   bmSiteType = 'commerce'
-  // console.log(bmSiteType)
+  console.log(bmSiteType)
   if (url !== undefined) {
     // UNLOAD/LOAD TEST BML DISABLING
     if (
@@ -66,7 +66,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       response
     ) {
       if (response !== undefined) {
-        // console.log(response.filename)
+        console.log(response.filename)
         fileName = response.filename
       }
     })

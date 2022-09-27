@@ -114,12 +114,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     const elem = document
       .getElementsByTagName('iframe')[1]
       .contentDocument.querySelector('#textarea')
-    // console.log(elem)
+    console.log(elem)
     textarea = document
       .getElementsByTagName('iframe')[1]
       .contentDocument.querySelector('#textarea')
   } else if (request.greeting == 'loadTest') {
-    // console.log(request.code)
+    console.log(request.code)
     const loadTestEvent = new CustomEvent('loadTestCode', {
       detail: request.code
     })

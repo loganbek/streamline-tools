@@ -16,18 +16,17 @@
     "open_in_tab": false
   },
   "background": {
-    "persistent": false,
     "service_worker": "background.js",
     "type": "module"
   },
-  "web_accessible_resources": [
-    "jsonpath-1.0.2.js",
-    "injected.js",
-    "adminCommerceInjected.js",
-    "adminConfigInjected.js",
-    "adminCommerceRulesInjected.js",
-    "adminCommerceActionsInjected.js"
-  ],
+  "web_accessible_resources": {
+   "jsonpath-1.0.2.js": "jsonpath-1.0.2.js",
+   "injected.js": "injected.js",
+   "adminCommerceInjected.js": "adminCommerceInjected.js",
+    "adminConfigInjected.js": "adminConfigInjected.js",
+    "adminCommerceRulesInjected.js": "adminCommerceRulesInjected",
+    "adminCommerceActionsInjected.js": "adminCommerceActionsInjected.js"
+  },
   "page_action": {
     "default_popup": "popup.html",
     "default_icon": {

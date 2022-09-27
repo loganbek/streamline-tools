@@ -76,7 +76,7 @@ chrome.runtime.onMessage.addListener(
         }
 
         // ACTION_ID
-        // console.log(document.url);
+        console.log(document.url);
         // body > table > tbody > tr > td > form > input[type=hidden]:nth-child(10)
         const actionElements = document.getElementsByName('action_id')
         console.log(actionElements)

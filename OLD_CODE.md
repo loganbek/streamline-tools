@@ -1,17 +1,17 @@
 # OLD CODE
   
   ```js
-  // console.log(document.getElementsByTagName('iframe')[1])
-  // console.log('CONTENT DOCUMENT')
-  // console.log(document.getElementsByTagName('iframe')[1].contentDocument)
-  // console.log(document.getElementsByTagName('iframe')[1].contentDocument.innerHTML)
-  // console.log(document.getElementsByTagName('iframe')[1].contentDocument.html)
-  // console.log(document.getElementsByTagName('iframe')[1].contentDocument.body.querySelector('#textarea').parent)
-  // console.log('CONTENT WINDOW')
-  // console.log(document.getElementsByTagName('iframe')[1].contentWindow.window)
-  // console.log(document.getElementsByTagName('iframe')[1].contentWindow.innerHTML)
-  // console.log(document.getElementsByTagName('iframe')[1].contentWindow.html)
-  // console.log(document.getElementsByTagName('iframe')[1].contentDocument.querySelector('#textarea').value)
+  console.log(document.getElementsByTagName('iframe')[1])
+  console.log('CONTENT DOCUMENT')
+  console.log(document.getElementsByTagName('iframe')[1].contentDocument)
+  console.log(document.getElementsByTagName('iframe')[1].contentDocument.innerHTML)
+  console.log(document.getElementsByTagName('iframe')[1].contentDocument.html)
+  console.log(document.getElementsByTagName('iframe')[1].contentDocument.body.querySelector('#textarea').parent)
+  console.log('CONTENT WINDOW')
+  console.log(document.getElementsByTagName('iframe')[1].contentWindow.window)
+  console.log(document.getElementsByTagName('iframe')[1].contentWindow.innerHTML)
+  console.log(document.getElementsByTagName('iframe')[1].contentWindow.html)
+  console.log(document.getElementsByTagName('iframe')[1].contentDocument.querySelector('#textarea').value)
 
 
   // ----------------------------------------------------------------
@@ -28,15 +28,15 @@
 //     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
 //         console.log("you saved me from background!!");
 //         console.log(filename);
-//         // console.log(result.variable_name);
+//         console.log(result.variable_name);
 //     });
 // }
 // GRAB COMM ACTIONS VAR NAME
 // #general > table > tbody > tr:nth-child(3) > td.form-input
 // commActionFileNameElement = document.querySelector("#general > table > tbody > tr:nth-child(3) > td.form-input");
 // commActionFileName = commActionFileNameElement.innertext;
-// console.log(commActionFileNameElement);
-// console.log(commActionFileName);
+console.log(commActionFileNameElement);
+console.log(commActionFileName);
 // var rule1 = {
 //     conditions: [
 //         new chrome.declarativeContent.PageStateMatcher({
@@ -180,9 +180,9 @@
 // Commerce Functions - "https://devmcnichols.bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:%274658213%27,folder_id:%27-1%27,process_id:%274653759%27,doc_id:%274653823%27}&inputdata={appid:%27sampleApp%27,service:%27bmllibraryservice%27,operation:%27getLibPageData%27,version:%271.0%27,header:%27%27,params:%20{componentid:%27libraryEditorPage%27,uicmd:%27defineComponent%27,%20id:%274658213%27,folder_id:%27-1%27,process_id:%274653759%27,doc_id:%274653823%27}}&token=cplHV3EHCvzBzOvLBAgOhoKF4m8";
 // Util Functions - "https://devmcnichols.bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:%274172483%27,folder_id:%274133367%27,process_id:%27-1%27,doc_id:%27-1%27}&inputdata={appid:%27sampleApp%27,service:%27bmllibraryservice%27,operation:%27getLibPageData%27,version:%271.0%27,header:%27%27,params:%20{componentid:%27libraryEditorPage%27,uicmd:%27defineComponent%27,%20id:%274172483%27,folder_id:%274133367%27,process_id:%27-1%27,doc_id:%27-1%27}}&token=cplHV3EHCvzBzOvLBAgOhoKF4m8";
 
-   // console.log(bodyModalHook[0].getElementsByTagName('iframe'))
+   console.log(bodyModalHook[0].getElementsByTagName('iframe'))
     // TEXT AREA ONCHANGE
-    // console.log('TEXTAREA ONCHANGE()')
+    console.log('TEXTAREA ONCHANGE()')
     // function customOnClickEvent (event) {
     //   console.log(document.querySelector('.ext-el-mask'))
     //   document.querySelector('.ext-el-mask').remove()
@@ -253,25 +253,25 @@
 
     // textarea.onchange()
 
-    // console.log('x-toolbar-right')
+    console.log('x-toolbar-right')
     
-    // console.log(divXWindow)
+    console.log(divXWindow)
 
     // for (const item of divXWindow) {
-    //   // console.log(item)
+    //   console.log(item)
     //   item.click()
     // }
 
 
 // chrome.storage.sync.set({ filename: 'filename' }, function () {
-//   // console.log('you saved me!!')
-//   // // console.log(result.variable_name);
+//   console.log('you saved me!!')
+//   // console.log(result.variable_name);
 // })
 
 // chrome.storage.sync.get(['filename'], function (result) {
 //   if (result.variable_name == undefined) {
-//     // console.log('I am retrieved!!')
-//     // console.log(result.variable_name)
+//     console.log('I am retrieved!!')
+//     console.log(result.variable_name)
 //   }
 // })
 
@@ -404,7 +404,7 @@
 
 // let editorHook = document.getElementById('editor')
 
-// console.log(editorHook)
+console.log(editorHook)
 
 // var walker = document.createTreeWalker(
 //   editorHook,
@@ -419,8 +419,8 @@
 // }
 
   // let elements = document.getElementsByClassName("varName");
-  // console.log(elements);
-  // console.log(elements[0].value);
+  console.log(elements);
+  console.log(elements[0].value);
 }
   // if (document.title) {
   //     alert(document.title);
@@ -458,14 +458,14 @@
 
 
 // chrome.storage.sync.set({ filename: 'filename' }, function () {
-//   // console.log('you saved me!!')
-//   // // console.log(result.variable_name);
+//   console.log('you saved me!!')
+//   // console.log(result.variable_name);
 // })
 
 // chrome.storage.sync.get(['filename'], function (result) {
 //   if (result.variable_name == undefined) {
-//     // console.log('I am retrieved!!')
-//     // console.log(result.variable_name)
+//     console.log('I am retrieved!!')
+//     console.log(result.variable_name)
 //   }
 // })
 
@@ -598,7 +598,7 @@
 
 // let editorHook = document.getElementById('editor')
 
-// console.log(editorHook)
+console.log(editorHook)
 
 // var walker = document.createTreeWalker(
 //   editorHook,
@@ -613,12 +613,12 @@
 // }
 
   // let elements = document.getElementsByClassName("varName");
-  // console.log(elements);
-  // console.log(elements[0].value);
+  console.log(elements);
+  console.log(elements[0].value);
 
   // let elements = document.getElementsByClassName("varName");
-  // console.log(elements);
-  // console.log(elements[0].value);
+  console.log(elements);
+  console.log(elements[0].value);
   // if (document.title) {
   //     alert(document.title);
   // }
@@ -652,8 +652,8 @@
 //     window.dispatchEvent(event);
 // }, false);
   // let elements = document.getElementsByClassName("varName");
-  // console.log(elements);
-  // console.log(elements[0].value);
+  console.log(elements);
+  console.log(elements[0].value);
 
   //     document.querySelector("#textarea").value = "test";
   //     document.querySelector("#textarea").textareaFocused = true;
@@ -747,13 +747,13 @@
 //     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
 //         console.log("you saved me!! comm rules");
 //         console.log(filename);
-//         // console.log(result.variable_name);
+//         console.log(result.variable_name);
 //     });
 // }
 
   // let elements = document.getElementsByClassName("varName");
-  // console.log(elements);
-  // console.log(elements[0].value);
+  console.log(elements);
+  console.log(elements[0].value);
 // if (document.title) {
   //     alert(document.title);
   // }
@@ -904,7 +904,7 @@
 // }
 
 // let elements = document.getElementsByClassName("varName");
-// console.log(elements);
+console.log(elements);
 
 // if (elements[0]) {
 //     console.log(elements[0].value);
@@ -928,7 +928,7 @@
 
 // if (document.getElementsByName('varName')[0]) {
 // filename = document.getElementsByName('varName')[0].value;
-// console.log(filename);
+console.log(filename);
 // }
 
 // if (document.querySelector('[name="variable_name"]')) {
@@ -943,7 +943,7 @@
 //     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
 //         console.log("you saved me!! comm rules");
 //         console.log(filename);
-//         // console.log(result.variable_name);
+//         console.log(result.variable_name);
 //     });
 // }
 
@@ -953,7 +953,7 @@
 //     // #general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]
 //     console.log(filename);
 
-//     // console.log(commActionFileName);
+//     console.log(commActionFileName);
 //     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
 //         console.log("you saved me!! comm action");
 //         console.log(filename);
@@ -965,7 +965,7 @@
 //   chrome.storage.sync.set({ commerceFileName: filename }, function () {
 //     console.log('you saved me!! comm rules')
 //     console.log(filename)
-//     // console.log(result.variable_name);
+//     console.log(result.variable_name);
 //   })
 // }
 
@@ -974,8 +974,8 @@
   // commActionFileName = commActionFileNameElement.innertext;
   // #general > table > tbody > tr
   // let elements = document.getElementsByClassName("varName");
-  // console.log(elements);
-  // console.log(elements[0].value);
+  console.log(elements);
+  console.log(elements[0].value);
 // if (document.title) {
   //     alert(document.title);
   // }
@@ -1126,7 +1126,7 @@
 // }
 
 // let elements = document.getElementsByClassName("varName");
-// console.log(elements);
+console.log(elements);
 
 // if (elements[0]) {
 //     console.log(elements[0].value);
@@ -1150,7 +1150,7 @@
 
 // if (document.getElementsByName('varName')[0]) {
 // filename = document.getElementsByName('varName')[0].value;
-// console.log(filename);
+console.log(filename);
 // }
 
 // if (document.querySelector('[name="variable_name"]')) {
@@ -1165,7 +1165,7 @@
 //     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
 //         console.log("you saved me!! comm rules");
 //         console.log(filename);
-//         // console.log(result.variable_name);
+//         console.log(result.variable_name);
 //     });
 // }
 
@@ -1175,7 +1175,7 @@
 //     // #general > table > tbody > tr:nth-child(3) > td.form-input > input[type=hidden]
 //     console.log(filename);
 
-//     // console.log(commActionFileName);
+//     console.log(commActionFileName);
 //     chrome.storage.sync.set({ 'commerceFileName': filename }, function() {
 //         console.log("you saved me!! comm action");
 //         console.log(filename);
@@ -1187,7 +1187,7 @@
 //   chrome.storage.sync.set({ commerceFileName: filename }, function () {
 //     console.log('you saved me!! comm rules')
 //     console.log(filename)
-//     // console.log(result.variable_name);
+//     console.log(result.variable_name);
 //   })
 // }
 

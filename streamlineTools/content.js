@@ -52,9 +52,9 @@ chrome.runtime.onMessage.addListener(
     if (request.greeting == 'unload') {
       const unloadEvent = new CustomEvent('unloadCode', { detail: request.code })
       window.dispatchEvent(unloadEvent)
-      // console.log('CH')
-      // console.log(contentHeader)
-      if (code !== null) {
+      console.log('CH')
+      console.log(contentHeader)
+      if (code != null) {
         if (!code.startsWith(commentHeader)) {
           code = commentHeader + '\n\n' + code
         }
@@ -74,7 +74,7 @@ chrome.runtime.onMessage.addListener(
       const loadEvent = new CustomEvent('loadCode', { detail: request.code })
       window.dispatchEvent(loadEvent)
     } else if (request.greeting == 'loadTest') {
-      // console.log(request.code)
+      console.log(request.code)
       const loadTestEvent = new CustomEvent('loadTestCode', { detail: request.code })
       window.dispatchEvent(loadTestEvent)
     } else if (request.greeting == 'filename') {
@@ -98,5 +98,5 @@ function newFunction (filename) {
 chrome.runtime.onMessage.addListener(function (message) {
   const { direction } = message
   direction === 'unload_bml' ? 'unload_bml received - content.js' : 'load_bml received - content.js'
-  // console.log(direction)
+  console.log(direction)
 })
