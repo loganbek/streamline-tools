@@ -8,9 +8,23 @@
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/loganbek/streamline-tools)
 
 ## Prerequisites
-
+### A Supported Browser
+<!-- One of the following Browsers -->
+<!-- Add Chrome -->
 - [Google Chrome Browser](https://www.google.com/chrome/)
-- [Visual Studio Code IDE](https://code.visualstudio.com/Download)
+<!-- Add FireFox -->
+<!-- - [FireFox Browser](https://www.mozilla.org/en-US/firefox/new/) -->
+<!-- Add Safari -->
+<!-- - [Safari Browser](https://www.apple.com/safari/) -->
+<!-- Add Orion -->
+<!-- - Orion Browser](https://www.orionjs.io/) -->
+### A Supported IDE
+<! -- Visual Studio Code -->
+- [Codium](https://vscodium.com/)
+- [Visual Studio Code](https://code.visualstudio.com/Download)
+
+### CPQ Development Tools VS Code Extension
+https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-overview
 
 ## Installation Instructions
 
