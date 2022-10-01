@@ -20,9 +20,9 @@
     "type": "module"
   },
   "web_accessible_resources": {
-   "jsonpath-1.0.2.js": "jsonpath-1.0.2.js",
-   "injected.js": "injected.js",
-   "adminCommerceInjected.js": "adminCommerceInjected.js",
+    "jsonpath-1.0.2.js": "jsonpath-1.0.2.js",
+    "injected.js": "injected.js",
+    "adminCommerceInjected.js": "adminCommerceInjected.js",
     "adminConfigInjected.js": "adminConfigInjected.js",
     "adminCommerceRulesInjected.js": "adminCommerceRulesInjected",
     "adminCommerceActionsInjected.js": "adminCommerceActionsInjected.js"
