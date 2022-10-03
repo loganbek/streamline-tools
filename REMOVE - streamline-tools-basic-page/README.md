@@ -6,7 +6,8 @@
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/loganbek/streamlineTools/graphs/commit-activity)
 
-<!-- ![Available in Chrome Webstore](images/available-in-CWS-md-border.png) -->
+<!-- ![Available in Chrome Webstore](images/chrome-webstore.svg)
+![Available as a Firefox Browser ADD-ON](images/firefox-add-ons.svg) -->
 
 ## Prerequisites
 
