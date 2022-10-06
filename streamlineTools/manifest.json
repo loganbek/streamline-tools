@@ -8,9 +8,9 @@
     "activeTab",
     "declarativeContent",
     "storage",
-    "file://*",
     "tabs"
   ],
+  "host-permissions": ["https://*.bigmachines.com/*", "file://*"],
   "options_ui": {
     "page": "options.html",
     "open_in_tab": false
@@ -19,15 +19,35 @@
     "service_worker": "background.js",
     "type": "module"
   },
-  "web_accessible_resources": {
-    "jsonpath-1.0.2.js": "jsonpath-1.0.2.js",
-    "injected.js": "injected.js",
-    "adminCommerceInjected.js": "adminCommerceInjected.js",
-    "adminConfigInjected.js": "adminConfigInjected.js",
-    "adminCommerceRulesInjected.js": "adminCommerceRulesInjected",
-    "adminCommerceActionsInjected.js": "adminCommerceActionsInjected.js"
+  "web_accessible_resources": [
+    {
+      "resources": [
+        {
+          "matches": ["https://*.bigmachines.com/*"],
+          "css": ["content.css"]
+        }
+      ],
+      "jsonpath-1.0.2.js": "jsonpath-1.0.2.js",
+      "injected.js": "injected.js",
+      "adminCommerceInjected.js": "adminCommerceInjected.js",
+      "adminConfigInjected.js": "adminConfigInjected.js",
+      "adminCommerceRulesInjected.js": "adminCommerceRulesInjected",
+      "adminCommerceActionsInjected.js": "adminCommerceActionsInjected.js"
+    }
+  ],
+  "matches": [""],
+  "content-security-policy": {
+    "extension_pages": [
+      "index.html",
+      "options.html",
+      "popup.html",
+      "adminCommerce.html",
+      "adminConfig.html",
+      "adminCommerceRules.html",
+      "adminCommerceActions.html"
+    ]
   },
-  "page_action": {
+  "action": {
     "default_popup": "popup.html",
     "default_icon": {
       "16": "images/streamline16.png",
