@@ -74,10 +74,21 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
   }
 })
 
-// CS
+// OLD CS
 function executeContentScript (contentScriptName) {
   chrome.tabs.executeScript({
     file: contentScriptName
+  })
+}
+
+// CS - udpdate v3 scripting API
+function executeContentScript ( contentScript ) {
+  
+  const tabId = getTabId();
+
+  chrome.scripting.executeScript({
+      tab: tabId,
+      file: contentScript
   })
 }
 
