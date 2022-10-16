@@ -4,6 +4,15 @@
 let code = ''
 let filename
 
+// refactor
+
+function getFilename (str) {
+  const re = /\/([^/]+)\.js$/
+  const match = re.exec(str)
+  return match[1]
+}
+
+
 // Listen for the PassToBackground event
 window.addEventListener('PassToBackground', function (evt) {
   code = evt.detail

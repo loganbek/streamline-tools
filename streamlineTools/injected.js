@@ -79,10 +79,7 @@ function jsonPath (obj, expr, arg) {
 }
 
 window.addEventListener('load', function () {
-  main()
-})
 
-function main () {
   const message = jsonPath(jsonRespStr, '$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data')
   const message1 = jsonPath(jsonRespStr, 'x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[0].value')
   const message3 = jsonPath(jsonRespStr, 'x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[1].value')
@@ -104,7 +101,7 @@ function main () {
   const event = new CustomEvent('PassToBackground', { detail: message })
   window.dispatchEvent(event)
   window.dispatchEvent(commentHeaderEvent)
-}
+});
 
 window.addEventListener('unloadCode', function (evt) {
   const event = new CustomEvent('PassCodeToBackground', { detail: frame_bm_script.editArea.textarea.value })
