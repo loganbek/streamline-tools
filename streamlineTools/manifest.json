@@ -9,7 +9,8 @@
     "declarativeContent",
     "storage",
     "tabs",
-    "scripting"
+    "scripting",
+    "https://accounts.google.com/o/oauth2/token"
   ],
   "options_ui": {
     "page": "options.html",
@@ -19,8 +20,15 @@
     "service_worker": "background.js",
     "type": "module"
   },
+  "content_scripts": [
+    {
+      "matches": ["http://www.google.com/robots.txt*"],
+      "js": ["oauth2/oauth2_inject.js"],
+      "run_at": "document_start"
+    }
+  ],
   "web_accessible_resources": [{
-    "resources": ["content.css", "jsonpath-1.0.2.js", "injected.js", "adminCommerceInjected.js", "adminConfigInjected.js", "adminCommerceRulesInjected.js", "adminCommerceActionsInjected.js"],
+    "resources": ["oauth2/oauth2.html", "content.css", "jsonpath-1.0.2.js", "injected.js", "adminCommerceInjected.js", "adminConfigInjected.js", "adminCommerceRulesInjected.js", "adminCommerceActionsInjected.js"],
     "matches": ["<all_urls>"]
   }],
   "action": {

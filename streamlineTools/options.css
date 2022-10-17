@@ -26,6 +26,20 @@ button:active {
   transform: translateY(4px);
 }
 
+h1 {
+  font-size: 20px
+}
+
+button.authorized {
+  background: green
+}
+
+/* Github SSO button */
+#oauth-2 #oauth2-2 {
+  background-color: #24292e;
+  color: #ffffff;
+}
+
 body {
   max-width: 200px;
   height: 259px;
