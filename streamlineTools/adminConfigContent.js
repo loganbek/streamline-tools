@@ -79,7 +79,7 @@ console.log(document.getElementById("adminConfig"))
 
 
 if(!document.getElementById("adminConfig")){
-  injectJs(chrome.extension.getURL('adminConfigInjected.js'))
+  injectJs(chrome.runtime.getURL('adminConfigInjected.js'))
 }
 
 // function isLoadedScript(lib) {

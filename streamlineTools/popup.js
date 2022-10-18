@@ -32,6 +32,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
   const domain = parts[1]
   const type = parts[2]
   console.log(sub)
+  console.log(tabs, "tabs")
   const bmSiteParts = sub.split('//')
   const bmSite = bmSiteParts[1]
   console.log(bmSite)
@@ -39,6 +40,16 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
   console.log(domain)
   console.log(type)
   bmSiteType = 'commerce'
+  // CS - udpdate v3 scripting API
+  // function executeContentScript ( contentScript ) {
+    
+  //   // const tabId = getTabId();
+  //   const tabId = tabs[0].id;
+  //   chrome.scripting.executeScript({
+  //       tab: tabId,
+  //       file: contentScript
+  //   })
+  // }
   console.log(bmSiteType)
   if (url !== undefined) {
     // UNLOAD/LOAD TEST BML DISABLING
@@ -58,7 +69,13 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       executeContentScript('adminCommerceRulesContent.js')
     } else if (url.includes('bigmachines.com/admin/configuration/rules')) {
       bmSiteType = 'configuration'
-      executeContentScript('adminConfigContent.js')
+      // executeContentScript('adminConfigContent.js')
+      // TODO: fix same filename overwrite for config advanced condition and action values to set
+      chrome.scripting.executeScript(
+        {
+          target: {tabId: tabs[0].id},
+          files: ['adminConfigContent.js'],
+        });
     }
   }
   if (url.includes('bigmachines.com/spring/')) {
@@ -77,26 +94,16 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         files: ['content.js'],
       });
       
-  }
-})
-
-// // CS
-// function executeContentScript (contentScriptName) {
-//   chrome.tabs.executeScript({
-//     file: contentScriptName
-//   })
-// }
-
-// CS - udpdate v3 scripting API
-function executeContentScript ( contentScript ) {
-  
-  const tabId = getTabId();
-
-  chrome.scripting.executeScript({
-      tab: tabId,
-      file: contentScript
+    }
   })
-}
+  
+  // // CS
+  // function executeContentScript (contentScriptName) {
+    //   chrome.tabs.executeScript({
+      //     file: contentScriptName
+      //   })
+      // }
+      
 
 // TODO: add to options
 // DISSABLE DOWNLOADS SHELF

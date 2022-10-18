@@ -45,7 +45,7 @@ function injectJs (link) {
   document.getElementsByTagName('head')[0].appendChild(scr)
 }
 
-injectJs(chrome.extension.getURL('adminCommerceRulesInjected.js'))
+injectJs(chrome.runtime.getURL('adminCommerceRulesInjected.js'))
 
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
