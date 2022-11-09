@@ -19,6 +19,10 @@ button {
   font-size: 16px;
   min-height: 24px;
   vertical-align: middle;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -ms-border-radius: 7px;
+  -o-border-radius: 7px;
 }
 
 button:active {
