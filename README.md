@@ -53,6 +53,8 @@ https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-ove
 
    `code --install-extension CPQConsultant.cpq-devkit-o`
 
+<!-- NOTE look into CPQ Toolkit -->
+
 9. Congratulations you've successfully installed Streamline Tools!
 
 <!-- 9) Enable the Native File System API via [chrome://flags#native-file-system-api](chrome://flags#native-file-system-api) flag. TODO: may be able to remove this -->
