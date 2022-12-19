@@ -31,11 +31,11 @@ function restore_options () {
 }
 
 if (document.readyState !== 'loading') {
-  // console.log('document is already ready, just execute code here');
+  console.log('document is already ready, just execute code here');
   restore_options()
 } else {
   document.addEventListener('DOMContentLoaded', function () {
-    // console.log('document was not ready, place code here');
+    console.log('document was not ready, place code here');
     restore_options()
   })
 }
@@ -63,3 +63,17 @@ document.addEventListener('DOMContentLoaded', event => {
 function getFooter () {
   return '<p>' + manifest.name + ' ' + manifest.version + '</p>'
 }
+
+// var googleAuth = new OAuth2('google', {
+//   client_id: '17755888930840',
+//   client_secret: 'b4a5741bd3d6de6ac591c7b0e279c9f',
+//   api_scope: 'https://www.googleapis.com/auth/tasks'
+// });
+
+// googleAuth.authorize(function() {
+//   // Ready for action, can now make requests with
+//   googleAuth.getAccessToken()
+// });
+
+// // Get the access token
+// xhr.setRequestHeader('Authorization', 'OAuth ' + myAuth.getAccessToken())

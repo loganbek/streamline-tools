@@ -4,6 +4,15 @@
 let code = ''
 let filename
 
+// refactor
+
+function getFilename (str) {
+  const re = /\/([^/]+)\.js$/
+  const match = re.exec(str)
+  return match[1]
+}
+
+
 // Listen for the PassToBackground event
 window.addEventListener('PassToBackground', function (evt) {
   code = evt.detail
@@ -76,7 +85,7 @@ chrome.runtime.onMessage.addListener(
         }
 
         // ACTION_ID
-        // console.log(document.url);
+        console.log(document.url);
         // body > table > tbody > tr > td > form > input[type=hidden]:nth-child(10)
         const actionElements = document.getElementsByName('action_id')
         console.log(actionElements)

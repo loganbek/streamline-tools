@@ -8,26 +8,30 @@
     "activeTab",
     "declarativeContent",
     "storage",
-    "file://*",
-    "tabs"
+    "tabs",
+    "scripting",
+    "https://accounts.google.com/o/oauth2/token"
   ],
   "options_ui": {
     "page": "options.html",
-    "open_in_tab": false
+    "open_in_tab": true
   },
   "background": {
-    "scripts": ["background.js", "hot-reload.js"],
-    "persistent": true
+    "service_worker": "background.js",
+    "type": "module"
   },
-  "web_accessible_resources": [
-    "jsonpath-1.0.2.js",
-    "injected.js",
-    "adminCommerceInjected.js",
-    "adminConfigInjected.js",
-    "adminCommerceRulesInjected.js",
-    "adminCommerceActionsInjected.js"
+  "content_scripts": [
+    {
+      "matches": ["http://www.google.com/robots.txt*"],
+      "js": ["oauth2/oauth2_inject.js"],
+      "run_at": "document_start"
+    }
   ],
-  "page_action": {
+  "web_accessible_resources": [{
+    "resources": ["oauth2/oauth2.html", "content.css", "jsonpath-1.0.2.js", "injected.js", "adminCommerceInjected.js", "adminConfigInjected.js", "adminCommerceRulesInjected.js", "adminCommerceActionsInjected.js"],
+    "matches": ["<all_urls>"]
+  }],
+  "action": {
     "default_popup": "popup.html",
     "default_icon": {
       "16": "images/streamline16.png",
@@ -42,7 +46,7 @@
     "48": "images/streamline48.png",
     "128": "images/streamline128.png"
   },
-  "manifest_version": 2,
+  "manifest_version": 3,
   "commands": {
     "_execute_page_action": {
       "suggested_key": {

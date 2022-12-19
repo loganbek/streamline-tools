@@ -91,7 +91,7 @@ chrome.runtime.onMessage.addListener(
     //  :nth-child(3) > td.form-input > input[type=hidden]
     console.log(filename)
 
-    // console.log(commActionFileName);
+    console.log(commActionFileName);
     chrome.storage.sync.set({ commerceFileName: filename }, function () {
       console.log('you saved me!! comm action')
       console.log(filename)

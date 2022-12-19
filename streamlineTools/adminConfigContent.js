@@ -9,19 +9,19 @@ var filename = filename || ''
 if (document.getElementById('#x-auto-3-input')) {
   filename = document.getElementById('#x-auto-3-input').value
   // document.querySelector("#x-auto-3-input")
-  console.log('line 8 - filename - ' + filename)
+  console.log('line 12 - filename - ' + filename)
 }
 
 if (window.document.getElementById('#x-auto-3-input')) {
   filename = window.document.getElementById('#x-auto-3-input').value
-  console.log('line 13 - filename - ' + filename)
+  console.log('line 17 - filename - ' + filename)
 }
 
 window.addEventListener('unloadCode', function (evt) {
   detail1 = '@#$@#'
   const event = new CustomEvent('PassCodeToBackground', { detail: detail1 })
   window.dispatchEvent(event)
-  console.log('line 13 - event -' + event)
+  console.log('line 24 - event -' + event)
 })
 
 // Listen for the PassToBackground event
@@ -29,7 +29,7 @@ window.addEventListener(
   'PassToBackground',
   function (evt) {
     code = evt.detail
-    console.log('line 28 - evt.detail' + evt.detail)
+    console.log('line 32 - evt.detail' + evt.detail)
   },
   false
 )
@@ -39,7 +39,7 @@ window.addEventListener(
   'PassCommentHeader',
   function (evt) {
     commentHeader = evt.detail
-    console.log('line 38 - commentHeader' + commentHeader)
+    console.log('line 42 - commentHeader' + commentHeader)
   },
   false
 )
@@ -59,7 +59,7 @@ window.addEventListener(
   'PassTestCodeToBackground',
   function (evt) {
     testCode = evt.detail
-    console.log('line 58 - testCode' + testCode)
+    console.log('line 62 - testCode' + testCode)
   },
   false
 )
@@ -114,12 +114,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     const elem = document
       .getElementsByTagName('iframe')[1]
       .contentDocument.querySelector('#textarea')
-    // console.log(elem)
+    console.log(elem)
     textarea = document
       .getElementsByTagName('iframe')[1]
       .contentDocument.querySelector('#textarea')
   } else if (request.greeting == 'loadTest') {
-    // console.log(request.code)
+    console.log(request.code)
     const loadTestEvent = new CustomEvent('loadTestCode', {
       detail: request.code
     })
@@ -148,4 +148,5 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 if (document.querySelector('#x-auto-3-input')) {
   filename = document.querySelector('#x-auto-3-input').value
+  console.log('lone 151 - filename - ' + filename)
 }

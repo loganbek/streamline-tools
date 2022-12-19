@@ -9,8 +9,23 @@
 
 ## Prerequisites
 
+### A Supported Browser
+<!-- One of the following Browsers -->
+<!-- Add Chrome -->
 - [Google Chrome Browser](https://www.google.com/chrome/)
-- [Visual Studio Code IDE](https://code.visualstudio.com/Download)
+<!-- Add FireFox -->
+<!-- - [FireFox Browser](https://www.mozilla.org/en-US/firefox/new/) -->
+<!-- Add Safari -->
+<!-- - [Safari Browser](https://www.apple.com/safari/) -->
+<!-- Add Orion -->
+<!-- - Orion Browser](https://www.orionjs.io/) -->
+### A Supported IDE
+<! -- Visual Studio Code -->
+- [Codium](https://vscodium.com/)
+- [Visual Studio Code](https://code.visualstudio.com/Download)
+
+### CPQ Development Tools VS Code Extension
+https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-overview
 
 ## Installation Instructions
 
@@ -64,8 +79,8 @@ Coming soon...
 
 - `Cmd/Ctrl + Shift + 1` - Show Streamline Tools UI
 
-<!-- - `Ctrl+Left` - Unload BML
-- `Ctrl+Right` - Load BML -->
+- `Ctrl+Left` - Unload BML
+- `Ctrl+Right` - Load BML
 
 ### Custom
 
@@ -86,7 +101,7 @@ Coming soon...
 
 ## Development Tools
 
-- Run `source .bashrc` and then
+- Run `source .bashrc` (bash) or `setopt` (zsh) and then
   - Run `lint-concise` to display a concise list of style errors.
   - Run `lint-verbose` to display a detailed list of style errors.
   - Run `lint-fix` to correct most style errors.
@@ -103,8 +118,6 @@ Coming soon...
 <!-- `npx standard | standard-summary` - https://www.npmjs.com/package/standard-summary -->
 
 <!-- ## Known & Reported Issues
-
-- [ ] N/A :innocent: -->
 
 <!-- 
 ANCHOR - Used to indicate a section in your file

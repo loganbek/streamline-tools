@@ -31,15 +31,15 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
   const sub = parts[0]
   const domain = parts[1]
   const type = parts[2]
-  // console.log(sub)
+  console.log(sub)
   const bmSiteParts = sub.split('//')
   const bmSite = bmSiteParts[1]
-  // console.log(bmSite)
+  console.log(bmSite)
   bmSiteSubDomain = bmSite
-  // console.log(domain)
-  // console.log(type)
+  console.log(domain)
+  console.log(type)
   bmSiteType = 'commerce'
-  // console.log(bmSiteType)
+  console.log(bmSiteType)
   if (url !== undefined) {
     // UNLOAD/LOAD TEST BML DISABLING
     if (
@@ -66,18 +66,35 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       response
     ) {
       if (response !== undefined) {
-        // console.log(response.filename)
+        console.log(response.filename)
         fileName = response.filename
       }
     })
-    executeContentScript('content.js')
+    // executeContentScript('content.js')
+    chrome.scripting.executeScript(
+      {
+        target: {tabId: tabs[0].id},
+        files: ['content.js'],
+      });
+      
   }
 })
 
-// CS
-function executeContentScript (contentScriptName) {
-  chrome.tabs.executeScript({
-    file: contentScriptName
+// // CS
+// function executeContentScript (contentScriptName) {
+//   chrome.tabs.executeScript({
+//     file: contentScriptName
+//   })
+// }
+
+// CS - udpdate v3 scripting API
+function executeContentScript ( contentScript ) {
+  
+  const tabId = getTabId();
+
+  chrome.scripting.executeScript({
+      tab: tabId,
+      file: contentScript
   })
 }
 
