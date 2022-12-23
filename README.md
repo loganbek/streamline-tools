@@ -21,8 +21,7 @@
 <!-- - Orion Browser](https://www.orionjs.io/) -->
 ### A Supported IDE
 <!-- Visual Studio Code -->
-- [Codium](https://vscodium.com/)
-- [Visual Studio Code](https://code.visualstudio.com/Download)
+- [Codium](https://vscodium.com/) OR [Visual Studio Code](https://code.visualstudio.com/Download)
 
 ### CPQ Development Tools VS Code Extension
 https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-overview
