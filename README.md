@@ -20,7 +20,7 @@
 <!-- Add Orion -->
 <!-- - Orion Browser](https://www.orionjs.io/) -->
 ### A Supported IDE
-<! -- Visual Studio Code -->
+<!-- Visual Studio Code -->
 - [Codium](https://vscodium.com/)
 - [Visual Studio Code](https://code.visualstudio.com/Download)
 
