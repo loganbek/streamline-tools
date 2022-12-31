@@ -305,14 +305,14 @@ window.addEventListener('unloadCode', function (evt) {
     .contentDocument.querySelector('#textarea').value
   console.log(textAreaCode)
   if (textAreaCode) {
-    testConfigCode = textAreaCode
+    code = textAreaCode
   } else {
-    testConfigCode = '\n'
+    code = '\n'
   }
   console.log(textAreaCode)
-  console.log(testConfigCode)
+  console.log(code)
   const event = new CustomEvent('PassCodeToBackground', {
-    detail: testConfigCode
+    detail: code
   })
   window.dispatchEvent(event)
 })
@@ -394,7 +394,7 @@ window.addEventListener(
 
     // let editorHook = document.getElementById('editor')
 
-    console.log(editorHook)
+    // console.log(editorHook)
     const loadingDiv = htmlToElement(
       '<div id ="configModalLoad" class="ext-el-mask" style="display: block;"><div id ="configModalLoadMsg" class="ext-el-mask-msg" style="display: block; left: 655px; top: 626px;"><div>Loading...</div></div></div>'
     )

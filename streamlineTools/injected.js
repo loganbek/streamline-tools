@@ -105,6 +105,7 @@ window.addEventListener('load', function () {
 
 window.addEventListener('unloadCode', function (evt) {
   const event = new CustomEvent('PassCodeToBackground', { detail: frame_bm_script.editArea.textarea.value })
+  // event.initCustomEvent("yourCustomEvent", true, true, url);
   window.dispatchEvent(event)
 })
 // Listen for the load code event
