@@ -112,6 +112,11 @@ Coming soon...
   - Run `lint-verbose` to display a detailed list of style errors.
   - Run `lint-fix` to correct most style errors.
 
+<!-- ## Testing
+
+Oracle Configure, Price, Quote (CPQ)
+Version: 24D Patch 4 -->
+
 <!-- switched to alias in .bashrc -->
 <!-- - Run `npx standard | npx standard-summary | npx snazzy` to display a concise list of style errors.
 
