@@ -7,7 +7,9 @@
     "activeTab",
     "declarativeContent",
     "storage",
-    "tabs"
+    "tabs",
+    "scripting",
+    "service_worker"
   ],
   "options_ui": {
     "page": "options.html",
