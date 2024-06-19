@@ -11,6 +11,6 @@
     ]
   },
   "dependencies": {
-    "puppeteer": "^16.1.0"
+    "puppeteer": "^22.11.2"
   }
 }
