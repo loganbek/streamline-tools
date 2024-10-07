@@ -95,7 +95,8 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       });
       
     }
-  })
+  }
+})
   
   // // CS
   // function executeContentScript (contentScriptName) {
@@ -236,3 +237,53 @@ document.addEventListener('DOMContentLoaded', event => {
 function getFooter () {
   return '<p>' + manifest.name + ' ' + manifest.version + '</p>'
 }
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  let filename = document.getElementById("variableName").value;
+  filename = newFunction(filename);
+  /* console.log(sender.tab
+      ? 'from a content script:' + sender.tab.url
+      : 'from the extension')
+    console.log(request.greeting
+      ? 'greeting: ' + request.greeting
+      : 'nogreeting') */
+  if (request.greeting == "unload") {
+    const unloadEvent = new CustomEvent("unloadCode", { detail: request.code });
+    window.dispatchEvent(unloadEvent);
+    // console.log('CH')
+    // console.log(contentHeader)
+    if (code != null) {
+      if (!code.startsWith(commentHeader)) {
+        code = commentHeader + "\n\n" + code;
+      } else {
+        code = code;
+      }
+    }
+    sendResponse({
+      filename: filename,
+      code: code,
+    });
+  } else if (request.greeting == "unloadTest") {
+    const unloadTestEvent = new CustomEvent("unloadTestCode", {
+      detail: request.code,
+    });
+    window.dispatchEvent(unloadTestEvent);
+    sendResponse({
+      filename: filename,
+      testCode: testCode,
+    });
+  } else if (request.greeting == "load") {
+    const loadEvent = new CustomEvent("loadCode", { detail: request.code });
+    window.dispatchEvent(loadEvent);
+  } else if (request.greeting == "loadTest") {
+    console.log(request.code);
+    const loadTestEvent = new CustomEvent("loadTestCode", {
+      detail: request.code,
+    });
+    window.dispatchEvent(loadTestEvent);
+  } else if (request.greeting == "filename") {
+    sendResponse({
+      filename: filename,
+    });
+  }
+});
