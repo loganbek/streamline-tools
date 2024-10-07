@@ -19,9 +19,16 @@
 <!-- - [Safari Browser](https://www.apple.com/safari/) -->
 <!-- Add Orion -->
 <!-- - Orion Browser](https://www.orionjs.io/) -->
+<!-- Add Edge -- >
+<!-- - [Edge Browser](https://www.microsoft.com/en-us/edge) -->
+<!-- Add Brave -->
+<!-- - [Brave Browser](https://brave.com/download/) -->
+
 ### A Supported IDE
 <!-- Visual Studio Code -->
 - [Codium](https://vscodium.com/) OR [Visual Studio Code](https://code.visualstudio.com/Download)
+<!-- Add Cursor -->
+<!-- - [Cursor](https://cursor.sh/) -->
 
 ### CPQ Development Tools VS Code Extension
 https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-overview
