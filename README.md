@@ -1,4 +1,4 @@
-# Streamline Tools v0.7.0-alpha
+# Streamline Tools v1.0.0-alpha
 
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
