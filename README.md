@@ -59,6 +59,8 @@ https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-ove
 
    `code --install-extension CPQConsultant.cpq-devkit-o`
 
+<!-- or `ext install CPQConsultant.cpq-devkit-o` in VSCode Command Palette. -->
+
 <!-- NOTE look into CPQ Toolkit -->
 
 <!-- https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-sf -->
