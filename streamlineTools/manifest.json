@@ -47,7 +47,7 @@
   },
   "manifest_version": 3,
   "commands": {
-    "_execute_page_action": {
+    "_execute_action": {
       "suggested_key": {
         "default": "Ctrl+Shift+1"
       },

@@ -1,12 +1,8 @@
-/* STUB | BACKGROUND SCRIPT */
+'use strict';
 
-'use strict'
-
-chrome.runtime.onInstalled.addListener(function () {
-  //   // chrome.storage.sync.set({ color: '#3aa757' }, function () {
-  //   //   console.log('The color is green.');
-  //   // });
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
+// Ensure extension is enabled on matching pages
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.declarativeContent.onPageChanged.removeRules(undefined, () => {
     chrome.declarativeContent.onPageChanged.addRules([
       {
         conditions: [
@@ -17,56 +13,55 @@ chrome.runtime.onInstalled.addListener(function () {
             }
           })
         ],
-        actions: [new chrome.declarativeContent.ShowPageAction()]
+        actions: [new chrome.declarativeContent.SetIcon({ path: "images/streamline48.png" })]
       }
-    ])
-  })
-})
+    ]);
+  });
+});
 
-// KEYBOARD COMMAND LISTENER
-// _execute_page_action - handled automatically
-// unload_bml + load_bml
-chrome.commands.onCommand.addListener(function (command) {
-  // const direction = command.split('-')[1];
+// Listen for keyboard shortcut commands
+chrome.commands.onCommand.addListener((command) => {
   switch (command) {
     case 'unload_bml':
-      unloadBML()
-      break
+      unloadBML();
+      break;
     case 'load_bml':
-      loadBML()
-      break
+      loadBML();
+      break;
     default:
-      console.log(`Command ${command} not found`)
+      console.log(`Command ${command} not found`);
   }
-})
+});
 
-function unloadBML () {
-  alert('UNLOAD COMMAND')
-  // unloadButton.click()
-  // chrome.pageAction.show()
-  // chrome.declarativeContent.ShowPageAction()
-  // chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-  //   lastTabId = tabs[0].id
-  //   chrome.pageAction.show(lastTabId)
-  // })
-  // chrome.extension.sendRequest("show_page_action");
-  // chrome.extension.onRequest.addListener(function (request, sender) {
-  //   if (request == "show_page_action") {
-  chrome.pageAction.show(tabs[0].id)
-  // chrome.tabs.update(integer tabId, object updateProperties, function callback)
-  //   }
-  // });
+function unloadBML() {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    if (tabs.length === 0) return;
+    
+    const tabId = tabs[0].id;
+    
+    chrome.scripting.executeScript({
+      target: { tabId: tabId },
+      func: () => {
+        console.log("Executing UNLOAD BML...");
+      }
+    });
+
+    // Show extension action (if needed)
+    chrome.action.enable(tabId);
+  });
 }
 
-// chrome.commands.onCommand.addListener(function (command) {
-//     const direction = command.split('-')[1];
+function loadBML() {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    if (tabs.length === 0) return;
 
-//     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-//       chrome.tabs.sendMessage(tabs[0].id, { "Right" });
-//   });
-// });
-
-function loadBML () {
-  // alert('LOAD COMMAND')
-  // loadButton.click()
+    const tabId = tabs[0].id;
+    
+    chrome.scripting.executeScript({
+      target: { tabId: tabId },
+      func: () => {
+        console.log("Executing LOAD BML...");
+      }
+    });
+  });
 }
