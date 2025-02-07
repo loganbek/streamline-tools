@@ -1,9 +1,10 @@
 {
   "name": "Streamline Tools",
   "version": "1.0.0",
-  "description": "Streamline Tools for Oracle CPQ Cloud!",
+  "description": "Streamline Tools helps streamline your Oracle CPQ Cloud BML development, administration, maintenance, and support tasks.",
   "permissions": [
     "downloads",
+    "downloads.shelf",
     "activeTab",
     "declarativeContent",
     "storage",
@@ -44,5 +45,25 @@
     "48": "images/streamline48.png",
     "128": "images/streamline128.png"
   },
-  "manifest_version": 3
+  "manifest_version": 3,
+  "commands": {
+    "_execute_page_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+1"
+      },
+      "description": "Opens Streamline Tools Extension"
+    },
+    "unload_bml": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Right"
+      },
+      "description": "Triggers UNLOAD BML function for the current tab editor"
+    },
+    "load_bml": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Left"
+      },
+      "description": "Triggers LOAD BML function for the current tab editor"
+    }
+  }
 }
