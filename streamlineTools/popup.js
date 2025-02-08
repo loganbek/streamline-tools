@@ -31,14 +31,14 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
   const sub = parts[0]
   const domain = parts[1]
   const type = parts[2]
-  console.log(sub)
-  console.log(tabs, "tabs")
+  // console.log(sub)
+  // console.log(tabs, "tabs")
   const bmSiteParts = sub.split('//')
   const bmSite = bmSiteParts[1]
-  console.log(bmSite)
+  // console.log(bmSite)
   bmSiteSubDomain = bmSite
-  console.log(domain)
-  console.log(type)
+  // console.log(domain)
+  // console.log(type)
   bmSiteType = 'commerce'
   // CS - udpdate v3 scripting API
   // function executeContentScript ( contentScript ) {
@@ -50,7 +50,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
   //       file: contentScript
   //   })
   // }
-  console.log(bmSiteType)
+  // console.log(bmSiteType)
   if (url !== undefined) {
     // UNLOAD/LOAD TEST BML DISABLING
     if (
@@ -83,7 +83,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       response
     ) {
       if (response !== undefined) {
-        console.log(response.filename)
+        // console.log(response.filename)
         fileName = response.filename
       }
     })
@@ -123,7 +123,7 @@ chrome.downloads.onDeterminingFilename.addListener(function (item, suggest) {
 
 // UNLOAD ONCLICK
 unloadButton.onclick = function (params) {
-  console.log('unload clicked')
+  // console.log('unload clicked')
   const unloaded = true
 
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -142,17 +142,17 @@ let fileHandle
 loadButton.addEventListener('click', async e => {
   // fileHandle = await window.chooseFileSystemEntries();
   ;[fileHandle] = await window.showOpenFilePicker()
-  console.log(fileHandle)
+  // console.log(fileHandle)
   const file = await fileHandle.getFile()
   const contents = await file.text()
-  console.log(contents)
+  // console.log(contents)
 
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     chrome.tabs.sendMessage(
       tabs[0].id,
       { greeting: 'load', code: contents },
       function (response) {
-        console.log(response)
+        // console.log(response)
       }
     )
   })
@@ -160,15 +160,15 @@ loadButton.addEventListener('click', async e => {
 
 // UNLOAD TEST ONCLICK
 unloadTestButton.onclick = function (params) {
-  console.log('unloadTest clicked')
+  // console.log('unloadTest clicked')
   const unloadedTest = true
 
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unloadTest' }, function (
       response
     ) {
-      console.log(response.filename)
-      console.log(response.testCode)
+      // console.log(response.filename)
+      // console.log(response.testCode)
       if (response.testCode && response.filename) {
         saveText(response.filename + '.test' + '.bml', response.testCode)
       }
@@ -191,7 +191,7 @@ loadTestButton.addEventListener('click', async e => {
   }
   //    [fileHandle2] = await window.showOpenFilePicker(options);
   ;[fileHandle2] = await window.showOpenFilePicker()
-  console.log(fileHandle2)
+  // console.log(fileHandle2)
   const file = await fileHandle2.getFile()
   const contents = await file.text()
 
@@ -200,7 +200,7 @@ loadTestButton.addEventListener('click', async e => {
       tabs[0].id,
       { greeting: 'loadTest', code: contents },
       function (response) {
-        console.log(response)
+        // console.log(response)
       }
     )
   })
