@@ -1,16 +1,28 @@
 /* STUB | PRICING + UTIL CONTENT SCRIPT */
 
-let commentHeader;
-try {
-  if (!commentHeader) {
-    commentHeader = "";
-  }
-} catch (e) {
-  console.log(e);
-}
+// let commentHeader;
+// try {
+  // if (!commentHeader) {
+    // commentHeader = "";
+  // }
+// } catch (e) {
+  // console.log(e);
+// }
 // let commentHeader = ''
-let code = "";
-let testCode = "";
+// let code = "";
+// let testCode = "";
+
+if(typeof commentHeader === "undefined"){
+  var commentHeader = "";
+}
+
+if(typeof code === "undefined"){
+  var code = "";
+}
+
+if(typeof testCode === "undefined"){
+  var testCode = "";
+}
 
 // Listen for the PassToBackground event
 window.addEventListener(
