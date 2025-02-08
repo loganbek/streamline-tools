@@ -1,8 +1,13 @@
 // STUB | ADMIN COMMERCE ACTIONS CONTENT
 
 // VARS
-let code = ''
-let filename
+// let code = ''
+if (typeof code === "undefined") {
+  var code = "";
+}
+if (typeof filename === "undefined") {
+  var filename = "";
+}
 
 // refactor
 
