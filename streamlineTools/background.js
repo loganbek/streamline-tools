@@ -13,7 +13,8 @@ chrome.runtime.onInstalled.addListener(() => {
             }
           })
         ],
-        actions: [new chrome.declarativeContent.SetIcon({ path: "images/streamline48.png" })]
+        // actions: [new chrome.declarativeContent.SetIcon({ path: "images/streamline48.png" })]
+        actions: [new chrome.declarativeContent.ShowAction()]
       }
     ]);
   });
