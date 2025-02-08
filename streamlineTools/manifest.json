@@ -26,7 +26,8 @@
         "injected.js",
         "adminCommerceInjected.js",
         "adminCommerceRulesInjected.js",
-        "adminConfigInjected.js"
+        "adminConfigInjected.js",
+        "adminCommerceActionsInjected.js"
       ],
       "matches": ["<all_urls>"]
     }
