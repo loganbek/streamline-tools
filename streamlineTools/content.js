@@ -116,7 +116,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     const loadEvent = new CustomEvent("loadCode", { detail: request.code });
     window.dispatchEvent(loadEvent);
   } else if (request.greeting == "loadTest") {
-    console.log(request.code);
+    //console.log(request.code);
     const loadTestEvent = new CustomEvent("loadTestCode", {
       detail: request.code,
     });
@@ -144,5 +144,5 @@ chrome.runtime.onMessage.addListener(function (message) {
   direction === "unload_bml"
     ? "unload_bml received - content.js"
     : "load_bml received - content.js";
-  console.log(direction);
+  // console.log(direction);
 });
