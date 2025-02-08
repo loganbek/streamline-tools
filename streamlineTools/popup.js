@@ -64,9 +64,19 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     if (
       url.includes('bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp')
     ) {
-      executeContentScript('adminCommerceActionsContent.js')
+      // executeContentScript('adminCommerceActionsContent.js')
+      chrome.scripting.executeScript(
+        {
+          target: {tabId: tabs[0].id},
+          files: ['adminCommerceActionsContent.js'],
+        });
     } else if (url.includes('bigmachines.com/admin/commerce/rules')) {
-      executeContentScript('adminCommerceRulesContent.js')
+      // executeContentScript('adminCommerceRulesContent.js')
+      chrome.scripting.executeScript(
+        {
+          target: {tabId: tabs[0].id},
+          files: ['adminCommerceRulesContent.js'],
+        });
     } else if (url.includes('bigmachines.com/admin/configuration/rules')) {
       bmSiteType = 'configuration'
       // executeContentScript('adminConfigContent.js')
