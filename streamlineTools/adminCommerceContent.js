@@ -1,11 +1,27 @@
 /* STUB | ADMIN COMMERCE CONTENT */
 
-let code = ''
-let testCode = ''
+// let code = ''
+// let testCode = ''
 // var filename = filename || "";
-let filename
-let filenameAfter
-let filenameBefore
+// let filename
+// let filenameAfter
+// let filenameBefore
+
+if (typeof code === "undefined") {
+  var code = "";
+}
+if (typeof testCode === "undefined") {
+  var testCode = "";
+}
+if (typeof filename === "undefined") {
+  var filename = "";
+}
+if (typeof filenameAfter === "undefined") {
+  var filenameAfter = "";
+}
+if (typeof filenameBefore === "undefined") {
+  var filenameBefore = "";
+}
 
 window.addEventListener('PassToBackground', function (evt) {
   code = evt.detail
@@ -42,18 +58,18 @@ injectJs(chrome.runtime.getURL('adminCommerceInjected.js'))
 
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
-    console.log(sender.tab
-      ? 'from a content script:' + sender.tab.url
-      : 'from the extension')
-    console.log(request.greeting
-      ? 'greeting: ' + request.greeting
-      : 'nogreeting')
+    // console.log(sender.tab
+      // ? 'from a content script:' + sender.tab.url
+      // : 'from the extension')
+    // console.log(request.greeting
+      // ? 'greeting: ' + request.greeting
+      // : 'nogreeting')
     if (request.greeting == 'unload') {
       const unloadEvent = new CustomEvent('unloadCode', { detail: request.code })
       window.dispatchEvent(unloadEvent)
 
       chrome.storage.sync.get(['commerceFileName'], function (result) {
-        console.log('Value currently is ' + result.key)
+        // console.log('Value currently is ' + result.key)
         if (result.key !== undefined) {
           filename = result.key
         }
@@ -75,7 +91,7 @@ chrome.runtime.onMessage.addListener(
       const loadEvent = new CustomEvent('loadCode', { detail: request.code })
       window.dispatchEvent(loadEvent)
     } else if (request.greeting == 'loadTest') {
-      console.log(request.code)
+      // console.log(request.code)
       const loadTestEvent = new CustomEvent('loadTestCode', { detail: request.code })
       window.dispatchEvent(loadTestEvent)
     } else if (request.greeting == 'filename') {
@@ -89,11 +105,11 @@ chrome.runtime.onMessage.addListener(
     }
 
     //  :nth-child(3) > td.form-input > input[type=hidden]
-    console.log(filename)
+    // console.log(filename)
 
-    console.log(commActionFileName);
+    // console.log(commActionFileName);
     chrome.storage.sync.set({ commerceFileName: filename }, function () {
       console.log('you saved me!! comm action')
-      console.log(filename)
+      // console.log(filename)
     })
   })

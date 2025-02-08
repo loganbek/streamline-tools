@@ -1,6 +1,6 @@
 # Streamline Tools for Oracle CPQ Cloud
 
-![Streamline Tools](SLCPQ_LOGO_SITE.png)
+![Streamline Tools](streamlinecpq.png)
 
 [![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/loganbek/streamlineTools/pulls)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
@@ -59,7 +59,11 @@ https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-ove
 
    `code --install-extension CPQConsultant.cpq-devkit-o`
 
+<!-- or `ext install CPQConsultant.cpq-devkit-o` in VSCode Command Palette. -->
+
 <!-- NOTE look into CPQ Toolkit -->
+
+<!-- https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-sf -->
 
 9. Congratulations you've successfully installed Streamline Tools!
 
@@ -111,6 +115,11 @@ Coming soon...
   - Run `lint-concise` to display a concise list of style errors.
   - Run `lint-verbose` to display a detailed list of style errors.
   - Run `lint-fix` to correct most style errors.
+
+<!-- ## Testing
+
+Oracle Configure, Price, Quote (CPQ)
+Version: 24D Patch 4 -->
 
 <!-- switched to alias in .bashrc -->
 <!-- - Run `npx standard | npx standard-summary | npx snazzy` to display a concise list of style errors.

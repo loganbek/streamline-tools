@@ -10,27 +10,28 @@
     "storage",
     "tabs",
     "scripting",
-    "https://accounts.google.com/o/oauth2/token"
+    "commands"
   ],
   "options_ui": {
     "page": "options.html",
     "open_in_tab": true
   },
   "background": {
-    "service_worker": "background.js",
-    "type": "module"
+    "service_worker": "background.js"
   },
-  "content_scripts": [
+  "web_accessible_resources": [
     {
-      "matches": ["http://www.google.com/robots.txt*"],
-      "js": ["oauth2/oauth2_inject.js"],
-      "run_at": "document_start"
+      "resources": [
+        "jsonpath-1.0.2.js",
+        "injected.js",
+        "adminCommerceInjected.js",
+        "adminCommerceRulesInjected.js",
+        "adminConfigInjected.js",
+        "adminCommerceActionsInjected.js"
+      ],
+      "matches": ["<all_urls>"]
     }
   ],
-  "web_accessible_resources": [{
-    "resources": ["oauth2/oauth2.html", "content.css", "jsonpath-1.0.2.js", "injected.js", "adminCommerceInjected.js", "adminConfigInjected.js", "adminCommerceRulesInjected.js", "adminCommerceActionsInjected.js"],
-    "matches": ["<all_urls>"]
-  }],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -48,7 +49,7 @@
   },
   "manifest_version": 3,
   "commands": {
-    "_execute_page_action": {
+    "_execute_action": {
       "suggested_key": {
         "default": "Ctrl+Shift+1"
       },

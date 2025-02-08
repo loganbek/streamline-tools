@@ -7,16 +7,16 @@ window.addEventListener('load', function () {
 window.addEventListener('unloadCode', function (evt) {
   // #textarea
   iframes = document.getElementsByTagName('iframe')
-  console.log(iframes)
+  // console.log(iframes)
   textAreaCode = document.getElementsByTagName('iframe')[0].contentDocument.querySelector('#textarea').value
-  console.log(textAreaCode)
+  // console.log(textAreaCode)
   if (textAreaCode) {
     testCommerceCode = textAreaCode
   } else {
     testCommerceCode = '\n'
   }
-  console.log(textAreaCode)
-  console.log(testCommerceCode)
+  // console.log(textAreaCode)
+  // console.log(testCommerceCode)
   const event = new CustomEvent('PassCodeToBackground', { detail: testCommerceCode })
   window.dispatchEvent(event)
 })

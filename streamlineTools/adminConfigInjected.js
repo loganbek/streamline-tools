@@ -66,34 +66,34 @@ function simulatedClick(target, options) {
 
 // var toggleModalPass = false
 document.addEventListener('click', function (evnt) {
-  console.log(evnt.target.id)
-  console.log('global click')
+  // console.log(evnt.target.id)
+  // console.log('global click')
   // Arrive.unbindAllArrive()
   // evnt.trigger("dblclick")
-  console.log(evnt)
+  // console.log(evnt)
   // evnt.
 
-  console.log('removing loading dialog...')
+  // console.log('removing loading dialog...')
   // bodyModalHook[0].querySelector('ext-el-mask').remove()
-  console.log('dialog removed')
-  console.log("activeElement global click listener")
-  console.log(document.activeElement)
+  // console.log('dialog removed')
+  // console.log("activeElement global click listener")
+  // console.log(document.activeElement)
   // for ()
   // bodyModalHook[0].src += ''
 
   const bodyElement2 = document.getElementsByTagName('body')
-  console.log('bodyElement2')
-  console.log(bodyElement2)
+  // console.log('bodyElement2')
+  // console.log(bodyElement2)
 
-  console.log(bodyElement2[0])
+  // console.log(bodyElement2[0])
   // bodyModalHook = bodyElement[0].getElementsByClassName(
   //   '.x-window x-component x-window-maximized x-masked'
   // )
   bodyModalHook2 = bodyElement2[0].getElementsByClassName(
     ' x-window x-component  x-window-maximized'
   )
-  console.log('bodyModalHook2')
-  console.log(bodyModalHook2)
+  // console.log('bodyModalHook2')
+  // console.log(bodyModalHook2)
   // window.click()
   if (bodyModalHook2[0] && bodyModalHook2[0].querySelectorAll('.ext-el-mask') != null) {
     bodyModalHook2[0].querySelectorAll('.ext-el-mask').forEach(e => e.parentNode.removeChild(e))
@@ -107,7 +107,7 @@ document.addEventListener('click', function (evnt) {
     // bodyModalHook2[0].querySelector("#x-auto-122 > div.ext-el-mask-msg").outerHTML=" "
     // bodyModalHook2[0].querySelector("#x-auto-122 > div.ext-el-mask-msg").remove()
     // bodyModalHook2[0].querySelector("#x-auto-122 > div.ext-el-mask-msg").style="display:none;"
-    console.log(bodyModalHook2[0].querySelectorAll('.ext-el-mask-msg'))
+    // console.log(bodyModalHook2[0].querySelectorAll('.ext-el-mask-msg'))
     // simulatedClick(bodyModalHook2[0].querySelectorAll('.ext-el-mask-msg')[0])
     // bodyModalHook2[0].querySelectorAll('.ext-el-mask-msg')[0].click()
     // bodyModalHook2[0].click()
@@ -123,7 +123,7 @@ document.addEventListener('click', function (evnt) {
     // bodyModalHook2[0].querySelector("div.ext-el-mask-msg").outerHTML=" "
     
     // bodyModalHook2[0].querySelectorAll('.ext-el-mask-msg')[0].HTML = ""
-    console.log(bodyModalHook2[0].querySelectorAll('.ext-el-mask-msg'))
+    // console.log(bodyModalHook2[0].querySelectorAll('.ext-el-mask-msg'))
     
   // }
 
@@ -132,7 +132,7 @@ document.addEventListener('click', function (evnt) {
     // bodyModalHook2[0].querySelector("#x-auto-122 > div.ext-el-mask-msg").outerHTML=" "
     // bodyModalHook2[0].querySelector("#x-auto-122 > div.ext-el-mask-msg").remove()
     // bodyModalHook2[0].querySelector("#x-auto-122 > div.ext-el-mask-msg3").style="display:none;"
-    console.log(bodyModalHook2[0].querySelectorAll('.ext-el-mask-msg'))
+    // console.log(bodyModalHook2[0].querySelectorAll('.ext-el-mask-msg'))
     // simulatedClick(bodyModalHook2[0].querySelectorAll('.ext-el-mask-msg')[0])
     // bodyModalHook2[0].querySelectorAll('.ext-el-mask-msg')[0].click()
     // bodyModalHook2[0].click()
@@ -148,33 +148,33 @@ document.addEventListener('click', function (evnt) {
     // bodyModalHook2[0].querySelector("div.ext-el-mask-msg").outerHTML=" "
     
     // bodyModalHook2[0].querySelectorAll('.ext-el-mask-msg')[0].HTML = ""
-    console.log(bodyModalHook2[0].querySelectorAll('.ext-el-mask-msg'))
+    // console.log(bodyModalHook2[0].querySelectorAll('.ext-el-mask-msg'))
     
   // }
   
   // bodyModalHook2[0].click()
   // setTimeout(() => {
-  //   console.log(bodyModalHook2[0].querySelectorAll('.ext-el-mask'))
+  //   // console.log(bodyModalHook2[0].querySelectorAll('.ext-el-mask'))
 
   //   // closeLoadingDialog()
   // }, 5000);
   // bodyModalHook2[0].click()
   // document.body.click
   // buttonCollection = document.getElementsByClassName('x-btn-text ')
-  console.log(buttonCollection)
+  // console.log(buttonCollection)
   // // // oop through collection and check for "Validate"
   // for (const item of buttonCollection) {
   //   if (item.innerText === 'Validate') {
-  //     console.log('found validate button')
+  //     // console.log('found validate button')
   //     validateButton = item
   //     validateButton.id = 'valid'
-  //     console.log(item)
+  //     // console.log(item)
   //   }
   // }
 
   // simulatedClick(validateButton)
   // validateButton.click
-  console.log(validateButton)
+  // console.log(validateButton)
 
   // if (toggleModalPass) {
   if (
@@ -242,17 +242,17 @@ document.addEventListener('click', function (evnt) {
   // try focus
 
   // function reloadIFrame () {
-  //   console.log('reloading..')
+  //   // console.log('reloading..')
   //   document.getElementById('#frame_x-auto-171-area').contentWindow.location.reload()
   // }
 
   // document.head.removeChild(document.getElementById('configInject'));
 if(document.getElementsByClassName('configInject')){
   const configInjectClassElements = document.getElementsByClassName('configInject')
-  console.log(configInjectClassElements)
+  // console.log(configInjectClassElements)
   for (w = 0; w < configInjectClassElements.length + 1; w++) {
-    console.log(document.head.removeChild(configInjectClassElements[w]))
-    console.log(configInjectClassElements[w])
+    // console.log(document.head.removeChild(configInjectClassElements[w]))
+    // console.log(configInjectClassElements[w])
     // document.head.removeChild(configInjectClassElements[w])
   }
 }
@@ -303,14 +303,14 @@ window.addEventListener('unloadCode', function (evt) {
   textAreaCode = document
     .getElementsByTagName('iframe')[1]
     .contentDocument.querySelector('#textarea').value
-  console.log(textAreaCode)
+  // console.log(textAreaCode)
   if (textAreaCode) {
     code = textAreaCode
   } else {
     code = '\n'
   }
-  console.log(textAreaCode)
-  console.log(code)
+  // console.log(textAreaCode)
+  // console.log(code)
   const event = new CustomEvent('PassCodeToBackground', {
     detail: code
   })
@@ -322,37 +322,37 @@ window.addEventListener(
   'loadCode',
   function (evt) {
     code = evt.detail
-    console.log(document.getElementById('x-auto-3-input'))
+    // console.log(document.getElementById('x-auto-3-input'))
     textarea = document
       .getElementsByTagName('iframe')[1]
       .contentDocument.querySelector('#textarea')
     textarea.value = code
-    console.log('loadCode listener')
+    // console.log('loadCode listener')
     modalHookTest = document.getElementsByClassName(
       'x-window x-component x-window-maximized x-masked'
     )
 
-    console.log(modalHookTest)
+    // console.log(modalHookTest)
 
     const bodyElement = document.getElementsByTagName('body')
-    console.log(bodyElement[0])
+    // console.log(bodyElement[0])
     // bodyModalHook = bodyElement[0].getElementsByClassName(
     //   '.x-window x-component x-window-maximized x-masked'
     // )
     bodyModalHook = bodyElement[0].getElementsByClassName(
       ' x-window x-component  x-window-maximized'
     )
-    console.log(bodyModalHook)
+    // console.log(bodyModalHook)
 
     // loadingDiv = htmlToElement(
     //   '<div class="ext-el-mask" style="display: block;"><div class="ext-el-mask-msg" style="display: block; left: 955px; top: 726px;"><div>Loading...</div></div></div>'
     // )
 
     // document.arrive('.ext-el-mask', function () {
-    //   console.log('removing loading dialog...')
-    //   console.log('inside arrive')
+    //   // console.log('removing loading dialog...')
+    //   // console.log('inside arrive')
     //   // bodyModalHook[0].querySelector('.ext-el-mask').remove()
-    //   console.log('dialog removed')
+    //   // console.log('dialog removed')
     //   // frame reload
     //   // bodyModalHook[0].src += ''
     //   // Arrive.unbindAllArrive() // prob move into click handler
@@ -360,10 +360,10 @@ window.addEventListener(
     // })
 
     // document.arrive('.ext-el-mask', function () {
-    //   console.log('removing loading dialog...')
-    //   console.log('inside arrive')
+    //   // console.log('removing loading dialog...')
+    //   // console.log('inside arrive')
     //   // bodyModalHook[0].querySelector('.ext-el-mask').remove()
-    //   console.log('dialog removed')
+    //   // console.log('dialog removed')
     //   // frame reload
     //   // bodyModalHook[0].src += ''
     //   // Arrive.unbindAllArrive() // prob move into click handler
@@ -371,10 +371,10 @@ window.addEventListener(
     // })
 
     // document.arrive('.ext-el-mask-msg', function () {
-    //   console.log('removing loading dialog...')
-    //   console.log('inside arrive')
+    //   // console.log('removing loading dialog...')
+    //   // console.log('inside arrive')
     //   // bodyModalHook[0].querySelector('.ext-el-mask').remove()
-    //   console.log('dialog removed')
+    //   // console.log('dialog removed')
     //   // frame reload
     //   // bodyModalHook[0].src += ''
     //   // Arrive.unbindAllArrive() // prob move into click handler
@@ -382,10 +382,10 @@ window.addEventListener(
     // })
 
     // document.arrive('.ext-el-mask-msg3', function () {
-    //   console.log('removing loading dialog...')
-    //   console.log('inside arrive')
+    //   // console.log('removing loading dialog...')
+    //   // console.log('inside arrive')
     //   // bodyModalHook[0].querySelector('.ext-el-mask').remove()
-    //   console.log('dialog removed')
+    //   // console.log('dialog removed')
     //   // frame reload
     //   // bodyModalHook[0].src += ''
     //   // Arrive.unbindAllArrive() // prob move into click handler
@@ -394,7 +394,7 @@ window.addEventListener(
 
     // let editorHook = document.getElementById('editor')
 
-    // console.log(editorHook)
+    // // console.log(editorHook)
     const loadingDiv = htmlToElement(
       '<div id ="configModalLoad" class="ext-el-mask" style="display: block;"><div id ="configModalLoadMsg" class="ext-el-mask-msg" style="display: block; left: 655px; top: 626px;"><div>Loading...</div></div></div>'
     )
@@ -423,24 +423,24 @@ window.addEventListener(
       // document.querySelector("#editor").appendChild(loadingDiv)
 
       // document.querySelector("html > body > div:nth-of-type(2)")
-//       console.log(document.getElementsByTagName("iframe")[0]).click
-      console.log(document.getElementsByTagName("iframe")[1]).click
+//       // console.log(document.getElementsByTagName("iframe")[0]).click
+      // console.log(document.getElementsByTagName("iframe")[1]).click
 
 
-      console.log("activeElement post loadingDiv append")
-      console.log(document.activeElement);
+      // console.log("activeElement post loadingDiv append")
+      // console.log(document.activeElement);
 
-      console.log(document.getElementsByTagName("iframe").document)
-      console.log(document.getElementsByTagName("iframe").contentDocument)
-      console.log(document.activeElement.contentDocument)
-      console.log(document.activeElement.contentDocument.innerHTML)
+      // console.log(document.getElementsByTagName("iframe").document)
+      // console.log(document.getElementsByTagName("iframe").contentDocument)
+      // console.log(document.activeElement.contentDocument)
+      // console.log(document.activeElement.contentDocument.innerHTML)
 
       
 
-//       console.log(document.activeElement.contentDocument.html.body)
-      console.log(document.activeElement.contentDocument.querySelector('#ext-el-mask-msg'))
-      console.log(document.activeElement.contentDocument.querySelector('#ext-el-mask'))
-      console.log(document.activeElement.document)
+//       // console.log(document.activeElement.contentDocument.html.body)
+      // console.log(document.activeElement.contentDocument.querySelector('#ext-el-mask-msg'))
+      // console.log(document.activeElement.contentDocument.querySelector('#ext-el-mask'))
+      // console.log(document.activeElement.document)
 
       // document.activeElement.getElementsByClassName('ext-el-mask-msg')[0].click
       // document.activeElement.getElementsByClassName('ext-el-mask')[0].click
@@ -453,7 +453,7 @@ window.addEventListener(
       // document.querySelector("#result").appendChild(loadingDiv)
       // body > table.page-content
 
-      console.log(document.getElementById('#frame_x-auto-171-area').contentWindow)
+      // console.log(document.getElementById('#frame_x-auto-171-area').contentWindow)
 
       // document.getElementsByTagName('iframe')[0].document.querySelector("#editor")
 
@@ -467,8 +467,8 @@ window.addEventListener(
       // document.querySelector('.ext-el-mask-msg').remove
       // if (current.previousElementSibling.className === 'ext-el-mask-msg') {
       //       const prevSiblings = current.previousElementSibling
-      //       console.log(prevSiblings)
-        //   console.log("sib")
+      //       // console.log(prevSiblings)
+        //   // console.log("sib")
         //   }
     // }
 
@@ -503,8 +503,8 @@ window.addEventListener(
     //   const current = document.querySelector('.ext-el-mask')
     //   if (current.previousElementSibling.className === 'ext-el-mask') {
     //     const prevSiblings = current.previousElementSibling
-    //     console.log(prevSiblings)
-    //   console.log("sib")
+    //     // console.log(prevSiblings)
+    //   // console.log("sib")
     //   }
     //   // document.body.click
     // }
@@ -529,7 +529,7 @@ window.addEventListener(
     // // bodyModalHook[0].click()
     // // }
     // setTimeout(() => {
-    //   console.log(bodyModalHook[0].querySelectorAll('.ext-el-mask'))
+    //   // console.log(bodyModalHook[0].querySelectorAll('.ext-el-mask'))
 
     //   // document.body.click()
     // }, 500);
@@ -543,12 +543,12 @@ window.addEventListener(
     const elem = document
       .getElementsByTagName('iframe')[1]
       .contentDocument.querySelector('#textarea')
-    console.log(elem)
+    // console.log(elem)
     buttonCollection = document.getElementsByClassName('x-btn-text ')
     // oop through collection and check for "Validate"
     // for (const item of buttonCollection) {
     //   if (item.innerText === 'Validate') {
-    //     console.log('found validate button')
+    //     // console.log('found validate button')
     //     validateButton = item
     //   }
     // }
@@ -563,7 +563,7 @@ window.addEventListener(
 
 function main () {
   const textArea = document.getElementById('textarea')
-  console.log(textArea)
+  // console.log(textArea)
   code = document.querySelector('#textarea').value
   // alert(code)
 

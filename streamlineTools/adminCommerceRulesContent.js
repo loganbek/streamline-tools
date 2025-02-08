@@ -1,8 +1,12 @@
 // ADMIN COMMERCE RULES CONTENT
 
 // VARS
-let code = ''
-let filename
+if (typeof code === "undefined") {
+  var code = "";
+}
+if (typeof filename === "undefined") {
+  var filename = "";
+}
 
 // Listen for the PassToBackground event
 window.addEventListener('PassToBackground', function (evt) {
@@ -49,17 +53,17 @@ chrome.runtime.onMessage.addListener(
     // let filename = ruleName + "." + ruleType;
     // alert(filename);
     // let filename = "commerceRuleName";
-    console.log(sender.tab
-      ? 'from a content script:' + sender.tab.url
-      : 'from the extension')
-    console.log(request.greeting
-      ? 'greeting: ' + request.greeting
-      : 'nogreeting')
+    // console.log(sender.tab
+      // ? 'from a content script:' + sender.tab.url
+      // : 'from the extension')
+    // console.log(request.greeting
+      // ? 'greeting: ' + request.greeting
+      // : 'nogreeting')
     if (request.greeting == 'unload') {
       const unloadEvent = new CustomEvent('unloadCode', { detail: request.code })
       window.dispatchEvent(unloadEvent)
       // chrome.storage.sync.get(['commerceFileName'], function(result) {
-      //     console.log('Value currently is ' + result.key);
+      //     // console.log('Value currently is ' + result.key);
       //     if (result.key !== undefined) {
       //         filename = result.key;
       //     }
@@ -68,14 +72,14 @@ chrome.runtime.onMessage.addListener(
       if (document.getElementsByClassName('bottom-bar')[0].innerHTML.length > 0) {
         let fileString = document.getElementsByClassName('bottom-bar')[0].innerHTML
         fileStringArray = fileString.split('&gt;')
-        console.log(fileStringArray)
-        console.log(fileStringArray[fileStringArray.length - 1])
+        // console.log(fileStringArray)
+        // console.log(fileStringArray[fileStringArray.length - 1])
         fileString = camelCase(fileStringArray[fileStringArray.length - 1])
-        console.log(fileString)
+        // console.log(fileString)
         const lc = fileString[0].toLowerCase()
-        console.log(fileString)
+        // console.log(fileString)
         fileString = lc + fileString.substring(1)
-        console.log(fileString)
+        // console.log(fileString)
         filename = fileString
       };
       sendResponse({
@@ -100,14 +104,14 @@ chrome.runtime.onMessage.addListener(
 if (document.getElementsByClassName('bottom-bar')[0].innerHTML.length > 0) {
   let fileString = document.getElementsByClassName('bottom-bar')[0].innerHTML
   fileStringArray = fileString.split('&gt;')
-  console.log(fileStringArray)
-  console.log(fileStringArray[fileStringArray.length - 1])
+  // console.log(fileStringArray)
+  // console.log(fileStringArray[fileStringArray.length - 1])
   fileString = camelCase(fileStringArray[fileStringArray.length - 1])
-  console.log(fileString)
+  // console.log(fileString)
   const lc = fileString[0].toLowerCase()
-  console.log(fileString)
+  // console.log(fileString)
   fileString = lc + fileString.substring(1)
-  console.log(fileString)
+  // console.log(fileString)
 };
 
 // TO CAMELCASE FUNCTION
