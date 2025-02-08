@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   console.log('document loaded');
 
-  restore_options();
+  // restore_options();
 
   const saveButton = document.getElementById('save');
   if (saveButton) {
