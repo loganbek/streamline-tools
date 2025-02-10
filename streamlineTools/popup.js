@@ -71,7 +71,8 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
                 files: ['adminCommerceRulesContent.js'],
             });
         } else if (url.includes('bigmachines.com/admin/configuration/rules')) {
-            bmSiteType = 'configuration'
+            bmSiteType = 'configuration';
+            logDebug("Folder Type:", bmSiteType);
             logDebug("Executing content script: adminConfigContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
