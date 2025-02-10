@@ -1,9 +1,9 @@
-// DEBUG FLAG
-const DEBUG = true;
+// POPUP_DEBUG FLAG
+const POPUP_DEBUG = true;
 
 function logDebug(message, ...args) {
-    if (DEBUG) {
-        console.log("[DEBUG]", message, ...args);
+    if (POPUP_DEBUG) {
+        console.log("[POPUP_DEBUG]", message, ...args);
     }
 }
 
