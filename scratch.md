@@ -4527,3 +4527,4 @@ util func elem
 - [] <span class="x-panel-header-text" id="ext-gen55">Util BML Library Function Editor: Properties &amp; Parameters</span>
 comm func elem
 - [ ] <span class="x-panel-header-text" id="ext-gen55">Util BML Library Function Editor: Properties &amp; Parameters</span>
+document.querySelector('span[id^="ext-gen"]').innerHTML.includes("Util");
