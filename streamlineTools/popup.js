@@ -1,18 +1,17 @@
-/* STUB | POPUP SCRIPT */
+// DEBUG FLAG
+const DEBUG = true;
+
+function logDebug(message, ...args) {
+    if (DEBUG) {
+        console.log("[DEBUG]", message, ...args);
+    }
+}
 
 'use strict'
 
 // VARS
-// let fileName
-// let commentHeader
-// let url
 let bmSiteSubDomain
 let bmSiteType
-// let header
-
-// FLAGS
-// const unloaded = false
-// const unloadedTest = false
 
 // BUTTONS
 const unloadButton = document.getElementById('unload')
@@ -22,227 +21,190 @@ const loadTestButton = document.getElementById('loadTest')
 const optionsButton = document.getElementById('options')
 const logsButton = document.getElementById('logs')
 
+logDebug("Initializing extension...");
+
 // CHROME TABS
 chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-  const tab = tabs[0]
-  const url = tab.url
-  const full = url
-  const parts = full.split('.')
-  const sub = parts[0]
-  const domain = parts[1]
-  const type = parts[2]
-  // console.log(sub)
-  // console.log(tabs, "tabs")
-  const bmSiteParts = sub.split('//')
-  const bmSite = bmSiteParts[1]
-  // console.log(bmSite)
-  bmSiteSubDomain = bmSite
-  // console.log(domain)
-  // console.log(type)
-  bmSiteType = 'commerce'
-  // CS - udpdate v3 scripting API
-  // function executeContentScript ( contentScript ) {
+    logDebug("chrome.tabs.query executed", tabs);
     
-  //   // const tabId = getTabId();
-  //   const tabId = tabs[0].id;
-  //   chrome.scripting.executeScript({
-  //       tab: tabId,
-  //       file: contentScript
-  //   })
-  // }
-  // console.log(bmSiteType)
-  if (url !== undefined) {
-    // UNLOAD/LOAD TEST BML DISABLING
-    if (
-      url.includes('bigmachines.com/admin/commerce/rules') ||
-      url.includes('bigmachines.com/admin/configuration/rules') ||
-      url.includes('bigmachines.com/admin/commerce/actions')
-    ) {
-      unloadTestButton.disabled = true
-      loadTestButton.disabled = true
-    }
-    if (
-      url.includes('bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp')
-    ) {
-      // executeContentScript('adminCommerceActionsContent.js')
-      chrome.scripting.executeScript(
-        {
-          target: {tabId: tabs[0].id},
-          files: ['adminCommerceActionsContent.js'],
-        });
-    } else if (url.includes('bigmachines.com/admin/commerce/rules')) {
-      // executeContentScript('adminCommerceRulesContent.js')
-      chrome.scripting.executeScript(
-        {
-          target: {tabId: tabs[0].id},
-          files: ['adminCommerceRulesContent.js'],
-        });
-    } else if (url.includes('bigmachines.com/admin/configuration/rules')) {
-      bmSiteType = 'configuration'
-      // executeContentScript('adminConfigContent.js')
-      // TODO: fix same filename overwrite for config advanced condition and action values to set
-      chrome.scripting.executeScript(
-        {
-          target: {tabId: tabs[0].id},
-          files: ['adminConfigContent.js'],
-        });
-    }
-  }
-  if (url.includes('bigmachines.com/spring/')) {
-    chrome.tabs.sendMessage(tabs[0].id, { greeting: 'filename' }, function (
-      response
-    ) {
-      if (response !== undefined) {
-        // console.log(response.filename)
-        fileName = response.filename
-      }
-    })
-    // executeContentScript('content.js')
-    chrome.scripting.executeScript(
-      {
-        target: {tabId: tabs[0].id},
-        files: ['content.js'],
-      });
-      
-    }
-  })
-  
-  // // CS
-  // function executeContentScript (contentScriptName) {
-    //   chrome.tabs.executeScript({
-      //     file: contentScriptName
-      //   })
-      // }
-      
+    const tab = tabs[0]
+    const url = tab.url
+    logDebug("Active tab URL:", url);
 
-// TODO: add to options
-// DISSABLE DOWNLOADS SHELF
+    const full = url
+    const parts = full.split('.')
+    const sub = parts[0]
+    const domain = parts[1]
+    const type = parts[2]
+
+    const bmSiteParts = sub.split('//')
+    const bmSite = bmSiteParts[1]
+    
+    bmSiteSubDomain = bmSite
+    bmSiteType = 'commerce'
+    
+    logDebug("Extracted subdomain:", bmSiteSubDomain);
+    logDebug("Extracted domain:", domain);
+    logDebug("Extracted type:", type);
+
+    if (url !== undefined) {
+        if (
+            url.includes('bigmachines.com/admin/commerce/rules') ||
+            url.includes('bigmachines.com/admin/configuration/rules') ||
+            url.includes('bigmachines.com/admin/commerce/actions')
+        ) {
+            unloadTestButton.disabled = true
+            loadTestButton.disabled = true
+            logDebug("Test buttons disabled due to matching admin commerce rules URL.");
+        }
+        
+        if (url.includes('bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp')) {
+            logDebug("Executing content script: adminCommerceActionsContent.js");
+            chrome.scripting.executeScript({
+                target: { tabId: tabs[0].id },
+                files: ['adminCommerceActionsContent.js'],
+            });
+        } else if (url.includes('bigmachines.com/admin/commerce/rules')) {
+            logDebug("Executing content script: adminCommerceRulesContent.js");
+            chrome.scripting.executeScript({
+                target: { tabId: tabs[0].id },
+                files: ['adminCommerceRulesContent.js'],
+            });
+        } else if (url.includes('bigmachines.com/admin/configuration/rules')) {
+            bmSiteType = 'configuration'
+            logDebug("Executing content script: adminConfigContent.js");
+            chrome.scripting.executeScript({
+                target: { tabId: tabs[0].id },
+                files: ['adminConfigContent.js'],
+            });
+        }
+    }
+
+    if (url.includes('bigmachines.com/spring/')) {
+        logDebug("Sending message to content script for filename retrieval.");
+        chrome.tabs.sendMessage(tabs[0].id, { greeting: 'filename' }, function (response) {
+            if (response !== undefined) {
+                logDebug("Received filename from content script:", response.filename);
+                fileName = response.filename;
+            }
+        });
+
+        logDebug("Executing content script: content.js");
+        chrome.scripting.executeScript({
+            target: { tabId: tabs[0].id },
+            files: ['content.js'],
+        });
+    }
+});
+
 chrome.downloads.setShelfEnabled(true)
+logDebug("Downloads shelf enabled.");
 
-// TODO: EXTERNAL LOG LINKING
+// EXTERNAL LOG LINKING
 logsButton.disabled = true
+logDebug("Logs button disabled.");
 
-// DOWNLOAD FILENAME
+// DOWNLOAD FILENAME HANDLING
 chrome.downloads.onDeterminingFilename.addListener(function (item, suggest) {
-  suggest({
-    filename:
-      'bigmachines/' + bmSiteSubDomain + '/' + bmSiteType + '/' + item.filename,
-    conflictAction: 'overwrite'
-  })
-})
+    logDebug("Download detected, setting filename:", item.filename);
+    suggest({
+        filename: 'bigmachines/' + bmSiteSubDomain + '/' + bmSiteType + '/' + item.filename,
+        conflictAction: 'overwrite'
+    });
+});
 
 // UNLOAD ONCLICK
-unloadButton.onclick = function (params) {
-  // console.log('unload clicked')
-  const unloaded = true
-
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unload' }, function (
-      response
-    ) {
-      if (response.code && response.filename) {
-        saveText(response.filename + '.bml', response.code)
-      }
-    })
-  })
+unloadButton.onclick = function () {
+    logDebug("Unload button clicked.");
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unload' }, function (response) {
+            if (response.code && response.filename) {
+                logDebug("Received unload response, saving file:", response.filename);
+                saveText(response.filename + '.bml', response.code);
+            }
+        });
+    });
 }
 
 // LOAD ONCLICK
-let fileHandle
-loadButton.addEventListener('click', async e => {
-  // fileHandle = await window.chooseFileSystemEntries();
-  ;[fileHandle] = await window.showOpenFilePicker()
-  // console.log(fileHandle)
-  const file = await fileHandle.getFile()
-  const contents = await file.text()
-  // console.log(contents)
+let fileHandle;
+loadButton.addEventListener('click', async () => {
+    logDebug("Load button clicked.");
+    [fileHandle] = await window.showOpenFilePicker();
+    const file = await fileHandle.getFile();
+    const contents = await file.text();
+    logDebug("File loaded:", file.name);
 
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.sendMessage(
-      tabs[0].id,
-      { greeting: 'load', code: contents },
-      function (response) {
-        // console.log(response)
-      }
-    )
-  })
-})
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        chrome.tabs.sendMessage(
+            tabs[0].id,
+            { greeting: 'load', code: contents },
+            function (response) {
+                logDebug("Load response received:", response);
+            }
+        );
+    });
+});
 
 // UNLOAD TEST ONCLICK
-unloadTestButton.onclick = function (params) {
-  // console.log('unloadTest clicked')
-  const unloadedTest = true
-
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unloadTest' }, function (
-      response
-    ) {
-      // console.log(response.filename)
-      // console.log(response.testCode)
-      if (response.testCode && response.filename) {
-        saveText(response.filename + '.test' + '.bml', response.testCode)
-      }
-    })
-  })
+unloadTestButton.onclick = function () {
+    logDebug("Unload Test button clicked.");
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unloadTest' }, function (response) {
+            if (response.testCode && response.filename) {
+                logDebug("Received unloadTest response, saving file:", response.filename);
+                saveText(response.filename + '.test.bml', response.testCode);
+            }
+        });
+    });
 }
 
 // LOAD TEST ONCLICK
-let fileHandle2
-loadTestButton.addEventListener('click', async e => {
-  const options = {
-    types: [
-      {
-        accept: {
-          'bml/plain': '.test.bml'
-        }
-      }
-    ],
-    excludeAcceptAllOption: true
-  }
-  //    [fileHandle2] = await window.showOpenFilePicker(options);
-  ;[fileHandle2] = await window.showOpenFilePicker()
-  // console.log(fileHandle2)
-  const file = await fileHandle2.getFile()
-  const contents = await file.text()
+let fileHandle2;
+loadTestButton.addEventListener('click', async () => {
+    logDebug("Load Test button clicked.");
+    [fileHandle2] = await window.showOpenFilePicker();
+    const file = await fileHandle2.getFile();
+    const contents = await file.text();
+    logDebug("Test file loaded:", file.name);
 
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.sendMessage(
-      tabs[0].id,
-      { greeting: 'loadTest', code: contents },
-      function (response) {
-        // console.log(response)
-      }
-    )
-  })
-})
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        chrome.tabs.sendMessage(
+            tabs[0].id,
+            { greeting: 'loadTest', code: contents },
+            function (response) {
+                logDebug("Load Test response received:", response);
+            }
+        );
+    });
+});
 
-// FILE SAVE
-function saveText (filename, text) {
-  const tempElem = document.createElement('a')
-  tempElem.setAttribute(
-    'href',
-    'data:bml/plain;charset=utf-8,' + encodeURIComponent(text)
-  )
-  tempElem.setAttribute('download', filename)
-  tempElem.click()
+// FILE SAVE FUNCTION
+function saveText(filename, text) {
+    logDebug("Saving file:", filename);
+    const tempElem = document.createElement('a');
+    tempElem.setAttribute(
+        'href',
+        'data:bml/plain;charset=utf-8,' + encodeURIComponent(text)
+    );
+    tempElem.setAttribute('download', filename);
+    tempElem.click();
 }
 
 // OPTIONS HANDLER
-optionsButton.onclick = function (params) {
-  // alert("optionsClicked");
-  window.location = '/options.html'
-  // chrome.runtime.openOptionsPage()
+optionsButton.onclick = function () {
+    logDebug("Options button clicked, redirecting to options page.");
+    window.location = '/options.html';
 }
 
-// * Footer Information from manifest
-const manifest = chrome.runtime.getManifest()
+// FOOTER INFORMATION
+const manifest = chrome.runtime.getManifest();
 
-document.addEventListener('DOMContentLoaded', event => {
-  const attachedFooter = (document.getElementById(
-    'footer'
-  ).innerHTML = getFooter())
-})
+document.addEventListener('DOMContentLoaded', () => {
+    logDebug("DOM fully loaded, setting footer information.");
+    document.getElementById('footer').innerHTML = getFooter();
+});
 
-function getFooter () {
-  return '<p>' + manifest.name + ' ' + manifest.version + '</p>'
+function getFooter() {
+    return '<p>' + manifest.name + ' ' + manifest.version + '</p>';
 }
