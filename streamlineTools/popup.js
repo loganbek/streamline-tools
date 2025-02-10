@@ -207,5 +207,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function getFooter() {
-    return '<p>' + manifest.name + ' ' + manifest.version + '</p>';
+    return '<p>' + manifest.name + ' v' + manifest.version + '</p>';
 }
