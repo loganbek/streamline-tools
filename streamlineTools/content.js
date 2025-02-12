@@ -10,7 +10,7 @@ function logDebug(message, ...args) {
 /* STUB | PRICING + UTIL CONTENT SCRIPT */
 
 if(typeof commentHeader === "undefined"){
-  var commentHeader = "//lbek 2/8/25";
+  var commentHeader = "// ";
   logDebug("commentHeader initialized", commentHeader);
 }
 
