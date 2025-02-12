@@ -107,7 +107,9 @@ logDebug("Logs button disabled.");
 
 // DOWNLOAD FILENAME HANDLING
 chrome.downloads.onDeterminingFilename.addListener(function (item, suggest) {
-    logDebug("Download detected, setting filename:", item.filename);
+    logDebug("Download detected, setting filename, subdomain, and site type:", item.filename, bmSiteSubDomain, bmSiteType);
+    logDebug("item", item);
+    logDebug("suggest", suggest);
     suggest({
         filename: 'bigmachines/' + bmSiteSubDomain + '/' + bmSiteType + '/' + item.filename,
         conflictAction: 'overwrite'
