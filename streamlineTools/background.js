@@ -1,7 +1,7 @@
 'use strict';
 
 // BACKGROUND_DEBUG FLAG
-var BACKGROUND_DEBUG = true;
+var BACKGROUND_DEBUG = false;
 
 function logDebug(message, ...args) {
     if (BACKGROUND_DEBUG) {

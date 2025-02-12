@@ -1,5 +1,5 @@
 // POPUP_DEBUG FLAG
-const POPUP_DEBUG = true;
+const POPUP_DEBUG = false;
 
 function logDebug(message, ...args) {
     if (POPUP_DEBUG) {
