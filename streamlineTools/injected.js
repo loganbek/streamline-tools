@@ -11,6 +11,7 @@ function logDebug(...args) {
 }
 
 function jsonPath (obj, expr, arg) {
+  logDebug("JsonPath Called", obj, expr, arg)
   var P = {
     resultType: arg && arg.resultType || 'VALUE',
     result: [],
@@ -88,7 +89,7 @@ function jsonPath (obj, expr, arg) {
 }
 
 window.addEventListener('load', function () {
-
+  logDebug("load event listener called");
   const message = jsonPath(jsonRespStr, '$.widget.items[1].component.widget.items[1].component.widget.items[0].component.data')
   const message1 = jsonPath(jsonRespStr, 'x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[0].value')
   const message3 = jsonPath(jsonRespStr, 'x.widget.items[1].component.widget.items[0].component.widget.items[2].component.widget.items[0].component.widget.items[1].component.widget.items[0].component.data[1].value')
@@ -113,23 +114,27 @@ window.addEventListener('load', function () {
 });
 
 window.addEventListener('unloadCode', function (evt) {
+  logDebug("unload code event listener called");
   const event = new CustomEvent('PassCodeToBackground', { detail: frame_bm_script.editArea.textarea.value })
   // event.initCustomEvent("yourCustomEvent", true, true, url);
   window.dispatchEvent(event)
 })
 // Listen for the load code event
 window.addEventListener('loadCode', function (evt) {
+  logDebug("loadCode event listener called");
   code = evt.detail
   frame_bm_script.editArea.textarea.value = code
   frame_bm_script.editArea.textareaFocused = true
 
   // Perform Validation
+  logDebug("Performing validation check click");
   document.getElementsByClassName('bmx-spellcheck')[0].click()
 }, false)
 
 // Listen for the load test code event
 window.addEventListener('loadTestCode',
   function (evt) {
+    logDebug("loadTestCode event listener called");
     code = evt.detail
     // need to rewrite these if's
     const commTestScript = document.getElementById('ext-comp-1080')
@@ -143,11 +148,13 @@ window.addEventListener('loadTestCode',
       commTestScript2.value = code
     }
     // RUN DEBUGGER
+    logDebug("run debugger click");
     document.getElementsByClassName('bmx-debug')[1].click()
   }, false)
 
 window.addEventListener('unloadTestCode',
   function (evt) {
+    logDebug("unloadtestCode event listener called");
     let testScript
     const useTestScript = document.getElementById('useScript').checked
     if (useTestScript) {
@@ -168,6 +175,7 @@ window.addEventListener('unloadTestCode',
       const event = new CustomEvent('PassTestCodeToBackground', { detail: testScript })
       window.dispatchEvent(event)
     } else {
-      alert('Please Check - Use Test Script.')
+      logDebug('Please Check -Use test Script - alert');
+      //alert('Please Check - Use Test Script.')
     }
   }, false)
