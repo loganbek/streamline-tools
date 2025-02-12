@@ -2,7 +2,7 @@
 /* FIXME CHECK USAGE */
 /* REVIEW + LINK */
 
-const INJECTED_DEBUG = true; // Set to false to disable debug logs
+var INJECTED_DEBUG = true; // Set to false to disable debug logs
 
 function logDebug(...args) {
   if (INJECTED_DEBUG) {

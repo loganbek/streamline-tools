@@ -1,5 +1,5 @@
 // CONTENT_DEBUG FLAG
-const CONTENT_DEBUG = true;
+var CONTENT_DEBUG = true;
 
 function logDebug(message, ...args) {
     if (CONTENT_DEBUG) {
