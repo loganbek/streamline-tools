@@ -1,3 +1,12 @@
+// OPTIONS_DEBUG FLAG
+var OPTIONS_DEBUG = false;
+
+function logDebug(message, ...args) {
+    if (OPTIONS_DEBUG) {
+        console.log("[OPTIONS_DEBUG]", message, ...args);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   console.log('document loaded');
 
@@ -26,3 +35,15 @@ document.addEventListener('DOMContentLoaded', function () {
     console.error("Element with id 'footer' not found.");
   }
 });
+
+// FOOTER INFORMATION
+const manifest = chrome.runtime.getManifest();
+
+document.addEventListener('DOMContentLoaded', () => {
+    logDebug("DOM fully loaded, setting footer information.");
+    document.getElementById('footer').innerHTML = getFooter();
+});
+
+function getFooter() {
+    return '<p>' + manifest.name + ' v' + manifest.version + '</p>';
+}

@@ -1,27 +1,27 @@
+// CONTENT_DEBUG FLAG
+var CONTENT_DEBUG = false;
+
+function logDebug(message, ...args) {
+    if (CONTENT_DEBUG) {
+        console.log("[CONTENT_DEBUG]", message, ...args);
+    }
+}
+
 /* STUB | PRICING + UTIL CONTENT SCRIPT */
 
-// let commentHeader;
-// try {
-  // if (!commentHeader) {
-    // commentHeader = "";
-  // }
-// } catch (e) {
-  // console.log(e);
-// }
-// let commentHeader = ''
-// let code = "";
-// let testCode = "";
-
 if(typeof commentHeader === "undefined"){
-  var commentHeader = "";
+  var commentHeader = "// ";
+  logDebug("commentHeader initialized", commentHeader);
 }
 
 if(typeof code === "undefined"){
   var code = "";
+  logDebug("code initialized", code);
 }
 
 if(typeof testCode === "undefined"){
   var testCode = "";
+  logDebug("testCode initialized", testCode);
 }
 
 // Listen for the PassToBackground event
@@ -29,6 +29,7 @@ window.addEventListener(
   "PassToBackground",
   function (evt) {
     code = evt.detail;
+    logDebug("PassToBackground event received", code);
   },
   false
 );
@@ -38,6 +39,7 @@ window.addEventListener(
   "PassCommentHeader",
   function (evt) {
     commentHeader = evt.detail;
+    logDebug("PassCommentHeader event received", commentHeader);
   },
   false
 );
@@ -47,6 +49,7 @@ window.addEventListener(
   "PassCodeToBackground",
   function (evt) {
     code = evt.detail;
+    logDebug("PassCodeToBackground event received", code);
   },
   false
 );
@@ -56,6 +59,7 @@ window.addEventListener(
   "PassTestCodeToBackground",
   function (evt) {
     testCode = evt.detail;
+    logDebug("PassTestCodeToBackground event received", testCode);
   },
   false
 );
@@ -65,11 +69,13 @@ window.addEventListener(
   "unloadCode",
   function (evt) {
     code = evt.detail;
+    logDebug("unloadCode event received", code);
   },
   false
 );
 
 function injectJs(link) {
+  logDebug("Injecting script", link);
   const scr = document.createElement("script");
   scr.type = "text/javascript";
   scr.src = link;
@@ -79,44 +85,55 @@ function injectJs(link) {
 injectJs(chrome.runtime.getURL("injected.js"));
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  logDebug("Message received", request);
+
   let filename = document.getElementById("variableName").value;
   filename = newFunction(filename);
-  /* console.log(sender.tab
-      ? 'from a content script:' + sender.tab.url
-      : 'from the extension')
-    console.log(request.greeting
-      ? 'greeting: ' + request.greeting
-      : 'nogreeting') */
+  logDebug("Filename processed", filename);
+
   if (request.greeting == "unload") {
+    logDebug("Processing unload request");
     const unloadEvent = new CustomEvent("unloadCode", { detail: request.code });
     window.dispatchEvent(unloadEvent);
-    // console.log('CH')
-    // console.log(contentHeader)
+
     if (code != null) {
       if (!code.startsWith(commentHeader)) {
         code = commentHeader + "\n\n" + code;
-      } else {
-        code = code;
       }
     }
+
+    let isUtil = document.querySelector('span[id^="ext-gen"]').innerHTML.includes("Util");
+
+    if(isUtil){
+      foldername = "util"
+    } else {
+      foldername = "comm"
+    }
+
     sendResponse({
       filename: filename,
+      foldername: foldername,
       code: code,
     });
+    logDebug("Unload response sent", filename, code);
   } else if (request.greeting == "unloadTest") {
+    logDebug("Processing unloadTest request");
     const unloadTestEvent = new CustomEvent("unloadTestCode", {
       detail: request.code,
     });
     window.dispatchEvent(unloadTestEvent);
+
     sendResponse({
       filename: filename,
       testCode: testCode,
     });
+    logDebug("UnloadTest response sent", filename, testCode);
   } else if (request.greeting == "load") {
+    logDebug("Processing load request", request.code);
     const loadEvent = new CustomEvent("loadCode", { detail: request.code });
     window.dispatchEvent(loadEvent);
   } else if (request.greeting == "loadTest") {
-    //console.log(request.code);
+    logDebug("Processing loadTest request", request.code);
     const loadTestEvent = new CustomEvent("loadTestCode", {
       detail: request.code,
     });
@@ -125,6 +142,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     sendResponse({
       filename: filename,
     });
+    logDebug("Filename request handled", filename);
   }
 });
 
@@ -132,17 +150,20 @@ function newFunction(filename) {
   if (filename === "") {
     filename = "nofilename";
   }
+  logDebug("newFunction processed filename", filename);
   return filename;
 }
 
 // COMMAN API LISTENER TODO: FINISH
 // PARTIAL PIPING CMDS
 
-// FIXME
 chrome.runtime.onMessage.addListener(function (message) {
   const { direction } = message;
-  direction === "unload_bml"
-    ? "unload_bml received - content.js"
-    : "load_bml received - content.js";
-  // console.log(direction);
+  logDebug("Message received for direction", direction);
+
+  if (direction === "unload_bml") {
+    logDebug("unload_bml received - content.js");
+  } else if (direction === "load_bml") {
+    logDebug("load_bml received - content.js");
+  }
 });
