@@ -4528,5 +4528,15 @@ util func elem
 comm func elem
 - [ ] <span class="x-panel-header-text" id="ext-gen55">Util BML Library Function Editor: Properties &amp; Parameters</span>
 document.querySelector('span[id^="ext-gen"]').innerHTML.includes("Util");
-
+## 8/12/25
 chrome://help - version
+- [ ] finish dev 
+  - [ ] chrome util
+  - [ ] code cleanup
+- [ ] next dev items
+  - [ ] badging
+  - [ ] panel
+  - [ ] options
+  - [ ] other app areas
+  - [ ] github login
+
