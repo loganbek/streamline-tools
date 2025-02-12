@@ -122,6 +122,11 @@ unloadButton.onclick = function () {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unload' }, function (response) {
             if (response.code && response.filename) {
+                if( response.foldername !== undefined){
+                    bmSiteType = response.foldername;
+                }
+                logDebug("Received unload response, bmsiteType", bmSiteType);
+                logDebug("Received unload response, saving folder", response.foldername);
                 logDebug("Received unload response, saving file:", response.filename);
                 saveText(response.filename + '.bml', response.code);
             }
