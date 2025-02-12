@@ -10,7 +10,7 @@ function logDebug(message, ...args) {
 /* STUB | PRICING + UTIL CONTENT SCRIPT */
 
 if(typeof commentHeader === "undefined"){
-  var commentHeader = "";
+  var commentHeader = "//lbek 2/8/25";
   logDebug("commentHeader initialized", commentHeader);
 }
 
@@ -102,8 +102,17 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       }
     }
 
+    let isUtil = document.querySelector('span[id^="ext-gen"]').innerHTML.includes("Util");
+
+    if(isUtil){
+      foldername = "util"
+    } else {
+      foldername = "comm"
+    }
+
     sendResponse({
       filename: filename,
+      foldername: foldername,
       code: code,
     });
     logDebug("Unload response sent", filename, code);
