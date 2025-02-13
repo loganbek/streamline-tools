@@ -1,5 +1,5 @@
 // OPTIONS_DEBUG FLAG
-var OPTIONS_DEBUG = false;
+var OPTIONS_DEBUG = true;
 
 function logDebug(message, ...args) {
     if (OPTIONS_DEBUG) {
