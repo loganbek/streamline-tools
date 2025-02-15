@@ -2,11 +2,12 @@
 review:
   focus_paths:
     - manifest.json          # Core extension configuration
-    - streamlineTools/background/*       # Background service worker
-    - streamlineTools/content/*          # Content scripts
-    - streamlineTools/popup/*            # Popup UI components
-    - streamlineTools/options/*          # Options page
-    - streamlineTools/utils/*            # Shared utilities
+    # - src/background/*       # Background service worker
+    # - src/content/*          # Content scripts
+    # - src/popup/*            # Popup UI components
+    # - src/options/*          # Options page
+    # - src/utils/*            # Shared utilities
+    - src/*                    # js files
     - webpack.config.js      # Build configuration
 
   ignore_paths:
