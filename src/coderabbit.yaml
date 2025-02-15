@@ -10,7 +10,7 @@ review:
     - webpack.config.js      # Build configuration
 
   ignore_paths:
-    - dist/                  # Built files
+    # - dist/                  # Built files
     - node_modules/
     - .github/               # CI/CD configurations
     - .gitignore
