@@ -4524,10 +4524,11 @@ not needed for config
 - [ ] download faily in UI - red x badge 5s
 
 util func elem
-- [] <span class="x-panel-header-text" id="ext-gen55">Util BML Library Function Editor: Properties &amp; Parameters</span>
+- [x] <span class="x-panel-header-text" id="ext-gen55">Util BML Library Function Editor: Properties &amp; Parameters</span>
 comm func elem
-- [ ] <span class="x-panel-header-text" id="ext-gen55">Util BML Library Function Editor: Properties &amp; Parameters</span>
+- [x] <span class="x-panel-header-text" id="ext-gen55">Util BML Library Function Editor: Properties &amp; Parameters</span>
 document.querySelector('span[id^="ext-gen"]').innerHTML.includes("Util");
+
 ## 8/12/25
 chrome://help - version
 - [ ] finish dev 
@@ -4551,22 +4552,20 @@ chrome://help - version
   - [ ] vmmapping
   - [ ] my after
   - [ ]  interface
-   -[ ] doc designer
+  - [ ] doc designer
     - [ ] dd body quote table xsl
 
 - [ ] quick links
  - [ ] demo config - config question
  - [ ] sylesheets folder
   - [ ] header + foooter
-  = [ ] x3 stylesheet
+  - [ ] x3 stylesheet
 
 - [ ] config subfolder 
 - [ ] config naming
-    - [ ] sortBy
-    - [ ] sort.attr.bml
+  - [ ] sortBy
+  - [ ] sort.attr.bml
 - [ ] bom mapping
   - [ ] rule type 23
 - [ ] options
-- [ ] 
-- [ ] 
 
