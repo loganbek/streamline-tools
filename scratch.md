@@ -4540,3 +4540,33 @@ chrome://help - version
   - [ ] other app areas
   - [ ] github login
 
+-[ ] notes 2 digital
+
+- [ ] setup rabbit
+- [ ] coveragre + remove unused
+
+
+- [ ] fix config double click
+- [ ] config
+  - [ ] vmmapping
+  - [ ] my after
+  - [ ]  interface
+   -[ ] doc designer
+    - [ ] dd body quote table xsl
+
+- [ ] quick links
+ - [ ] demo config - config question
+ - [ ] sylesheets folder
+  - [ ] header + foooter
+  = [ ] x3 stylesheet
+
+- [ ] config subfolder 
+- [ ] config naming
+    - [ ] sortBy
+    - [ ] sort.attr.bml
+- [ ] bom mapping
+  - [ ] rule type 23
+- [ ] options
+- [ ] 
+- [ ] 
+
