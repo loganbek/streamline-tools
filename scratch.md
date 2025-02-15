@@ -4546,7 +4546,6 @@ chrome://help - version
 - [ ] setup rabbit
 - [ ] coveragre + remove unused
 
-
 - [ ] fix config double click
 - [ ] config
   - [ ] vmmapping
@@ -4558,7 +4557,7 @@ chrome://help - version
 - [ ] quick links
  - [ ] demo config - config question
  - [ ] sylesheets folder
-  - [ ] header + foooter
+  - [ ] header + footer
   - [ ] x3 stylesheet
 
 - [ ] config subfolder 
