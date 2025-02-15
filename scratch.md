@@ -4544,6 +4544,7 @@ chrome://help - version
 -[ ] notes 2 digital
 
 - [ ] setup rabbit
+- [ ] copilot setup
 - [ ] coveragre + remove unused
 
 - [ ] fix config double click
