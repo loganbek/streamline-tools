@@ -1,0 +1,29 @@
+# .coderabbit.yaml
+review:
+  focus_paths:
+    - manifest.json          # Core extension configuration
+    - streamlineTools/background/*       # Background service worker
+    - streamlineTools/content/*          # Content scripts
+    - streamlineTools/popup/*            # Popup UI components
+    - streamlineTools/options/*          # Options page
+    - streamlineTools/utils/*            # Shared utilities
+    - webpack.config.js      # Build configuration
+
+  ignore_paths:
+    - dist/                  # Built files
+    - node_modules/
+    - .github/               # CI/CD configurations
+    - .gitignore
+    - package-lock.json
+
+  guidelines:
+    - Verify Manifest V3 compliance
+    - Check permissions scope for "scripting", "storage", and "activeTab"
+    - Review content script injection patterns
+    - Validate cross-origin XHR requests in background scripts
+    - Ensure proper error handling in API calls
+    - Check GDPR compliance for data collection
+    - Verify webpack build optimization
+
+feedback: true
+auto_approve: true
