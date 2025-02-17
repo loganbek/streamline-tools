@@ -13,11 +13,11 @@
     "commands"
   ],
   "options_ui": {
-    "page": "options.html",
+    "page": "options/options.html",
     "open_in_tab": true
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background/background.js"
   },
   "web_accessible_resources": [
     {
@@ -33,7 +33,7 @@
     }
   ],
   "action": {
-    "default_popup": "popup.html",
+    "default_popup": "popup/popup.html",
     "default_icon": {
       "16": "images/streamline16.png",
       "32": "images/streamline32.png",
