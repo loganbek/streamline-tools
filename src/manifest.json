@@ -27,9 +27,12 @@
         "adminCommerceInjected.js",
         "adminCommerceRulesInjected.js",
         "adminConfigInjected.js",
-        "adminCommerceActionsInjected.js"
+        "adminCommerceActionsInjected.js",
+        "content/content.js"
       ],
-      "matches": ["<all_urls>"]
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ],
   "action": {

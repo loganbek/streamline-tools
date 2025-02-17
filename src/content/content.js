@@ -1,4 +1,4 @@
-// CONTENT_DEBUG FLAG
+  // CONTENT_DEBUG FLAG
 var CONTENT_DEBUG = true;
 
 function logDebug(message, ...args) {

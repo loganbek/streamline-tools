@@ -90,10 +90,10 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             }
         });
 
-        logDebug("Executing content script: content.js");
+        logDebug("Executing content script: content/content.js");
         chrome.scripting.executeScript({
             target: { tabId: tabs[0].id },
-            files: ['content.js'],
+            files: ['content/content.js'],
         });
     }
 });
