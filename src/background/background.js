@@ -48,48 +48,35 @@ chrome.commands.onCommand.addListener((command) => {
     }
 });
 
-function unloadBML() {
-    logDebug("Executing unloadBML...");
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        if (tabs.length === 0) {
-            logDebug("No active tabs found, exiting unloadBML.");
-            return;
-        }
+function handleBML(action) {
+ const isLoad = action === 'load';
+ logDebug(`Executing ${action}BML...`);
+ 
+ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+     if (tabs.length === 0) {
+         logDebug(`No active tabs found, exiting ${action}BML.`);
+         return;
+     }
 
-        const tabId = tabs[0].id;
-        logDebug("Found active tab with ID:", tabId);
+     const tabId = tabs[0].id;
+     logDebug("Found active tab with ID:", tabId);
 
-        chrome.scripting.executeScript({
-            target: { tabId: tabId },
-            func: () => {
-                console.log("Executing UNLOAD BML...");
-            }
-        });
+     chrome.scripting.executeScript({
+         target: { tabId: tabId },
+         func: (isLoad) => {
+             // TODO: Implement actual BML loading/unloading logic
+             console.log(`Executing ${isLoad ? 'LOAD' : 'UNLOAD'} BML...`);
+         },
+         args: [isLoad]
+     });
 
-        logDebug("Script injected to unload BML.");
-        chrome.action.enable(tabId);
-        logDebug("Extension action enabled for tab:", tabId);
-    });
+     logDebug(`Script injected to ${action} BML.`);
+     if (!isLoad) {
+         chrome.action.enable(tabId);
+         logDebug("Extension action enabled for tab:", tabId);
+     }
+ });
 }
 
-function loadBML() {
-    logDebug("Executing loadBML...");
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        if (tabs.length === 0) {
-            logDebug("No active tabs found, exiting loadBML.");
-            return;
-        }
-
-        const tabId = tabs[0].id;
-        logDebug("Found active tab with ID:", tabId);
-
-        chrome.scripting.executeScript({
-            target: { tabId: tabId },
-            func: () => {
-                console.log("Executing LOAD BML...");
-            }
-        });
-
-        logDebug("Script injected to load BML.");
-    });
-}
+const loadBML = () => handleBML('load');
+const unloadBML = () => handleBML('unload');
