@@ -2,3 +2,7 @@
 #   ## What’s Changed
 
 #   $CHANGES
+name: release-drafter
+on:  [release]
+
+
