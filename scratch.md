@@ -3650,7 +3650,7 @@ TODO v1 and Beyond
 - [ ] remove hot-reload from release version
 - [ ] logs access/generation from bm-framework?
 - [ ] first options to add?
-- [ ] is it useful to display _BM_USER_ vars information in app, maybe login, email, company, host company, bm user full access?
+- [ ] is it useful to display *BM_USER* vars information in app, maybe login, email, company, host company, bm user full access?
 - [ ] effort to port over to other browsers
   - [ ] edge, firefox, safari, + others
   - [ ] What do most bigmachine admins use? Chrome + Edge?
@@ -4077,9 +4077,12 @@ Since Windows and Linux use different default line endings, Git may report a lar
 
 Typically adding or modifying a .gitattributes file in your repository is the most reliable way to solve this problem. Committing this file to source control will help others and allows you to vary behaviors by repository as appropriate. For example, adding the following to .gitattributes file to the root of your repository will force everything to be LF, except for Windows batch files that require CRLF:
 
+```gitattributes
 - text=auto eol=lf
 *.{cmd,[cC][mM][dD]} text eol=crlf
 *.{bat,[bB][aA][tT]} text eol=crlf
+```
+
 Note that this works in Git v2.10+, so if you are running into problems, be sure you've got a recent Git client installed. You can add other file types in your repository that require CRLF to this same file.
 
 If you would prefer to still always upload Unix-style line endings (LF), you can use the input option.
@@ -4493,20 +4496,20 @@ function simulatedClick(target, options) {
 
 Puppetry or Jest for testing
 starting w/ puppetry
-https://github.com/puppeteer/puppeteer/tree/6522e4f524bdbc1f1b9d040772acf862517ed507/utils/browser
+<https://github.com/puppeteer/puppeteer/tree/6522e4f524bdbc1f1b9d040772acf862517ed507/utils/browser>
 
 make setShelfEnabled in option.html
 add download success to UI
-  - what should this look like?
 
+- what should this look like?
 
 check on CH
 
 work on alt command click - comm advanced
 not needed for config
 
-
 ## 8/13/22
+
 - [ ] check code + add comments
   - [ ] general folder structure/architecture
   - [ ] config
@@ -4518,21 +4521,24 @@ not needed for config
 
 - [ ] get puppeteer working for unit tests
 - [ ] look into github sso for authentication
-- [ ] 
+- [ ]
 
 - [ ] download success in UI - green checkmark badge 5s
 - [ ] download faily in UI - red x badge 5s
 
 util func elem
-- [x] <span class="x-panel-header-text" id="ext-gen55">Util BML Library Function Editor: Properties &amp; Parameters</span>
+
+- [x] ```html <span class="x-panel-header-text" id="ext-gen55">``` Util BML Library Function Editor: Properties &amp; Parameters</span>
 comm func elem
-- [x] <span class="x-panel-header-text" id="ext-gen55">Util BML Library Function Editor: Properties &amp; Parameters</span>
+- [x] ```html <span class="x-panel-header-text" id="ext-gen55">```Util BML Library Function Editor: Properties &amp; Parameters</span>
 document.querySelector('span[id^="ext-gen"]').innerHTML.includes("Util");
 
 ## 8/12/25
+
 chrome://help - version
-  - [ ] chrome util
-  - [ ] code cleanup
+
+- [ ] chrome util
+- [ ] code cleanup
 - [ ] next dev items
   - [ ] badging
   - [ ] panel
@@ -4540,13 +4546,13 @@ chrome://help - version
   - [ ] other app areas
   - [ ] github login
 
--[ ] notes 2 digital
+- [x] notes 2 digital
 
 - [x] setup rabbit
 - [x] copilot setup
 - [x] coverage
-	- [ ] remove unused
- 		- [ ] finish	
+  - [x] remove unused
+  - [ ] finish
 
 - [ ] fix config double click
 - [ ] config
@@ -4554,21 +4560,26 @@ chrome://help - version
   - [ ] my after
   - [ ]  interface
   - [ ] doc designer
-    - [ ] dd body quote table xsl
+  - [ ] <https://devmcnichols.bigmachines.com/admin/document-designer/4653759/editor/72244963>
+  - [ ] dd body quote table xsl
 
 - [ ] quick links
- - [ ] demo config - config question
- - [ ] sylesheets folder
-  - [ ] header + footer
-    - [ ]  https://devmcnichols.bigmachines.com/admin/ui/branding/edit_header_footer.jsp
-    - [ ] create ui for (un)load Header HTML + Foot HTML 
-      - [ ] use HTML Head checkbox question <td width="*" nowrap="" class="form-input">
+- [ ] demo config - config question
+- [ ] sylesheets folder
+- [ ] header + footer
+  - [ ]  <https://devmcnichols.bigmachines.com/admin/ui/branding/edit_header_footer.jsp>
+  - [ ] create ui for (un)load Header HTML + Foot HTML
+    - [ ] use HTML Head checkbox question
+
+    ```html
+    <td width="*" nowrap="" class="form-input">
                         <input value="false" id="htmlHeadCheckbox" type="checkbox" class="form-input" name="htmlHeadCheckbox" onchange="displayHtmlHeadTextArea()">
                         <input value="No" id="useHtmlHead" type="hidden" class="form-input" size="1" name="useHtmlHead">
                     </td>
-  - [ ] x3 stylesheet
+                    ```
+- [ ] x3 stylesheet
 
-- [ ] config subfolders 
+- [ ] config subfolders
 - [ ] config naming
   - [ ] sortBy
   - [ ] sort.attr.bml
@@ -4577,8 +4588,7 @@ chrome://help - version
 - [ ] options
 
 - [ ] URL Listing config
-  - [ ] config recommendation - [Edit Rule](https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5268044&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true)
-    - [ ]  config recommendation attribute - https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5268044&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true
+  - [ ] config recommendation - [Config Recommendation](<https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5268044&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true)>
 - [  ] URL Listing commerce
-  - [ ] commerce before formulas - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=54983795
-  - [ ] commerce after formulas - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=18&process_id=4653759&document_id=4653823&action_id=54983795
+  - [ ] commerce before formulas - [Commerce Before Formulas](<https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=54983795>)
+  - [ ] commerce after formulas - [Commerce After Formulas](<https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=18&process_id=4653759&document_id=4653823&action_id=54983795>)
