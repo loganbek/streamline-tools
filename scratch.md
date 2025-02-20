@@ -4560,6 +4560,12 @@ chrome://help - version
  - [ ] demo config - config question
  - [ ] sylesheets folder
   - [ ] header + footer
+    - [ ]  https://devmcnichols.bigmachines.com/admin/ui/branding/edit_header_footer.jsp
+    - [ ] create ui for (un)load Header HTML + Foot HTML 
+      - [ ] use HTML Head checkbox question <td width="*" nowrap="" class="form-input">
+                        <input value="false" id="htmlHeadCheckbox" type="checkbox" class="form-input" name="htmlHeadCheckbox" onchange="displayHtmlHeadTextArea()">
+                        <input value="No" id="useHtmlHead" type="hidden" class="form-input" size="1" name="useHtmlHead">
+                    </td>
   - [ ] x3 stylesheet
 
 - [ ] config subfolders 

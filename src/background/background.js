@@ -48,6 +48,40 @@ chrome.commands.onCommand.addListener((command) => {
     }
 });
 
+// Listen for tab updates to switch popups
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.url) {
+    if (tab.url.includes('bigmachines.com/admin/ui/branding/edit_header_footer.jsp')) {
+      chrome.action.setPopup({
+        tabId: tabId,
+        popup: 'popup/popupHeaderFooter.html'
+      });
+    } else if (tab.url.includes('bigmachines.com')) {
+      chrome.action.setPopup({
+        tabId: tabId,
+        popup: 'popup/popup.html'
+      });
+    }
+  }
+});
+
+// Also handle initial tab loading
+chrome.tabs.onActivated.addListener((activeInfo) => {
+  chrome.tabs.get(activeInfo.tabId, (tab) => {
+    if (tab.url.includes('bigmachines.com/admin/ui/branding/edit_header_footer.jsp')) {
+      chrome.action.setPopup({
+        tabId: activeInfo.tabId,
+        popup: 'popup/popupHeaderFooter.html'
+      });
+    } else if (tab.url.includes('bigmachines.com')) {
+      chrome.action.setPopup({
+        tabId: activeInfo.tabId,
+        popup: 'popup/popup.html'
+      });
+    }
+  });
+});
+
 // Function to handle BML actions
 function handleBML(action) {
  const isLoad = action === 'load';
