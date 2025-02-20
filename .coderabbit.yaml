@@ -1,14 +1,14 @@
 # .coderabbit.yaml
 review:
   focus_paths:
-    - manifest.json          # Core extension configuration
+    - src/manifest.json          # Core extension configuration
     - src/background/*       # Background service worker
     - src/content/*          # Content scripts
     - src/popup/*            # Popup UI components
     - src/options/*          # Options page
     # - src/utils/*            # Shared utilities
     # - src/*                    # js files
-    - webpack.config.js      # Build configuration
+    # - webpack.config.js      # Build configuration
 
   ignore_paths:
     # - dist/                  # Built files
