@@ -18,6 +18,8 @@ jobs:
         run: |
           eslint src/content/**/*.js
           eslint src/background/*.js
+          eslint src/options/*.js
+          eslint src/popup/*.js
 
   build-check:
     runs-on: ubuntu-latest
