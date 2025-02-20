@@ -31,7 +31,8 @@
 <!-- - [Cursor](https://cursor.sh/) -->
 
 ### CPQ Development Tools VS Code Extension
-https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-overview
+
+<https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-overview>
 
 ## Installation Instructions
 
