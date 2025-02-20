@@ -4629,9 +4629,10 @@ chrome://help - version
 - [ ] quick links
 - [ ] demo config - config question
 - [ ] sylesheets folder
+  - [ ] [Stylesheet Manager](https://devmcnichols.bigmachines.com/admin/ui/branding/edit_site_branding.jsp)
 - [ ] header + footer
   - [ ]  <https://devmcnichols.bigmachines.com/admin/ui/branding/edit_header_footer.jsp>
-  - [ ] create ui for (un)load Header HTML + Foot HTML
+  - [x] create ui for (un)load Header HTML + Foot HTML
     - [ ] use HTML Head checkbox question
 
     ```html
