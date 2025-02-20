@@ -7,11 +7,11 @@ function logDebug(message, ...args) {
     }
 }
 
+// Event listener for DOMContentLoaded
 document.addEventListener('DOMContentLoaded', function () {
   console.log('document loaded');
 
-  // restore_options();
-
+  // Initialize save button
   const saveButton = document.getElementById('save');
   if (saveButton) {
     saveButton.addEventListener('click', save_options);
@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     console.error("Element with id 'save' not found.");
   }
 
+  // Initialize back button
   const backButton = document.getElementById('back');
   if (backButton) {
     backButton.onclick = function () {
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
     console.error("Element with id 'back' not found.");
   }
 
+  // Set footer content
   const footer = document.getElementById('footer');
   if (footer) {
     footer.innerHTML = getFooter();
@@ -44,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('footer').innerHTML = getFooter();
 });
 
+// Function to get footer content
 function getFooter() {
     return '<p>' + manifest.name + ' v' + manifest.version + '</p>';
 }

@@ -1,9 +1,11 @@
 /* STUB | OPTIONS CSS */
 
+/* Logo Styles */
 #logo {
   width: 180px;
 }
 
+/* Button Styles */
 button {
   min-width: 170px;
   margin: 7px;
@@ -30,20 +32,23 @@ button:active {
   transform: translateY(4px);
 }
 
+/* Header Styles */
 h1 {
-  font-size: 20px
+  font-size: 20px;
 }
 
+/* Authorized Button Styles */
 button.authorized {
-  background: green
+  background: green;
 }
 
-/* Github SSO button */
+/* Github SSO Button */
 #oauth-2 #oauth2-2 {
   background-color: #24292e;
   color: #ffffff;
 }
 
+/* Body Styles */
 body {
   max-width: 200px;
   height: 259px;
@@ -51,6 +56,7 @@ body {
   text-align: center;
 }
 
+/* Footer Styles */
 footer {
   text-align: center;
   position: absolute;

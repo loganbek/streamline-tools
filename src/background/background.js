@@ -48,6 +48,7 @@ chrome.commands.onCommand.addListener((command) => {
     }
 });
 
+// Function to handle BML actions
 function handleBML(action) {
  const isLoad = action === 'load';
  logDebug(`Executing ${action}BML...`);
@@ -78,5 +79,6 @@ function handleBML(action) {
  });
 }
 
+// Define loadBML and unloadBML functions
 const loadBML = () => handleBML('load');
 const unloadBML = () => handleBML('unload');

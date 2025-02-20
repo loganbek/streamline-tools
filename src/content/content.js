@@ -1,4 +1,4 @@
-  // CONTENT_DEBUG FLAG
+// CONTENT_DEBUG FLAG
 var CONTENT_DEBUG = true;
 
 function logDebug(message, ...args) {
@@ -7,73 +7,49 @@ function logDebug(message, ...args) {
     }
 }
 
-/* STUB | PRICING + UTIL CONTENT SCRIPT */
-
-if(typeof commentHeader === "undefined"){
+// Initialize variables
+if (typeof commentHeader === "undefined") {
   var commentHeader = "// ";
   logDebug("commentHeader initialized", commentHeader);
 }
 
-if(typeof code === "undefined"){
+if (typeof code === "undefined") {
   var code = "";
   logDebug("code initialized", code);
 }
 
-if(typeof testCode === "undefined"){
+if (typeof testCode === "undefined") {
   var testCode = "";
   logDebug("testCode initialized", testCode);
 }
 
-// Listen for the PassToBackground event
-window.addEventListener(
-  "PassToBackground",
-  function (evt) {
-    code = evt.detail;
-    logDebug("PassToBackground event received", code);
-  },
-  false
-);
+// Event listeners for custom events
+window.addEventListener("PassToBackground", function (evt) {
+  code = evt.detail;
+  logDebug("PassToBackground event received", code);
+}, false);
 
-// Listen for the PassCommentHeader event
-window.addEventListener(
-  "PassCommentHeader",
-  function (evt) {
-    commentHeader = evt.detail;
-    logDebug("PassCommentHeader event received", commentHeader);
-  },
-  false
-);
+window.addEventListener("PassCommentHeader", function (evt) {
+  commentHeader = evt.detail;
+  logDebug("PassCommentHeader event received", commentHeader);
+}, false);
 
-// Listen for the code event
-window.addEventListener(
-  "PassCodeToBackground",
-  function (evt) {
-    code = evt.detail;
-    logDebug("PassCodeToBackground event received", code);
-  },
-  false
-);
+window.addEventListener("PassCodeToBackground", function (evt) {
+  code = evt.detail;
+  logDebug("PassCodeToBackground event received", code);
+}, false);
 
-// Listen for the testcode event
-window.addEventListener(
-  "PassTestCodeToBackground",
-  function (evt) {
-    testCode = evt.detail;
-    logDebug("PassTestCodeToBackground event received", testCode);
-  },
-  false
-);
+window.addEventListener("PassTestCodeToBackground", function (evt) {
+  testCode = evt.detail;
+  logDebug("PassTestCodeToBackground event received", testCode);
+}, false);
 
-// Listen for the unloadCode event
-window.addEventListener(
-  "unloadCode",
-  function (evt) {
-    code = evt.detail;
-    logDebug("unloadCode event received", code);
-  },
-  false
-);
+window.addEventListener("unloadCode", function (evt) {
+  code = evt.detail;
+  logDebug("unloadCode event received", code);
+}, false);
 
+// Function to inject a script into the page
 function injectJs(link) {
   logDebug("Injecting script", link);
   const scr = document.createElement("script");
@@ -82,8 +58,10 @@ function injectJs(link) {
   document.getElementsByTagName("head")[0].appendChild(scr);
 }
 
+// Inject the main script
 injectJs(chrome.runtime.getURL("injected.js"));
 
+// Message listener for communication with background script
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   logDebug("Message received", request);
 
@@ -146,6 +124,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 });
 
+// Function to process filename
 function newFunction(filename) {
   if (filename === "") {
     filename = "nofilename";
@@ -154,9 +133,7 @@ function newFunction(filename) {
   return filename;
 }
 
-// COMMAN API LISTENER TODO: FINISH
-// PARTIAL PIPING CMDS
-
+// Command API listener
 chrome.runtime.onMessage.addListener(function (message) {
   const { direction } = message;
   logDebug("Message received for direction", direction);
