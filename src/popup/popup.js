@@ -136,6 +136,7 @@ unloadButton.onclick = function () {
 
 // LOAD ONCLICK
 let fileHandle;
+
 loadButton.addEventListener('click', async () => {
     logDebug("Load button clicked.");
     [fileHandle] = await window.showOpenFilePicker();

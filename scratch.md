@@ -4562,7 +4562,7 @@ chrome://help - version
   - [ ] header + footer
   - [ ] x3 stylesheet
 
-- [ ] config subfolder 
+- [ ] config subfolders 
 - [ ] config naming
   - [ ] sortBy
   - [ ] sort.attr.bml
