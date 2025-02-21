@@ -14,6 +14,31 @@ document.addEventListener('DOMContentLoaded', function () {
   // Initialize save button
   const saveButton = document.getElementById('save');
   if (saveButton) {
+    function save_options() {
+      logDebug("Saving options...");
+      
+      // Get values from form elements
+      const options = {
+        // Add your options here, for example:
+        // setting1: document.getElementById('setting1').value,
+        // setting2: document.getElementById('setting2').checked,
+      };
+
+      // Save to Chrome storage
+      chrome.storage.sync.set(options, function() {
+        // Update status to let user know options were saved
+        const status = document.getElementById('status');
+        if (status) {
+          status.textContent = 'Options saved.';
+          setTimeout(function() {
+            status.textContent = '';
+          }, 2000);
+        }
+        
+        logDebug("Options saved:", options);
+      });
+    }
+
     saveButton.addEventListener('click', save_options);
   } else {
     console.error("Element with id 'save' not found.");
@@ -23,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const backButton = document.getElementById('back');
   if (backButton) {
     backButton.onclick = function () {
-      window.location = '/popup.html';
+      window.location = '/popup/popup.html';
     };
   } else {
     console.error("Element with id 'back' not found.");
