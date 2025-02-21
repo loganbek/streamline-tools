@@ -18,11 +18,8 @@ jobs:
         run: |
           eslint src/content/**/*.js
           eslint src/background/*.js
-<<<<<<< HEAD
           eslint src/options/*.js
           eslint src/popup/*.js
-=======
->>>>>>> 7bb2c2c (src fldr rename)
 
   build-check:
     runs-on: ubuntu-latest
