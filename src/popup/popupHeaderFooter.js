@@ -119,7 +119,7 @@ function saveText(filename, text) {
 // Options handler
 optionsButton.onclick = function () {
     logDebug("Options button clicked");
-    window.location = '/options.html';
+    window.location = chrome.runtime.getURL('options.html');
 }
 
 // Set footer version info
