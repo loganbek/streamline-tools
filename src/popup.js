@@ -110,10 +110,18 @@ chrome.downloads.onDeterminingFilename.addListener(function (item, suggest) {
     logDebug("Download detected, setting filename, subdomain, and site type:", item.filename, bmSiteSubDomain, bmSiteType);
     logDebug("item", item);
     logDebug("suggest", suggest);
+    if(item.ruleType !== undefined){
+    suggest({
+        filename: 'bigmachines/' + bmSiteSubDomain + '/' + bmSiteType + '/' + item.ruleType + '/' + item.filename,
+        conflictAction: 'overwrite'
+    });
+}   else {
     suggest({
         filename: 'bigmachines/' + bmSiteSubDomain + '/' + bmSiteType + '/' + item.filename,
         conflictAction: 'overwrite'
     });
+}
+
 });
 
 // UNLOAD ONCLICK
@@ -203,7 +211,7 @@ function saveText(filename, text) {
 // OPTIONS HANDLER
 optionsButton.onclick = function () {
     logDebug("Options button clicked, redirecting to options page.");
-    window.location = '/options.html';
+    window.location = 'options/options.html';
 }
 
 // FOOTER INFORMATION
