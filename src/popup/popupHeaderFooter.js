@@ -107,13 +107,13 @@ loadFooterBtn.onclick = async function () {
 // File save helper
 function saveText(filename, text) {
     logDebug("Saving file:", filename);
-    const tempElem = document.createElement('a');
-    tempElem.setAttribute(
-        'href',
-        'data:text/html;charset=utf-8,' + encodeURIComponent(text)
-    );
-    tempElem.setAttribute('download', filename);
-    tempElem.click();
+    const blob = new Blob([text], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(url);
 }
 
 // Options handler
