@@ -9,8 +9,8 @@ function logDebug(message, ...args) {
 'use strict'
 
 // Buttons
-const unloadHeaderBtn = document.getElementById('unloadHeader');
-const loadHeaderBtn = document.getElementById('loadHeader');
+const unloadHeaderBtn = document.getElementById('unloadHead');
+const loadHeaderBtn = document.getElementById('loadHead');
 const unloadFooterBtn = document.getElementById('unloadFooter');
 const loadFooterBtn = document.getElementById('loadFooter');
 const optionsButton = document.getElementById('options');
@@ -119,7 +119,7 @@ function saveText(filename, text) {
 // Options handler
 optionsButton.onclick = function () {
     logDebug("Options button clicked");
-    window.location = chrome.runtime.getURL('options.html');
+    window.location = chrome.runtime.getURL('options/options.html');
 }
 
 // Set footer version info

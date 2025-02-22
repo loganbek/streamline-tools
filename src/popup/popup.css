@@ -126,6 +126,28 @@ button:disabled {
   background-color: #00a0c6;
 }
 
+/* Load Foot Button */
+#loadFoot {
+  border-color: #00a0c6;
+  color: #00a0c6;
+}
+
+#loadFoot:hover:enabled {
+  color: #ffffff;
+  background-color: #00a0c6;
+}
+
+/* Unload Foot Button */
+#unloadFoot {
+  border-color: #80cfe2;
+  color: #80cfe2;
+}
+
+#unloadFoot:hover:enabled {
+  color: #ffffff;
+  background-color: #80cfe2;
+}
+
 /* Unload Test Head Button */
 #unloadTestHead {
   border-color: #0c5fa8;
