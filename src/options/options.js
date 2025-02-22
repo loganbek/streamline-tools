@@ -73,5 +73,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Function to get footer content
 function getFooter() {
-    return '<p>' + manifest.name + ' v' + manifest.version + '</p>';
+    try {
+        const name = manifest.name ? manifest.name.replace(/[<>]/g, '') : 'Unknown';
+        const version = manifest.version || '0.0.0';
+        const text = document.createTextNode(`${name} v${version}`);
+        const p = document.createElement('p');
+        p.appendChild(text);
+        return p.outerHTML;
+    } catch (error) {
+        logDebug('Error creating footer:', error);
+        return '<p>Extension Info Unavailable</p>';
+    }
 }
