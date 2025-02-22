@@ -104,6 +104,50 @@ button:disabled {
   background-color: #f0037f;
 }
 
+/* Unload Head Button */
+#unloadHead {
+  border-color: #80cfe2;
+  color: #80cfe2;
+}
+
+#unloadHead:hover:enabled {
+  color: #ffffff;
+  background-color: #80cfe2;
+}
+
+/* Load Head Button */
+#loadHead {
+  border-color: #00a0c6;
+  color: #00a0c6;
+}
+
+#loadHead:hover:enabled {
+  color: #ffffff;
+  background-color: #00a0c6;
+}
+
+/* Unload Test Head Button */
+#unloadTestHead {
+  border-color: #0c5fa8;
+  color: #0c5fa8;
+}
+
+#unloadTestHead:hover:enabled {
+  color: #ffffff;
+  background-color: #0c5fa8;
+}
+
+/* Load Test Head Button */
+#loadTestHead {
+  border-color: #60017c;
+  color: #60017c;
+}
+
+#loadTestHead:hover:enabled {
+  color: #ffffff;
+  background-color: #60017c;
+}
+
 /* Streamline Colors
 - [ ] #80CFE2 - lightest blue - UNLOAD BML
 - [ ] #00A0C6 - lighter blue - LOAD BML
