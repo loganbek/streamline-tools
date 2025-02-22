@@ -172,13 +172,13 @@ button:disabled {
 
 /* Unload Alternate CSS Button */
 #unloadAltCSS {
-  border-color: #0c5fa8
-  color: #0c5fa8
+  border-color: #0c5fa8;
+  color: #0c5fa8;
 }
 
 #unloadAltCSS:hover:enabled {
   color: #ffffff;
-  background-color: #0c5fa8
+  background-color: #0c5fa8;
 }
 
 /* Load Alternate CSS Button */
