@@ -148,6 +148,62 @@ button:disabled {
   background-color: #60017c;
 }
 
+/* Unload CSS Button */
+#unloadCSS {
+  border-color: #80cfe2;
+  color: #80cfe2;
+}
+
+#unloadCSS:hover:enabled {
+  color: #ffffff;
+  background-color: #80cfe2;
+}
+
+/* Load CSS Button */
+#loadCSS {
+  border-color: #00a0c6;
+  color: #00a0c6;
+}
+
+#loadCSS:hover:enabled {
+  color: #ffffff;
+  background-color: #00a0c6;
+}
+
+/* Unload Alternate CSS Button */
+#unloadAltCSS {
+  border-color: #0c5fa8
+  color: #0c5fa8
+}
+
+#unloadAltCSS:hover:enabled {
+  color: #ffffff;
+  background-color: #0c5fa8
+}
+
+/* Load Alternate CSS Button */
+#loadAltCSS {
+  border-color: #60017c;
+  color: #60017c;
+}
+
+#loadAltCSS:hover:enabled {
+  color: #ffffff;
+  background-color: #60017c;
+}
+
+/* Unload JET CSS Button */
+#unloadJETCSS {
+  border-color: #f0037f;
+  color: #f0037f;
+}
+
+#unloadJETCSS:hover:enabled {
+  color: #ffffff;
+  background-color: #f0037f;
+}
+
+
 /* Streamline Colors
 - [ ] #80CFE2 - lightest blue - UNLOAD BML
 - [ ] #00A0C6 - lighter blue - LOAD BML
