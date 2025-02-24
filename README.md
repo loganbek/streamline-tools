@@ -31,7 +31,8 @@
 <!-- - [Cursor](https://cursor.sh/) -->
 
 ### CPQ Development Tools VS Code Extension
-https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-overview
+
+<https://marketplace.visualstudio.com/items?itemName=CPQConsultant.cpq-devkit-overview>
 
 ## Installation Instructions
 
@@ -109,12 +110,13 @@ Coming soon...
 
 2. Remove the extension and then reinstall it after filing a bug report [here](https://github.com/loganbek/streamlineTools/issues/new?assignees=loganbek&labels=&template=bug_report.md&title=). Please include any error logs from the console.
 
-## Development Tools
+<!-- 
+## Development Tools -->
 
-- Run `source .bashrc` (bash) or `setopt` (zsh) and then
+<!-- - Run `source .bashrc` (bash) or `setopt` (zsh) and then
   - Run `lint-concise` to display a concise list of style errors.
   - Run `lint-verbose` to display a detailed list of style errors.
-  - Run `lint-fix` to correct most style errors.
+  - Run `lint-fix` to correct most style errors. -->
 
 <!-- ## Testing
 
