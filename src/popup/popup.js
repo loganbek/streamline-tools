@@ -13,6 +13,20 @@ function logDebug(message, ...args) {
 let bmSiteSubDomain
 let bmSiteType
 
+// URL MATCHERS
+// Config - Recommendation - https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5268044&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true
+// Config - Constraint - https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=4889573&rule_type=2&pline_id=-1&segment_id=11&model_id=-1&fromList=true
+// Config - Hiding - https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=4951171&rule_type=11&pline_id=-1&segment_id=11&model_id=-1&fromList=true
+
+const topLevelFolder = {
+    commerce: 'commerce',
+    config: 'config',
+    documents: 'documents',
+    utils: 'utils',
+    interfaces: 'interfaces',
+    stylesheets: 'stylesheets',
+}
+
 // BUTTONS
 const unloadButton = document.getElementById('unload')
 const loadButton = document.getElementById('load')
