@@ -71,38 +71,37 @@ loadHeaderBtn.onclick = async function () {
 }
 
 // Unload Footer handler
-unloadFooterBtn.onclick = function () {
-    logDebug("Unload Footer button clicked");
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unloadFooter' }, function (response) {
-            if (response && response.code) {
-                saveText('footer.html', response.code);
-            }
-        });
-    });
-}
-
-// Load Footer handler
-loadFooterBtn.onclick = async function () {
-    logDebug("Load Footer button clicked");
+async function handleFileOperation(operation, fileName) {
+    logDebug(`${operation} button clicked`);
     try {
-        const [fileHandle] = await window.showOpenFilePicker();
-        const file = await fileHandle.getFile();
-        const contents = await file.text();
-        
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            chrome.tabs.sendMessage(
-                tabs[0].id,
-                { greeting: 'loadFooter', code: contents },
-                function (response) {
-                    logDebug("Load Footer response received:", response);
-                }
-            );
-        });
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        if (operation.startsWith('unload')) {
+            const response = await chrome.tabs.sendMessage(tab.id, { greeting: operation });
+            if (response?.code) {
+                await saveText(fileName, response.code);
+            } else {
+                throw new Error(`Failed to ${operation}`);
+            }
+        } else {
+            const [fileHandle] = await window.showOpenFilePicker();
+            const file = await fileHandle.getFile();
+            const contents = await file.text();
+            await chrome.tabs.sendMessage(tab.id, { greeting: operation, code: contents });
+            logDebug(`${operation} response received`);
+        }
     } catch (err) {
-        logDebug("Error loading footer file:", err);
+        logDebug(`Error in ${operation}:`, err);
+        alert(`Failed to ${operation}. Please try again.`);
     }
 }
+
+// Header handlers (assuming these elements exist in the file)
+unloadHeaderBtn.onclick = () => handleFileOperation('unloadHeader', 'header.html');
+loadHeaderBtn.onclick = () => handleFileOperation('loadHeader', 'header.html');
+
+// Footer handlers
+unloadFooterBtn.onclick = () => handleFileOperation('unloadFooter', 'footer.html');
+loadFooterBtn.onclick = () => handleFileOperation('loadFooter', 'footer.html');
 
 // File save helper
 function saveText(filename, text) {
