@@ -37,15 +37,20 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 });
 
 // Unload Header handler
-unloadHeaderBtn.onclick = function () {
+unloadHeaderBtn.onclick = async function () {
     logDebug("Unload Header button clicked");
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unloadHeader' }, function (response) {
-            if (response && response.code) {
-                saveText('header.html', response.code);
-            }
-        });
-    });
+    try {
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadHeader' });
+        if (response?.code) {
+            await saveText('header.html', response.code);
+        } else {
+            throw new Error('Failed to unload header');
+        }
+    } catch (err) {
+        logDebug("Error unloading header:", err);
+        alert('Failed to unload header. Please try again.');
+    }
 }
 
 // Load Header handler
