@@ -24,7 +24,7 @@ let bmSiteType
 // Commerce - Hiding Rule - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?rule_id=1&fromList=true
 // Commerce - Validation Rule - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?rule_id=1&fromList=true
 
-// Utils - 
+// Utils - https://devmcnichols.bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:%274220560%27,folder_id:%274133367%27,process_id:%27-1%27,doc_id:%27-1%27}&inputdata={appid:%27sampleApp%27,service:%27bmllibraryservice%27,operation:%27getLibPageData%27,version:%271.0%27,header:%27%27,params:%20{componentid:%27libraryEditorPage%27,uicmd:%27defineComponent%27,%20id:%274220560%27,folder_id:%274133367%27,process_id:%27-1%27,doc_id:%27-1%27}}&token=hwH3rR7wSY8wxhFag_Fvp9u6EKUata3vOTNFgmPNLdgPTh5DgO712uR3s5U
 
 // Interfaces - REST - https://devmcnichols.bigmachines.com/rest/v1/quote/1
 // Interfaces - SOAP -
