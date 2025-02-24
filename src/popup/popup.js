@@ -29,9 +29,13 @@ let bmSiteType
 // Interfaces - REST - https://devmcnichols.bigmachines.com/rest/v1/quote/1
 // Interfaces - SOAP -
 
-// Stylesheets -
+// Stylesheets - Stylesheet Manager - https://devmcnichols.bigmachines.com/admin/ui/branding/edit_site_branding.jsp
+// Stylesheets - Header & Footer = https://devmcnichols.bigmachines.com/admin/ui/branding/edit_site_branding.jsp
 
-// Documents -
+
+
+// Documents -gloobal xsl - https://devmcnichols.bigmachines.com/admin/document-designer/4653759/editor/134737862
+
 
 
 // Top Level Folders
