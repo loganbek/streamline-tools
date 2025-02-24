@@ -10,7 +10,8 @@
     "storage",
     "tabs",
     "scripting",
-    "commands"
+    "commands",
+    "sidePanel"
   ],
   "options_ui": {
     "page": "options/options.html",
