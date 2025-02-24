@@ -120,12 +120,19 @@ logsButton.disabled = true
 logDebug("Logs button disabled.");
 
 // DOWNLOAD FILENAME HANDLING
+function sanitizeFilename(filename) {
+    return filename.replace(/[^a-z0-9.-]/gi, '_');
+}
+
 chrome.downloads.onDeterminingFilename.addListener(function (item, suggest) {
     logDebug("Download detected, setting filename, subdomain, and site type:", item.filename, bmSiteSubDomain, bmSiteType);
     logDebug("item", item);
     logDebug("suggest", suggest);
     suggest({
-        filename: 'bigmachines/' + bmSiteSubDomain + '/' + bmSiteType + '/' + item.filename,
+        filename: 'bigmachines/' + 
+                 sanitizeFilename(bmSiteSubDomain) + '/' + 
+                 sanitizeFilename(bmSiteType) + '/' + 
+                 sanitizeFilename(item.filename),
         conflictAction: 'overwrite'
     });
 });
