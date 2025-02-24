@@ -67,6 +67,7 @@ loadHeaderBtn.onclick = async function () {
         });
     } catch (err) {
         logDebug("Error loading header file:", err);
+        alert('Failed to load header file. Please try again.');
     }
 }
 
