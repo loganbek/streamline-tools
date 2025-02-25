@@ -36,7 +36,30 @@ let bmSiteType
 
 // Documents -gloobal xsl - https://devmcnichols.bigmachines.com/admin/document-designer/4653759/editor/134737862
 
-
+// const URL_MATCHERS = {
+//     config: {
+//         recommendation: 'admin/configuration/rules/edit_rule.jsp?rule_id=',
+//         constraint: 'admin/configuration/rules/edit_rule.jsp?rule_id=',
+//         hiding: 'admin/configuration/rules/edit_rule.jsp?rule_id=',
+//     },
+//     commerce: {
+//         action: 'admin/commerce/actions/edit_action.jsp?action_id=',
+//         rule: 'admin/commerce/rules/edit_rule.jsp?rule_id=',
+//         constraintRule: 'admin/commerce/rules/edit_rule.jsp?rule_id=',
+//         hidingRule: 'admin/commerce/rules/edit_rule.jsp?rule_id=',
+//         validationRule: 'admin/commerce/rules/edit_rule.jsp?rule_id=',
+//     },
+//     utils: 'spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:%27',
+//     interfaces: {
+//         rest: 'rest/v1/quote/',
+//         soap: '',
+//     },
+//     stylesheets: {
+//         stylesheetManager: 'admin/ui/branding/edit_site_branding.jsp',
+//         headerFooter: 'admin/ui/branding/edit_site_branding.jsp',
+//     },
+//     documents: 'admin/document-designer/',
+// }
 
 // Top Level Folders
 const topLevelFolder = {
@@ -82,7 +105,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     logDebug("Extracted domain:", domain);
     logDebug("Extracted type:", type);
 
-    if (url !== undefined) {
+    if (url !== undefined) { 
         if (
             url.includes('bigmachines.com/admin/commerce/rules') ||
             url.includes('bigmachines.com/admin/configuration/rules') ||
