@@ -26,5 +26,5 @@ review:
     - Check GDPR compliance for data collection
     - Verify webpack build optimization
 
-feedback: true
-auto_approve: true
+  feedback: true
+  auto_approve: true
