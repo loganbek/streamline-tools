@@ -66,7 +66,7 @@ const URL_MATCHERS = {
     },
     stylesheets: {
         stylesheetManager: 'bigmachines.com/admin/ui/branding/edit_site_branding.jsp',
-        headerFooter: 'bigmachines.com/admin/ui/branding/edit_site_branding.jsp'
+        headerFooter: 'bigmachines.com/admin/ui/branding/edit_header_footer.jsp'
     },
     documents: 'bigmachines.com/admin/document-designer/',
 }
@@ -131,7 +131,24 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     logDebug("Extracted domain:", domain);
     logDebug("Extracted type:", type);
 
-    if (url !== undefined) { 
+    if (url) { 
+        // Check if URL matches styleSheetManager
+        if (matchesUrlPattern(url, topLevelFolder.stylesheets, 'stylesheetManager')) {
+            bmSiteType = 'stylesheets'
+            logDebug("Folder Type:", bmSiteType);
+            logDebug("Executing content script: adminStylesheetsContent.js");
+            chrome.scripting.executeScript({
+                target: { tabId: tabs[0].id },
+                files: ['adminStylesheetsContent.js'],
+            });
+        }
+
+        // Check if URL matches headerFooter
+        if (matchesUrlPattern(url, topLevelFolder.stylesheets, 'headerFooter')) {
+            bmSiteType = 'stylesheets'
+            logDebug("Folder Type:", bmSiteType);
+        }
+
         if (
             url.includes('bigmachines.com/admin/commerce/rules') ||
             url.includes('bigmachines.com/admin/configuration/rules') ||
@@ -141,7 +158,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             loadTestButton.disabled = true
             logDebug("Test buttons disabled due to matching admin commerce rules URL.");
         }
-        
+
         if (url.includes('bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp')) {
             logDebug("Executing content script: adminCommerceActionsContent.js");
             chrome.scripting.executeScript({
