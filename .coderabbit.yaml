@@ -16,6 +16,8 @@ review:
     - .github/               # CI/CD configurations
     - .gitignore
     - package-lock.json
+    - .cpqdevkit            # CPQ DevKit configurations
+    - .vscode/              # VS Code configurations
 
   guidelines:
     - Verify Manifest V3 compliance
