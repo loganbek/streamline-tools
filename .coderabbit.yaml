@@ -29,5 +29,14 @@ reviews:
   - "Verify Manifest V3 compatibility and compliance"
   - "Ensure the extension is compatible with the latest version of Chrome"
   - "Ensure error handling is implemented for all user interactions"
+  auto_review:
+    enabled: true
+    ignore_title_keywords:
+      - "WIP"
+      - "DO NOT MERGE"
+    drafts: false
+    base_branches:
+      - "master"
+      - "coverage"
 chat:
   auto_reply: true
