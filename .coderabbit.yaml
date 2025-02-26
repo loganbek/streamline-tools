@@ -1,32 +1,33 @@
-# .coderabbit.yaml
-
-focus_paths:
-  - src/manifest.json          # Core extension configuration
-  - src/background/*       # Background service worker
-  - src/content/*          # Content scripts
-  - src/popup/*            # Popup UI components
-  - src/options/*          # Options page
-  # - src/utils/*            # Shared utilities
-  # - src/*                    # js files
-  # - webpack.config.js      # Build configuration
-
-ignore_paths:
-  # - dist/                  # Built files
-  - node_modules/
-  - .github/               # CI/CD configurations
-  - .gitignore
-  - package-lock.json
-  - .cpqdevkit            # CPQ DevKit configurations
-  - .vscode/              # VS Code configurations
-
-guidelines:
-  - Verify Manifest V3 compliance
-  - Check permissions scope for "scripting", "storage", and "activeTab"
-  - Review content script injection patterns
-  - Validate cross-origin XHR requests in background scripts
-  - Ensure proper error handling in API calls
-  - Check GDPR compliance for data collection
-  - Verify webpack build optimization
-
-feedback: true
-auto_approve: true
+# yaml-language-server: $schema=https://storage.googleapis.com/coderabbit_public_assets/schema.v2.json
+language: "en-US"
+early_access: false
+enable_free_tier: true
+reviews:
+  profile: "assertive"
+  request_changes_workflow: true
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+  auto_review:
+    enabled: true
+    drafts: true
+  focus_paths:
+    - src/manifest.json # Core extension file
+    - src/background/* # Background service worker
+    - src/content/* # Content scripts
+    - src/options/* # Options page
+    - src/popup/* # Popup pages
+  ignoree_paths:
+    - node_modules/*
+    - .github/*
+    - .vscode/*
+    - .gitignore
+    - .cpqdevkit
+    - package-lock.json
+  guidelines:
+  - "Verify Manifest V3 compatibility and compliance"
+  - "Ensure the extension is compatible with the latest version of Chrome"
+  - "Ensure error handling is implemented for all user interactions"
+chat:
+  auto_reply: true
