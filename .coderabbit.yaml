@@ -13,12 +13,12 @@ reviews:
     enabled: true
     drafts: true
   focus_paths:
-    - src/manifest.json # Core extension file
-    - src/background/* # Background service worker
-    - src/content/* # Content scripts
-    - src/options/* # Options page
-    - src/popup/* # Popup pages
-  ignoree_paths:
+    - src/manifest.json  # Core extension file
+    - src/background/*   # Background service worker
+    - src/content/*      # Content scripts
+    - src/options/*      # Options page
+    - src/popup/*        # Popup pages
+  ignore_paths:
     - node_modules/*
     - .github/*
     - .vscode/*
@@ -26,9 +26,9 @@ reviews:
     - .cpqdevkit
     - package-lock.json
   guidelines:
-  - "Verify Manifest V3 compatibility and compliance"
-  - "Ensure the extension is compatible with the latest version of Chrome"
-  - "Ensure error handling is implemented for all user interactions"
+    - "Verify Manifest V3 compatibility and compliance"
+    - "Ensure the extension is compatible with the latest version of Chrome"
+    - "Ensure error handling is implemented for all user interactions"
   auto_review:
     enabled: true
     ignore_title_keywords:

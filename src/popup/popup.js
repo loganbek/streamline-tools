@@ -24,7 +24,7 @@ let bmSiteType
 // Commerce - Hiding Rule - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?rule_id=1&fromList=true
 // Commerce - Validation Rule - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?rule_id=1&fromList=true
 
-// Utils - https://devmcnichols.bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:%274220560%27,folder_id:%274133367%27,process_id:%27-1%27,doc_id:%27-1%27}&inputdata={appid:%27sampleApp%27,service:%27bmllibraryservice%27,operation:%27getLibPageData%27,version:%271.0%27,header:%27%27,params:%20{componentid:%27libraryEditorPage%27,uicmd:%27defineComponent%27,%20id:%274220560%27,folder_id:%274133367%27,process_id:%27-1%27,doc_id:%27-1%27}}&token=hwH3rR7wSY8wxhFag_Fvp9u6EKUata3vOTNFgmPNLdgPTh5DgO712uR3s5U
+// Utils - https://devmcnichols.bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:'EXAMPLE_ID',folder_id:'EXAMPLE_FOLDER',process_id:'-1',doc_id:'-1'}&inputdata={appid:'sampleApp',service:'bmllibraryservice',operation:'getLibPageData',version:'1.0',header:'',params: {componentid:'libraryEditorPage',uicmd:'defineComponent', id:'EXAMPLE_ID',folder_id:'EXAMPLE_FOLDER',process_id:'-1',doc_id:'-1'}}&token=EXAMPLE_TOKEN
 
 // Interfaces - REST - https://devmcnichols.bigmachines.com/rest/v1/quote/1
 // Interfaces - SOAP -
@@ -36,30 +36,31 @@ let bmSiteType
 
 // Documents -gloobal xsl - https://devmcnichols.bigmachines.com/admin/document-designer/4653759/editor/134737862
 
-// const URL_MATCHERS = {
-//     config: {
-//         recommendation: 'admin/configuration/rules/edit_rule.jsp?rule_id=',
-//         constraint: 'admin/configuration/rules/edit_rule.jsp?rule_id=',
-//         hiding: 'admin/configuration/rules/edit_rule.jsp?rule_id=',
-//     },
-//     commerce: {
-//         action: 'admin/commerce/actions/edit_action.jsp?action_id=',
-//         rule: 'admin/commerce/rules/edit_rule.jsp?rule_id=',
-//         constraintRule: 'admin/commerce/rules/edit_rule.jsp?rule_id=',
-//         hidingRule: 'admin/commerce/rules/edit_rule.jsp?rule_id=',
-//         validationRule: 'admin/commerce/rules/edit_rule.jsp?rule_id=',
-//     },
-//     utils: 'spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:%27',
-//     interfaces: {
-//         rest: 'rest/v1/quote/',
-//         soap: '',
-//     },
-//     stylesheets: {
-//         stylesheetManager: 'admin/ui/branding/edit_site_branding.jsp',
-//         headerFooter: 'admin/ui/branding/edit_site_branding.jsp',
-//     },
-//     documents: 'admin/document-designer/',
-// }
+// URL matchers for different sections and rule types
+const URL_MATCHERS = {
+    config: {
+        recommendation: 'admin/configuration/rules/edit_rule.jsp?rule_id=',
+        constraint: 'admin/configuration/rules/edit_rule.jsp?rule_id=',
+        hiding: 'admin/configuration/rules/edit_rule.jsp?rule_id=',
+    },
+    commerce: {
+        action: 'admin/commerce/actions/edit_action.jsp?action_id=',
+        rule: 'admin/commerce/rules/edit_rule.jsp?rule_id=',
+        constraintRule: 'admin/commerce/rules/edit_rule.jsp?rule_id=',
+        hidingRule: 'admin/commerce/rules/edit_rule.jsp?rule_id=',
+        validationRule: 'admin/commerce/rules/edit_rule.jsp?rule_id=',
+    },
+    utils: 'spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:%27',
+    interfaces: {
+        rest: 'rest/v1/quote/',
+        soap: '',
+    },
+    stylesheets: {
+        stylesheetManager: 'admin/ui/branding/edit_site_branding.jsp',
+        headerFooter: 'admin/ui/branding/edit_site_branding.jsp',
+    },
+    documents: 'admin/document-designer/'
+}
 
 // Top Level Folders
 const topLevelFolder = {
