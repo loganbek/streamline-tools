@@ -10,11 +10,11 @@ reviews:
   review_status: true
   collapse_walkthrough: false
   path_filters:
-    - src/manifest.json  # Core extension file
-    - src/background/*   # Background service worker
-    - src/content/*      # Content scripts
-    - src/options/*      # Options page
-    - src/popup/*        # Popup pages
+    - src/manifest.json       # Core extension file
+    - src/background/*        # Background service worker
+    - src/content/*           # Content scripts
+    - src/options/*           # Options page
+    - src/popup/*             # Popup pages
     - "!node_modules/*"
     - "!.github/*"
     - "!.vscode/*"
