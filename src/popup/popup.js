@@ -147,6 +147,11 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         if (matchesUrlPattern(url, topLevelFolder.stylesheets, 'headerFooter')) {
             bmSiteType = 'stylesheets'
             logDebug("Folder Type:", bmSiteType);
+            logDebug("Executing content script: adminHeaderFooterContent.js");
+            chrome.scripting.executeScript({
+                target: { tabId: tabs[0].id },
+                files: ['adminHeaderFooterContent.js'],
+            });
         }
 
         if (
