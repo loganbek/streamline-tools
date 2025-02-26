@@ -9,26 +9,18 @@ reviews:
   poem: false
   review_status: true
   collapse_walkthrough: false
-  auto_review:
-    enabled: true
-    drafts: true
-  focus_paths:
+  path_filters:
     - src/manifest.json  # Core extension file
     - src/background/*   # Background service worker
     - src/content/*      # Content scripts
     - src/options/*      # Options page
     - src/popup/*        # Popup pages
-  ignore_paths:
-    - node_modules/*
-    - .github/*
-    - .vscode/*
-    - .gitignore
-    - .cpqdevkit
-    - package-lock.json
-  guidelines:
-    - "Verify Manifest V3 compatibility and compliance"
-    - "Ensure the extension is compatible with the latest version of Chrome"
-    - "Ensure error handling is implemented for all user interactions"
+    - "!node_modules/*"
+    - "!.github/*"
+    - "!.vscode/*"
+    - "!.gitignore"
+    - "!.cpqdevkit"
+    - "!package-lock.json"
   auto_review:
     enabled: true
     ignore_title_keywords:
