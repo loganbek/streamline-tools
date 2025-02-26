@@ -1,32 +1,32 @@
 # .coderabbit.yaml
-review:
-  focus_paths:
-    - src/manifest.json          # Core extension configuration
-    - src/background/*       # Background service worker
-    - src/content/*          # Content scripts
-    - src/popup/*            # Popup UI components
-    - src/options/*          # Options page
-    # - src/utils/*            # Shared utilities
-    # - src/*                    # js files
-    # - webpack.config.js      # Build configuration
 
-  ignore_paths:
-    # - dist/                  # Built files
-    - node_modules/
-    - .github/               # CI/CD configurations
-    - .gitignore
-    - package-lock.json
-    - .cpqdevkit            # CPQ DevKit configurations
-    - .vscode/              # VS Code configurations
+focus_paths:
+  - src/manifest.json          # Core extension configuration
+  - src/background/*       # Background service worker
+  - src/content/*          # Content scripts
+  - src/popup/*            # Popup UI components
+  - src/options/*          # Options page
+  # - src/utils/*            # Shared utilities
+  # - src/*                    # js files
+  # - webpack.config.js      # Build configuration
 
-  guidelines:
-    - Verify Manifest V3 compliance
-    - Check permissions scope for "scripting", "storage", and "activeTab"
-    - Review content script injection patterns
-    - Validate cross-origin XHR requests in background scripts
-    - Ensure proper error handling in API calls
-    - Check GDPR compliance for data collection
-    - Verify webpack build optimization
+ignore_paths:
+  # - dist/                  # Built files
+  - node_modules/
+  - .github/               # CI/CD configurations
+  - .gitignore
+  - package-lock.json
+  - .cpqdevkit            # CPQ DevKit configurations
+  - .vscode/              # VS Code configurations
 
-  feedback: true
-  auto_approve: true
+guidelines:
+  - Verify Manifest V3 compliance
+  - Check permissions scope for "scripting", "storage", and "activeTab"
+  - Review content script injection patterns
+  - Validate cross-origin XHR requests in background scripts
+  - Ensure proper error handling in API calls
+  - Check GDPR compliance for data collection
+  - Verify webpack build optimization
+
+feedback: true
+auto_approve: true
