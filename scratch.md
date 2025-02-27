@@ -3650,7 +3650,7 @@ TODO v1 and Beyond
 - [ ] remove hot-reload from release version
 - [ ] logs access/generation from bm-framework?
 - [ ] first options to add?
-- [ ] is it useful to display _BM_USER_ vars information in app, maybe login, email, company, host company, bm user full access?
+- [ ] is it useful to display *BM_USER* vars information in app, maybe login, email, company, host company, bm user full access?
 - [ ] effort to port over to other browsers
   - [ ] edge, firefox, safari, + others
   - [ ] What do most bigmachine admins use? Chrome + Edge?
@@ -4077,9 +4077,12 @@ Since Windows and Linux use different default line endings, Git may report a lar
 
 Typically adding or modifying a .gitattributes file in your repository is the most reliable way to solve this problem. Committing this file to source control will help others and allows you to vary behaviors by repository as appropriate. For example, adding the following to .gitattributes file to the root of your repository will force everything to be LF, except for Windows batch files that require CRLF:
 
+```gitattributes
 - text=auto eol=lf
 *.{cmd,[cC][mM][dD]} text eol=crlf
 *.{bat,[bB][aA][tT]} text eol=crlf
+```
+
 Note that this works in Git v2.10+, so if you are running into problems, be sure you've got a recent Git client installed. You can add other file types in your repository that require CRLF to this same file.
 
 If you would prefer to still always upload Unix-style line endings (LF), you can use the input option.
@@ -4493,20 +4496,20 @@ function simulatedClick(target, options) {
 
 Puppetry or Jest for testing
 starting w/ puppetry
-https://github.com/puppeteer/puppeteer/tree/6522e4f524bdbc1f1b9d040772acf862517ed507/utils/browser
+<https://github.com/puppeteer/puppeteer/tree/6522e4f524bdbc1f1b9d040772acf862517ed507/utils/browser>
 
 make setShelfEnabled in option.html
 add download success to UI
-  - what should this look like?
 
+- what should this look like?
 
 check on CH
 
 work on alt command click - comm advanced
 not needed for config
 
-
 ## 8/13/22
+
 - [ ] check code + add comments
   - [ ] general folder structure/architecture
   - [ ] config
@@ -4518,21 +4521,24 @@ not needed for config
 
 - [ ] get puppeteer working for unit tests
 - [ ] look into github sso for authentication
-- [ ] 
+- [ ]
 
 - [ ] download success in UI - green checkmark badge 5s
 - [ ] download faily in UI - red x badge 5s
 
 util func elem
-- [] <span class="x-panel-header-text" id="ext-gen55">Util BML Library Function Editor: Properties &amp; Parameters</span>
+
+- [x] ```html <span class="x-panel-header-text" id="ext-gen55">``` Util BML Library Function Editor: Properties &amp; Parameters</span>
 comm func elem
-- [ ] <span class="x-panel-header-text" id="ext-gen55">Util BML Library Function Editor: Properties &amp; Parameters</span>
+- [x] ```html <span class="x-panel-header-text" id="ext-gen55">```Util BML Library Function Editor: Properties &amp; Parameters</span>
 document.querySelector('span[id^="ext-gen"]').innerHTML.includes("Util");
+
 ## 8/12/25
+
 chrome://help - version
-- [ ] finish dev 
-  - [ ] chrome util
-  - [ ] code cleanup
+
+- [ ] chrome util
+- [ ] code cleanup
 - [ ] next dev items
   - [ ] badging
   - [ ] panel
@@ -4540,3 +4546,112 @@ chrome://help - version
   - [ ] other app areas
   - [ ] github login
 
+- [x] notes 2 digital
+
+- [x] setup rabbit
+- [x] copilot setup
+- [x] coverage
+  - [x] remove unused
+  - [ ] finish
+
+- [ ] fix config double click
+- [ ] config
+  - [ ] vmmapping
+  - [ ] my after
+  - [ ]  interface
+  - [ ] doc designer
+  - [ ] [Global XSL Snippet](<https://devmcnichols.bigmachines.com/admin/document-designer/4653759/editor/72244963>)
+
+    ```html
+    <div id="action-container">
+                    <oj-module config="[[actionViewConfig()]]" class="oj-complete"><!-- ko ojModule: {"view":config().view, "viewModel":config().viewModel,"cleanupMode":config().cleanupMode,"animation":animation} -->
+    <!--oj-bind-if test='[[property.isShowPaste]]'--><!--ko if:property.isShowPaste--><!--/ko--><!--/oj-bind-if-->
+    <oj-button id="doc-global-snippet" class="xsl-action oj-button oj-button-full-chrome oj-button-icon-only oj-enabled oj-complete oj-default" display="icons" on-oj-action="[[documentProperty.setGlobalXslSnippet.bind($data)]]" title="Global XSL"><button class="oj-button-button" aria-labelledby="doc-global-snippet_oj90|text"><div class="oj-button-label"><span class="oj-button-icon oj-start"><span slot="startIcon" class="xsl-action-icon"></span></span><span class="oj-button-text oj-helper-hidden-accessible" id="doc-global-snippet_oj90|text"><span class=""><!--oj-bind-text value='[[property.text.globalXSL]]'--><!--ko text:property.text.globalXSL-->Global XSL<!--/ko--><!--/oj-bind-text--></span></span></div></button></oj-button>
+    <oj-button id="doc-header-styling" class="heading-action oj-button oj-button-full-chrome oj-button-icon-only oj-enabled oj-complete oj-default" display="icons" on-oj-action="[[documentProperty.setHeaderStyling]]" title="Heading Styles"><button class="oj-button-button" aria-labelledby="doc-header-styling_oj89|text"><div class="oj-button-label"><span class="oj-button-icon oj-start"><span slot="startIcon" class="heading-action-icon"></span></span><span class="oj-button-text oj-helper-hidden-accessible" id="doc-header-styling_oj89|text"><span class=""><!--oj-bind-text value='[[property.text.headingStyles]]'--><!--ko text:property.text.headingStyles-->Heading Styles<!--/ko--><!--/oj-bind-text--></span></span></div></button></oj-button>
+<!-- /ko --><div data-bind="_ojNodeStorage_" class="oj-subtree-hidden" style="display: none;"></div></oj-module>
+                </div>
+
+    ```
+    
+- [ ] dd body quote table xsl
+
+  ```html
+    <li :class="[[element.data.myClass + ' draggableElement']]" :data-add-label="[[element.data.addLabel]]" :data-my-class="[[element.data.myClass]]" :data-move-label="[[element.data.moveLabel]]" :data-type="[[element.data.type]]" data-bind="event: {dblclick: addElement}" class="element-inlinexsl draggableElement ui-draggable ui-draggable-handle" data-add-label="Drop XSL Snippet Here to Add" data-my-class="element-inlinexsl" data-move-label="Drop XSL Snippet Here to Move" data-type="INLINE_XSL_SNIPPET">
+    <div class="element-container" data-bind="parentMoved: moveParent" on-click="[[clicked]]" on-dblclick="[[dblClicked]]" :class="[[{invalid: isInvalid()}]]">
+        <span class="error-icon">!</span>
+        <span class="delete" on-click="[[deleteComponentClicked.bind($data)]]" on-mouseover="[[deleteHover.bind($data)]]" on-mouseout="[[deleteHoverOut.bind($data)]]"><span></span></span>
+        <!--oj-bind-if test='[[loop() || condition()]]'--><!--ko if:loop() || condition()-->
+            <span class="modifiers">
+                <!--oj-bind-if test='[[loop]]'--><!--ko if:loop--><!--/ko--><!--/oj-bind-if-->
+                <!--oj-bind-if test='[[condition]]'--><!--ko if:condition-->
+                    <span class="conditional-action" on-click="[[showConditionalEditor.bind($data)]]" :title="[[text.editConditional]]" title="Edit Conditional"></span>
+                <!--/ko--><!--/oj-bind-if-->
+            </span>
+        <!--/ko--><!--/oj-bind-if-->
+        <div class="element-component">
+            <div class="element-content">
+                <p><!--oj-bind-text value='[[displayName]]'--><!--ko text:displayName-->Weight for Line item - XSL Snippet<!--/ko--><!--/oj-bind-text--></p>
+            </div>
+        </div>
+    </div>
+
+</li>
+  ```
+
+```html
+
+<!-- Advanced Conditional Window -->
+ <div class="oj-dialog-container"><div class="oj-dialog-header ui-draggable-handle"><div slot="header" class="oj-helper-clearfix" aria-labelledby="script-dialog-header">
+        <span class="context-image script-dialog-image" data-bind="css: 'script-dialog-image'"></span>
+        <div id="script-dialog-header" class="oj-dialog-title" data-bind="html: scriptDialogHeader">&lt;/&gt; &nbsp;Advanced Conditional</div>
+    </div></div><div class="oj-dialog-content oj-dialog-default-content"><div class="oj-dialog-body-wrapper"><div slot="body" data-bind="css: { fieldless: hasFields() == 0 }" class="fieldless oj-dialog-body">
+        <!--oj-bind-if test='[[hasFields() > 0]]'--><!--ko if:hasFields() > 0--><!--/ko--><!--/oj-bind-if-->
+        <div id="scriptEditor" class=" ace_editor ace_hidpi ace-chrome"><textarea class="ace_text-input" wrap="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="opacity: 0; font-size: 1px; height: 1px; width: 1px; transform: translate(44px, 17px);"></textarea><div class="ace_gutter" aria-hidden="true" style="left: 0px; width: 41px;"><div class="ace_layer ace_gutter-layer ace_folding-enabled" style="height: 1e+06px; transform: translate(0px, 0px); width: 41px;"><div class="ace_gutter-cell ace_gutter-active-line " style="height: 17px; top: 0px;">1<span class="ace_fold-widget ace_start ace_open" style="height: 17px; display: inline-block;"></span></div><div class="ace_gutter-cell " style="height: 17px; top: 17px;">2<span class="ace_fold-widget ace_start ace_open" style="height: 17px; display: inline-block;"></span></div><div class="ace_gutter-cell " style="height: 17px; top: 34px;">3<span style="display: none;"></span></div><div class="ace_gutter-cell " style="height: 17px; top: 51px;">4<span style="display: none;"></span></div><div class="ace_gutter-cell " style="height: 17px; top: 68px;">5<span style="display: none;"></span></div><div class="ace_gutter-cell " style="height: 17px; top: 85px;">6<span style="display: none;"></span></div></div></div><div class="ace_scroller" style="line-height: 17px; left: 40.1992px; right: 0px; bottom: 0px;"><div class="ace_content" style="transform: translate(0px, 0px); width: 1729px; height: 361px;"><div class="ace_layer ace_print-margin-layer"><div class="ace_print-margin" style="left: 580px; visibility: hidden;"></div></div><div class="ace_layer ace_marker-layer"><div class="ace_active-line" style="height: 17px; top: 0px; left: 0px; right: 0px;"></div><div class="ace_bracket ace_start ace_br15" style="height: 17px; width: 71.9922px; top: 85px; left: 18.3984px;"></div></div><div class="ace_layer ace_text-layer" style="height: 1e+06px; margin: 0px 4px; transform: translate(0px, 0px);"><div class="ace_line" style="height: 17px; top: 0px;"><span class="ace_meta ace_tag ace_punctuation ace_tag-open ace_xml">&lt;</span><span class="ace_meta ace_tag ace_tag-name ace_xml">xsl:choose</span><span class="ace_meta ace_tag ace_punctuation ace_tag-close ace_xml">&gt;</span></div><div class="ace_line" style="height: 17px; top: 17px;"><span class="ace_text ace_xml">    </span><span class="ace_meta ace_tag ace_punctuation ace_tag-open ace_xml">&lt;</span><span class="ace_meta ace_tag ace_tag-name ace_xml">xsl:when</span><span class="ace_text ace_tag-whitespace ace_xml"> </span><span class="ace_entity ace_other ace_attribute-name ace_xml">test</span><span class="ace_keyword ace_operator ace_attribute-equals ace_xml">=</span><span class="ace_string ace_attribute-value ace_xml">"$_dsSub1/saleTypeHidden_line!=</span><span class="ace_constant ace_language ace_escape ace_reference ace_attribute-value ace_xml">&amp;#39;</span><span class="ace_string ace_attribute-value ace_xml">Process</span><span class="ace_constant ace_language ace_escape ace_reference ace_attribute-value ace_xml">&amp;#39;</span><span class="ace_string ace_attribute-value ace_xml"> and $_dsSub1/saleTypeHidden_line!=</span><span class="ace_constant ace_language ace_escape ace_reference ace_attribute-value ace_xml">&amp;#39;</span><span class="ace_string ace_attribute-value ace_xml">Non-Stock</span><span class="ace_constant ace_language ace_escape ace_reference ace_attribute-value ace_xml">&amp;#32;</span><span class="ace_string ace_attribute-value ace_xml">Process</span><span class="ace_constant ace_language ace_escape ace_reference ace_attribute-value ace_xml">&amp;#39;</span><span class="ace_string ace_attribute-value ace_xml"> and $_dsSub1/saleTypeHidden_line!=</span><span class="ace_constant ace_language ace_escape ace_reference ace_attribute-value ace_xml">&amp;#39;</span><span class="ace_string ace_attribute-value ace_xml">Custom</span><span class="ace_constant ace_language ace_escape ace_reference ace_attribute-value ace_xml">&amp;#39;</span><span class="ace_string ace_attribute-value ace_xml"> and $_dsMain1/proposalPrintType_quote!=</span><span class="ace_constant ace_language ace_escape ace_reference ace_attribute-value ace_xml">&amp;#39;</span><span class="ace_string ace_attribute-value ace_xml">RFQ</span><span class="ace_constant ace_language ace_escape ace_reference ace_attribute-value ace_xml">&amp;#39;</span><span class="ace_string ace_attribute-value ace_xml">"</span><span class="ace_meta ace_tag ace_punctuation ace_tag-close ace_xml">&gt;</span></div><div class="ace_line" style="height: 17px; top: 34px;"><span class="ace_indent-guide">    </span><span class="ace_text ace_xml">    1</span></div><div class="ace_line" style="height: 17px; top: 51px;"><span class="ace_text ace_xml">    </span><span class="ace_meta ace_tag ace_punctuation ace_end-tag-open ace_xml">&lt;/</span><span class="ace_meta ace_tag ace_tag-name ace_xml">xsl:when</span><span class="ace_meta ace_tag ace_punctuation ace_tag-close ace_xml">&gt;</span></div><div class="ace_line" style="height: 17px; top: 68px;"><span class="ace_text ace_xml">    </span><span class="ace_meta ace_tag ace_punctuation ace_tag-open ace_xml">&lt;</span><span class="ace_meta ace_tag ace_tag-name ace_xml">xsl:otherwise</span><span class="ace_meta ace_tag ace_punctuation ace_tag-close ace_xml">&gt;</span><span class="ace_text ace_xml">0</span><span class="ace_meta ace_tag ace_punctuation ace_end-tag-open ace_xml">&lt;/</span><span class="ace_meta ace_tag ace_tag-name ace_xml">xsl:otherwise</span><span class="ace_meta ace_tag ace_punctuation ace_tag-close ace_xml">&gt;</span></div><div class="ace_line" style="height: 17px; top: 85px;"><span class="ace_meta ace_tag ace_punctuation ace_end-tag-open ace_xml">&lt;/</span><span class="ace_meta ace_tag ace_tag-name ace_xml">xsl:choose</span><span class="ace_meta ace_tag ace_punctuation ace_tag-close ace_xml">&gt;</span></div></div><div class="ace_layer ace_marker-layer"></div><div class="ace_layer ace_cursor-layer ace_hidden-cursors"><div class="ace_cursor" style="animation-duration: 1000ms; display: block; transform: translate(4px, 0px); width: 7px; height: 17px;"></div></div></div></div><div class="ace_scrollbar ace_scrollbar-v" style="display: none; width: 20px; bottom: 15px;"><div class="ace_scrollbar-inner" style="width: 20px; height: 102px;">&nbsp;</div></div><div class="ace_scrollbar ace_scrollbar-h" style="height: 20px; left: 40.1992px; right: 0px;"><div class="ace_scrollbar-inner" style="height: 20px; width: 1729px;">&nbsp;</div></div><div style="height: auto; width: auto; top: 0px; left: 0px; visibility: hidden; position: absolute; white-space: pre; font: inherit; overflow: hidden;"><div style="height: auto; width: auto; top: 0px; left: 0px; visibility: hidden; position: absolute; white-space: pre; font: inherit; overflow: visible;">הההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההה</div><div style="height: auto; width: auto; top: 0px; left: 0px; visibility: hidden; position: absolute; white-space: pre; font-style: inherit; font-variant: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; overflow: visible;">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</div></div></div>
+        </div></div></div><div><div slot="footer" id="buttonFooter" class="oj-dialog-footer">
+        <!--  ko with: footerCheckboxes --><!-- /ko -->
+        <div id="footer-buttons">
+          <!--oj-bind-if test='[[buttons().length]]'--><!--ko if:buttons().length-->
+            <!--oj-bind-for-each data='[[buttons]]' as='button'--><!--ko _ojBindForEach_:{data:buttons,as:'button'}-->
+              <oj-button :id="[[button.data.itemId]]" on-oj-action="[[button.data.callback.bind(button.data)]]" id="modifier-simple" class="oj-button oj-button-full-chrome oj-button-text-only oj-enabled oj-default oj-complete"><button class="oj-button-button" aria-labelledby="modifier-simple_oj157|text"><div class="oj-button-label"><span class="oj-button-text" id="modifier-simple_oj157|text"><span :class="[[button.data.itemClass]]" class="entry-mode"><!--oj-bind-text value='[[button.data.itemLabel]]'--><!--ko text:button.data.itemLabel-->Simple<!--/ko--><!--/oj-bind-text--></span></span></div></button></oj-button>
+            
+              <oj-button :id="[[button.data.itemId]]" on-oj-action="[[button.data.callback.bind(button.data)]]" id="modifier-delete" class="oj-button oj-button-full-chrome oj-button-text-only oj-enabled oj-default oj-complete"><button class="oj-button-button" aria-labelledby="modifier-delete_oj158|text"><div class="oj-button-label"><span class="oj-button-text" id="modifier-delete_oj158|text"><span :class="[[button.data.itemClass]]" class=""><!--oj-bind-text value='[[button.data.itemLabel]]'--><!--ko text:button.data.itemLabel-->Delete Conditional<!--/ko--><!--/oj-bind-text--></span></span></div></button></oj-button>
+            <!--/ko--><!--/oj-bind-for-each-->
+          <!--/ko--><!--/oj-bind-if-->
+          <oj-button on-oj-action="[[validateClicked.bind($data)]]" class="oj-button oj-button-full-chrome oj-button-text-only oj-enabled oj-default oj-complete"><button class="oj-button-button" aria-labelledby="_oj96|text"><div class="oj-button-label"><span class="oj-button-text" id="_oj96|text"><span class="confirm-button"><!--oj-bind-text value='[[text.validate]]'--><!--ko text:text.validate-->Validate<!--/ko--><!--/oj-bind-text--></span></span></div></button></oj-button>
+          <oj-button on-oj-action="[[okClicked.bind($data)]]" class="oj-button oj-button-full-chrome oj-button-text-only oj-enabled oj-default oj-complete"><button class="oj-button-button" aria-labelledby="_oj97|text"><div class="oj-button-label"><span class="oj-button-text" id="_oj97|text"><span class="confirm-button"><!--oj-bind-text value='[[text.ok]]'--><!--ko text:text.ok-->OK<!--/ko--><!--/oj-bind-text--></span></span></div></button></oj-button>
+          <oj-button on-oj-action="[[cancelClicked.bind($data)]]" class="oj-button oj-button-full-chrome oj-button-text-only oj-enabled oj-complete oj-default"><button class="oj-button-button" aria-labelledby="_oj98|text"><div class="oj-button-label"><span class="oj-button-text" id="_oj98|text"><span class="cancel-button"><!--oj-bind-text value='[[text.cancel]]'--><!--ko text:text.cancel-->Cancel<!--/ko--><!--/oj-bind-text--></span></span></div></button></oj-button>
+        </div>
+    </div></div></div>
+
+```
+
+- [ ] quick links
+- [ ] demo config - config question
+- [ ] sylesheets folder
+  - [ ] [Stylesheet Manager](https://devmcnichols.bigmachines.com/admin/ui/branding/edit_site_branding.jsp)
+- [ ] header + footer
+  - [ ]  <https://devmcnichols.bigmachines.com/admin/ui/branding/edit_header_footer.jsp>
+  - [x] create ui for (un)load Header HTML + Foot HTML
+    - [ ] use HTML Head checkbox question
+
+    ```html
+    <td width="*" nowrap="" class="form-input">
+                        <input value="false" id="htmlHeadCheckbox" type="checkbox" class="form-input" name="htmlHeadCheckbox" onchange="displayHtmlHeadTextArea()">
+                        <input value="No" id="useHtmlHead" type="hidden" class="form-input" size="1" name="useHtmlHead">
+                    </td>
+                    ```
+- [ ] x3 stylesheet
+
+- [ ] config subfolders
+- [ ] config naming
+  - [ ] sortBy
+  - [ ] sort.attr.bml
+- [ ] bom mapping
+  - [ ] rule type 23
+- [ ] options
+
+- [ ] URL Listing config
+  - [ ] config recommendation - [Config Recommendation](<https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5268044&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true)>
+- [  ] URL Listing commerce
+  - [ ] commerce before formulas - [Commerce Before Formulas](<https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=54983795>)
+  - [ ] commerce after formulas - [Commerce After Formulas](<https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=18&process_id=4653759&document_id=4653823&action_id=54983795>)
