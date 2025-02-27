@@ -52,12 +52,19 @@ const URL_MATCHERS = {
             pattern: 'bigmachines.com/admin/configuration/rules/edit_rule.jsp',
             ruleType: 11
         },
+        bommapping: {
+            pattern: 'bigmachines.com/admin/configuration/rules/edit_rule.jsp',
+            ruleType: 23
+        },
         generic: 'bigmachines.com/admin/configuration/rules'
     },
     commerce: {
         action: 'bigmachines.com/admin/commerce/actions/edit_action.jsp',
-        rule: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
-        ruleInputs: 'bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp',
+        constraint: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
+        hiding: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
+        validation: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
+        libary: 'bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp',
+
         generic: 'bigmachines.com/admin/commerce/rules'
     },
     utils: 'bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor',
@@ -155,6 +162,10 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             } else if (ruleTypeParam === '11') {
                 bmRuleType = 'hiding';
                 logDebug("Detected configuration hiding rule");
+            }
+            else if (ruleTypeParam === '23') {
+                bmRuleType = 'bommapping';
+                logDebug("Detected configuration bommapping rule");
             } else {
                 bmRuleType = 'other_rule_type_' + ruleTypeParam;
                 logDebug("Detected other configuration rule type:", ruleTypeParam);
@@ -179,7 +190,8 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     // Check for utils
     else if (matchesUrlPattern(url, 'utils')) {
         bmSiteType = 'utils';
-        bmRuleType = 'library';
+        // bmRuleType = 'library';
+        bmRuleType = null;
         logDebug("Detected utils library");
     }
     
