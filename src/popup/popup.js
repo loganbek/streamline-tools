@@ -20,7 +20,7 @@ let bmRuleType
 // Config - Hiding - https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=4951171&rule_type=11&pline_id=-1&segment_id=11&model_id=-1&fromList=true
 
 // Commerce - Action Before Formulas - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=54983795
-// Commerce - ACtion After Formulas - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=18&process_id=4653759&document_id=4653823&action_id=54983795
+// Commerce - Action After Formulas - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=18&process_id=4653759&document_id=4653823&action_id=54983795
 // Commerce - Rule - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?rule_id=1&fromList=true
 // Commerce - Constraint Rule - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?rule_id=1&fromList=true
 // Commerce - Hiding Rule - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?rule_id=1&fromList=true
