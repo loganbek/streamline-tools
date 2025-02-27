@@ -220,7 +220,8 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     // Check for documents
     else if (url.includes(URL_MATCHERS.documents)) {
         bmSiteType = 'documents';
-        bmRuleType = 'document';
+        // bmRuleType = 'document';
+        bmRuleType = null;
         logDebug("Detected document");
     }
     
