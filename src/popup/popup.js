@@ -225,6 +225,10 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         bmRuleType = null;
         logDebug("Detected document");
     }
+    // Default case for unrecognized URLs
+    else {
+        logDebug("Unrecognized URL pattern:", url);
+    }
     
     logDebug("Extracted subdomain:", bmSiteSubDomain);
     logDebug("Site type set to:", bmSiteType);
