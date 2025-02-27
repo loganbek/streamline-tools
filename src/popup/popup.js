@@ -88,6 +88,14 @@ function matchesUrlPattern(url, patternKey, subPatternKey = null) {
     }
 }
 
+// Add this function to extract query parameters from URL
+function getUrlParameter(url, name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    const results = regex.exec(url);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
 // Top Level Folders
 const topLevelFolder = {
     commerce: 'commerce',
@@ -127,10 +135,86 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 
     bmSiteSubDomain = bmSite
     bmSiteType = 'commerce'
-
+    
+    // Set bmRuleType based on URL pattern and parameters
+    bmRuleType = null;
+    
+    // Check for configuration rules
+    if (url.includes(URL_MATCHERS.config.generic)) {
+        bmSiteType = 'config';
+        const ruleTypeParam = getUrlParameter(url, 'rule_type');
+        
+        if (ruleTypeParam) {
+            // Set bmRuleType based on the rule_type parameter
+            if (ruleTypeParam === '1') {
+                bmRuleType = 'recommendation';
+                logDebug("Detected configuration recommendation rule");
+            } else if (ruleTypeParam === '2') {
+                bmRuleType = 'constraint';
+                logDebug("Detected configuration constraint rule");
+            } else if (ruleTypeParam === '11') {
+                bmRuleType = 'hiding';
+                logDebug("Detected configuration hiding rule");
+            } else {
+                bmRuleType = 'other_rule_type_' + ruleTypeParam;
+                logDebug("Detected other configuration rule type:", ruleTypeParam);
+            }
+        }
+    }
+    
+    // Check for commerce rules
+    else if (url.includes(URL_MATCHERS.commerce.generic)) {
+        if (url.includes(URL_MATCHERS.commerce.action)) {
+            bmRuleType = 'action';
+            logDebug("Detected commerce action");
+        } else if (url.includes(URL_MATCHERS.commerce.rule)) {
+            bmRuleType = 'rule';
+            logDebug("Detected commerce rule");
+        } else if (url.includes(URL_MATCHERS.commerce.ruleInputs)) {
+            bmRuleType = 'rule_inputs';
+            logDebug("Detected commerce rule inputs");
+        }
+    }
+    
+    // Check for utils
+    else if (matchesUrlPattern(url, 'utils')) {
+        bmSiteType = 'utils';
+        bmRuleType = 'library';
+        logDebug("Detected utils library");
+    }
+    
+    // Check for interfaces
+    else if (url.includes('bigmachines.com/rest/')) {
+        bmSiteType = 'interfaces';
+        bmRuleType = 'rest';
+        logDebug("Detected REST interface");
+    } else if (url.includes('bigmachines.com/soap/')) {
+        bmSiteType = 'interfaces';
+        bmRuleType = 'soap';
+        logDebug("Detected SOAP interface");
+    }
+    
+    // Check for stylesheets
+    else if (matchesUrlPattern(url, 'stylesheets', 'stylesheetManager')) {
+        bmSiteType = 'stylesheets';
+        bmRuleType = 'stylesheet';
+        logDebug("Detected stylesheet manager");
+    } else if (matchesUrlPattern(url, 'stylesheets', 'headerFooter')) {
+        bmSiteType = 'stylesheets';
+        bmRuleType = 'headerFooter';
+        logDebug("Detected header/footer stylesheet");
+    }
+    
+    // Check for documents
+    else if (url.includes(URL_MATCHERS.documents)) {
+        bmSiteType = 'documents';
+        bmRuleType = 'document';
+        logDebug("Detected document");
+    }
+    
     logDebug("Extracted subdomain:", bmSiteSubDomain);
-    logDebug("Extracted domain:", domain);
-    logDebug("Extracted type:", type);
+    logDebug("Site type set to:", bmSiteType);
+    logDebug("Rule type set to:", bmRuleType);
 
     if (url) {
         // Check if URL matches styleSheetManager
