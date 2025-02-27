@@ -34,9 +34,7 @@ let bmRuleType
 // Stylesheets - Stylesheet Manager - https://devmcnichols.bigmachines.com/admin/ui/branding/edit_site_branding.jsp
 // Stylesheets - Header & Footer = https://devmcnichols.bigmachines.com/admin/ui/branding/edit_site_branding.jsp
 
-
-
-// Documents -gloobal xsl - https://devmcnichols.bigmachines.com/admin/document-designer/4653759/editor/134737862
+// Documents  -global xsl - https://devmcnichols.bigmachines.com/admin/document-designer/4653759/editor/134737862
 
 // URL matchers for different sections and rule types
 const URL_MATCHERS = {
@@ -64,7 +62,7 @@ const URL_MATCHERS = {
         constraint: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
         hiding: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
         validation: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
-        libary: 'bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp',
+        library: 'bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp',
 
         generic: 'bigmachines.com/admin/commerce/rules'
     },
@@ -98,8 +96,8 @@ function matchesUrlPattern(url, patternKey, subPatternKey = null) {
 
 // Add this function to extract query parameters from URL
 function getUrlParameter(url, name) {
-    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-    const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    const escapedName = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    const regex = new RegExp(`[\\?&]${escapedName}=([^&#]*)`);
     const results = regex.exec(url);
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
@@ -168,13 +166,17 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
                 bmRuleType = 'bommapping';
                 logDebug("Detected configuration bommapping rule");
             } else {
-                bmRuleType = 'other_rule_type_' + ruleTypeParam;
+// -                bmRuleType = 'other_rule_type_' + ruleTypeParam;
++               bmRuleType = `other_rule_type_${ruleTypeParam}`;
                 logDebug("Detected other configuration rule type:", ruleTypeParam);
             }
         }
     }
     
     // Check for commerce rules
+  // https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=6112520&doc_id=4653823
+  // https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=6112520
+  // https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=18&process_id=4653759&document_id=4653823&action_id=6112520
     else if (url.includes(URL_MATCHERS.commerce.generic)) {
         if (url.includes(URL_MATCHERS.commerce.action)) {
             bmRuleType = 'action';
