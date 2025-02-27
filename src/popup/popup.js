@@ -218,7 +218,7 @@ function sanitizeFilename(filename) {
 }
 
 chrome.downloads.onDeterminingFilename.addListener(function (item, suggest) {
-    logDebug("Download detected, setting filename, subdomain, and site type:", item.filename, bmSiteSubDomain, bmSiteType);
+    logDebug("Download detected, setting filename, subdomain, site type, and rule type:", item.filename, bmSiteSubDomain, bmSiteType, bmRuleType);
     logDebug("item", item);
     logDebug("suggest", suggest);
     suggest({
