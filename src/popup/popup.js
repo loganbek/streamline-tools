@@ -12,6 +12,7 @@ function logDebug(message, ...args) {
 // VARS
 let bmSiteSubDomain
 let bmSiteType
+let bmRuleType
 
 // URL MATCHERS and Rules Types
 // Config - Recommendation - https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5268044&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true
@@ -74,15 +75,15 @@ const URL_MATCHERS = {
 // Utility function to check if URL matches a pattern
 function matchesUrlPattern(url, patternKey, subPatternKey = null) {
     if (!url) return false;
-    
+
     if (subPatternKey) {
         const pattern = URL_MATCHERS[patternKey][subPatternKey];
-        return typeof pattern === 'string' ? 
-            url.includes(pattern) : 
+        return typeof pattern === 'string' ?
+            url.includes(pattern) :
             url.includes(pattern.pattern);
     } else {
         const pattern = URL_MATCHERS[patternKey];
-        return typeof pattern === 'string' ? 
+        return typeof pattern === 'string' ?
             url.includes(pattern) : false;
     }
 }
@@ -110,7 +111,7 @@ logDebug("Initializing extension...");
 // CHROME TABS
 chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     logDebug("chrome.tabs.query executed", tabs);
-    
+
     const tab = tabs[0]
     const url = tab.url
     logDebug("Active tab URL:", url);
@@ -123,15 +124,15 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 
     const bmSiteParts = sub.split('//')
     const bmSite = bmSiteParts[1]
-    
+
     bmSiteSubDomain = bmSite
     bmSiteType = 'commerce'
-    
+
     logDebug("Extracted subdomain:", bmSiteSubDomain);
     logDebug("Extracted domain:", domain);
     logDebug("Extracted type:", type);
 
-    if (url) { 
+    if (url) {
         // Check if URL matches styleSheetManager
         if (matchesUrlPattern(url, topLevelFolder.stylesheets, 'stylesheetManager')) {
             bmSiteType = 'stylesheets'
@@ -221,10 +222,11 @@ chrome.downloads.onDeterminingFilename.addListener(function (item, suggest) {
     logDebug("item", item);
     logDebug("suggest", suggest);
     suggest({
-        filename: 'bigmachines/' + 
-                 sanitizeFilename(bmSiteSubDomain) + '/' + 
-                 sanitizeFilename(bmSiteType) + '/' + 
-                 sanitizeFilename(item.filename),
+        filename: 'bigmachines/' +
+            sanitizeFilename(bmSiteSubDomain) + '/' +
+            sanitizeFilename(bmSiteType) + '/' +
+            (bmRuleType ? sanitizeFilename(bmRuleType) + '/' : '') +
+            sanitizeFilename(item.filename),
         conflictAction: 'overwrite'
     });
 });
@@ -235,7 +237,7 @@ unloadButton.onclick = function () {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unload' }, function (response) {
             if (response.code && response.filename) {
-                if( response.foldername !== undefined){
+                if (response.foldername !== undefined) {
                     bmSiteType = response.foldername;
                 }
                 logDebug("Received unload response, bmsiteType", bmSiteType);
