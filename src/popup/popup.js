@@ -63,7 +63,8 @@ const URL_MATCHERS = {
         hiding: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
         validation: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
         library: 'bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp',
-
+        rule: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
+        ruleInputs: 'bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp',
         generic: 'bigmachines.com/admin/commerce/rules'
     },
     utils: 'bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor',
@@ -141,15 +142,15 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 
     bmSiteSubDomain = bmSite
     bmSiteType = 'commerce'
-    
+
     // Set bmRuleType based on URL pattern and parameters
     bmRuleType = null;
-    
+
     // Check for configuration rules
     if (url.includes(URL_MATCHERS.config.generic)) {
         bmSiteType = 'config';
         const ruleTypeParam = getUrlParameter(url, 'rule_type');
-        
+
         if (ruleTypeParam) {
             // Set bmRuleType based on the rule_type parameter
             if (ruleTypeParam === '1') {
@@ -171,11 +172,11 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             }
         }
     }
-    
+
     // Check for commerce rules
-  // https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=6112520&doc_id=4653823
-  // https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=6112520
-  // https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=18&process_id=4653759&document_id=4653823&action_id=6112520
+    // https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=6112520&doc_id=4653823
+    // https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=6112520
+    // https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=18&process_id=4653759&document_id=4653823&action_id=6112520
     else if (url.includes(URL_MATCHERS.commerce.generic)) {
         if (url.includes(URL_MATCHERS.commerce.action)) {
             bmRuleType = 'action';
@@ -188,7 +189,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             logDebug("Detected commerce rule inputs");
         }
     }
-    
+
     // Check for utils
     else if (matchesUrlPattern(url, 'utils')) {
         bmSiteType = 'utils';
@@ -196,7 +197,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         bmRuleType = null;
         logDebug("Detected utils library");
     }
-    
+
     // Check for interfaces
     else if (url.includes('bigmachines.com/rest/')) {
         bmSiteType = 'interfaces';
@@ -207,7 +208,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         bmRuleType = 'soap';
         logDebug("Detected SOAP interface");
     }
-    
+
     // Check for stylesheets
     else if (matchesUrlPattern(url, 'stylesheets', 'stylesheetManager')) {
         bmSiteType = 'stylesheets';
@@ -218,7 +219,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         bmRuleType = 'headerFooter';
         logDebug("Detected header/footer stylesheet");
     }
-    
+
     // Check for documents
     else if (url.includes(URL_MATCHERS.documents)) {
         bmSiteType = 'documents';
@@ -230,7 +231,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     else {
         logDebug("Unrecognized URL pattern:", url);
     }
-    
+
     logDebug("Extracted subdomain:", bmSiteSubDomain);
     logDebug("Site type set to:", bmSiteType);
     logDebug("Rule type set to:", bmRuleType);
