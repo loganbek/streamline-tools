@@ -166,8 +166,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
                 bmRuleType = 'bommapping';
                 logDebug("Detected configuration bommapping rule");
             } else {
-// -                bmRuleType = 'other_rule_type_' + ruleTypeParam;
-+               bmRuleType = `other_rule_type_${ruleTypeParam}`;
+                bmRuleType = `other_rule_type_${ruleTypeParam}`;
                 logDebug("Detected other configuration rule type:", ruleTypeParam);
             }
         }
