@@ -13,6 +13,7 @@ function logDebug(message, ...args) {
 let bmSiteSubDomain
 let bmSiteType
 let bmRuleType
+let bmFileType
 
 // URL MATCHERS and Rules Types
 // Config - Recommendation - https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5268044&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true
@@ -142,6 +143,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 
     bmSiteSubDomain = bmSite
     bmSiteType = 'commerce'
+bmFileType = 'bml'
 
     // Set bmRuleType based on URL pattern and parameters
     bmRuleType = null;
@@ -212,6 +214,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     // Check for stylesheets
     else if (matchesUrlPattern(url, 'stylesheets', 'stylesheetManager')) {
         bmSiteType = 'stylesheets';
+bmFileType = 'xsl';
         bmRuleType = 'stylesheet';
         logDebug("Detected stylesheet manager");
     } else if (matchesUrlPattern(url, 'stylesheets', 'headerFooter')) {
@@ -407,8 +410,9 @@ loadTestButton.addEventListener('click', async () => {
     });
 });
 
+
 // FILE SAVE FUNCTION
-function saveText(filename, text) {
+function saveText(filename, filetype, text) {
     logDebug("Saving file:", filename);
     const tempElem = document.createElement('a');
     tempElem.setAttribute(
