@@ -412,6 +412,7 @@ loadTestButton.addEventListener('click', async () => {
 
 
 // FILE SAVE FUNCTION
+// TODO: Add support for different file types
 function saveText(filename, filetype, text) {
     logDebug("Saving file:", filename);
     const tempElem = document.createElement('a');
