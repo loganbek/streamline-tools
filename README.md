@@ -145,4 +145,13 @@ NOTE - An important note for a specific code section
 REVIEW - An item that requires additional review
 SECTION - Used to define a region (See 'Hierarchical anchors')
 LINK - Used to link to a file that can be opened within the editor (See 'Link Anchors') 
+
+## Best GitHub Repositories for CPQ Development
+
+Here are some of the best GitHub repositories for CPQ development:
+
+- [CPQ DevKit](https://github.com/CPQConsultant/cpq-devkit): A comprehensive toolkit for CPQ development.
+- [CPQ Tools](https://github.com/CPQConsultant/cpq-tools): A collection of tools to streamline CPQ development.
+- [CPQ Samples](https://github.com/CPQConsultant/cpq-samples): Sample projects and code snippets for CPQ development.
+
 -->
