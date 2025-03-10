@@ -385,7 +385,7 @@ unloadTestButton.onclick = function () {
         chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unloadTest' }, function (response) {
             if (response.testCode && response.filename) {
                 logDebug("Received unloadTest response, saving file:", response.filename);
-                saveText(response.filename + '.test.bml', response.testCode);
+                saveText(response.filename + '.test.' + bmFileType, response.testCode, bmFileType);
             }
         });
     });
