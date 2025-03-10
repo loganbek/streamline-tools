@@ -324,6 +324,7 @@ function sanitizeFilename(filename) {
     return filename.replace(/[^a-z0-9.-]/gi, '_');
 }
 
+//TODO: Add support for different file types
 chrome.downloads.onDeterminingFilename.addListener(function (item, suggest) {
     logDebug("Download detected, setting filename, subdomain, site type, and rule type:", item.filename, bmSiteSubDomain, bmSiteType, bmRuleType);
     logDebug("item", item);
