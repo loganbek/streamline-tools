@@ -329,11 +329,18 @@ chrome.downloads.onDeterminingFilename.addListener(function (item, suggest) {
     logDebug("Download detected, setting filename, subdomain, site type, and rule type:", item.filename, bmSiteSubDomain, bmSiteType, bmRuleType);
     logDebug("item", item);
     logDebug("suggest", suggest);
+    
+    let fileTypeFolder = '';
+    if (bmFileType) {
+        fileTypeFolder = sanitizeFilename(bmFileType) + '/';
+    }
+
     suggest({
         filename: 'bigmachines/' +
             sanitizeFilename(bmSiteSubDomain) + '/' +
             sanitizeFilename(bmSiteType) + '/' +
             (bmRuleType ? sanitizeFilename(bmRuleType) + '/' : '') +
+            fileTypeFolder +
             sanitizeFilename(item.filename),
         conflictAction: 'overwrite'
     });
@@ -351,7 +358,7 @@ unloadButton.onclick = function () {
                 logDebug("Received unload response, bmsiteType", bmSiteType);
                 logDebug("Received unload response, saving folder", response.foldername);
                 logDebug("Received unload response, saving file:", response.filename);
-                saveText(response.filename + '.bml', response.code);
+                saveText(response.filename + '.' + bmFileType, response.code, bmFileType);
             }
         });
     });
@@ -414,12 +421,13 @@ loadTestButton.addEventListener('click', async () => {
 
 // FILE SAVE FUNCTION
 // TODO: Add support for different file types
-function saveText(filename, filetype, text) {
+function saveText(filename, text, filetype = 'bml') {
     logDebug("Saving file:", filename);
+    const mimeType = filetype === 'xsl' ? 'application/xml' : 'text/plain';
     const tempElem = document.createElement('a');
     tempElem.setAttribute(
         'href',
-        'data:bml/plain;charset=utf-8,' + encodeURIComponent(text)
+        `data:${mimeType};charset=utf-8,` + encodeURIComponent(text)
     );
     tempElem.setAttribute('download', filename);
     tempElem.click();
