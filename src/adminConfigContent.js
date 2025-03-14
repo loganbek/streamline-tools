@@ -1,9 +1,9 @@
 /* ANCHOR ADMIN CONFIG CONTENT */
 
-const ADMIN_CONFIG_CONTENT_DEBUG_DEBUG = true;
+let ADMIN_CONFIG_CONTENT_DEBUG = true;
 
 function logDebug(message, ...optionalParams) {
-  if (ADMIN_CONFIG_CONTENT_DEBUG_DEBUG) {
+  if (ADMIN_CONFIG_CONTENT_DEBUG) {
     console.log("[ADMIN_CONFIG_CONTENT_DEBUG]", message, ...optionalParams);
   }
 }
