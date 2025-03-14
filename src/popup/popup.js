@@ -427,7 +427,7 @@ function saveText(filename, text, filetype = 'bml') {
     const tempElem = document.createElement('a');
     tempElem.setAttribute(
         'href',
-        `data:${mimeType};charset=utf-8,` + encodeURIComponent(text)
+        `data:${mimeType};charset=utf-8,${encodeURIComponent(text)}`
     );
     tempElem.setAttribute('download', filename);
     tempElem.click();
