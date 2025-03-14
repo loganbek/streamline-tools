@@ -1,5 +1,13 @@
 // ADMIN COMMERCE RULES CONTENT
 
+let ADMIN_COMMERCE_RULES_CONTENT_DEBUG = true;
+
+function logDebug(message, ...optionalParams) {
+  if (ADMIN_COMMERCE_RULES_CONTENT_DEBUG) {
+    console.log("[ADMIN_COMMERCE_RULES_CONTENT_DEBUG]", message, ...optionalParams);
+  }
+}
+
 // VARS
 if (typeof code === "undefined") {
   var code = "";

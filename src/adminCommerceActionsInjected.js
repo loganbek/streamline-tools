@@ -1,38 +1,45 @@
 /* STUB | ADMIN COMMERCE ACTIONS INJECT */
 
+let ADMIN_COMMERCE_ACTIONS_INJECT_DEBUG = true;
+
+function logDebug(message, ...optionalParams) {
+  if (ADMIN_COMMERCE_ACTIONS_INJECT_DEBUG) {
+    console.log("[ADMIN_COMMERCE_ACTIONS_INJECT_DEBUG]", message, ...optionalParams);
+  }
+}
+
 window.addEventListener('load', function () {
   main()
+  logDebug("Main function executed on load.");
 })
 
 window.addEventListener('unloadCode', function (evt) {
-  // #textarea
   iframes = document.getElementsByTagName('iframe')
-  // console.log(iframes)
+  logDebug("Iframes found:", iframes);
   textAreaCode = document.getElementsByTagName('iframe')[0].contentDocument.querySelector('#textarea').value
-  // console.log(textAreaCode)
+  logDebug("Textarea code:", textAreaCode);
   if (textAreaCode) {
     testCommerceCode = textAreaCode
   } else {
     testCommerceCode = '\n'
   }
-  // console.log(textAreaCode)
-  // console.log(testCommerceCode)
+  logDebug("Test commerce code:", testCommerceCode);
   const event = new CustomEvent('PassCodeToBackground', { detail: testCommerceCode })
   window.dispatchEvent(event)
+  logDebug("PassCodeToBackground event dispatched with detail:", testCommerceCode);
 })
 
 // Listen for the load code event
 window.addEventListener('loadCode', function (evt) {
   code = evt.detail
-  // frame_bm_script.editArea.textarea.value = code;
-  // frame_bm_script.editArea.textareaFocused = true;
-  // frame_bm_script_id.editArea.textarea.value = code;
-  // frame_bm_script_id.editArea.textareaFocused = true;
+  logDebug("LoadCode event received with detail:", code);
 
   textarea = document.getElementsByTagName('iframe')[0].contentDocument.querySelector('#textarea')
   textarea.value = code
+  logDebug("Textarea value set to code.");
 
   document.getElementById('check').click()
+  logDebug("Check button clicked.");
 }, false)
 
 function main () {
@@ -40,7 +47,9 @@ function main () {
 
   code = document.querySelector('#textarea').value
   alert(code)
+  logDebug("Code from textarea:", code);
 
   const event = new CustomEvent('PassToBackground', { code })
   window.dispatchEvent(event)
+  logDebug("PassToBackground event dispatched with code:", code);
 }

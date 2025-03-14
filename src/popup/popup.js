@@ -298,7 +298,9 @@ bmFileType = 'xsl';
     if (url.includes('bigmachines.com/a/')) {
         logDebug("Sending message to content script for filename retrieval.");
         chrome.tabs.sendMessage(tabs[0].id, { greeting: 'filename' }, function (response) {
-            if (response !== undefined) {
+            if (chrome.runtime.lastError) {
+                logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
+            } else if (response !== undefined) {
                 logDebug("Received filename from content script:", response.filename);
                 fileName = response.filename;
             }
@@ -308,6 +310,10 @@ bmFileType = 'xsl';
         chrome.scripting.executeScript({
             target: { tabId: tabs[0].id },
             files: ['content/content.js'],
+        }, function () {
+            if (chrome.runtime.lastError) {
+                logDebug("Error executing content script:", chrome.runtime.lastError.message);
+            }
         });
     }
 });
@@ -351,7 +357,9 @@ unloadButton.onclick = function () {
     logDebug("Unload button clicked.");
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unload' }, function (response) {
-            if (response.code && response.filename) {
+            if (chrome.runtime.lastError) {
+                logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
+            } else if (response.code && response.filename) {
                 if (response.foldername !== undefined) {
                     bmSiteType = response.foldername;
                 }
@@ -379,7 +387,11 @@ loadButton.addEventListener('click', async () => {
             tabs[0].id,
             { greeting: 'load', code: contents },
             function (response) {
-                logDebug("Load response received:", response);
+                if (chrome.runtime.lastError) {
+                    logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
+                } else {
+                    logDebug("Load response received:", response);
+                }
             }
         );
     });
@@ -390,7 +402,9 @@ unloadTestButton.onclick = function () {
     logDebug("Unload Test button clicked.");
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unloadTest' }, function (response) {
-            if (response.testCode && response.filename) {
+            if (chrome.runtime.lastError) {
+                logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
+            } else if (response.testCode && response.filename) {
                 logDebug("Received unloadTest response, saving file:", response.filename);
                 saveText(response.filename + '.test.' + bmFileType, response.testCode, bmFileType);
             }
@@ -412,7 +426,11 @@ loadTestButton.addEventListener('click', async () => {
             tabs[0].id,
             { greeting: 'loadTest', code: contents },
             function (response) {
-                logDebug("Load Test response received:", response);
+                if (chrome.runtime.lastError) {
+                    logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
+                } else {
+                    logDebug("Load Test response received:", response);
+                }
             }
         );
     });

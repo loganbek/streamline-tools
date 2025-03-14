@@ -1,5 +1,13 @@
 // STUB | ADMIN COMMERCE ACTIONS CONTENT
 
+let ADMIN_COMMERCE_ACTIONS_CONTENT_DEBUG = true;
+
+// Function to log debug messages
+function logDebug (message, ...optionalParams) {
+  if (ADMIN_COMMERCE_ACTIONS_CONTENT_DEBUG) {
+    console.log("[ADMIN_COMMERCE_ACTIONS_CONTENT_DEBUG]", message, ...optionalParams);
+  }
+}
 // Initialize variables
 if (typeof code === "undefined") {
   var code = "";
@@ -52,53 +60,60 @@ function injectJs (link) {
 injectJs(chrome.runtime.getURL('adminCommerceRulesInjected.js'))
 
 // Listen for messages from the background script
-chrome.runtime.onMessage.addListener(
-  function (request, sender, sendResponse) {
-    if (request.greeting == 'unload') {
-      const unloadEvent = new CustomEvent('unloadCode', { detail: request.code })
-      window.dispatchEvent(unloadEvent)
-
-      if (document.getElementsByClassName('bottom-bar')[0].innerHTML.length > 0) {
-        let fileString = document.getElementsByClassName('bottom-bar')[0].innerHTML
-        fileStringArray = fileString.split('&gt;')
-        fileString = camelCase(fileStringArray[fileStringArray.length - 1])
-        const lc = fileString[0].toLowerCase()
-        fileString = lc + fileString.substring(1)
-
-        // ACTION SPECIFIC LOGIC (BEFORE/AFTER + action_id)
-        // LABEL.AFTER/BEFORE.ACTION_ID
-
-        // BEFORE / AFTER
-        const fullTitle = document.title
-
-        if (document.title.includes('After')) {
-          fileString += '.afterFormulas'
-        } else if (document.title.includes('Before')) {
-          fileString += '.beforeFormulas'
-        }
-
-        // ACTION_ID
-        const actionElements = document.getElementsByName('action_id')
-        fileString += '.' + actionElements[0].value
-        filename = fileString
-      };
-      sendResponse({
-        filename: filename,
-        code: code
-      })
-    } else if (request.greeting == 'load') {
-      const loadEvent = new CustomEvent('loadCode', { detail: request.code })
-      window.dispatchEvent(loadEvent)
-    } else if (request.greeting == 'filename') {
-      sendResponse({
-        filename: filename
-      })
-    } else if (request.greeting == 'commerceFilename') {
-      sendResponse({
-        filename: 'commerceRulesFileNameFromCS'
-      })
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  logDebug("Received message with greeting:", request.greeting);
+  if (request.greeting == 'unload') {
+    const unloadEvent = new CustomEvent('unloadCode', { detail: request.code });
+    window.dispatchEvent(unloadEvent);
+    logDebug("Unload event dispatched with code:", request.code);
+    sendResponse({
+      filename: filename,
+      code: code
+    });
+    logDebug("Unload response sent with filename and code.");
+  } else if (request.greeting == 'unloadTest') {
+    const unloadTestEvent = new CustomEvent('unloadTestCode', {
+      detail: request.code
+    });
+    window.dispatchEvent(unloadTestEvent);
+    logDebug("Unload test event dispatched with code:", request.code);
+    sendResponse({
+      filename: filename,
+      testCode: testCode
+    });
+    logDebug("Unload test response sent with filename and testCode.");
+  } else if (request.greeting == 'load') {
+    if (document.getElementById('configInject')) {
+      document.getElementById('configInject').remove();
+      logDebug("Removed existing configInject script.");
     }
-  })
+    const loadEvent = new CustomEvent('loadCode', { detail: request.code });
+    window.dispatchEvent(loadEvent);
+    logDebug("Load event dispatched with code:", request.code);
+    const elem = document
+      .getElementsByTagName('iframe')[1]
+      .contentDocument.querySelector('#textarea');
+    logDebug("Textarea element found:", elem);
+    textarea = document
+      .getElementsByTagName('iframe')[1]
+      .contentDocument.querySelector('#textarea');
+  } else if (request.greeting == 'loadTest') {
+    const loadTestEvent = new CustomEvent('loadTestCode', {
+      detail: request.code
+    });
+    window.dispatchEvent(loadTestEvent);
+    logDebug("Load test event dispatched with code:", request.code);
+  } else if (request.greeting == 'filename') {
+    sendResponse({
+      filename: filename
+    });
+    logDebug("Filename response sent:", filename);
+  } else if (request.greeting == 'commerceFilename') {
+    sendResponse({
+      filename: 'commerceRulesFileNameFromCS'
+    });
+  }
+})
 
 // Function to convert a string to camelCase
 function camelCase (str) {

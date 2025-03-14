@@ -84,19 +84,10 @@ function injectJs (link) {
   logDebug("Injected script with link:", link);
 }
 
-// console.log("script present")
-// console.log(document.getElementById("adminConfig"))
-
 if(!document.getElementById("adminConfig")){
   injectJs(chrome.runtime.getURL('adminConfigInjected.js'))
   logDebug("Injected adminConfigInjected.js script.");
 }
-
-// function isLoadedScript(lib) {
-//   return document.querySelectorAll('[src="' + lib + '"]').length > 0
-// }
-
-// var len = $('script[src="<external JS>"]').length;
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   logDebug("Received message with greeting:", request.greeting);
@@ -147,21 +138,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     })
     logDebug("Filename response sent:", filename);
   }
-  // return true;
 })
-
-// function getElementsStartsWithId (id) {
-//   const children = document.body.getElementsByTagName('*')
-//   const elements = []
-//   let child
-//   for (let i = 0, length = children.length; i < length; i++) {
-//     child = children[i]
-//     if (child.id.substr(0, id.length) == id) {
-//       elements.push(child)
-//     }
-//   }
-//   return elements
-// }
 
 if (document.querySelector('#x-auto-3-input')) {
   filename = document.querySelector('#x-auto-3-input').value
