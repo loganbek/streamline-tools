@@ -12,12 +12,99 @@ function logDebug(message, ...args) {
 // VARS
 let bmSiteSubDomain
 let bmSiteType
+let bmRuleType
+let bmFileType
 
-// URL MATCHERS
+// URL MATCHERS and Rules Types
 // Config - Recommendation - https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5268044&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true
 // Config - Constraint - https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=4889573&rule_type=2&pline_id=-1&segment_id=11&model_id=-1&fromList=true
 // Config - Hiding - https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=4951171&rule_type=11&pline_id=-1&segment_id=11&model_id=-1&fromList=true
 
+// Commerce - Action Before Formulas - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=54983795
+// Commerce - Action After Formulas - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=18&process_id=4653759&document_id=4653823&action_id=54983795
+// Commerce - Rule - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?rule_id=1&fromList=true
+// Commerce - Constraint Rule - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?rule_id=1&fromList=true
+// Commerce - Hiding Rule - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?rule_id=1&fromList=true
+// Commerce - Validation Rule - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?rule_id=1&fromList=true
+
+// Utils - https://devmcnichols.bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:'EXAMPLE_ID',folder_id:'EXAMPLE_FOLDER',process_id:'-1',doc_id:'-1'}&inputdata={appid:'sampleApp',service:'bmllibraryservice',operation:'getLibPageData',version:'1.0',header:'',params: {componentid:'libraryEditorPage',uicmd:'defineComponent', id:'EXAMPLE_ID',folder_id:'EXAMPLE_FOLDER',process_id:'-1',doc_id:'-1'}}&token=EXAMPLE_TOKEN
+
+// Interfaces - REST - https://devmcnichols.bigmachines.com/rest/v1/quote/1
+// Interfaces - SOAP -
+
+// Stylesheets - Stylesheet Manager - https://devmcnichols.bigmachines.com/admin/ui/branding/edit_site_branding.jsp
+// Stylesheets - Header & Footer = https://devmcnichols.bigmachines.com/admin/ui/branding/edit_site_branding.jsp
+
+// Documents  -global xsl - https://devmcnichols.bigmachines.com/admin/document-designer/4653759/editor/134737862
+
+// URL matchers for different sections and rule types
+const URL_MATCHERS = {
+    config: {
+        recommendation: {
+            pattern: 'bigmachines.com/admin/configuration/rules/edit_rule.jsp',
+            ruleType: 1
+        },
+        constraint: {
+            pattern: 'bigmachines.com/admin/configuration/rules/edit_rule.jsp',
+            ruleType: 2
+        },
+        hiding: {
+            pattern: 'bigmachines.com/admin/configuration/rules/edit_rule.jsp',
+            ruleType: 11
+        },
+        bommapping: {
+            pattern: 'bigmachines.com/admin/configuration/rules/edit_rule.jsp',
+            ruleType: 23
+        },
+        generic: 'bigmachines.com/admin/configuration/rules'
+    },
+    commerce: {
+        action: 'bigmachines.com/admin/commerce/actions/edit_action.jsp',
+        constraint: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
+        hiding: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
+        validation: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
+        library: 'bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp',
+        rule: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
+        ruleInputs: 'bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp',
+        generic: 'bigmachines.com/admin/commerce/rules'
+    },
+    utils: 'bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor',
+    interfaces: {
+        rest: 'bigmachines.com/rest/v1/quote/',
+        soap: 'bigmachines.com/soap/'
+    },
+    stylesheets: {
+        stylesheetManager: 'bigmachines.com/admin/ui/branding/edit_site_branding.jsp',
+        headerFooter: 'bigmachines.com/admin/ui/branding/edit_header_footer.jsp'
+    },
+    documents: 'bigmachines.com/admin/document-designer/',
+}
+
+// Utility function to check if URL matches a pattern
+function matchesUrlPattern(url, patternKey, subPatternKey = null) {
+    if (!url) return false;
+
+    if (subPatternKey) {
+        const pattern = URL_MATCHERS[patternKey][subPatternKey];
+        return typeof pattern === 'string' ?
+            url.includes(pattern) :
+            url.includes(pattern.pattern);
+    } else {
+        const pattern = URL_MATCHERS[patternKey];
+        return typeof pattern === 'string' ?
+            url.includes(pattern) : false;
+    }
+}
+
+// Add this function to extract query parameters from URL
+function getUrlParameter(url, name) {
+    const escapedName = name.replace(/\[/g, '\\[').replace(/\]/g, '\\]');
+    const regex = new RegExp(`[\\?&]${escapedName}=([^&#]*)`);
+    const results = regex.exec(url);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
+// Top Level Folders
 const topLevelFolder = {
     commerce: 'commerce',
     config: 'config',
@@ -40,7 +127,7 @@ logDebug("Initializing extension...");
 // CHROME TABS
 chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     logDebug("chrome.tabs.query executed", tabs);
-    
+
     const tab = tabs[0]
     const url = tab.url
     logDebug("Active tab URL:", url);
@@ -53,15 +140,128 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 
     const bmSiteParts = sub.split('//')
     const bmSite = bmSiteParts[1]
-    
+
     bmSiteSubDomain = bmSite
     bmSiteType = 'commerce'
-    
-    logDebug("Extracted subdomain:", bmSiteSubDomain);
-    logDebug("Extracted domain:", domain);
-    logDebug("Extracted type:", type);
+bmFileType = 'bml'
 
-    if (url !== undefined) {
+    // Set bmRuleType based on URL pattern and parameters
+    bmRuleType = null;
+
+    // Check for configuration rules
+    if (url.includes(URL_MATCHERS.config.generic)) {
+        bmSiteType = 'config';
+        const ruleTypeParam = getUrlParameter(url, 'rule_type');
+
+        if (ruleTypeParam) {
+            // Set bmRuleType based on the rule_type parameter
+            if (ruleTypeParam === '1') {
+                bmRuleType = 'recommendation';
+                logDebug("Detected configuration recommendation rule");
+            } else if (ruleTypeParam === '2') {
+                bmRuleType = 'constraint';
+                logDebug("Detected configuration constraint rule");
+            } else if (ruleTypeParam === '11') {
+                bmRuleType = 'hiding';
+                logDebug("Detected configuration hiding rule");
+            }
+            else if (ruleTypeParam === '23') {
+                bmRuleType = 'bommapping';
+                logDebug("Detected configuration bommapping rule");
+            } else {
+                bmRuleType = `other_rule_type_${ruleTypeParam}`;
+                logDebug("Detected other configuration rule type:", ruleTypeParam);
+            }
+        }
+    }
+
+    // Check for commerce rules
+    // https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=6112520&doc_id=4653823
+    // https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=6112520
+    // https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=18&process_id=4653759&document_id=4653823&action_id=6112520
+    else if (url.includes(URL_MATCHERS.commerce.generic)) {
+        if (url.includes(URL_MATCHERS.commerce.action)) {
+            bmRuleType = 'action';
+            logDebug("Detected commerce action");
+        } else if (url.includes(URL_MATCHERS.commerce.rule)) {
+            bmRuleType = 'rule';
+            logDebug("Detected commerce rule");
+        } else if (url.includes(URL_MATCHERS.commerce.ruleInputs)) {
+            bmRuleType = 'rule_inputs';
+            logDebug("Detected commerce rule inputs");
+        }
+    }
+
+    // Check for utils
+    else if (matchesUrlPattern(url, 'utils')) {
+        bmSiteType = 'utils';
+        // bmRuleType = 'library';
+        bmRuleType = null;
+        logDebug("Detected utils library");
+    }
+
+    // Check for interfaces
+    else if (url.includes('bigmachines.com/rest/')) {
+        bmSiteType = 'interfaces';
+        bmRuleType = 'rest';
+        logDebug("Detected REST interface");
+    } else if (url.includes('bigmachines.com/soap/')) {
+        bmSiteType = 'interfaces';
+        bmRuleType = 'soap';
+        logDebug("Detected SOAP interface");
+    }
+
+    // Check for stylesheets
+    else if (matchesUrlPattern(url, 'stylesheets', 'stylesheetManager')) {
+        bmSiteType = 'stylesheets';
+bmFileType = 'xsl';
+        bmRuleType = 'stylesheet';
+        logDebug("Detected stylesheet manager");
+    } else if (matchesUrlPattern(url, 'stylesheets', 'headerFooter')) {
+        bmSiteType = 'stylesheets';
+        bmRuleType = 'headerFooter';
+        logDebug("Detected header/footer stylesheet");
+    }
+
+    // Check for documents
+    else if (url.includes(URL_MATCHERS.documents)) {
+        bmSiteType = 'documents';
+        // bmRuleType = 'document';
+        bmRuleType = null;
+        logDebug("Detected document");
+    }
+    // Default case for unrecognized URLs
+    else {
+        logDebug("Unrecognized URL pattern:", url);
+    }
+
+    logDebug("Extracted subdomain:", bmSiteSubDomain);
+    logDebug("Site type set to:", bmSiteType);
+    logDebug("Rule type set to:", bmRuleType);
+
+    if (url) {
+        // Check if URL matches styleSheetManager
+        if (matchesUrlPattern(url, topLevelFolder.stylesheets, 'stylesheetManager')) {
+            bmSiteType = 'stylesheets'
+            logDebug("Folder Type:", bmSiteType);
+            logDebug("Executing content script: adminStylesheetsContent.js");
+            chrome.scripting.executeScript({
+                target: { tabId: tabs[0].id },
+                files: ['adminStylesheetsContent.js'],
+            });
+        }
+
+        // Check if URL matches headerFooter
+        if (matchesUrlPattern(url, topLevelFolder.stylesheets, 'headerFooter')) {
+            bmSiteType = 'stylesheets'
+            logDebug("Folder Type:", bmSiteType);
+            logDebug("Executing content script: adminHeaderFooterContent.js");
+            chrome.scripting.executeScript({
+                target: { tabId: tabs[0].id },
+                files: ['adminHeaderFooterContent.js'],
+            });
+        }
+
         if (
             url.includes('bigmachines.com/admin/commerce/rules') ||
             url.includes('bigmachines.com/admin/configuration/rules') ||
@@ -71,7 +271,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             loadTestButton.disabled = true
             logDebug("Test buttons disabled due to matching admin commerce rules URL.");
         }
-        
+
         if (url.includes('bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp')) {
             logDebug("Executing content script: adminCommerceActionsContent.js");
             chrome.scripting.executeScript({
@@ -95,10 +295,12 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         }
     }
 
-    if (url.includes('bigmachines.com/spring/')) {
+    if (url.includes('bigmachines.com/a/')) {
         logDebug("Sending message to content script for filename retrieval.");
         chrome.tabs.sendMessage(tabs[0].id, { greeting: 'filename' }, function (response) {
-            if (response !== undefined) {
+            if (chrome.runtime.lastError) {
+                logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
+            } else if (response !== undefined) {
                 logDebug("Received filename from content script:", response.filename);
                 fileName = response.filename;
             }
@@ -108,6 +310,10 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         chrome.scripting.executeScript({
             target: { tabId: tabs[0].id },
             files: ['content/content.js'],
+        }, function () {
+            if (chrome.runtime.lastError) {
+                logDebug("Error executing content script:", chrome.runtime.lastError.message);
+            }
         });
     }
 });
@@ -124,15 +330,24 @@ function sanitizeFilename(filename) {
     return filename.replace(/[^a-z0-9.-]/gi, '_');
 }
 
+//TODO: Add support for different file types
 chrome.downloads.onDeterminingFilename.addListener(function (item, suggest) {
-    logDebug("Download detected, setting filename, subdomain, and site type:", item.filename, bmSiteSubDomain, bmSiteType);
+    logDebug("Download detected, setting filename, subdomain, site type, and rule type:", item.filename, bmSiteSubDomain, bmSiteType, bmRuleType);
     logDebug("item", item);
     logDebug("suggest", suggest);
+    
+    let fileTypeFolder = '';
+    if (bmFileType) {
+        fileTypeFolder = sanitizeFilename(bmFileType) + '/';
+    }
+
     suggest({
-        filename: 'bigmachines/' + 
-                 sanitizeFilename(bmSiteSubDomain) + '/' + 
-                 sanitizeFilename(bmSiteType) + '/' + 
-                 sanitizeFilename(item.filename),
+        filename: 'bigmachines/' +
+            sanitizeFilename(bmSiteSubDomain) + '/' +
+            sanitizeFilename(bmSiteType) + '/' +
+            (bmRuleType ? sanitizeFilename(bmRuleType) + '/' : '') +
+            fileTypeFolder +
+            sanitizeFilename(item.filename),
         conflictAction: 'overwrite'
     });
 });
@@ -142,14 +357,16 @@ unloadButton.onclick = function () {
     logDebug("Unload button clicked.");
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unload' }, function (response) {
-            if (response.code && response.filename) {
-                if( response.foldername !== undefined){
+            if (chrome.runtime.lastError) {
+                logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
+            } else if (response.code && response.filename) {
+                if (response.foldername !== undefined) {
                     bmSiteType = response.foldername;
                 }
                 logDebug("Received unload response, bmsiteType", bmSiteType);
                 logDebug("Received unload response, saving folder", response.foldername);
                 logDebug("Received unload response, saving file:", response.filename);
-                saveText(response.filename + '.bml', response.code);
+                saveText(response.filename + '.' + bmFileType, response.code, bmFileType);
             }
         });
     });
@@ -170,7 +387,11 @@ loadButton.addEventListener('click', async () => {
             tabs[0].id,
             { greeting: 'load', code: contents },
             function (response) {
-                logDebug("Load response received:", response);
+                if (chrome.runtime.lastError) {
+                    logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
+                } else {
+                    logDebug("Load response received:", response);
+                }
             }
         );
     });
@@ -181,9 +402,11 @@ unloadTestButton.onclick = function () {
     logDebug("Unload Test button clicked.");
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unloadTest' }, function (response) {
-            if (response.testCode && response.filename) {
+            if (chrome.runtime.lastError) {
+                logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
+            } else if (response.testCode && response.filename) {
                 logDebug("Received unloadTest response, saving file:", response.filename);
-                saveText(response.filename + '.test.bml', response.testCode);
+                saveText(response.filename + '.test.' + bmFileType, response.testCode, bmFileType);
             }
         });
     });
@@ -203,19 +426,26 @@ loadTestButton.addEventListener('click', async () => {
             tabs[0].id,
             { greeting: 'loadTest', code: contents },
             function (response) {
-                logDebug("Load Test response received:", response);
+                if (chrome.runtime.lastError) {
+                    logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
+                } else {
+                    logDebug("Load Test response received:", response);
+                }
             }
         );
     });
 });
 
+
 // FILE SAVE FUNCTION
-function saveText(filename, text) {
+// TODO: Add support for different file types
+function saveText(filename, text, filetype = 'bml') {
     logDebug("Saving file:", filename);
+    const mimeType = filetype === 'xsl' ? 'application/xml' : 'text/plain';
     const tempElem = document.createElement('a');
     tempElem.setAttribute(
         'href',
-        'data:bml/plain;charset=utf-8,' + encodeURIComponent(text)
+        `data:${mimeType};charset=utf-8,${encodeURIComponent(text)}`
     );
     tempElem.setAttribute('download', filename);
     tempElem.click();
