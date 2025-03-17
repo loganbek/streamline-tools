@@ -231,6 +231,13 @@ bmFileType = 'xsl';
         // bmRuleType = 'document';
         bmRuleType = null;
         logDebug("Detected document");
+        bmFileType = 'xsl';
+        logDebug("File type set to:", bmFileType);
+        logDebug("Executing content script: adminDocumentsContent.js");
+        chrome.scripting.executeScript({
+            target: { tabId: tabs[0].id },
+            files: ['adminDocumentsContent.js'],
+        });
     }
     // Default case for unrecognized URLs
     else {
