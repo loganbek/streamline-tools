@@ -11,7 +11,7 @@ function logError(message, ...optionalParams) {
     console.error(message, optionalParams);
 }
 
-// Add message passing for  .ace_text-layer element. This element's textContent property contains the full code of the document.
+// Add message passing for the .ace_text-layer element. This element's textContent property contains the full code of the document.
 // This is a workaround for the fact that the Ace editor does not provide a way to get the full code of the document.
 //        chrome.scripting.executeScript({
 //     target: { tabId: tabs[0].id },
