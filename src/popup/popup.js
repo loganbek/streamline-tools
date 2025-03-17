@@ -98,7 +98,7 @@ function matchesUrlPattern(url, patternKey, subPatternKey = null) {
 
 // Add this function to extract query parameters from URL
 function getUrlParameter(url, name) {
-    const escapedName = name.replace(/\[/g, '\\[').replace(/\]/g, '\\]');
+    const escapedName = name.replace(/\\/g, '\\\\').replace(/\[/g, '\\[').replace(/\]/g, '\\]');
     const regex = new RegExp(`[\\?&]${escapedName}=([^&#]*)`);
     const results = regex.exec(url);
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
