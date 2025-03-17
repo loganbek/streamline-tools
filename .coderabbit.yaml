@@ -15,6 +15,7 @@ reviews:
     - src/content/*           # Content scripts
     - src/options/*           # Options page
     - src/popup/*             # Popup pages
+    - test/*                  # Test files
     - "!node_modules/*"
     - "!.github/*"
     - "!.vscode/*"
