@@ -237,6 +237,14 @@ bmFileType = 'xsl';
         chrome.scripting.executeScript({
             target: { tabId: tabs[0].id },
             files: ['adminDocumentsContent.js'],
+        }, () => {
+            chrome.tabs.sendMessage(tabs[0].id, { action: 'initializeDocumentHandlers' }, (response) => {
+                if (chrome.runtime.lastError) {
+                    logDebug("Error initializing document handlers:", chrome.runtime.lastError);
+                } else {
+                    logDebug("Document handlers initialized:", response);
+                }
+            });
         });
     }
     // Default case for unrecognized URLs
