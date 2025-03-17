@@ -36,6 +36,7 @@ let bmFileType
 // Stylesheets - Header & Footer = https://devmcnichols.bigmachines.com/admin/ui/branding/edit_site_branding.jsp
 
 // Documents  -global xsl - https://devmcnichols.bigmachines.com/admin/document-designer/4653759/editor/134737862
+// To achieve this I traversed the DOM to locate the .ace_text-layer element. This element's textContent property contains the full code. After that, I've used navigator.clipboard.writeText to copy this code to your clipboar
 
 // URL matchers for different sections and rule types
 const URL_MATCHERS = {
