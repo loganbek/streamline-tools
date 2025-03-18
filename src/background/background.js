@@ -122,14 +122,14 @@ function handleBML(action) {
              } else {
                  // For unloading BML, we need to get the code from the editor and save it
                  chrome.tabs.sendMessage(tabId, { greeting: "unload" }, function(response) {
-                     if (response && response.code) {
+                     if (response?.code) {
                          // Save the code to storage for later loading
                          chrome.storage.local.set({
                              currentBML: response.code,
                              currentFilename: response.filename,
                              currentFoldername: response.foldername
                          }, function() {
-                             console.log("BML code saved to storage:", response.code.substring(0, 100) + "...");
+                             console.log(`BML code saved to storage: ${response.code.substring(0, 100)}...`);
                          });
                      }
                  });
