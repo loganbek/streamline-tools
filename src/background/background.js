@@ -110,18 +110,30 @@ function handleBML(action) {
              if (isLoad) {
                  // For loading BML, we need to get the code from storage and load it
                  chrome.storage.local.get(['currentBML'], function(result) {
-                     if (result.currentBML) {
-                         chrome.tabs.sendMessage(tabId, {
-                             greeting: "load",
-                             code: result.currentBML
-                         });
-                     } else {
-                         console.warn("No BML code found in storage to load");
+                     try {
+                         if (result.currentBML) {
+                             chrome.tabs.sendMessage(tabId, {
+                                 greeting: "load",
+                                 code: result.currentBML
+                             }, function(response) {
+                                 if (chrome.runtime.lastError) {
+                                     console.error("Error loading BML:", chrome.runtime.lastError);
+                                 }
+                             });
+                         } else {
+                             console.warn("No BML code found in storage to load");
+                         }
+                     } catch (error) {
+                         console.error("Error in BML loading process:", error);
                      }
                  });
              } else {
                  // For unloading BML, we need to get the code from the editor and save it
                  chrome.tabs.sendMessage(tabId, { greeting: "unload" }, function(response) {
+                     if (chrome.runtime.lastError) {
+                         console.error("Error unloading BML:", chrome.runtime.lastError);
+                         return;
+                     }
                      if (response?.code) {
                          // Save the code to storage for later loading
                          chrome.storage.local.set({
@@ -129,6 +141,10 @@ function handleBML(action) {
                              currentFilename: response.filename,
                              currentFoldername: response.foldername
                          }, function() {
+                             if (chrome.runtime.lastError) {
+                                 console.error("Error saving BML to storage:", chrome.runtime.lastError);
+                                 return;
+                             }
                              console.log(`BML code saved to storage: ${response.code.substring(0, 100)}...`);
                          });
                      }
