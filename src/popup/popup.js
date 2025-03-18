@@ -96,7 +96,17 @@ function matchesUrlPattern(url, patternKey, subPatternKey = null) {
     }
 }
 
-// Add this function to extract query parameters from URL
+/**
+ * Extracts the value of a specified query parameter from a URL.
+ *
+ * This function safely escapes the provided parameter name (including backslashes and square brackets)
+ * to construct a regular expression that locates the parameter in the URL. If the parameter is found,
+ * its value is decoded and returned; otherwise, an empty string is returned.
+ *
+ * @param {string} url - The URL to search for the query parameter.
+ * @param {string} name - The name of the query parameter to extract.
+ * @returns {string} The decoded value of the query parameter, or an empty string if not present.
+ */
 function getUrlParameter(url, name) {
     const escapedName = name.replace(/\\/g, '\\\\').replace(/\[/g, '\\[').replace(/\]/g, '\\]');
     const regex = new RegExp(`[\\?&]${escapedName}=([^&#]*)`);
