@@ -37,6 +37,7 @@ let bmFileType
 
 // Documents  -global xsl - https://devmcnichols.bigmachines.com/admin/document-designer/4653759/editor/134737862
 
+
 // URL matchers for different sections and rule types
 const URL_MATCHERS = {
     config: {
@@ -229,6 +230,21 @@ bmFileType = 'xsl';
         // bmRuleType = 'document';
         bmRuleType = null;
         logDebug("Detected document");
+        bmFileType = 'xsl';
+        logDebug("File type set to:", bmFileType);
+        logDebug("Executing content script: adminDocumentsContent.js");
+        chrome.scripting.executeScript({
+            target: { tabId: tabs[0].id },
+            files: ['adminDocumentsContent.js'],
+        }, () => {
+            chrome.tabs.sendMessage(tabs[0].id, { action: 'initializeDocumentHandlers' }, (response) => {
+                if (chrome.runtime.lastError) {
+                    logDebug("Error initializing document handlers:", chrome.runtime.lastError);
+                } else {
+                    logDebug("Document handlers initialized:", response);
+                }
+            });
+        });
     }
     // Default case for unrecognized URLs
     else {
