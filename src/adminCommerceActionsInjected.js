@@ -1,4 +1,13 @@
-/* STUB | ADMIN COMMERCE ACTIONS INJECT */
+/**
+ * Streamline Tools - Admin Commerce Actions Injected Script
+ *
+ * This script is injected into Oracle CPQ Cloud admin commerce actions pages
+ * to handle BML code operations directly in the page context. It provides
+ * functionality for loading and unloading BML code in commerce actions.
+ *
+ * @version 1.0.0
+ * @license Unlicense
+ */
 
 let ADMIN_COMMERCE_ACTIONS_INJECT_DEBUG = true;
 

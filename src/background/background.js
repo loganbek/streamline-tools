@@ -99,8 +99,41 @@ function handleBML(action) {
      chrome.scripting.executeScript({
          target: { tabId: tabId },
          func: (isLoad) => {
-             // TODO: Implement actual BML loading/unloading logic
              console.log(`Executing ${isLoad ? 'LOAD' : 'UNLOAD'} BML...`);
+             
+             // Send message to content script to handle BML loading/unloading
+             chrome.runtime.sendMessage({
+                 direction: isLoad ? 'load_bml' : 'unload_bml'
+             });
+             
+             // Trigger the appropriate action based on whether we're loading or unloading
+             if (isLoad) {
+                 // For loading BML, we need to get the code from storage and load it
+                 chrome.storage.local.get(['currentBML'], function(result) {
+                     if (result.currentBML) {
+                         chrome.tabs.sendMessage(tabId, {
+                             greeting: "load",
+                             code: result.currentBML
+                         });
+                     } else {
+                         console.warn("No BML code found in storage to load");
+                     }
+                 });
+             } else {
+                 // For unloading BML, we need to get the code from the editor and save it
+                 chrome.tabs.sendMessage(tabId, { greeting: "unload" }, function(response) {
+                     if (response && response.code) {
+                         // Save the code to storage for later loading
+                         chrome.storage.local.set({
+                             currentBML: response.code,
+                             currentFilename: response.filename,
+                             currentFoldername: response.foldername
+                         }, function() {
+                             console.log("BML code saved to storage:", response.code.substring(0, 100) + "...");
+                         });
+                     }
+                 });
+             }
          },
          args: [isLoad]
      });
