@@ -103,7 +103,7 @@ function handleBML(action) {
              
              // Send message to content script to handle BML loading/unloading
              chrome.runtime.sendMessage({
-                 direction: isLoad ? 'load_bml' : 'unload_bml'
+                 greeting: isLoad ? "load" : "unload"
              });
              
              // Trigger the appropriate action based on whether we're loading or unloading
