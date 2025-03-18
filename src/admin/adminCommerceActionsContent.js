@@ -67,7 +67,7 @@ function injectJs (link) {
 }
 
 // Inject the adminCommerceRulesInjected.js script
-injectJs(chrome.runtime.getURL('adminCommerceRulesInjected.js'))
+injectJs(chrome.runtime.getURL('admin/adminCommerceRulesInjected.js'))
 
 // Listen for messages from the background script
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
