@@ -115,7 +115,7 @@ function handleBML(action) {
                              chrome.tabs.sendMessage(tabId, {
                                  greeting: "load",
                                  code: result.currentBML
-                             }, function(response) {
+                             }, function() {
                                  if (chrome.runtime.lastError) {
                                      console.error("Error loading BML:", chrome.runtime.lastError);
                                  }
@@ -129,24 +129,10 @@ function handleBML(action) {
                  });
              } else {
                  // For unloading BML, we need to get the code from the editor and save it
-                 chrome.tabs.sendMessage(tabId, { greeting: "unload" }, function(response) {
+                 chrome.tabs.sendMessage(tabId, { greeting: "unload" }, function() {
                      if (chrome.runtime.lastError) {
                          console.error("Error unloading BML:", chrome.runtime.lastError);
                          return;
-                     }
-                     if (response?.code) {
-                         // Save the code to storage for later loading
-                         chrome.storage.local.set({
-                             currentBML: response.code,
-                             currentFilename: response.filename,
-                             currentFoldername: response.foldername
-                         }, function() {
-                             if (chrome.runtime.lastError) {
-                                 console.error("Error saving BML to storage:", chrome.runtime.lastError);
-                                 return;
-                             }
-                             console.log(`BML code saved to storage: ${response.code.substring(0, 100)}...`);
-                         });
                      }
                  });
              }
