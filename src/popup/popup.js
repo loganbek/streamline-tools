@@ -247,7 +247,7 @@ bmFileType = 'xsl';
             logDebug("Executing content script: adminStylesheetsContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['adminStylesheetsContent.js'],
+                files: ['admin/adminStylesheetsContent.js'],
             });
         }
 
@@ -258,7 +258,7 @@ bmFileType = 'xsl';
             logDebug("Executing content script: adminHeaderFooterContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['adminHeaderFooterContent.js'],
+                files: ['admin/adminHeaderFooterContent.js'],
             });
         }
 
@@ -276,13 +276,13 @@ bmFileType = 'xsl';
             logDebug("Executing content script: adminCommerceActionsContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['adminCommerceActionsContent.js'],
+                files: ['admin/adminCommerceActionsContent.js'],
             });
         } else if (url.includes('bigmachines.com/admin/commerce/rules')) {
             logDebug("Executing content script: adminCommerceRulesContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['adminCommerceRulesContent.js'],
+                files: ['admin/adminCommerceRulesContent.js'],
             });
         } else if (url.includes('bigmachines.com/admin/configuration/rules')) {
             bmSiteType = 'configuration';
@@ -290,7 +290,7 @@ bmFileType = 'xsl';
             logDebug("Executing content script: adminConfigContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['adminConfigContent.js'],
+                files: ['admin/adminConfigContent.js'],
             });
         }
     }
