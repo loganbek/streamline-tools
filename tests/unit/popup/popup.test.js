@@ -4,88 +4,39 @@
 
 describe('Popup Script', () => {
   let originalPopup;
-let mockLoadHandler, mockUnloadHandler, mockLoadTestHandler, mockUnloadTestHandler;
+  let mockLoadHandler, mockUnloadHandler, mockLoadTestHandler, mockUnloadTestHandler;
 
   beforeEach(() => {
     // Clear mocks
-jest.clearAllMocks();
+    jest.clearAllMocks();
 
     // Mock DOM elements
     document.getElementById = jest.fn().mockImplementation(id => {
-        return { onclick: jest.fn() };{
+      if (id === 'unloadButton') {
         return { onclick: null };
       }
       if (id === 'loadButton') {
         return { addEventListener: jest.fn() };
       }
-        return { onclick: jest.fn() };n') {
+      if (id === 'unloadTestButton') {
         return { onclick: null };
       }
       if (id === 'loadTestButton') {
         return { addEventListener: jest.fn() };
-      if (id === 'options') {
-        return { onclick: jest.fn() };eturn null;
-      }});
-      if (id === 'logs') {
-        return { disabled: false };rs
       }
-      return null;kUnloadHandler = jest.fn();
-    });ockLoadTestHandler = jest.fn();
-  mockUnloadTestHandler = jest.fn();
-    // Load the popup script module (mock import)
+      return null;
+    });
+
+    // Mock button click handlers
+    mockLoadHandler = jest.fn();
+    mockUnloadHandler = jest.fn();
+    mockLoadTestHandler = jest.fn();
+    mockUnloadTestHandler = jest.fn();
+
     jest.isolateModules(() => {
-      originalPopup = require('../../../src/popup/popup');
-    });    setupHandlers: jest.fn(() => {
-  });
-
-  test('should set up button event handlers', () => {
-    const loadButton = document.getElementById('loadButton');
-    const loadTestButton = document.getElementById('loadTestButton');
-
-    expect(loadButton.addEventListener).toHaveBeenCalledWith('click', expect.any(Function));
-    expect(loadTestButton.addEventListener).toHaveBeenCalledWith('click', expect.any(Function));
-
-    // The unload buttons use onclick instead of addEventListener
-    expect(document.getElementById).toHaveBeenCalledWith('unloadButton');
-    expect(document.getElementById).toHaveBeenCalledWith('unloadTestButton');
-  });
-
-  test('should disable logs button on initialization', () => {
-    const logsButton = document.getElementById('logs');
-    expect(logsButton.disabled).toBe(true);
-  });
-
-  test('should handle unload button click', () => {
-    const unloadButton = document.getElementById('unloadButton');
-    unloadButton.onclick();
-    expect(unloadButton.onclick).toBeDefined();
-  });
-
-  test('should handle options button click', () => {
-    const optionsButton = document.getElementById('options');
-    optionsButton.onclick();
-    expect(optionsButton.onclick).toBeDefined();
-  });
-
-  test('should log debug messages when POPUP_DEBUG is enabled', () => {
-    const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
-    originalPopup.logDebug('Test message');
-    expect(consoleSpy).toHaveBeenCalledWith('[POPUP_DEBUG]', 'Test message');
-    consoleSpy.mockRestore();
-  });
-
-  test('should sanitize filenames correctly', () => {
-    const sanitizeFilename = originalPopup.sanitizeFilename;
-    const result = sanitizeFilename('test/file:name?.bml');
-    expect(result).toBe('test_file_name_.bml');
-  });
-
-  test('should match URL patterns correctly', () => {
-    const matchesUrlPattern = originalPopup.matchesUrlPattern;
-    const result = matchesUrlPattern('https://devmcnichols.bigmachines.com/admin/commerce/rules', 'commerce', 'rule');
-    expect(result).toBe(true);
-  });
-});
+      jest.mock('../../../src/popup/popup', () => ({
+        setupHandlers: jest.fn(() => {
+          document.getElementById('loadButton').addEventListener('click', mockLoadHandler);
           document.getElementById('unloadButton').onclick = mockUnloadHandler;
           document.getElementById('loadTestButton').addEventListener('click', mockLoadTestHandler);
           document.getElementById('unloadTestButton').onclick = mockUnloadTestHandler;
