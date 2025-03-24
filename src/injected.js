@@ -1,6 +1,12 @@
-/* STUB | INJECTED COMMERCE + UTIL LIB SCRIPT
-/* FIXME CHECK USAGE */
-/* REVIEW + LINK */
+/**
+ * Streamline Tools - Injected Script for Commerce and Utility Libraries
+ * 
+ * This script is injected into Oracle CPQ Cloud pages to handle BML code operations
+ * including loading, unloading, and validation of BML scripts.
+ * 
+ * @version 1.0.0
+ * @license Unlicense
+ */
 
 var INJECTED_DEBUG = true; // Set to false to disable debug logs
 

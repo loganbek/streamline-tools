@@ -37,7 +37,6 @@ let bmFileType
 
 // Documents  -global xsl - https://devmcnichols.bigmachines.com/admin/document-designer/4653759/editor/134737862
 
-
 // URL matchers for different sections and rule types
 const URL_MATCHERS = {
     config: {
@@ -240,21 +239,6 @@ bmFileType = 'xsl';
         // bmRuleType = 'document';
         bmRuleType = null;
         logDebug("Detected document");
-        bmFileType = 'xsl';
-        logDebug("File type set to:", bmFileType);
-        logDebug("Executing content script: adminDocumentsContent.js");
-        chrome.scripting.executeScript({
-            target: { tabId: tabs[0].id },
-            files: ['adminDocumentsContent.js'],
-        }, () => {
-            chrome.tabs.sendMessage(tabs[0].id, { action: 'initializeDocumentHandlers' }, (response) => {
-                if (chrome.runtime.lastError) {
-                    logDebug("Error initializing document handlers:", chrome.runtime.lastError);
-                } else {
-                    logDebug("Document handlers initialized:", response);
-                }
-            });
-        });
     }
     // Default case for unrecognized URLs
     else {
@@ -273,7 +257,7 @@ bmFileType = 'xsl';
             logDebug("Executing content script: adminStylesheetsContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['adminStylesheetsContent.js'],
+                files: ['admin/adminStylesheetsContent.js'],
             });
         }
 
@@ -284,7 +268,7 @@ bmFileType = 'xsl';
             logDebug("Executing content script: adminHeaderFooterContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['adminHeaderFooterContent.js'],
+                files: ['admin/adminHeaderFooterContent.js'],
             });
         }
 
@@ -302,13 +286,13 @@ bmFileType = 'xsl';
             logDebug("Executing content script: adminCommerceActionsContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['adminCommerceActionsContent.js'],
+                files: ['admin/adminCommerceActionsContent.js'],
             });
         } else if (url.includes('bigmachines.com/admin/commerce/rules')) {
             logDebug("Executing content script: adminCommerceRulesContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['adminCommerceRulesContent.js'],
+                files: ['admin/adminCommerceRulesContent.js'],
             });
         } else if (url.includes('bigmachines.com/admin/configuration/rules')) {
             bmSiteType = 'configuration';
@@ -316,7 +300,7 @@ bmFileType = 'xsl';
             logDebug("Executing content script: adminConfigContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['adminConfigContent.js'],
+                files: ['admin/adminConfigContent.js'],
             });
         }
     }
@@ -356,17 +340,35 @@ function sanitizeFilename(filename) {
     return filename.replace(/[^a-z0-9.-]/gi, '_');
 }
 
-//TODO: Add support for different file types
+// Support for different file types
 chrome.downloads.onDeterminingFilename.addListener(function (item, suggest) {
     logDebug("Download detected, setting filename, subdomain, site type, and rule type:", item.filename, bmSiteSubDomain, bmSiteType, bmRuleType);
     logDebug("item", item);
     logDebug("suggest", suggest);
     
-    let fileTypeFolder = '';
-    if (bmFileType) {
-        fileTypeFolder = sanitizeFilename(bmFileType) + '/';
+    // Determine file type based on file extension or content type
+    let fileType = bmFileType || 'bml'; // Default to BML
+    const fileExtension = item.filename.split('.').pop().toLowerCase();
+    
+    // Map file extensions to file types
+    const fileTypeMap = {
+        'bml': 'bml',
+        'js': 'javascript',
+        'xsl': 'xsl',
+        'xml': 'xml',
+        'css': 'css',
+        'html': 'html',
+        'json': 'json'
+    };
+    
+    // Update file type if we can determine it from the extension
+    if (fileExtension && fileTypeMap[fileExtension]) {
+        fileType = fileTypeMap[fileExtension];
     }
-
+    
+    // Create folder structure based on file type
+    let fileTypeFolder = sanitizeFilename(fileType) + '/';
+    
     suggest({
         filename: 'bigmachines/' +
             sanitizeFilename(bmSiteSubDomain) + '/' +
@@ -464,10 +466,27 @@ loadTestButton.addEventListener('click', async () => {
 
 
 // FILE SAVE FUNCTION
-// TODO: Add support for different file types
+// Enhanced support for different file types
 function saveText(filename, text, filetype = 'bml') {
-    logDebug("Saving file:", filename);
-    const mimeType = filetype === 'xsl' ? 'application/xml' : 'text/plain';
+    logDebug("Saving file:", filename, "with filetype:", filetype);
+    
+    // Map file types to appropriate MIME types
+    const mimeTypeMap = {
+        'bml': 'text/plain',
+        'javascript': 'application/javascript',
+        'js': 'application/javascript',
+        'xsl': 'application/xml',
+        'xml': 'application/xml',
+        'css': 'text/css',
+        'html': 'text/html',
+        'json': 'application/json',
+        'txt': 'text/plain'
+    };
+    
+    // Get the appropriate MIME type or default to text/plain
+    const mimeType = mimeTypeMap[filetype] || 'text/plain';
+    
+    // Create download element
     const tempElem = document.createElement('a');
     tempElem.setAttribute(
         'href',
