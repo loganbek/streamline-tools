@@ -38,47 +38,92 @@ let bmFileType
 // Documents  -global xsl - https://devmcnichols.bigmachines.com/admin/document-designer/4653759/editor/134737862
 
 // URL matchers for different sections and rule types
-const URL_MATCHERS = {
+let URL_MATCHERS = {
     config: {
         recommendation: {
-            pattern: 'bigmachines.com/admin/configuration/rules/edit_rule.jsp',
-            ruleType: 1
+            pattern: "bigmachines.com/admin/configuration/rules/edit_rule.jsp",
+            ruleType: 1,
+            fileType: "bml",
         },
         constraint: {
-            pattern: 'bigmachines.com/admin/configuration/rules/edit_rule.jsp',
-            ruleType: 2
+            pattern: "bigmachines.com/admin/configuration/rules/edit_rule.jsp",
+            ruleType: 2,
+            fileType: "bml",
         },
         hiding: {
-            pattern: 'bigmachines.com/admin/configuration/rules/edit_rule.jsp',
-            ruleType: 11
+            pattern: "bigmachines.com/admin/configuration/rules/edit_rule.jsp",
+            ruleType: 11,
+            fileType: "bml",
         },
         bommapping: {
-            pattern: 'bigmachines.com/admin/configuration/rules/edit_rule.jsp',
-            ruleType: 23
+            pattern: "bigmachines.com/admin/configuration/rules/edit_rule.jsp",
+            ruleType: 23,
+            fileType: "bml",
         },
-        generic: 'bigmachines.com/admin/configuration/rules'
+        generic: "bigmachines.com/admin/configuration/rules",
     },
     commerce: {
-        action: 'bigmachines.com/admin/commerce/actions/edit_action.jsp',
-        constraint: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
-        hiding: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
-        validation: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
-        library: 'bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp',
-        rule: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
-        ruleInputs: 'bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp',
-        generic: 'bigmachines.com/admin/commerce/rules'
+        action: {
+            pattern: "bigmachines.com/admin/commerce/actions/edit_action.jsp",
+            fileType: "bml",
+        },
+        constraint: {
+            pattern: "bigmachines.com/admin/commerce/rules/edit_rule.jsp",
+            fileType: "bml",
+        },
+        hiding: {
+            pattern: "bigmachines.com/admin/commerce/rules/edit_rule.jsp",
+            fileType: "bml",
+        },
+        validation: {
+            pattern: "bigmachines.com/admin/commerce/rules/edit_rule.jsp",
+            fileType: "bml",
+        },
+        library: {
+            pattern: "bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp",
+            fileType: "bml",
+        },
+        rule: {
+            pattern: "bigmachines.com/admin/commerce/rules/edit_rule.jsp",
+            fileType: "bml",
+        },
+        ruleInputs: {
+            pattern: "bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp",
+            fileType: "bml",
+        },
+        generic: "bigmachines.com/admin/commerce/rules",
     },
-    utils: 'bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor',
+    utils: {
+        url: "bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor",
+        fileType: "bml",
+    },
     interfaces: {
-        rest: 'bigmachines.com/rest/v1/quote/',
-        soap: 'bigmachines.com/soap/'
+        rest: {
+            url: "bigmachines.com/rest/v1/quote/",
+            fileType: "json",
+        },
+        soap: {
+            url: "bigmachines.com/soap/",
+            fileType: "xml",
+        },
+        generic: "bigmachines.com/admin/interfaceCatalogs/list_ics_resources.jsp",
     },
     stylesheets: {
-        stylesheetManager: 'bigmachines.com/admin/ui/branding/edit_site_branding.jsp',
-        headerFooter: 'bigmachines.com/admin/ui/branding/edit_header_footer.jsp'
+        stylesheetManager: {
+            url: "bigmachines.com/admin/ui/branding/edit_site_branding.jsp",
+            fileType: "css",
+        },
+        headerFooter: {
+            url: "bigmachines.com/admin/ui/branding/edit_header_footer.jsp",
+            fileType: "html",
+        },
     },
-    documents: 'bigmachines.com/admin/document-designer/',
-}
+    documents: {
+        url: "bigmachines.com/admin/document-designer/",
+        fileType: "xsl",
+    },
+};
+
 
 // Utility function to check if URL matches a pattern
 function matchesUrlPattern(url, patternKey, subPatternKey = null) {

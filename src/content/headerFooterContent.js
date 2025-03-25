@@ -11,10 +11,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     logDebug("Message received:", request);
 
     switch (request.greeting) {
-        case 'unloadHeader':
-            const headerCode = document.querySelector('#header_content').value;
+        case 'unloadHeaderHTML':
+            // const headerCode = document.querySelector('#header_content').value;
+            const headerHTMLCode = document.getElementsByName('header')[0].childNodes[0];
             logDebug("Unloading header code");
-            sendResponse({ code: headerCode });
+            sendResponse({ code: headerHTMLCode });
             break;
 
         case 'loadHeader':

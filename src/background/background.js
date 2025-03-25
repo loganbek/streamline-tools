@@ -21,6 +21,7 @@ chrome.runtime.onInstalled.addListener(() => {
                         pageUrl: {
                             urlMatches:
                                 'bigmachines.com/admin/configuration/rules/edit_rule.jsp|bigmachines.com/spring/|bigmachines.com/admin/commerce/rules/|bigmachines.com/admin/commerce/actions/edit_action.jsp'
+                                //|bigmachines.com/admin/ui/branding/edit_header_footer.jsp|bigmachines.com/admin/ui/branding/edit_site_branding.jsp
                         }
                     })
                 ],
@@ -113,6 +114,46 @@ function handleBML(action) {
  });
 }
 
+// Function to handle HTML actions
+function handleHTML(action) {
+ const isLoad = action === 'load';
+ logDebug(`Executing ${action}HTML...`);
+
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs.length === 0) {
+          logDebug(`No active tabs found, exiting ${action}HTML.`);
+          return;
+      }
+
+      const tabId = tabs[0].id;
+      logDebug("Found active tab with ID:", tabId);
+
+      chrome.scripting.executeScript({
+          target: { tabId: tabId },
+          func: (isLoad) => {
+          // TODO: Implement actual HTML loading/unloading logic
+          console.log(`Executing ${isLoad ? 'LOAD' : 'UNLOAD'} HTML...`);
+          },
+          args: [isLoad]
+      });
+
+      logDebug(`Script injected to ${action} HTML.`);
+      if (!isLoad) {
+          chrome.action.enable(tabId);
+          logDebug("Extension action enabled for tab:", tabId);
+      }
+  });
+}
+
+    
+
+
 // Define loadBML and unloadBML functions
 const loadBML = () => handleBML('load');
 const unloadBML = () => handleBML('unload');
+const loadTestBML = () => handleBML('loadTest');
+const unloadTestBML = () => handleBML('unloadTest');
+const loadHeadHTML = () => handleHTML('loadHead');
+const unloadHeadHTML = () => handleHTML('unloadHead');
+const loadFooterHTML = () => handleHTML('loadFooter');
+const unloadFooterHTML = () => handleHTML('unloadFooter');
