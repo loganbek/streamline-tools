@@ -4,7 +4,7 @@ require('dotenv').config(); // Add this to load environment variables
 (async () => {
     // Check if password environment variable exists
     if (!process.env.CPQ_PASSWORD || !process.env.CPQ_USERNAME) {
-        console.error('Error: CPQ_PASSWORD environment variable is not set');
+        console.error('Error: CPQ_PASSWORD and/or CPQ_USERNAME environment variable is not set');
         process.exit(1);
     }
 
@@ -51,22 +51,7 @@ require('dotenv').config(); // Add this to load environment variables
             .setTimeout(timeout)
             .fill('process.env.CPQ_USERNAME'); // Use environment variable here
     }
-    {
-        const targetPage = page;
-        await puppeteer.Locator.race([
-            targetPage.locator('::-p-aria(Password:)'),
-            targetPage.locator('#psword'),
-            targetPage.locator('::-p-xpath(//*[@id=\\"psword\\"])'),
-            targetPage.locator(':scope >>> #psword')
-        ])
-            .setTimeout(timeout)
-            .click({
-              offset: {
-                x: 85.33333206176758,
-                y: 9,
-              },
-            });
-    }
+    
     {
         const targetPage = page;
         await puppeteer.Locator.race([
