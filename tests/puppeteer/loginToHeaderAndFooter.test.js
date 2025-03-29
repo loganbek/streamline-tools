@@ -49,7 +49,7 @@ require('dotenv').config(); // Add this to load environment variables
             targetPage.locator(':scope >>> #username')
         ])
             .setTimeout(timeout)
-            .fill('cwilliams');
+            .fill('process.env.CPQ_USERNAME'); // Use environment variable here
     }
     {
         const targetPage = page;
