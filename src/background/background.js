@@ -9,6 +9,7 @@ function logDebug(message, ...args) {
     }
 }
 
+// NOTE: bigmachines.com/admin/ui/branding/edit_header_footer.jsp|bigmachines.com/admin/ui/branding/edit_site_branding.jsp
 // Ensure extension is enabled on matching pages
 chrome.runtime.onInstalled.addListener(() => {
     logDebug("Extension installed, setting up rules...");
@@ -21,7 +22,6 @@ chrome.runtime.onInstalled.addListener(() => {
                         pageUrl: {
                             urlMatches:
                                 'bigmachines.com/admin/configuration/rules/edit_rule.jsp|bigmachines.com/spring/|bigmachines.com/admin/commerce/rules/|bigmachines.com/admin/commerce/actions/edit_action.jsp'
-                                //|bigmachines.com/admin/ui/branding/edit_header_footer.jsp|bigmachines.com/admin/ui/branding/edit_site_branding.jsp
                         }
                     })
                 ],
@@ -52,16 +52,18 @@ chrome.commands.onCommand.addListener((command) => {
 // Listen for tab updates to switch popups
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.url) {
-    if (tab.url.includes('bigmachines.com/admin/ui/branding/edit_header_footer.jsp')) {
+    if (tab && tab.url && tab.url.includes('bigmachines.com/admin/ui/branding/edit_header_footer.jsp')) {
       chrome.action.setPopup({
         tabId: tabId,
         popup: 'popup/popupHeaderFooter.html'
       });
-    } else if (tab.url.includes('bigmachines.com')) {
+    } else if (tab && tab.url && tab.url.includes('bigmachines.com')) {
       chrome.action.setPopup({
         tabId: tabId,
         popup: 'popup/popup.html'
       });
+    } else {
+      console.log("Tab or tab.url is undefined");
     }
   }
 });
@@ -69,16 +71,18 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 // Also handle initial tab loading
 chrome.tabs.onActivated.addListener((activeInfo) => {
   chrome.tabs.get(activeInfo.tabId, (tab) => {
-    if (tab.url.includes('bigmachines.com/admin/ui/branding/edit_header_footer.jsp')) {
+    if (tab && tab.url && tab.url.includes('bigmachines.com/admin/ui/branding/edit_header_footer.jsp')) {
       chrome.action.setPopup({
         tabId: activeInfo.tabId,
         popup: 'popup/popupHeaderFooter.html'
       });
-    } else if (tab.url.includes('bigmachines.com')) {
+    } else if (tab && tab.url && tab.url.includes('bigmachines.com')) {
       chrome.action.setPopup({
         tabId: activeInfo.tabId,
         popup: 'popup/popup.html'
       });
+    } else {
+      console.log("Tab or tab.url is undefined");
     }
   });
 });
