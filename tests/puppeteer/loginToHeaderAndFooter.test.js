@@ -3,7 +3,7 @@ require('dotenv').config(); // Add this to load environment variables
 
 (async () => {
     // Check if password environment variable exists
-    if (!process.env.CPQ_PASSWORD) {
+    if (!process.env.CPQ_PASSWORD || !process.env.CPQ_USERNAME) {
         console.error('Error: CPQ_PASSWORD environment variable is not set');
         process.exit(1);
     }
