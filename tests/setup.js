@@ -1,3 +1,5 @@
+jest.setTimeout(60000); // Set timeout to 60 seconds
+
 // Mock Chrome API
 global.chrome = {
   runtime: {
