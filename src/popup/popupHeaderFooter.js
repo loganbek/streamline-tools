@@ -1,8 +1,8 @@
-const POPUP_DEBUG = true;
+const POPUP_HEADER_FOOTER_DEBUG = true;
 
 function logDebug(message, ...args) {
-    if (POPUP_DEBUG) {
-        console.log("[POPUP_DEBUG]", message, ...args);
+    if (POPUP_HEADER_FOOTER_DEBUG) {
+        console.log("[POPUP_HEADER_FOOTER_DEBUG]", message, ...args);
     }
 }
 
@@ -11,8 +11,8 @@ function logDebug(message, ...args) {
 // Buttons
 const unloadHeaderBtn = document.getElementById('unloadHead');
 const loadHeaderBtn = document.getElementById('loadHead');
-const unloadFooterBtn = document.getElementById('unloadFooter');
-const loadFooterBtn = document.getElementById('loadFooter');
+const unloadFooterBtn = document.getElementById('unloadFoot');
+const loadFooterBtn = document.getElementById('loadFoot');
 const optionsButton = document.getElementById('options');
 const logsButton = document.getElementById('logs');
 
@@ -41,7 +41,7 @@ unloadHeaderBtn.onclick = async function () {
     logDebug("Unload Header button clicked");
     try {
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-        const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadHeader' });
+        const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadHeaderHTML' });
         if (response?.code) {
             await saveText('header.html', response.code);
         } else {
@@ -49,7 +49,7 @@ unloadHeaderBtn.onclick = async function () {
         }
     } catch (err) {
         logDebug("Error unloading header:", err);
-        alert('Failed to unload header. Please try again.');
+        //alert('Failed to unload header. Please try again.');
     }
 }
 
@@ -72,7 +72,7 @@ loadHeaderBtn.onclick = async function () {
         });
     } catch (err) {
         logDebug("Error loading header file:", err);
-        alert('Failed to load header file. Please try again.');
+        //alert('Failed to load header file. Please try again.');
     }
 }
 
@@ -97,17 +97,17 @@ async function handleFileOperation(operation, fileName) {
         }
     } catch (err) {
         logDebug(`Error in ${operation}:`, err);
-        alert(`Failed to ${operation}. Please try again.`);
+        //alert(`Failed to ${operation}. Please try again.`);
     }
 }
 
 // Header handlers (assuming these elements exist in the file)
-unloadHeaderBtn.onclick = () => handleFileOperation('unloadHeader', 'header.html');
-loadHeaderBtn.onclick = () => handleFileOperation('loadHeader', 'header.html');
+unloadHeaderBtn.onclick = () => handleFileOperation('unloadHeaderHTML', 'header.html');
+loadHeaderBtn.onclick = () => handleFileOperation('loadHead', 'header.html');
 
 // Footer handlers
-unloadFooterBtn.onclick = () => handleFileOperation('unloadFooter', 'footer.html');
-loadFooterBtn.onclick = () => handleFileOperation('loadFooter', 'footer.html');
+unloadFooterBtn.onclick = () => handleFileOperation('unloadFoot', 'footer.html');
+loadFooterBtn.onclick = () => handleFileOperation('loadFoot', 'footer.html');
 
 // File save helper
 function saveText(filename, text) {
