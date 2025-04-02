@@ -29,8 +29,9 @@ let bmFileType
 
 // Utils - https://devmcnichols.bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:'EXAMPLE_ID',folder_id:'EXAMPLE_FOLDER',process_id:'-1',doc_id:'-1'}&inputdata={appid:'sampleApp',service:'bmllibraryservice',operation:'getLibPageData',version:'1.0',header:'',params: {componentid:'libraryEditorPage',uicmd:'defineComponent', id:'EXAMPLE_ID',folder_id:'EXAMPLE_FOLDER',process_id:'-1',doc_id:'-1'}}&token=EXAMPLE_TOKEN
 
+// Interfaces List - https://devmcnichols.bigmachines.com/admin/interfaceCatalogs/list_ics_resources.jsp
 // Interfaces - REST - https://devmcnichols.bigmachines.com/rest/v1/quote/1
-// Interfaces - SOAP -
+// Interfaces - SOAP - https://devmcnichols.bigmachines.com/rest/v1/interfaceCatalogs/soapCatalog/services/Security_v1
 
 // Stylesheets - Stylesheet Manager - https://devmcnichols.bigmachines.com/admin/ui/branding/edit_site_branding.jsp
 // Stylesheets - Header & Footer = https://devmcnichols.bigmachines.com/admin/ui/branding/edit_site_branding.jsp
