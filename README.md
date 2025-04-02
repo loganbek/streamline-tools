@@ -118,8 +118,11 @@ Coming soon...
   - Run `lint-verbose` to display a detailed list of style errors.
   - Run `lint-fix` to correct most style errors. -->
 
-<!-- ## Testing
+## Testing
 
+Create a .env file w/ CPQ_PASSWORD and CPQ_USERNAME
+
+<!--
 Oracle Configure, Price, Quote (CPQ)
 Version: 24D Patch 4 -->
 
