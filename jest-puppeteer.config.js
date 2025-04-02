@@ -2,8 +2,8 @@ module.exports = {
   launch: {
     headless: false,
     args: [
-      '--disable-extensions-except=./dist',
-      '--load-extension=./dist',
+      '--disable-extensions-except=./src',
+      '--load-extension=./src',
       '--no-sandbox',
       '--disable-setuid-sandbox'
     ],
