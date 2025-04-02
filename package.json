@@ -26,9 +26,5 @@
     "globals": [
       "chrome"
     ]
-  },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "preset": "jest-puppeteer"
   }
 }
