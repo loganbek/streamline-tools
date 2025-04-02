@@ -12,7 +12,7 @@ describe('Chrome Extension Tests', () => {
         browser = await puppeteer.launch({ headless: false });
         page = await browser.newPage();
 
-        await page.goto('chrome-extension://' + extensionId + 'popup.html');
+        await page.goto('chrome-extension://' + extensionId + '/popup.html');
     });
 
     afterAll(async () => {
