@@ -1,14 +1,18 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
+require('dotenv').config();
+
 
 describe('Chrome Extension Tests', () => {
     let browser;
     let page;
+    let extensionId = process.env.EXTENSION_ID;
 
     beforeAll(async () => {
         browser = await puppeteer.launch({ headless: false });
         page = await browser.newPage();
-        await page.goto('chrome-extension://<your-extension-id>/popup.html');
+
+        await page.goto('chrome-extension://' + extensionId + 'popup.html');
     });
 
     afterAll(async () => {
