@@ -288,10 +288,10 @@ bmFileType = 'xsl';
         logDebug("Detected document");
         bmFileType = 'xsl';
         logDebug("File type set to:", bmFileType);
-        logDebug("Executing content script: adminDocumentsContent.js");
+        logDebug("Executing content script: admin/adminDocumentsContent.js");
         chrome.scripting.executeScript({
             target: { tabId: tabs[0].id },
-            files: ['adminDocumentsContent.js'],
+            files: ['admin/adminDocumentsContent.js'],
         }, () => {
             const messageTimeout = setTimeout(() => {
             logDebug("Document handlers initialization timed out");
@@ -321,10 +321,10 @@ bmFileType = 'xsl';
         if (matchesUrlPattern(url, topLevelFolder.stylesheets, 'stylesheetManager')) {
             bmSiteType = 'stylesheets'
             logDebug("Folder Type:", bmSiteType);
-            logDebug("Executing content script: adminStylesheetsContent.js");
+            logDebug("Executing content script: admin/adminStylesheetsContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['adminStylesheetsContent.js'],
+                files: ['admin/adminStylesheetsContent.js'],
             });
         }
 
@@ -332,10 +332,10 @@ bmFileType = 'xsl';
         if (matchesUrlPattern(url, topLevelFolder.stylesheets, 'headerFooter')) {
             bmSiteType = 'stylesheets'
             logDebug("Folder Type:", bmSiteType);
-            logDebug("Executing content script: adminHeaderFooterContent.js");
+            logDebug("Executing content script: admin/adminHeaderFooterContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['adminHeaderFooterContent.js'],
+                files: ['admin/adminHeaderFooterContent.js'],
             });
         }
 
@@ -350,16 +350,16 @@ bmFileType = 'xsl';
         }
 
         if (url.includes('bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp')) {
-            logDebug("Executing content script: adminCommerceActionsContent.js");
+            logDebug("Executing content script: admin/adminCommerceActionsContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['adminCommerceActionsContent.js'],
+                files: ['admin/adminCommerceActionsContent.js'],
             });
         } else if (url.includes('bigmachines.com/admin/commerce/rules')) {
             logDebug("Executing content script: adminCommerceRulesContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['adminCommerceRulesContent.js'],
+                files: ['admin/adminCommerceRulesContent.js'],
             });
         } else if (url.includes('bigmachines.com/admin/configuration/rules')) {
             bmSiteType = 'configuration';
@@ -367,7 +367,7 @@ bmFileType = 'xsl';
             logDebug("Executing content script: adminConfigContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['adminConfigContent.js'],
+                files: ['admin/adminConfigContent.js'],
             });
         }
     }
