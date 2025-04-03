@@ -62,3 +62,7 @@ function main () {
   window.dispatchEvent(event)
   logDebug("PassToBackground event dispatched with code:", code);
 }
+
+module.exports = {
+  ADMIN_COMMERCE_ACTIONS_INJECT_DEBUG
+};
