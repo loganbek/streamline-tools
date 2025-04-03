@@ -1,4 +1,8 @@
 .DS_Store
 node_modules
-
 .cpqdevkit/**
+
+# Environment variables
+.env
+
+package-lock.json

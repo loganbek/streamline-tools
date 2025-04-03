@@ -29,13 +29,15 @@ let bmFileType
 
 // Utils - https://devmcnichols.bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:'EXAMPLE_ID',folder_id:'EXAMPLE_FOLDER',process_id:'-1',doc_id:'-1'}&inputdata={appid:'sampleApp',service:'bmllibraryservice',operation:'getLibPageData',version:'1.0',header:'',params: {componentid:'libraryEditorPage',uicmd:'defineComponent', id:'EXAMPLE_ID',folder_id:'EXAMPLE_FOLDER',process_id:'-1',doc_id:'-1'}}&token=EXAMPLE_TOKEN
 
+// Interfaces List - https://devmcnichols.bigmachines.com/admin/interfaceCatalogs/list_ics_resources.jsp
 // Interfaces - REST - https://devmcnichols.bigmachines.com/rest/v1/quote/1
-// Interfaces - SOAP -
+// Interfaces - SOAP - https://devmcnichols.bigmachines.com/rest/v1/interfaceCatalogs/soapCatalog/services/Security_v1
 
 // Stylesheets - Stylesheet Manager - https://devmcnichols.bigmachines.com/admin/ui/branding/edit_site_branding.jsp
 // Stylesheets - Header & Footer = https://devmcnichols.bigmachines.com/admin/ui/branding/edit_site_branding.jsp
 
 // Documents  -global xsl - https://devmcnichols.bigmachines.com/admin/document-designer/4653759/editor/134737862
+
 
 // URL matchers for different sections and rule types
 let URL_MATCHERS = {
@@ -141,9 +143,19 @@ function matchesUrlPattern(url, patternKey, subPatternKey = null) {
     }
 }
 
-// Add this function to extract query parameters from URL
+/**
+ * Extracts the value of a specified query parameter from a URL.
+ *
+ * This function safely escapes the provided parameter name (including backslashes and square brackets)
+ * to construct a regular expression that locates the parameter in the URL. If the parameter is found,
+ * its value is decoded and returned; otherwise, an empty string is returned.
+ *
+ * @param {string} url - The URL to search for the query parameter.
+ * @param {string} name - The name of the query parameter to extract.
+ * @returns {string} The decoded value of the query parameter, or an empty string if not present.
+ */
 function getUrlParameter(url, name) {
-    const escapedName = name.replace(/\[/g, '\\[').replace(/\]/g, '\\]');
+    const escapedName = name.replace(/\\/g, '\\\\').replace(/\[/g, '\\[').replace(/\]/g, '\\]');
     const regex = new RegExp(`[\\?&]${escapedName}=([^&#]*)`);
     const results = regex.exec(url);
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
@@ -274,6 +286,21 @@ bmFileType = 'xsl';
         // bmRuleType = 'document';
         bmRuleType = null;
         logDebug("Detected document");
+        bmFileType = 'xsl';
+        logDebug("File type set to:", bmFileType);
+        logDebug("Executing content script: adminDocumentsContent.js");
+        chrome.scripting.executeScript({
+            target: { tabId: tabs[0].id },
+            files: ['adminDocumentsContent.js'],
+        }, () => {
+            chrome.tabs.sendMessage(tabs[0].id, { action: 'initializeDocumentHandlers' }, (response) => {
+                if (chrome.runtime.lastError) {
+                    logDebug("Error initializing document handlers:", chrome.runtime.lastError);
+                } else {
+                    logDebug("Document handlers initialized:", response);
+                }
+            });
+        });
     }
     // Default case for unrecognized URLs
     else {
