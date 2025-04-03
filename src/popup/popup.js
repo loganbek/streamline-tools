@@ -29,56 +29,103 @@ let bmFileType
 
 // Utils - https://devmcnichols.bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:'EXAMPLE_ID',folder_id:'EXAMPLE_FOLDER',process_id:'-1',doc_id:'-1'}&inputdata={appid:'sampleApp',service:'bmllibraryservice',operation:'getLibPageData',version:'1.0',header:'',params: {componentid:'libraryEditorPage',uicmd:'defineComponent', id:'EXAMPLE_ID',folder_id:'EXAMPLE_FOLDER',process_id:'-1',doc_id:'-1'}}&token=EXAMPLE_TOKEN
 
+// Interfaces List - https://devmcnichols.bigmachines.com/admin/interfaceCatalogs/list_ics_resources.jsp
 // Interfaces - REST - https://devmcnichols.bigmachines.com/rest/v1/quote/1
-// Interfaces - SOAP -
+// Interfaces - SOAP - https://devmcnichols.bigmachines.com/rest/v1/interfaceCatalogs/soapCatalog/services/Security_v1
 
 // Stylesheets - Stylesheet Manager - https://devmcnichols.bigmachines.com/admin/ui/branding/edit_site_branding.jsp
 // Stylesheets - Header & Footer = https://devmcnichols.bigmachines.com/admin/ui/branding/edit_site_branding.jsp
 
-// Documents  -global xsl - https://devmcnichols.bigmachines.com/admin/document-designer/4653759/editor/134737862
+// Documents - global xsl - https://devmcnichols.bigmachines.com/admin/document-designer/4653759/editor/134737862
+
 
 // URL matchers for different sections and rule types
-const URL_MATCHERS = {
+let URL_MATCHERS = {
     config: {
         recommendation: {
-            pattern: 'bigmachines.com/admin/configuration/rules/edit_rule.jsp',
-            ruleType: 1
+            pattern: "bigmachines.com/admin/configuration/rules/edit_rule.jsp",
+            ruleType: 1,
+            fileType: "bml",
         },
         constraint: {
-            pattern: 'bigmachines.com/admin/configuration/rules/edit_rule.jsp',
-            ruleType: 2
+            pattern: "bigmachines.com/admin/configuration/rules/edit_rule.jsp",
+            ruleType: 2,
+            fileType: "bml",
         },
         hiding: {
-            pattern: 'bigmachines.com/admin/configuration/rules/edit_rule.jsp',
-            ruleType: 11
+            pattern: "bigmachines.com/admin/configuration/rules/edit_rule.jsp",
+            ruleType: 11,
+            fileType: "bml",
         },
         bommapping: {
-            pattern: 'bigmachines.com/admin/configuration/rules/edit_rule.jsp',
-            ruleType: 23
+            pattern: "bigmachines.com/admin/configuration/rules/edit_rule.jsp",
+            ruleType: 23,
+            fileType: "bml",
         },
-        generic: 'bigmachines.com/admin/configuration/rules'
+        generic: "bigmachines.com/admin/configuration/rules",
     },
     commerce: {
-        action: 'bigmachines.com/admin/commerce/actions/edit_action.jsp',
-        constraint: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
-        hiding: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
-        validation: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
-        library: 'bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp',
-        rule: 'bigmachines.com/admin/commerce/rules/edit_rule.jsp',
-        ruleInputs: 'bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp',
-        generic: 'bigmachines.com/admin/commerce/rules'
+        action: {
+            pattern: "bigmachines.com/admin/commerce/actions/edit_action.jsp",
+            fileType: "bml",
+        },
+        constraint: {
+            pattern: "bigmachines.com/admin/commerce/rules/edit_rule.jsp",
+            fileType: "bml",
+        },
+        hiding: {
+            pattern: "bigmachines.com/admin/commerce/rules/edit_rule.jsp",
+            fileType: "bml",
+        },
+        validation: {
+            pattern: "bigmachines.com/admin/commerce/rules/edit_rule.jsp",
+            fileType: "bml",
+        },
+        library: {
+            pattern: "bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp",
+            fileType: "bml",
+        },
+        rule: {
+            pattern: "bigmachines.com/admin/commerce/rules/edit_rule.jsp",
+            fileType: "bml",
+        },
+        ruleInputs: {
+            pattern: "bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp",
+            fileType: "bml",
+        },
+        generic: "bigmachines.com/admin/commerce/rules",
     },
-    utils: 'bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor',
+    utils: {
+        url: "bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor",
+        fileType: "bml",
+    },
     interfaces: {
-        rest: 'bigmachines.com/rest/v1/quote/',
-        soap: 'bigmachines.com/soap/'
+        rest: {
+            url: "bigmachines.com/rest/v1/quote/",
+            fileType: "json",
+        },
+        soap: {
+            url: "bigmachines.com/soap/",
+            fileType: "xml",
+        },
+        generic: "bigmachines.com/admin/interfaceCatalogs/list_ics_resources.jsp",
     },
     stylesheets: {
-        stylesheetManager: 'bigmachines.com/admin/ui/branding/edit_site_branding.jsp',
-        headerFooter: 'bigmachines.com/admin/ui/branding/edit_header_footer.jsp'
+        stylesheetManager: {
+            url: "bigmachines.com/admin/ui/branding/edit_site_branding.jsp",
+            fileType: "css",
+        },
+        headerFooter: {
+            url: "bigmachines.com/admin/ui/branding/edit_header_footer.jsp",
+            fileType: "html",
+        },
     },
-    documents: 'bigmachines.com/admin/document-designer/',
-}
+    documents: {
+        url: "bigmachines.com/admin/document-designer/",
+        fileType: "xsl",
+    },
+};
+
 
 // Utility function to check if URL matches a pattern
 function matchesUrlPattern(url, patternKey, subPatternKey = null) {
@@ -239,6 +286,26 @@ bmFileType = 'xsl';
         // bmRuleType = 'document';
         bmRuleType = null;
         logDebug("Detected document");
+        bmFileType = 'xsl';
+        logDebug("File type set to:", bmFileType);
+        logDebug("Executing content script: adminDocumentsContent.js");
+        chrome.scripting.executeScript({
+            target: { tabId: tabs[0].id },
+            files: ['adminDocumentsContent.js'],
+        }, () => {
+            const messageTimeout = setTimeout(() => {
+            logDebug("Document handlers initialization timed out");
+            }, 5000);
+
+            chrome.tabs.sendMessage(tabs[0].id, { action: 'initializeDocumentHandlers' }, (response) => {
+            clearTimeout(messageTimeout);
+            if (chrome.runtime.lastError) {
+                logDebug("Error initializing document handlers:", chrome.runtime.lastError);
+            } else {
+                logDebug("Document handlers initialized:", response);
+            }
+            });
+        });
     }
     // Default case for unrecognized URLs
     else {
@@ -257,7 +324,7 @@ bmFileType = 'xsl';
             logDebug("Executing content script: adminStylesheetsContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['admin/adminStylesheetsContent.js'],
+                files: ['adminStylesheetsContent.js'],
             });
         }
 
@@ -268,7 +335,7 @@ bmFileType = 'xsl';
             logDebug("Executing content script: adminHeaderFooterContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['admin/adminHeaderFooterContent.js'],
+                files: ['adminHeaderFooterContent.js'],
             });
         }
 
@@ -286,13 +353,13 @@ bmFileType = 'xsl';
             logDebug("Executing content script: adminCommerceActionsContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['admin/adminCommerceActionsContent.js'],
+                files: ['adminCommerceActionsContent.js'],
             });
         } else if (url.includes('bigmachines.com/admin/commerce/rules')) {
             logDebug("Executing content script: adminCommerceRulesContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['admin/adminCommerceRulesContent.js'],
+                files: ['adminCommerceRulesContent.js'],
             });
         } else if (url.includes('bigmachines.com/admin/configuration/rules')) {
             bmSiteType = 'configuration';
@@ -300,7 +367,7 @@ bmFileType = 'xsl';
             logDebug("Executing content script: adminConfigContent.js");
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                files: ['admin/adminConfigContent.js'],
+                files: ['adminConfigContent.js'],
             });
         }
     }
@@ -340,35 +407,17 @@ function sanitizeFilename(filename) {
     return filename.replace(/[^a-z0-9.-]/gi, '_');
 }
 
-// Support for different file types
+//TODO: Add support for different file types
 chrome.downloads.onDeterminingFilename.addListener(function (item, suggest) {
     logDebug("Download detected, setting filename, subdomain, site type, and rule type:", item.filename, bmSiteSubDomain, bmSiteType, bmRuleType);
     logDebug("item", item);
     logDebug("suggest", suggest);
     
-    // Determine file type based on file extension or content type
-    let fileType = bmFileType || 'bml'; // Default to BML
-    const fileExtension = item.filename.split('.').pop().toLowerCase();
-    
-    // Map file extensions to file types
-    const fileTypeMap = {
-        'bml': 'bml',
-        'js': 'javascript',
-        'xsl': 'xsl',
-        'xml': 'xml',
-        'css': 'css',
-        'html': 'html',
-        'json': 'json'
-    };
-    
-    // Update file type if we can determine it from the extension
-    if (fileExtension && fileTypeMap[fileExtension]) {
-        fileType = fileTypeMap[fileExtension];
+    let fileTypeFolder = '';
+    if (bmFileType) {
+        fileTypeFolder = sanitizeFilename(bmFileType) + '/';
     }
-    
-    // Create folder structure based on file type
-    let fileTypeFolder = sanitizeFilename(fileType) + '/';
-    
+
     suggest({
         filename: 'bigmachines/' +
             sanitizeFilename(bmSiteSubDomain) + '/' +
@@ -466,27 +515,10 @@ loadTestButton.addEventListener('click', async () => {
 
 
 // FILE SAVE FUNCTION
-// Enhanced support for different file types
+// TODO: Add support for different file types
 function saveText(filename, text, filetype = 'bml') {
-    logDebug("Saving file:", filename, "with filetype:", filetype);
-    
-    // Map file types to appropriate MIME types
-    const mimeTypeMap = {
-        'bml': 'text/plain',
-        'javascript': 'application/javascript',
-        'js': 'application/javascript',
-        'xsl': 'application/xml',
-        'xml': 'application/xml',
-        'css': 'text/css',
-        'html': 'text/html',
-        'json': 'application/json',
-        'txt': 'text/plain'
-    };
-    
-    // Get the appropriate MIME type or default to text/plain
-    const mimeType = mimeTypeMap[filetype] || 'text/plain';
-    
-    // Create download element
+    logDebug("Saving file:", filename);
+    const mimeType = filetype === 'xsl' ? 'application/xml' : 'text/plain';
     const tempElem = document.createElement('a');
     tempElem.setAttribute(
         'href',
