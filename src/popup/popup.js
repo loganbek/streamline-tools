@@ -40,7 +40,7 @@ let bmFileType
 
 
 // URL matchers for different sections and rule types
-let URL_MATCHERS = {
+const URL_MATCHERS = {
     config: {
         recommendation: {
             pattern: "bigmachines.com/admin/configuration/rules/edit_rule.jsp",
