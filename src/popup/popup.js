@@ -18,7 +18,7 @@ function logDebug(message, ...args) {
 let bmSiteSubDomain = '';
 let bmSiteType = '';
 let bmRuleType = '';
-let bmFileType = '';
+let bmFileType = 'bml';
 
 // URL Matchers for Different Sections and Rule Types
 const URL_MATCHERS = {
