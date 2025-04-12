@@ -55,7 +55,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (tab && tab.url && tab.url.includes('bigmachines.com/admin/ui/branding/edit_header_footer.jsp')) {
       chrome.action.setPopup({
         tabId: tabId,
-        popup: 'popup/popupHeaderFooter.html'
+        popup: 'popup/popupHeaderFooterHTML.html'
       });
     } else if (tab && tab.url && tab.url.includes('bigmachines.com')) {
       chrome.action.setPopup({
@@ -74,7 +74,7 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
     if (tab && tab.url && tab.url.includes('bigmachines.com/admin/ui/branding/edit_header_footer.jsp')) {
       chrome.action.setPopup({
         tabId: activeInfo.tabId,
-        popup: 'popup/popupHeaderFooter.html'
+        popup: 'popup/popupHeaderFooterHTML.html'
       });
     } else if (tab && tab.url && tab.url.includes('bigmachines.com')) {
       chrome.action.setPopup({
@@ -104,8 +104,43 @@ function handleBML(action) {
      chrome.scripting.executeScript({
          target: { tabId: tabId },
          func: (isLoad) => {
-             // TODO: Implement actual BML loading/unloading logic
              console.log(`Executing ${isLoad ? 'LOAD' : 'UNLOAD'} BML...`);
+             
+             // Send message to content script to handle BML loading/unloading
+             chrome.runtime.sendMessage({
+                 greeting: isLoad ? "load" : "unload"
+             });
+             
+             // Trigger the appropriate action based on whether we're loading or unloading
+             if (isLoad) {
+                 // For loading BML, we need to get the code from storage and load it
+                 chrome.storage.local.get(['currentBML'], function(result) {
+                     try {
+                         if (result.currentBML) {
+                             chrome.tabs.sendMessage(tabId, {
+                                 greeting: "load",
+                                 code: result.currentBML
+                             }, function() {
+                                 if (chrome.runtime.lastError) {
+                                     console.error("Error loading BML:", chrome.runtime.lastError);
+                                 }
+                             });
+                         } else {
+                             console.warn("No BML code found in storage to load");
+                         }
+                     } catch (error) {
+                         console.error("Error in BML loading process:", error);
+                     }
+                 });
+             } else {
+                 // For unloading BML, we need to get the code from the editor and save it
+                 chrome.tabs.sendMessage(tabId, { greeting: "unload" }, function() {
+                     if (chrome.runtime.lastError) {
+                         console.error("Error unloading BML:", chrome.runtime.lastError);
+                         return;
+                     }
+                 });
+             }
          },
          args: [isLoad]
      });

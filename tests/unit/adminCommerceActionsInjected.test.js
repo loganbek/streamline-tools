@@ -28,7 +28,7 @@ describe('Admin Commerce Actions Injected Script', () => {
     
     // Load the script module (mock import)
     jest.isolateModules(() => {
-      originalScript = require('../../src/adminCommerceActionsInjected');
+      originalScript = require('../../src/admin/adminCommerceActionsInjected');
     });
   });
   

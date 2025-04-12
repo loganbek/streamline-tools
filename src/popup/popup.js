@@ -1,19 +1,24 @@
-// POPUP_DEBUG FLAG
+'use strict';
+
+// Debugging Flag
 const POPUP_DEBUG = true;
 
+/**
+ * Logs debug messages to the console if debugging is enabled.
+ * @param {string} message - The debug message.
+ * @param {...any} args - Additional arguments to log.
+ */
 function logDebug(message, ...args) {
     if (POPUP_DEBUG) {
         console.log("[POPUP_DEBUG]", message, ...args);
     }
 }
 
-'use strict'
-
-// VARS
-let bmSiteSubDomain
-let bmSiteType
-let bmRuleType
-let bmFileType
+// Global Variables
+let bmSiteSubDomain = '';
+let bmSiteType = '';
+let bmRuleType = '';
+let bmFileType = 'bml';
 
 // URL MATCHERS and Rules Types
 // Config - Recommendation - https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5268044&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true
@@ -40,7 +45,7 @@ let bmFileType
 
 
 // URL matchers for different sections and rule types
-let URL_MATCHERS = {
+const URL_MATCHERS = {
     config: {
         recommendation: {
             pattern: "bigmachines.com/admin/configuration/rules/edit_rule.jsp",
@@ -126,7 +131,6 @@ let URL_MATCHERS = {
     },
 };
 
-
 // Utility function to check if URL matches a pattern
 function matchesUrlPattern(url, patternKey, subPatternKey = null) {
     if (!url) return false;
@@ -145,287 +149,102 @@ function matchesUrlPattern(url, patternKey, subPatternKey = null) {
 
 /**
  * Extracts the value of a specified query parameter from a URL.
- *
- * This function safely escapes the provided parameter name (including backslashes and square brackets)
- * to construct a regular expression that locates the parameter in the URL. If the parameter is found,
- * its value is decoded and returned; otherwise, an empty string is returned.
- *
  * @param {string} url - The URL to search for the query parameter.
  * @param {string} name - The name of the query parameter to extract.
  * @returns {string} The decoded value of the query parameter, or an empty string if not present.
  */
 function getUrlParameter(url, name) {
-    const escapedName = name.replace(/\\/g, '\\\\').replace(/\[/g, '\\[').replace(/\]/g, '\\]');
-    const regex = new RegExp(`[\\?&]${escapedName}=([^&#]*)`);
+    const escapedName = name.replace(/[[\]\\]/g, '\\$&');
+    const regex = new RegExp(`[?&]${escapedName}=([^&#]*)`);
     const results = regex.exec(url);
-    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    return results ? decodeURIComponent(results[1].replace(/\+/g, ' ')) : '';
 }
 
-// Top Level Folders
-const topLevelFolder = {
-    commerce: 'commerce',
-    config: 'config',
-    documents: 'documents',
-    utils: 'utils',
-    interfaces: 'interfaces',
-    stylesheets: 'stylesheets',
+/**
+ * Determines the rule type based on the `rule_type` parameter in the URL.
+ * @param {string} url - The URL to analyze.
+ * @returns {string|null} The rule type or null if not found.
+ */
+function determineRuleType(url) {
+    const ruleTypeParam = getUrlParameter(url, 'rule_type');
+    if (ruleTypeParam) {
+        const ruleType = URL_MATCHERS.config.ruleTypes[ruleTypeParam] || `other_rule_type_${ruleTypeParam}`;
+        logDebug(`Detected configuration rule type: ${ruleType}`);
+        return ruleType;
+    }
+    return null;
 }
 
-// BUTTONS
-const unloadButton = document.getElementById('unload')
-const loadButton = document.getElementById('load')
-const unloadTestButton = document.getElementById('unloadTest')
-const loadTestButton = document.getElementById('loadTest')
-const optionsButton = document.getElementById('options')
-const logsButton = document.getElementById('logs')
-
-logDebug("Initializing extension...");
-
-// CHROME TABS
-chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    logDebug("chrome.tabs.query executed", tabs);
-
-    const tab = tabs[0]
-    const url = tab.url
-    logDebug("Active tab URL:", url);
-
-    const full = url
-    const parts = full.split('.')
-    const sub = parts[0]
-    const domain = parts[1]
-    const type = parts[2]
-
-    const bmSiteParts = sub.split('//')
-    const bmSite = bmSiteParts[1]
-
-    bmSiteSubDomain = bmSite
-    bmSiteType = 'commerce'
-bmFileType = 'bml'
-
-    // Set bmRuleType based on URL pattern and parameters
-    bmRuleType = null;
-
-    // Check for configuration rules
+/**
+ * Determines the site type and rule type based on the URL.
+ * @param {string} url - The URL to analyze.
+ */
+function analyzeUrl(url) {
     if (url.includes(URL_MATCHERS.config.generic)) {
         bmSiteType = 'config';
-        const ruleTypeParam = getUrlParameter(url, 'rule_type');
-
-        if (ruleTypeParam) {
-            // Set bmRuleType based on the rule_type parameter
-            if (ruleTypeParam === '1') {
-                bmRuleType = 'recommendation';
-                logDebug("Detected configuration recommendation rule");
-            } else if (ruleTypeParam === '2') {
-                bmRuleType = 'constraint';
-                logDebug("Detected configuration constraint rule");
-            } else if (ruleTypeParam === '11') {
-                bmRuleType = 'hiding';
-                logDebug("Detected configuration hiding rule");
-            }
-            else if (ruleTypeParam === '23') {
-                bmRuleType = 'bommapping';
-                logDebug("Detected configuration bommapping rule");
-            } else {
-                bmRuleType = `other_rule_type_${ruleTypeParam}`;
-                logDebug("Detected other configuration rule type:", ruleTypeParam);
-            }
-        }
-    }
-
-    // Check for commerce rules
-    // https://devmcnichols.bigmachines.com/admin/commerce/actions/edit_action.jsp?id=6112520&doc_id=4653823
-    // https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=6112520
-    // https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=18&process_id=4653759&document_id=4653823&action_id=6112520
-    else if (url.includes(URL_MATCHERS.commerce.generic)) {
+        bmRuleType = determineRuleType(url);
+    } else if (url.includes(URL_MATCHERS.commerce.generic)) {
+        bmSiteType = 'commerce';
         if (url.includes(URL_MATCHERS.commerce.action)) {
             bmRuleType = 'action';
-            logDebug("Detected commerce action");
         } else if (url.includes(URL_MATCHERS.commerce.rule)) {
             bmRuleType = 'rule';
-            logDebug("Detected commerce rule");
         } else if (url.includes(URL_MATCHERS.commerce.ruleInputs)) {
             bmRuleType = 'rule_inputs';
-            logDebug("Detected commerce rule inputs");
         }
-    }
-
-    // Check for utils
-    else if (matchesUrlPattern(url, 'utils')) {
+    } else if (url.includes(URL_MATCHERS.utils)) {
         bmSiteType = 'utils';
-        // bmRuleType = 'library';
         bmRuleType = null;
-        logDebug("Detected utils library");
-    }
-
-    // Check for interfaces
-    else if (url.includes('bigmachines.com/rest/')) {
+    } else if (url.includes(URL_MATCHERS.interfaces.rest)) {
         bmSiteType = 'interfaces';
         bmRuleType = 'rest';
-        logDebug("Detected REST interface");
-    } else if (url.includes('bigmachines.com/soap/')) {
+    } else if (url.includes(URL_MATCHERS.interfaces.soap)) {
         bmSiteType = 'interfaces';
         bmRuleType = 'soap';
-        logDebug("Detected SOAP interface");
-    }
-
-    // Check for stylesheets
-    else if (matchesUrlPattern(url, 'stylesheets', 'stylesheetManager')) {
+    } else if (url.includes(URL_MATCHERS.stylesheets.stylesheetManager)) {
         bmSiteType = 'stylesheets';
-bmFileType = 'xsl';
         bmRuleType = 'stylesheet';
-        logDebug("Detected stylesheet manager");
-    } else if (matchesUrlPattern(url, 'stylesheets', 'headerFooter')) {
+    } else if (url.includes(URL_MATCHERS.stylesheets.headerFooter)) {
         bmSiteType = 'stylesheets';
         bmRuleType = 'headerFooter';
-        logDebug("Detected header/footer stylesheet");
-    }
-
-    // Check for documents
-    else if (url.includes(URL_MATCHERS.documents)) {
+    } else if (url.includes(URL_MATCHERS.documents)) {
         bmSiteType = 'documents';
-        // bmRuleType = 'document';
         bmRuleType = null;
-        logDebug("Detected document");
         bmFileType = 'xsl';
-        logDebug("File type set to:", bmFileType);
-        logDebug("Executing content script: adminDocumentsContent.js");
-        chrome.scripting.executeScript({
-            target: { tabId: tabs[0].id },
-            files: ['adminDocumentsContent.js'],
-        }, () => {
-            chrome.tabs.sendMessage(tabs[0].id, { action: 'initializeDocumentHandlers' }, (response) => {
-                if (chrome.runtime.lastError) {
-                    logDebug("Error initializing document handlers:", chrome.runtime.lastError);
-                } else {
-                    logDebug("Document handlers initialized:", response);
-                }
-            });
-        });
-    }
-    // Default case for unrecognized URLs
-    else {
+    } else {
         logDebug("Unrecognized URL pattern:", url);
     }
 
-    logDebug("Extracted subdomain:", bmSiteSubDomain);
     logDebug("Site type set to:", bmSiteType);
     logDebug("Rule type set to:", bmRuleType);
-
-    if (url) {
-        // Check if URL matches styleSheetManager
-        if (matchesUrlPattern(url, topLevelFolder.stylesheets, 'stylesheetManager')) {
-            bmSiteType = 'stylesheets'
-            logDebug("Folder Type:", bmSiteType);
-            logDebug("Executing content script: adminStylesheetsContent.js");
-            chrome.scripting.executeScript({
-                target: { tabId: tabs[0].id },
-                files: ['adminStylesheetsContent.js'],
-            });
-        }
-
-        // Check if URL matches headerFooter
-        if (matchesUrlPattern(url, topLevelFolder.stylesheets, 'headerFooter')) {
-            bmSiteType = 'stylesheets'
-            logDebug("Folder Type:", bmSiteType);
-            logDebug("Executing content script: adminHeaderFooterContent.js");
-            chrome.scripting.executeScript({
-                target: { tabId: tabs[0].id },
-                files: ['adminHeaderFooterContent.js'],
-            });
-        }
-
-        if (
-            url.includes('bigmachines.com/admin/commerce/rules') ||
-            url.includes('bigmachines.com/admin/configuration/rules') ||
-            url.includes('bigmachines.com/admin/commerce/actions')
-        ) {
-            unloadTestButton.disabled = true
-            loadTestButton.disabled = true
-            logDebug("Test buttons disabled due to matching admin commerce rules URL.");
-        }
-
-        if (url.includes('bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp')) {
-            logDebug("Executing content script: adminCommerceActionsContent.js");
-            chrome.scripting.executeScript({
-                target: { tabId: tabs[0].id },
-                files: ['adminCommerceActionsContent.js'],
-            });
-        } else if (url.includes('bigmachines.com/admin/commerce/rules')) {
-            logDebug("Executing content script: adminCommerceRulesContent.js");
-            chrome.scripting.executeScript({
-                target: { tabId: tabs[0].id },
-                files: ['adminCommerceRulesContent.js'],
-            });
-        } else if (url.includes('bigmachines.com/admin/configuration/rules')) {
-            bmSiteType = 'configuration';
-            logDebug("Folder Type:", bmSiteType);
-            logDebug("Executing content script: adminConfigContent.js");
-            chrome.scripting.executeScript({
-                target: { tabId: tabs[0].id },
-                files: ['adminConfigContent.js'],
-            });
-        }
-    }
-
-    if (url.includes('bigmachines.com/a/')) {
-        logDebug("Sending message to content script for filename retrieval.");
-        chrome.tabs.sendMessage(tabs[0].id, { greeting: 'filename' }, function (response) {
-            if (chrome.runtime.lastError) {
-                logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
-            } else if (response !== undefined) {
-                logDebug("Received filename from content script:", response.filename);
-                fileName = response.filename;
-            }
-        });
-
-        logDebug("Executing content script: content/content.js");
-        chrome.scripting.executeScript({
-            target: { tabId: tabs[0].id },
-            files: ['content/content.js'],
-        }, function () {
-            if (chrome.runtime.lastError) {
-                logDebug("Error executing content script:", chrome.runtime.lastError.message);
-            }
-        });
-    }
-});
-
-chrome.downloads.setShelfEnabled(true)
-logDebug("Downloads shelf enabled.");
-
-// EXTERNAL LOG LINKING
-logsButton.disabled = true
-logDebug("Logs button disabled.");
-
-// DOWNLOAD FILENAME HANDLING
-function sanitizeFilename(filename) {
-    return filename.replace(/[^a-z0-9.-]/gi, '_');
 }
 
-//TODO: Add support for different file types
-chrome.downloads.onDeterminingFilename.addListener(function (item, suggest) {
-    logDebug("Download detected, setting filename, subdomain, site type, and rule type:", item.filename, bmSiteSubDomain, bmSiteType, bmRuleType);
-    logDebug("item", item);
-    logDebug("suggest", suggest);
-    
-    let fileTypeFolder = '';
-    if (bmFileType) {
-        fileTypeFolder = sanitizeFilename(bmFileType) + '/';
-    }
+/**
+ * Sanitizes a filename by replacing invalid characters with underscores.
+ * @param {string} filename - The filename to sanitize.
+ * @returns {string} The sanitized filename.
+ */
+function sanitizeFilename(filename) {
+    return filename.replace(/[^a-zA-Z0-9.-]/g, '_');
+}
 
-    suggest({
-        filename: 'bigmachines/' +
-            sanitizeFilename(bmSiteSubDomain) + '/' +
-            sanitizeFilename(bmSiteType) + '/' +
-            (bmRuleType ? sanitizeFilename(bmRuleType) + '/' : '') +
-            fileTypeFolder +
-            sanitizeFilename(item.filename),
-        conflictAction: 'overwrite'
-    });
-});
+/**
+ * Saves text content to a file.
+ * @param {string} filename - The name of the file.
+ * @param {string} text - The content to save.
+ * @param {string} filetype - The file type (default: 'bml').
+ */
+function saveText(filename, text, filetype = 'bml') {
+    logDebug("Saving file:", filename);
+    const mimeType = filetype === 'xsl' ? 'application/xml' : 'text/plain';
+    const tempElem = document.createElement('a');
+    tempElem.setAttribute('href', `data:${mimeType};charset=utf-8,${encodeURIComponent(text)}`);
+    tempElem.setAttribute('download', filename);
+    tempElem.click();
+}
 
-// UNLOAD ONCLICK
-unloadButton.onclick = function () {
+// Event Listeners for Buttons
+document.getElementById('unload').addEventListener('click', () => {
     logDebug("Unload button clicked.");
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unload' }, function (response) {
@@ -442,14 +261,11 @@ unloadButton.onclick = function () {
             }
         });
     });
-}
+});
 
-// LOAD ONCLICK
-let fileHandle;
-
-loadButton.addEventListener('click', async () => {
+document.getElementById('load').addEventListener('click', async () => {
     logDebug("Load button clicked.");
-    [fileHandle] = await window.showOpenFilePicker();
+    const [fileHandle] = await window.showOpenFilePicker();
     const file = await fileHandle.getFile();
     const contents = await file.text();
     logDebug("File loaded:", file.name);
@@ -470,7 +286,7 @@ loadButton.addEventListener('click', async () => {
 });
 
 // UNLOAD TEST ONCLICK
-unloadTestButton.onclick = function () {
+document.getElementById('unloadTest').addEventListener('click', () => {
     logDebug("Unload Test button clicked.");
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unloadTest' }, function (response) {
@@ -482,13 +298,12 @@ unloadTestButton.onclick = function () {
             }
         });
     });
-}
+});
 
 // LOAD TEST ONCLICK
-let fileHandle2;
-loadTestButton.addEventListener('click', async () => {
+document.getElementById('loadTest').addEventListener('click', async () => {
     logDebug("Load Test button clicked.");
-    [fileHandle2] = await window.showOpenFilePicker();
+    const [fileHandle2] = await window.showOpenFilePicker();
     const file = await fileHandle2.getFile();
     const contents = await file.text();
     logDebug("Test file loaded:", file.name);
@@ -508,26 +323,16 @@ loadTestButton.addEventListener('click', async () => {
     });
 });
 
+// Initialize Extension
+chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const url = tabs[0]?.url;
+    if (url) {
+        logDebug("Active tab URL:", url);
+        analyzeUrl(url);
+    }
+});
 
-// FILE SAVE FUNCTION
-// TODO: Add support for different file types
-function saveText(filename, text, filetype = 'bml') {
-    logDebug("Saving file:", filename);
-    const mimeType = filetype === 'xsl' ? 'application/xml' : 'text/plain';
-    const tempElem = document.createElement('a');
-    tempElem.setAttribute(
-        'href',
-        `data:${mimeType};charset=utf-8,${encodeURIComponent(text)}`
-    );
-    tempElem.setAttribute('download', filename);
-    tempElem.click();
-}
-
-// OPTIONS HANDLER
-optionsButton.onclick = function () {
-    logDebug("Options button clicked, redirecting to options page.");
-    window.location = '/options.html';
-}
+logDebug("Extension initialized.");
 
 // FOOTER INFORMATION
 const manifest = chrome.runtime.getManifest();

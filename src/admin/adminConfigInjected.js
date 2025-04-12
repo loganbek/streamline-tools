@@ -1,4 +1,14 @@
-/* STUB | ADMIN CONFIG INJECTED */
+/**
+ * Streamline Tools - Admin Config Injected Script
+ *
+ * This script is injected into Oracle CPQ Cloud admin configuration pages
+ * to handle BML code operations directly in the page context. It provides
+ * functionality for loading and unloading BML code in configuration rules
+ * and handles modal dialogs and UI interactions.
+ *
+ * @version 1.0.0
+ * @license Unlicense
+ */
 
 function simulatedClick(target, options) {
 

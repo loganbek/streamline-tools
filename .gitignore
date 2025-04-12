@@ -2,7 +2,8 @@
 node_modules
 .cpqdevkit/**
 
-# Environment variables
+.cpqdevkit
+
+.package-lock.json
 .env
 
-package-lock.json

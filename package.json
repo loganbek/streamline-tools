@@ -26,5 +26,9 @@
     "globals": [
       "chrome"
     ]
+  },
+  "dependencies": {
+    "puppeteer": "^22.15.0",
+    "wallaby": "^1.0.0"
   }
 }
