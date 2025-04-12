@@ -1,6 +1,7 @@
 /**
  * Unit tests for popup.js
  */
+// @jest-environment jsdom
 
 // Import necessary modules and functions
 
