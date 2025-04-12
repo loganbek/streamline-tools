@@ -1,4 +1,14 @@
-/* STUB | ADMIN COMMERCE CONTENT */
+/**
+ * Streamline Tools - Admin Commerce Content Script
+ *
+ * This content script is injected into Oracle CPQ Cloud admin commerce pages
+ * to handle BML code operations including loading, unloading, and validation.
+ * It communicates with the background script and injects the commerce-specific
+ * functionality.
+ *
+ * @version 1.0.0
+ * @license Unlicense
+ */
 
 let ADMIN_COMMERCE_CONTENT_DEBUG = true;
 

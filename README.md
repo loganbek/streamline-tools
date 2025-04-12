@@ -88,10 +88,22 @@ Coming soon...
 
 <!-- (TBD) -->
 
-- `Cmd/Ctrl + Shift + 1` - Show Streamline Tools UI
+### Optimal Command Hotkeys
 
-- `Ctrl+Left` - Unload BML
-- `Ctrl+Right` - Load BML
+- `Cmd/Ctrl + Shift + 1` - Show Streamline Tools UI
+- `Cmd/Ctrl+Left` - Unload Code (BML/XSL/JSON/XML/CSS)
+- `Cmd/Ctrl+Right` - Load Code (BML/XSL/JSON/XML/CSS)
+
+### Customizing Hotkeys
+
+1. Open `chrome://extensions/shortcuts` in your browser.
+2. Locate Streamline Tools and assign custom key combinations for each action.
+3. Ensure combinations include "Ctrl" or "Ctrl + Shift" (or "Cmd" on macOS) with any available key.
+4. Remove shortcuts by clicking the “X” next to the assigned key combination.
+
+- `Cmd/Ctrl + Shift + 1` - Show Streamline Tools UI
+- `Ctrl+Left` - Unload Code (BML/XSL/JSON/XML/CSS)
+- `Ctrl+Right` - Load Code (BML/XSL/JSON/XML/CSS)
 
 ### Custom
 

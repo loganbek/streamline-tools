@@ -1,4 +1,14 @@
-// STUB | ADMIN COMMERCE ACTIONS CONTENT
+/**
+ * Streamline Tools - Admin Commerce Actions Content Script
+ *
+ * This content script is injected into Oracle CPQ Cloud admin commerce actions pages
+ * to handle BML code operations for commerce actions including loading, unloading,
+ * and validation. It communicates with the background script and injects the
+ * commerce-actions-specific functionality.
+ *
+ * @version 1.0.0
+ * @license Unlicense
+ */
 
 let ADMIN_COMMERCE_ACTIONS_CONTENT_DEBUG = true;
 
@@ -57,7 +67,7 @@ function injectJs (link) {
 }
 
 // Inject the adminCommerceRulesInjected.js script
-injectJs(chrome.runtime.getURL('adminCommerceRulesInjected.js'))
+injectJs(chrome.runtime.getURL('admin/adminCommerceRulesInjected.js'))
 
 // Listen for messages from the background script
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {

@@ -1,4 +1,13 @@
-/* STUB | HOT RELOAD */
+/**
+ * Hot Reload Utility for Streamline Tools
+ * 
+ * This script enables automatic reloading of the extension during development
+ * when files are changed. It watches for file modifications in the extension
+ * directory and triggers a reload of the extension and active tab.
+ * 
+ * @version 1.0.0
+ * @license Unlicense
+ */
 
 const filesInDirectory = dir =>
   new Promise(resolve =>
