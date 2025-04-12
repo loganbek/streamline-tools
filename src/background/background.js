@@ -54,7 +54,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (tab.url.includes('bigmachines.com/admin/ui/branding/edit_header_footer.jsp')) {
       chrome.action.setPopup({
         tabId: tabId,
-        popup: 'popup/popupHeaderFooter.html'
+        popup: 'popup/popupHeaderFooterHTML.html'
       });
     } else if (tab.url.includes('bigmachines.com')) {
       chrome.action.setPopup({
@@ -71,7 +71,7 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
     if (tab.url.includes('bigmachines.com/admin/ui/branding/edit_header_footer.jsp')) {
       chrome.action.setPopup({
         tabId: activeInfo.tabId,
-        popup: 'popup/popupHeaderFooter.html'
+        popup: 'popup/popupHeaderFooterHTML.html'
       });
     } else if (tab.url.includes('bigmachines.com')) {
       chrome.action.setPopup({
