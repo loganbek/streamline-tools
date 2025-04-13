@@ -1,6 +1,6 @@
 // add in debugging to the console
 
-const POPUP_SOAP_INTERFACES_DEBUG = "true";
+const POPUP_SOAP_INTERFACES_DEBUG = true;
 
 function logDebug(message, ...args) {
   if (POPUP_SOAP_INTERFACES_DEBUG) {
@@ -14,18 +14,15 @@ function logDebug(message, ...args) {
 chrome.windows.getAll({ populate: true }, function (windows) {
   for (let i = 0; i < windows.length; i++) {
     let window = windows[i];
-    //if (window.type !== "normal") continue; // Skip non-normal windows
-    //if (window.tabs.length === 0) continue; // Skip windows with no tabs
+    // Commented out for development purposes:
+    // if (window.type !== "normal") continue; // Skip non-normal windows
+    // if (window.tabs.length === 0) continue; // Skip windows with no tabs
     // log the window for debugging visibility
     logDebug("Window:", window);
     console.log("Window", window);
     for (let j = 0; j < window.tabs.length; j++) {
-      let tab = window.tabs[j];
-      if (
-        tab.url.includes(
-          "bigmachines.com/rest/v1/interfaceCatalogs/soapCatalog/services"
-        )
-      ) {
+      if (/bigmachines\.com\/rest\/v1\/interfaceCatalogs\/soapCatalog\/services/.test(tab.url)) {
+        logDebug("Tab URL matches:", tab.url);{
         console.log("Found tab with URL:", tab.url);
         // Perform actions with the tab here
 
@@ -40,19 +37,26 @@ chrome.windows.getAll({ populate: true }, function (windows) {
               console.log("Received response:", response);
               // Process the response as needed
               // save the code response to a file pulling thefilename frome the last part of the URL and the code from the response
-              const filename = response.url.split("/").pop() + ".xml";
+           
+              const filename = `${response.url.split("/").pop()}.xml`;
               const code = response.code;
-              const blob = new Blob([code], { type: "text/xml" });
-              const url = URL.createObjectURL(blob);
-              const a = document.createElement("a");
-              a.href = url;
-              a.download = filename;
-              document.body.appendChild(a);
-              a.click();
-              document.body.removeChild(a);
-              URL.revokeObjectURL(url);
-            } else {
-              console.log("No response received.");
+              try {
+                if (!code) {
+                  throw new Error("Empty response code");
+                }
+                const blob = new Blob([code], { type: "text/xml" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                console.log(`Successfully downloaded ${filename}`);
+              } catch (error) {
+                console.error("Error downloading file:", error);
+              }
             }
           }
         );
