@@ -13,6 +13,11 @@ function logDebug(message, ...args) {
 chrome.windows.getAll({ populate: true }, function (windows) {
   for (let i = 0; i < windows.length; i++) {
     let window = windows[i];
+    //if (window.type !== "normal") continue; // Skip non-normal windows
+    //if (window.tabs.length === 0) continue; // Skip windows with no tabs
+    // log the window for debugging visibility
+    logDebug("Window:", window);
+    console.log("Window". window);
     for (let j = 0; j < window.tabs.length; j++) {
       let tab = window.tabs[j];
       if (
