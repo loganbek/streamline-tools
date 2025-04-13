@@ -8,7 +8,8 @@ function logDebug(message, ...args) {
   }
 }
 
-// use chrome.winfows.getAll to access code in https://devmcnichols.bigmachines.com/rest/v1/interfaceCatalogs/soapCatalog/services/DataTables_v1
+// use chrome.windows.getAll to access code in https://devmcnichols.bigmachines.com/rest/v1/interfaceCatalogs/soapCatalog/services/DataTables_v1
+// use chrome.windows.getAll to access code in https://devmcnichols.bigmachines.com/rest/v18/metadata-catalog/commerceDocumentsQuickstart_commerce_processQuote_process
 
 chrome.windows.getAll({ populate: true }, function (windows) {
   for (let i = 0; i < windows.length; i++) {
@@ -17,7 +18,7 @@ chrome.windows.getAll({ populate: true }, function (windows) {
     //if (window.tabs.length === 0) continue; // Skip windows with no tabs
     // log the window for debugging visibility
     logDebug("Window:", window);
-    console.log("Window". window);
+    console.log("Window", window);
     for (let j = 0; j < window.tabs.length; j++) {
       let tab = window.tabs[j];
       if (
