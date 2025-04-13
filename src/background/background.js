@@ -58,7 +58,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         popup: 'popup/popupHeaderFooter.html'
       });
     } else if (tab?.url?.includes('bigmachines.com/admin/ui/branding/edit_site_branding.jsp')){
-        chrome.action.setPoppup({
+        chrome.action.setPopup({
             tabId: tabId,
             popup: 'popup/popupStyleSheetsCSS.html'
         });
