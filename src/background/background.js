@@ -57,7 +57,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         tabId: tabId,
         popup: 'popup/popupHeaderFooter.html'
       });
-    } else if (tab?.url?.includes('https://devmcnichols.bigmachines.com/admin/ui/branding/edit_site_branding.jsp')){
+    } else if (tab?.url?.includes('bigmachines.com/admin/ui/branding/edit_site_branding.jsp')){
         chrome.action.setPoppup({
             tabId: tabId,
             popup: 'popup/popupStyleSheetsCSS.html'
