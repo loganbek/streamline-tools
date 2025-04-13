@@ -234,6 +234,16 @@ button:disabled {
   background-color: #f0037f;
 }
 
+#loadJETCSS {
+  border-color: #f0037f;
+  color: #f0037f;
+}
+
+#loadJETCSS:hover:enabled {
+  color: #ffffff;
+  background-color: #f0037f;
+}
+
 
 /* Streamline Colors
 - [ ] #80CFE2 - lightest blue - UNLOAD BML
