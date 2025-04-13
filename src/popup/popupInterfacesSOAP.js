@@ -21,6 +21,8 @@ chrome.windows.getAll({ populate: true }, function (windows) {
     logDebug("Window:", window);
     console.log("Window", window);
     for (let j = 0; j < window.tabs.length; j++) {
+      const tab = window.tabs[j];
+      // Check if the tab URL matches the specific pattern
       if (/bigmachines\.com\/rest\/v1\/interfaceCatalogs\/soapCatalog\/services/.test(tab.url)) {
         logDebug("Tab URL matches:", tab.url);{
         console.log("Found tab with URL:", tab.url);
