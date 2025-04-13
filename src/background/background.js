@@ -82,6 +82,11 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
         tabId: activeInfo.tabId,
         popup: 'popup/popupHeaderFooterHTML.html'
       });
+    } else if (tab?.url?.includes('bigmachines.com/admin/ui/branding/edit_site_branding.jsp')){
+        chrome.action.setPopup({
+            tabId: activeInfo.tabId,
+            popup: 'popup/popupStyleSheetsCSS.html'
+        });
     } else if (tab && tab.url && /^https?:\/\/[^\/]*bigmachines\.com\//.test(tab.url)) {
       chrome.action.setPopup({
         tabId: activeInfo.tabId,
