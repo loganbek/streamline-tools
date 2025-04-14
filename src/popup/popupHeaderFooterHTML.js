@@ -9,10 +9,10 @@ function logDebug(message, ...args) {
 'use strict'
 
 // Buttons
-const unloadHeaderBtn = document.getElementById('unloadHead');
-const loadHeaderBtn = document.getElementById('loadHead');
-const unloadFooterBtn = document.getElementById('unloadFoot');
-const loadFooterBtn = document.getElementById('loadFoot');
+const unloadHeaderBtn = document.getElementById('unloadHeadHTML');
+const loadHeaderBtn = document.getElementById('loadHeadHTML');
+const unloadFooterBtn = document.getElementById('unloadFootHTML');
+const loadFooterBtn = document.getElementById('loadFootHTML');
 const optionsButton = document.getElementById('options');
 const logsButton = document.getElementById('logs');
 
