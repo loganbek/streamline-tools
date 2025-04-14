@@ -45,7 +45,7 @@ button:disabled {
   cursor: no-drop;
 }
 
-/* Unload Button */
+/* Unload Button
 #unload {
   border-color: #80cfe2;
   color: #80cfe2;
@@ -56,7 +56,6 @@ button:disabled {
   background-color: #80cfe2;
 }
 
-/* Load Button */
 #load {
   border-color: #00a0c6;
   color: #00a0c6;
@@ -67,7 +66,6 @@ button:disabled {
   background-color: #00a0c6;
 }
 
-/* Unload Test Button */
 #unloadTest {
   border-color: #0c5fa8;
   color: #0c5fa8;
@@ -78,7 +76,6 @@ button:disabled {
   background-color: #0c5fa8;
 }
 
-/* Load Test Button */
 #loadTest {
   border-color: #60017c;
   color: #60017c;
@@ -89,7 +86,6 @@ button:disabled {
   background-color: #60017c;
 }
 
-/* Options Button */
 #options {
   color: #ad047e;
   border-color: #ad047e;
@@ -101,7 +97,6 @@ button:disabled {
   background-color: #ad047e;
 }
 
-/* Logs Button */
 #logs {
   color: #f0037f;
   border-color: #f0037f;
@@ -113,7 +108,6 @@ button:disabled {
   background-color: #f0037f;
 }
 
-/* Unload Head Button */
 #unloadHead {
   border-color: #80cfe2;
   color: #80cfe2;
@@ -124,7 +118,6 @@ button:disabled {
   background-color: #80cfe2;
 }
 
-/* Load Head Button */
 #loadHead {
   border-color: #00a0c6;
   color: #00a0c6;
@@ -135,7 +128,6 @@ button:disabled {
   background-color: #00a0c6;
 }
 
-/* Load Foot Button */
 #loadFoot {
   border-color: #00a0c6;
   color: #00a0c6;
@@ -146,7 +138,6 @@ button:disabled {
   background-color: #00a0c6;
 }
 
-/* Unload Foot Button */
 #unloadFoot {
   border-color: #80cfe2;
   color: #80cfe2;
@@ -157,7 +148,6 @@ button:disabled {
   background-color: #80cfe2;
 }
 
-/* Unload Test Head Button */
 #unloadTestHead {
   border-color: #0c5fa8;
   color: #0c5fa8;
@@ -168,7 +158,6 @@ button:disabled {
   background-color: #0c5fa8;
 }
 
-/* Load Test Head Button */
 #loadTestHead {
   border-color: #60017c;
   color: #60017c;
@@ -179,7 +168,6 @@ button:disabled {
   background-color: #60017c;
 }
 
-/* Unload CSS Button */
 #unloadCSS {
   border-color: #80cfe2;
   color: #80cfe2;
@@ -190,7 +178,6 @@ button:disabled {
   background-color: #80cfe2;
 }
 
-/* Load CSS Button */
 #loadCSS {
   border-color: #00a0c6;
   color: #00a0c6;
@@ -201,7 +188,6 @@ button:disabled {
   background-color: #00a0c6;
 }
 
-/* Unload Alternate CSS Button */
 #unloadAltCSS {
   border-color: #0c5fa8;
   color: #0c5fa8;
@@ -212,7 +198,6 @@ button:disabled {
   background-color: #0c5fa8;
 }
 
-/* Load Alternate CSS Button */
 #loadAltCSS {
   border-color: #60017c;
   color: #60017c;
@@ -223,7 +208,6 @@ button:disabled {
   background-color: #60017c;
 }
 
-/* Unload JET CSS Button */
 #unloadJETCSS {
   border-color: #f0037f;
   color: #f0037f;
@@ -242,7 +226,8 @@ button:disabled {
 #loadJETCSS:hover:enabled {
   color: #ffffff;
   background-color: #f0037f;
-}
+} 
+  */
 
 
 /* Streamline Colors
@@ -291,4 +276,78 @@ button:disabled {
 /* Footer */
 footer {
   text-align: center;
+}
+
+/* Style for elements with ID containing 'unload' */
+/* [id*="unload"] {
+  font-weight: bold;
+  opacity: 0.9;
+} */
+
+/* Unload Button */
+[id*="unload"] {
+  border-color: #80cfe2;
+  color: #80cfe2;
+}
+
+[id*="unload"]:hover:enabled {
+  color: #ffffff;
+  background-color: #80cfe2;
+}
+
+/* Load Button */
+[id*="load"] {
+  border-color: #00a0c6;
+  color: #00a0c6;
+}
+
+[id*="load"]:hover:enabled {
+  color: #ffffff;
+  background-color: #00a0c6;
+}
+
+/* Unload Test Button */
+[id*="unloadTest"] {
+  border-color: #0c5fa8;
+  color: #0c5fa8;
+}
+
+[id*="unloadTest"]:hover:enabled {
+  color: #ffffff;
+  background-color: #0c5fa8;
+}
+
+/* Load Test Button */
+[id*="loadTest"] {
+  border-color: #60017c;
+  color: #60017c;
+}
+
+[id*="loadTest"]:hover:enabled {
+  color: #ffffff;
+  background-color: #60017c;
+}
+
+/* Options Button */
+[id*="options"] {
+  color: #ad047e;
+  border-color: #ad047e;
+  display: inline-block;
+}
+
+[id*="options"]:hover:enabled {
+  color: #ffffff;
+  background-color: #ad047e;
+}
+
+/* Logs Button */
+[id*="logs"] {
+  color: #f0037f;
+  border-color: #f0037f;
+  display: inline-block;
+}
+
+[id*="logs"]:hover:enabled {
+  color: #ffffff;
+  background-color: #f0037f;
 }
