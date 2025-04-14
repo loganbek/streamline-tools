@@ -68,6 +68,12 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
             popup: 'popup/popupStyleSheetsCSS.html'
         });
     }
+    else if (tab.url?.includes('bigmachines.com/admin/document-designer')){
+        chrome.action.setPopup({
+            tabId: tabId,
+            popup: 'popup/popupDocumentDesigner.html'
+        });
+    }
      else if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\//.test(tab.url)) {
       chrome.action.setPopup({
         tabId: tabId,
