@@ -68,7 +68,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
             popup: 'popup/popupStyleSheetsCSS.html'
         });
     }
-    else if (tab.url?.includes('bigmachines.com/admin/document-designer')){
+    else if (tab?.url?.includes('bigmachines.com/admin/document-designer')){
         chrome.action.setPopup({
             tabId: tabId,
             popup: 'popup/popupDocumentDesigner.html'
