@@ -28,7 +28,7 @@ reviews:
     ignore_title_keywords:
       - "WIP"
       - "DO NOT MERGE"
-    drafts: false
+    drafts: true
     base_branches:
       - "master"
       - "coverage"
