@@ -1,0 +1,43 @@
+<!--
+ * Streamline Tools - Popup Interface
+ *
+ * This is the main popup interface for the Streamline Tools extension.
+ * It provides buttons for loading and unloading BML code, accessing options,
+ * and viewing logs.
+ *
+ * @version 1.0.0
+ * @license Unlicense
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="popup.css">
+        <title>Streamline Tools - Popup Interface</title>
+</head>
+
+<body>
+        <button id="unload" aria-label="Unload XSL"> Unload XSL <i class="material-icons md-18">keyboard_arrow_right</i><i
+                        class="material-icons md-18">keyboard_arrow_right</i></button>
+
+        <button id="load" aria-label="Load XSL"><i class="material-icons md-18">keyboard_arrow_left</i><i
+                        class="material-icons md-18">keyboard_arrow_left</i> Load XSL </button>
+
+        <!-- <button id="unloadTest" aria-label="Unload Test XSL"> Unload Test XSL <i class="material-icons md-18">keyboard_arrow_right</i><i
+                        class="material-icons md-18">keyboard_arrow_right</i></button>
+
+        <button id="loadTest" aria-label="Load Test XSL"><i class="material-icons md-18">keyboard_arrow_left</i><i
+                        class="material-icons md-18">keyboard_arrow_left</i> Load Test XSL </button> -->
+
+        <button id="options" aria-label="Open Options"><i class="material-icons md-18">settings</i> Options </button>
+
+        <button id="logs" aria-label="View Logs"><i class="material-icons md-18">assignment</i> Logs </button>
+
+        <footer id="footer"></footer>
+        <script src="popupDocumentsXSL.js"></script>
+</body>
+
+</html>
