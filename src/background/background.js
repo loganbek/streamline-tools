@@ -52,23 +52,23 @@ chrome.commands.onCommand.addListener((command) => {
 // Listen for tab updates to switch popups
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.url) {
-    if (tab?.url?.includes('bigmachines.com/admin/ui/branding/edit_header_footer.jsp')) {
+    if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/ui\/branding\/edit_header_footer\.jsp/.test(tab.url)) {
+    chrome.action.setPopup({
+      tabId: tabId,
+      popup: 'popup/popupHeaderFooterHTML.html'
+    });
+    } else if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/interfaceCatalogs\/list_ics_resources\.jsp/.test(tab.url)){
       chrome.action.setPopup({
         tabId: tabId,
-        popup: 'popup/popupHeaderFooterHTML.html'
+        popup: 'popup/popupInterfacesSOAP.html'
       });
-    } else if (tab?.url && tab.url.includes('bigmachines.com/admin/interfaceCatalogs/list_ics_resources.jsp')){
-        chrome.action.setPopup({
-            tabId: activeInfo.tabId,
-            popup: 'popup/popupInterfacesSOAP.html'
-        });
-    } else if (tab?.url?.includes('bigmachines.com/admin/ui/branding/edit_site_branding.jsp')){
+     } else if(tab.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/ui\/branding\/edit_site_branding\.jsp/.test(tab.url)){
         chrome.action.setPopup({
             tabId: tabId,
             popup: 'popup/popupStyleSheetsCSS.html'
         });
     }
-    else if (tab.url?.includes('bigmachines.com/admin/document-designer')){
+    else if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/document-designer/.test(tab.url)){
         chrome.action.setPopup({
             tabId: tabId,
             popup: 'popup/popupDocumentDesigner.html'
@@ -88,22 +88,23 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 // Also handle initial tab loading
 chrome.tabs.onActivated.addListener((activeInfo) => {
   chrome.tabs.get(activeInfo.tabId, (tab) => {
-    if (tab && tab.url && tab.url.includes('bigmachines.com/admin/ui/branding/edit_header_footer.jsp')) {
+//    if (tab && tab.url && tab.url.includes('bigmachines.com/admin/ui/branding/edit_header_footer.jsp')) {
+    if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/ui\/branding\/edit_header_footer\.jsp/.test(tab.url)) {
       chrome.action.setPopup({
         tabId: activeInfo.tabId,
         popup: 'popup/popupHeaderFooterHTML.html'
       });
-    } else if (tab?.url && tab.url.includes('bigmachines.com/admin/interfaceCatalogs/list_ics_resources.jsp')){
+    } else if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/interfaceCatalogs\/list_ics_resources\.jsp/.test(tab.url)){
         chrome.action.setPopup({
             tabId: activeInfo.tabId,
             popup: 'popup/popupInterfacesSOAP.html'
         });
-    } else if (tab?.url?.includes('bigmachines.com/admin/ui/branding/edit_site_branding.jsp')){
+    } else if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/ui\/branding\/edit_site_branding\.jsp/.test(tab.url)){
         chrome.action.setPopup({
             tabId: activeInfo.tabId,
             popup: 'popup/popupStyleSheetsCSS.html'
         });
-    } else if (tab && tab.url && /^https?:\/\/[^\/]*bigmachines\.com\//.test(tab.url)) {
+    } else if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/document-designer/.test(tab.url)){
       chrome.action.setPopup({
         tabId: activeInfo.tabId,
         popup: 'popup/popup.html'
