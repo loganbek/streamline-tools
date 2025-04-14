@@ -107,8 +107,14 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
     } else if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/document-designer/.test(tab.url)){
       chrome.action.setPopup({
         tabId: activeInfo.tabId,
-        popup: 'popup/popup.html'
+        popup: 'popup/popupDocumentDesigner.html'
       });
+    }
+    else if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\//.test(tab.url)) {
+        chrome.action.setPopup({
+            tabId: activeInfo.tabId,
+            popup: 'popup/popup.html'
+        });
     } else {
       console.log("Tab or tab.url is undefined");
     }
