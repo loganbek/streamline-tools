@@ -11,30 +11,31 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     logDebug("Message received:", request);
 
     switch (request.greeting) {
-        case 'unloadHeaderHTML':
-            // const headerCode = document.querySelector('#header_content').value;
-            const headerHTMLCode = document.getElementsByName('header')[0].childNodes[0];
-            logDebug("Unloading header code");
+        case 'unloadHeaderHTML': {
+            let headerHTMLCode = document.querySelector('textarea[name="header"]').value || "";
+            logDebug("Unloading header code", headerHTMLCode);
             sendResponse({ code: headerHTMLCode });
             break;
-
-        case 'loadHeader':
-            logDebug("Loading header code");
-            document.querySelector('#header_content').value = request.code;
+        }
+        case 'loadHeaderHTML': {
+            let headerHTMLCode = request.code;
+            logDebug("Loading header code", headerHTMLCode);
             sendResponse({ status: "Header loaded successfully" });
             break;
-
-        case 'unloadFooter':
-            const footerCode = document.querySelector('#footer_content').value;
-            logDebug("Unloading footer code");
-            sendResponse({ code: footerCode });
+        }
+        case 'unloadFooterHTML': {
+            let footerHTMLCode = document.querySelector('textarea[name="footer"]').value || "";
+            logDebug("Unloading footer code", footerHTMLCode);
+            sendResponse({ code: footerHTMLCode });
             break;
+        }
 
-        case 'loadFooter':
-            logDebug("Loading footer code");
-            document.querySelector('#footer_content').value = request.code;
+        case 'loadFooterHTML': {
+            let footerHTMLCode = request.code;
+            logDebug("Loading footer code", footerHTMLCode);
             sendResponse({ status: "Footer loaded successfully" });
             break;
+        }
     }
     return true;
 });

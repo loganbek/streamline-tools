@@ -32,6 +32,7 @@ chrome.runtime.onInstalled.addListener(() => {
     });
 });
 
+
 // Listen for keyboard shortcut commands
 chrome.commands.onCommand.addListener((command) => {
     logDebug("Received command:", command);
@@ -88,7 +89,6 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 // Also handle initial tab loading
 chrome.tabs.onActivated.addListener((activeInfo) => {
   chrome.tabs.get(activeInfo.tabId, (tab) => {
-//    if (tab && tab.url && tab.url.includes('bigmachines.com/admin/ui/branding/edit_header_footer.jsp')) {
     if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/ui\/branding\/edit_header_footer\.jsp/.test(tab.url)) {
       chrome.action.setPopup({
         tabId: activeInfo.tabId,
