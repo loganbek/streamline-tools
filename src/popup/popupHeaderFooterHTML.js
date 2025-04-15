@@ -36,20 +36,71 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     logsButton.disabled = true;
 });
 
+// Function to ensure content script is loaded
+async function ensureContentScript(tabId) {
+    try {
+        const response = await chrome.tabs.sendMessage(tabId, { greeting: 'ping' });
+        if (response?.status === 'ok') {
+            logDebug("Content script is already loaded.");
+            return true;
+        }
+    } catch (err) {
+        logDebug("Content script not loaded, injecting now...");
+    }
+
+    // Inject content script
+    try {
+        await chrome.scripting.executeScript({
+            target: { tabId },
+            files: ['background/background.js'] // Replace with the actual content script file name
+        });
+        logDebug("Content script injected successfully.");
+
+        // Wait briefly to ensure the script is fully loaded
+        await new Promise(resolve => setTimeout(resolve, 500));
+        return true;
+    } catch (err) {
+        logDebug("Failed to inject content script:", err);
+        return false;
+    }
+}
+
 // Unload Header handler
 unloadHeaderBtn.onclick = async function () {
     logDebug("Unload Header button clicked");
     try {
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-        const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadHeaderHTML' });
-        if (response?.code) {
-            await saveText('header.html', response.code);
+        if (await ensureContentScript(tab.id)) {
+            const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadHeaderHTML' });
+            if (response?.code) {
+                await saveText('header.html', response.code);
+            } else {
+                throw new Error('Failed to unload header');
+            }
         } else {
-            throw new Error('Failed to unload header');
+            throw new Error('Content script injection failed');
         }
     } catch (err) {
         logDebug("Error unloading header:", err);
         //alert('Failed to unload header. Please try again.');
+    }
+}
+
+// Unload Footer handler
+unloadFooterBtn.onclick = async function () {
+    logDebug("Unload Footer button clicked");
+    try {
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadFooterHTML' });
+        if (response?.code) {
+            await saveText('footer.html', response.code);
+        }
+        else {
+            throw new Error('Failed to unload footer');
+        }
+    } catch (err) {
+        logDebug("Error unloading footer:", err);
+        //alert('Failed to unload footer. Please try again.');
     }
 }
 
@@ -102,12 +153,12 @@ async function handleFileOperation(operation, fileName) {
 }
 
 // Header handlers (assuming these elements exist in the file)
-unloadHeaderBtn.onclick = () => handleFileOperation('unloadHeaderHTML', 'header.html');
-loadHeaderBtn.onclick = () => handleFileOperation('loadHead', 'header.html');
+// unloadHeaderBtn.onclick = () => handleFileOperation('unloadHeaderHTML', 'header.html');
+// loadHeaderBtn.onclick = () => handleFileOperation('loadHead', 'header.html');
 
 // Footer handlers
-unloadFooterBtn.onclick = () => handleFileOperation('unloadFoot', 'footer.html');
-loadFooterBtn.onclick = () => handleFileOperation('loadFoot', 'footer.html');
+// unloadFooterBtn.onclick = () => handleFileOperation('unloadFoot', 'footer.html');
+// loadFooterBtn.onclick = () => handleFileOperation('loadFoot', 'footer.html');
 
 // File save helper
 function saveText(filename, text) {

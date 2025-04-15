@@ -218,6 +218,69 @@ function handleHTML(action) {
   });
 }
 
+// Listen for messages from popup scripts
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    logDebug("Received message:", request);
+    switch (request.greeting) {
+        case 'loadBML':
+            loadBML();
+            break;
+        case 'unloadBML':
+            unloadBML();
+            break;
+        case 'loadTestBML':
+            loadTestBML();
+            break;
+        case 'unloadTestBML':
+            unloadTestBML();
+            break;
+        case 'loadHeadHTML':
+            loadHeadHTML();
+            break;
+        case 'unloadHeaderHTML':
+            unloadHeaderHTML();
+            break;
+        case 'loadFooterHTML':
+            loadFooterHTML();
+            break;
+        case 'unloadFooterHTML':
+            unloadFooterHTML();
+            break;
+        default:
+            logDebug("Unknown message received:", request.greeting);
+    }
+});
+
+// Implement unloadHeadHTML function
+function unloadHeaderHTML() {
+    //get Head HTML code from editor for unloading
+    const code = Document.querySelector('textarea[name="header"]').value;
+    logDebug("Unloading Head HTML code:", code);
+    // Send the code back to the popup or wherever needed
+    chrome.runtime.sendMessage({ greeting: "unloadHeadHTML", code: code }, function(response) {
+        if (chrome.runtime.lastError) {
+            console.error("Error unloading Head HTML:", chrome.runtime.lastError);
+        } else {
+            logDebug("Head HTML unloaded successfully:", response);
+        }
+    });
+}
+
+//Implement unloadFooter
+function unloadFooterHTML() {
+    //get Footer HTML code from editor for unloading
+    const code = Document.querySelector('textarea[name="footer"]').value;
+    logDebug("Unloading Footer HTML code:", code);
+    // Send the code back to the popup or wherever needed
+    chrome.runtime.sendMessage({ greeting: "unloadFooterHTML", code: code }, function(response) {
+        if (chrome.runtime.lastError) {
+            console.error("Error unloading Footer HTML:", chrome.runtime.lastError);
+        } else {
+            logDebug("Footer HTML unloaded successfully:", response);
+        }
+    });
+}
+
     
 
 
@@ -226,7 +289,7 @@ const loadBML = () => handleBML('load');
 const unloadBML = () => handleBML('unload');
 const loadTestBML = () => handleBML('loadTest');
 const unloadTestBML = () => handleBML('unloadTest');
-const loadHeadHTML = () => handleHTML('loadHead');
-const unloadHeadHTML = () => handleHTML('unloadHead');
-const loadFooterHTML = () => handleHTML('loadFooter');
-const unloadFooterHTML = () => handleHTML('unloadFooter');
+// const loadHeadHTML = () => handleHTML('loadHead');
+// const unloadHeadHTML = () => handleHTML('unloadHead');
+// const loadFooterHTML = () => handleHTML('loadFooter');
+// const unloadFooterHTML = () => handleHTML('unloadFooter');
