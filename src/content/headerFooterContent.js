@@ -24,7 +24,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             break;
         }
         case 'unloadFooterHTML': {
-            let footerHTMLCode = document.querySelector('textarea[name="footer"]').value || "";
+-            let footerHTMLCode = document.querySelector('textarea[name="footer"]').value || "";
++            const footerHTMLCode = document.querySelector('textarea[name="footer"]')?.value || "";
             logDebug("Unloading footer code", footerHTMLCode);
             sendResponse({ code: footerHTMLCode });
             break;
