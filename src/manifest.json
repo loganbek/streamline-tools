@@ -30,8 +30,10 @@
         "adminConfigInjected.js",
         "adminCommerceActionsInjected.js",
         "popup/*",
-        "content.*",
-        "admin*"
+        "content/*",
+        "background/*",
+        "admin*",
+        "options/*"
       ],
       "matches": [
         "https://*.bigmachines.com/*"
