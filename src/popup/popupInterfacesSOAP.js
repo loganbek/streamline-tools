@@ -39,7 +39,7 @@ chrome.windows.getAll({ populate: true }, function (windows) {
               console.log("Received response:", response);
               // Process the response as needed
               // save the code response to a file pulling thefilename frome the last part of the URL and the code from the response
-           
+              // Extract filename from the last segment of the URL path (e.g., "DataTables_v1" from "/services/DataTables_v1")
               const filename = `${response.url.split("/").pop()}.xml`;
               const code = response.code;
               try {

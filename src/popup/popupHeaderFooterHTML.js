@@ -52,7 +52,7 @@ async function ensureContentScript(tabId) {
     try {
         await chrome.scripting.executeScript({
             target: { tabId },
-            files: ['background/background.js'] // Replace with the actual content script file name
+            files: ['content/content.js'] // Replace with the actual content script file name
         });
         logDebug("Content script injected successfully.");
 
