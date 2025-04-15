@@ -11,26 +11,26 @@ function logDebug(message, ...args) {
 
 // NOTE: bigmachines.com/admin/ui/branding/edit_header_footer.jsp|bigmachines.com/admin/ui/branding/edit_site_branding.jsp
 // Ensure extension is enabled on matching pages
-chrome.runtime.onInstalled.addListener(() => {
-    logDebug("Extension installed, setting up rules...");
-    chrome.declarativeContent.onPageChanged.removeRules(undefined, () => {
-        logDebug("Removed existing rules.");
-        chrome.declarativeContent.onPageChanged.addRules([
-            {
-                conditions: [
-                    new chrome.declarativeContent.PageStateMatcher({
-                        pageUrl: {
-                            urlMatches:
-                                'bigmachines.com/admin/configuration/rules/edit_rule.jsp|bigmachines.com/spring/|bigmachines.com/admin/commerce/rules/|bigmachines.com/admin/commerce/actions/edit_action.jsp'
-                        }
-                    })
-                ],
-                actions: [new chrome.declarativeContent.ShowAction()]
-            }
-        ]);
-        logDebug("New rules added.");
-    });
-});
+// chrome.runtime.onInstalled.addListener(() => {
+//     logDebug("Extension installed, setting up rules...");
+//     chrome.declarativeContent.onPageChanged.removeRules(undefined, () => {
+//         logDebug("Removed existing rules.");
+//         chrome.declarativeContent.onPageChanged.addRules([
+//             {
+//                 conditions: [
+//                     new chrome.declarativeContent.PageStateMatcher({
+//                         pageUrl: {
+//                             urlMatches:
+//                                 'bigmachines.com/admin/configuration/rules/edit_rule.jsp|bigmachines.com/spring/|bigmachines.com/admin/commerce/rules/|bigmachines.com/admin/commerce/actions/edit_action.jsp'
+//                         }
+//                     })
+//                 ],
+//                 actions: [new chrome.declarativeContent.ShowAction()]
+//             }
+//         ]);
+//         logDebug("New rules added.");
+//     });
+// });
 
 
 // Listen for keyboard shortcut commands
