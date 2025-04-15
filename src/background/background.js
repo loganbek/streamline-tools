@@ -266,18 +266,25 @@ function unloadHeaderHTML() {
     });
 }
 
-//Implement unloadFooter
 function unloadFooterHTML() {
-    //get Footer HTML code from editor for unloading
-    const code = Document.querySelector('textarea[name="footer"]').value;
-    logDebug("Unloading Footer HTML code:", code);
-    // Send the code back to the popup or wherever needed
-    chrome.runtime.sendMessage({ greeting: "unloadFooterHTML", code: code }, function(response) {
-        if (chrome.runtime.lastError) {
-            console.error("Error unloading Footer HTML:", chrome.runtime.lastError);
-        } else {
-            logDebug("Footer HTML unloaded successfully:", response);
+    // Background script can't access page DOM - need to message the content script
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        if (tabs.length === 0) {
+            logDebug("No active tabs found, can't unload footer HTML.");
+            return;
         }
+        
+        chrome.tabs.sendMessage(tabs[0].id, { greeting: "unloadFooterHTML" }, (response) => {
+            if (chrome.runtime.lastError) {
+                console.error("Error getting footer HTML:", chrome.runtime.lastError);
+                return;
+            }
+            
+            if (response?.code) {
+                logDebug("Unloading Footer HTML code:", response.code);
+                chrome.runtime.sendMessage({ greeting: "unloadFooterHTML", code: response.code });
+            }
+        });
     });
 }
 
