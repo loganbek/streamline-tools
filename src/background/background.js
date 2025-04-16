@@ -1,7 +1,7 @@
 'use strict';
 
 // BACKGROUND_DEBUG FLAG
-var BACKGROUND_DEBUG = true;
+const BACKGROUND_DEBUG = true;
 
 function logDebug(message, ...args) {
     if (BACKGROUND_DEBUG) {
@@ -9,29 +9,127 @@ function logDebug(message, ...args) {
     }
 }
 
-// NOTE: bigmachines.com/admin/ui/branding/edit_header_footer.jsp|bigmachines.com/admin/ui/branding/edit_site_branding.jsp
-// Ensure extension is enabled on matching pages
-// chrome.runtime.onInstalled.addListener(() => {
-//     logDebug("Extension installed, setting up rules...");
-//     chrome.declarativeContent.onPageChanged.removeRules(undefined, () => {
-//         logDebug("Removed existing rules.");
-//         chrome.declarativeContent.onPageChanged.addRules([
-//             {
-//                 conditions: [
-//                     new chrome.declarativeContent.PageStateMatcher({
-//                         pageUrl: {
-//                             urlMatches:
-//                                 'bigmachines.com/admin/configuration/rules/edit_rule.jsp|bigmachines.com/spring/|bigmachines.com/admin/commerce/rules/|bigmachines.com/admin/commerce/actions/edit_action.jsp'
-//                         }
-//                     })
-//                 ],
-//                 actions: [new chrome.declarativeContent.ShowAction()]
-//             }
-//         ]);
-//         logDebug("New rules added.");
-//     });
-// });
+// Listen for messages from popup.js
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    logDebug("Received message from popup.js:", request);
 
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        if (tabs.length === 0) {
+            logDebug("No active tabs found, cannot forward message to content.js.");
+            sendResponse({ success: false, error: "No active tabs found." });
+            return;
+        }
+
+        const activeTabId = tabs[0].id;
+
+        // Forward the message to content.js
+        chrome.tabs.sendMessage(activeTabId, request, (response) => {
+            if (chrome.runtime.lastError) {
+                logDebug("Error forwarding message to content.js:", chrome.runtime.lastError.message);
+                sendResponse({ success: false, error: chrome.runtime.lastError.message });
+            } else {
+                logDebug("Response from content.js:", response);
+                sendResponse({ success: true, data: response });
+            }
+        });
+    });
+
+    // Return true to indicate asynchronous response
+    return true;
+});
+
+// Update popup dynamically based on active tab's URL
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    if (changeInfo.url) {
+        setDynamicPopup(tabId, changeInfo.url);
+    }
+});
+
+chrome.tabs.onActivated.addListener((activeInfo) => {
+    chrome.tabs.get(activeInfo.tabId, (tab) => {
+        if (tab?.url) {
+            setDynamicPopup(activeInfo.tabId, tab.url);
+        }
+    });
+});
+
+/**
+ * Dynamically set the popup based on the active tab's URL.
+ * @param {number} tabId - The ID of the active tab.
+ * @param {string} url - The URL of the active tab.
+ */
+async function setDynamicPopup(tabId, url) {
+    logDebug("Setting dynamic popup for URL:", url);
+
+    try {
+        const rulesList = await fetchRulesList();
+        const matchingRule = rulesList.find(rule => {
+            const ruleUrl = rule.URL.replace(/\*/g, ''); // Remove wildcard for comparison
+            const cleanedUrl = cleanUrlParameters(url); // Clean up URL parameters
+            return cleanedUrl.includes(ruleUrl);
+        });
+
+        if (matchingRule) {
+            let popupUrl = matchingRule.ui;
+
+            if (matchingRule.opensNewWindow === "TRUE" && matchingRule.newWindowURL !== "x") {
+                popupUrl = matchingRule.newWindowURL;
+            } else if (matchingRule.redirect === "TRUE" && matchingRule.redirectURL !== "x") {
+                popupUrl = matchingRule.redirectURL;
+            }
+
+            chrome.action.setPopup({
+                tabId,
+                popup: 'popup/' + popupUrl,
+            });
+
+            logDebug("Popup set to:", popupUrl);
+        } else {
+            chrome.action.setPopup({
+                tabId,
+                popup: 'popup/popup.html',
+            });
+
+            logDebug("Popup set to default:", 'popup/popup.html');
+        }
+    } catch (error) {
+        logDebug("Error setting dynamic popup:", error);
+    }
+}
+
+/**
+ * Cleans up URL parameters by removing unnecessary query parameters for matching.
+ * @param {string} url - The URL to clean.
+ * @returns {string} The cleaned URL.
+ */
+function cleanUrlParameters(url) {
+    try {
+        const urlObj = new URL(url);
+        const allowedParams = ['rule_id', 'rule_type', 'pline_id', 'segment_id', 'model_id', 'fromList'];
+        const cleanedSearchParams = new URLSearchParams();
+
+        for (const [key, value] of urlObj.searchParams.entries()) {
+            if (allowedParams.includes(key)) {
+                cleanedSearchParams.append(key, value);
+            }
+        }
+
+        urlObj.search = cleanedSearchParams.toString();
+        return urlObj.toString();
+    } catch (error) {
+        logDebug("Error cleaning URL parameters:", error);
+        return url;
+    }
+}
+
+/**
+ * Fetch rule configurations from rulesList.json.
+ * @returns {Promise<Object[]>} The parsed rules list.
+ */
+async function fetchRulesList() {
+    const response = await fetch(chrome.runtime.getURL('rulesList.json'));
+    return response.json();
+}
 
 // Listen for keyboard shortcut commands
 chrome.commands.onCommand.addListener((command) => {
@@ -48,77 +146,6 @@ chrome.commands.onCommand.addListener((command) => {
         default:
             logDebug(`Command ${command} not recognized.`);
     }
-});
-
-// Listen for tab updates to switch popups
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  if (changeInfo.url) {
-    if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/ui\/branding\/edit_header_footer\.jsp/.test(tab.url)) {
-    chrome.action.setPopup({
-      tabId: tabId,
-      popup: 'popup/popupHeaderFooterHTML.html'
-    });
-    } else if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/interfaceCatalogs\/list_ics_resources\.jsp/.test(tab.url)){
-      chrome.action.setPopup({
-        tabId: tabId,
-        popup: 'popup/popupInterfacesSOAP.html'
-      });
-     } else if(tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/ui\/branding\/edit_site_branding\.jsp/.test(tab.url)){
-        chrome.action.setPopup({
-            tabId: tabId,
-            popup: 'popup/popupStyleSheetsCSS.html'
-        });
-    }
-    else if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/document-designer/.test(tab.url)){
-        chrome.action.setPopup({
-            tabId: tabId,
-            popup: 'popup/popupDocumentDesigner.html'
-        });
-    }
-     else if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\//.test(tab.url)) {
-      chrome.action.setPopup({
-        tabId: tabId,
-        popup: 'popup/popup.html'
-      });
-    } else {
-      console.log("Tab or tab.url is undefined");
-    }
-  }
-});
-
-// Also handle initial tab loading
-chrome.tabs.onActivated.addListener((activeInfo) => {
-  chrome.tabs.get(activeInfo.tabId, (tab) => {
-    if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/ui\/branding\/edit_header_footer\.jsp/.test(tab.url)) {
-      chrome.action.setPopup({
-        tabId: activeInfo.tabId,
-        popup: 'popup/popupHeaderFooterHTML.html'
-      });
-    } else if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/interfaceCatalogs\/list_ics_resources\.jsp/.test(tab.url)){
-        chrome.action.setPopup({
-            tabId: activeInfo.tabId,
-            popup: 'popup/popupInterfacesSOAP.html'
-        });
-    } else if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/ui\/branding\/edit_site_branding\.jsp/.test(tab.url)){
-        chrome.action.setPopup({
-            tabId: activeInfo.tabId,
-            popup: 'popup/popupStyleSheetsCSS.html'
-        });
-    } else if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/document-designer/.test(tab.url)){
-      chrome.action.setPopup({
-        tabId: activeInfo.tabId,
-        popup: 'popup/popupDocumentDesigner.html'
-      });
-    }
-    else if (tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\//.test(tab.url)) {
-        chrome.action.setPopup({
-            tabId: activeInfo.tabId,
-            popup: 'popup/popup.html'
-        });
-    } else {
-      console.log("Tab or tab.url is undefined");
-    }
-  });
 });
 
 // Function to handle BML actions
@@ -218,39 +245,6 @@ function handleHTML(action) {
   });
 }
 
-// Listen for messages from popup scripts
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    logDebug("Received message:", request);
-    switch (request.greeting) {
-        case 'loadBML':
-            loadBML();
-            break;
-        case 'unloadBML':
-            unloadBML();
-            break;
-        case 'loadTestBML':
-            loadTestBML();
-            break;
-        case 'unloadTestBML':
-            unloadTestBML();
-            break;
-        case 'loadHeadHTML':
-            loadHeadHTML();
-            break;
-        case 'unloadHeaderHTML':
-            unloadHeaderHTML();
-            break;
-        case 'loadFooterHTML':
-            loadFooterHTML();
-            break;
-        case 'unloadFooterHTML':
-            unloadFooterHTML();
-            break;
-        default:
-            logDebug("Unknown message received:", request.greeting);
-    }
-});
-
 // Implement unloadHeadHTML function
 function unloadHeaderHTML() {
     //get Head HTML code from editor for unloading
@@ -288,15 +282,8 @@ function unloadFooterHTML() {
     });
 }
 
-    
-
-
 // Define loadBML and unloadBML functions
 const loadBML = () => handleBML('load');
 const unloadBML = () => handleBML('unload');
 const loadTestBML = () => handleBML('loadTest');
 const unloadTestBML = () => handleBML('unloadTest');
-// const loadHeadHTML = () => handleHTML('loadHead');
-// const unloadHeadHTML = () => handleHTML('unloadHead');
-// const loadFooterHTML = () => handleHTML('loadFooter');
-// const unloadFooterHTML = () => handleHTML('unloadFooter');

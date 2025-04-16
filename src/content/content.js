@@ -250,3 +250,55 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
   return true;
 });
+
+/**
+ * Dynamically fetch rule configurations from rulesList.json.
+ * @returns {Promise<Object[]>} The parsed rules list.
+ */
+async function fetchRulesList() {
+    try {
+        const response = await fetch(chrome.runtime.getURL('rulesList.json'));
+        if (!response.ok) {
+            throw new Error(`Failed to fetch rulesList.json: ${response.status} ${response.statusText}`);
+        }
+        return await response.json();
+    } catch (error) {
+        logDebug("Error fetching rulesList.json:", error);
+        return []; // Return an empty array to prevent further errors
+    }
+}
+
+/**
+ * Process incoming messages dynamically based on rulesList.json.
+ */
+chrome.runtime.onMessage.addListener(async function (request, sender, sendResponse) {
+    logDebug("Message received", request);
+
+    const rulesList = await fetchRulesList();
+    const rule = rulesList.find(r => r.RuleName === request.rule?.RuleName);
+
+    if (!rule) {
+        logDebug("No matching rule found for request:", request.rule);
+        return;
+    }
+
+    switch (request.greeting) {
+        case 'unload':
+            logDebug("Processing unload request for rule:", rule.RuleName);
+            const unloadCode = document.querySelector(rule.codeSelector)?.value || '';
+            sendResponse({ filename: rule.fileName, code: unloadCode });
+            break;
+
+        case 'load':
+            logDebug("Processing load request for rule:", rule.RuleName);
+            const loadElement = document.querySelector(rule.codeSelector);
+            if (loadElement) {
+                loadElement.value = request.code;
+            }
+            break;
+
+        default:
+            logDebug("Unknown request received", request.greeting);
+    }
+    return true;
+});

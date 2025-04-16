@@ -32,8 +32,9 @@
         "popup/*",
         "content/*",
         "background/*",
-        "admin*",
-        "options/*"
+        "admin/*",
+        "options/*",
+        "rulesList.json"
       ],
       "matches": [
         "https://*.bigmachines.com/*"

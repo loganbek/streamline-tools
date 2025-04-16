@@ -15,204 +15,45 @@ function logDebug(message, ...args) {
 }
 
 // Global Variables
-let bmSiteSubDomain = '';
 let bmSiteType = '';
 let bmRuleType = '';
 let bmFileType = 'bml';
 
-// URL MATCHERS and Rules Types
-// Config - Recommendation - https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5268044&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true
-// Config - Constraint - https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=4889573&rule_type=2&pline_id=-1&segment_id=11&model_id=-1&fromList=true
-// Config - Hiding - https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=4951171&rule_type=11&pline_id=-1&segment_id=11&model_id=-1&fromList=true
-
-// Commerce - Action Before Formulas - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=30&process_id=4653759&document_id=4653823&action_id=54983795
-// Commerce - Action After Formulas - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp?area=18&process_id=4653759&document_id=4653823&action_id=54983795
-// Commerce - Rule - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?rule_id=1&fromList=true
-// Commerce - Constraint Rule - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?rule_id=1&fromList=true
-// Commerce - Hiding Rule - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?rule_id=1&fromList=true
-// Commerce - Validation Rule - https://devmcnichols.bigmachines.com/admin/commerce/rules/edit_rule.jsp?rule_id=1&fromList=true
-
-// Utils - https://devmcnichols.bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor&pageParams={id:'EXAMPLE_ID',folder_id:'EXAMPLE_FOLDER',process_id:'-1',doc_id:'-1'}&inputdata={appid:'sampleApp',service:'bmllibraryservice',operation:'getLibPageData',version:'1.0',header:'',params: {componentid:'libraryEditorPage',uicmd:'defineComponent', id:'EXAMPLE_ID',folder_id:'EXAMPLE_FOLDER',process_id:'-1',doc_id:'-1'}}&token=EXAMPLE_TOKEN
-
-// Interfaces List - https://devmcnichols.bigmachines.com/admin/interfaceCatalogs/list_ics_resources.jsp
-// Interfaces - REST - https://devmcnichols.bigmachines.com/rest/v1/quote/1
-// Interfaces - SOAP - https://devmcnichols.bigmachines.com/rest/v1/interfaceCatalogs/soapCatalog/services/Security_v1
-
-// Stylesheets - Stylesheet Manager - https://devmcnichols.bigmachines.com/admin/ui/branding/edit_site_branding.jsp
-// Stylesheets - Header & Footer = https://devmcnichols.bigmachines.com/admin/ui/branding/edit_site_branding.jsp
-
-// Documents  -global xsl - https://devmcnichols.bigmachines.com/admin/document-designer/4653759/editor/134737862
-
-
-// URL matchers for different sections and rule types
-const URL_MATCHERS = {
-    config: {
-        recommendation: {
-            pattern: "bigmachines.com/admin/configuration/rules/edit_rule.jsp",
-            ruleType: 1,
-            fileType: "bml",
-        },
-        constraint: {
-            pattern: "bigmachines.com/admin/configuration/rules/edit_rule.jsp",
-            ruleType: 2,
-            fileType: "bml",
-        },
-        hiding: {
-            pattern: "bigmachines.com/admin/configuration/rules/edit_rule.jsp",
-            ruleType: 11,
-            fileType: "bml",
-        },
-        bommapping: {
-            pattern: "bigmachines.com/admin/configuration/rules/edit_rule.jsp",
-            ruleType: 23,
-            fileType: "bml",
-        },
-        generic: "bigmachines.com/admin/configuration/rules",
-    },
-    commerce: {
-        action: {
-            pattern: "bigmachines.com/admin/commerce/actions/edit_action.jsp",
-            fileType: "bml",
-        },
-        constraint: {
-            pattern: "bigmachines.com/admin/commerce/rules/edit_rule.jsp",
-            fileType: "bml",
-        },
-        hiding: {
-            pattern: "bigmachines.com/admin/commerce/rules/edit_rule.jsp",
-            fileType: "bml",
-        },
-        validation: {
-            pattern: "bigmachines.com/admin/commerce/rules/edit_rule.jsp",
-            fileType: "bml",
-        },
-        library: {
-            pattern: "bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp",
-            fileType: "bml",
-        },
-        rule: {
-            pattern: "bigmachines.com/admin/commerce/rules/edit_rule.jsp",
-            fileType: "bml",
-        },
-        ruleInputs: {
-            pattern: "bigmachines.com/admin/commerce/rules/edit_rule_inputs.jsp",
-            fileType: "bml",
-        },
-        generic: "bigmachines.com/admin/commerce/rules",
-    },
-    utils: {
-        url: "bigmachines.com/spring/bmllibrary?format=jsp&view=bmllibraryeditor",
-        fileType: "bml",
-    },
-    interfaces: {
-        rest: {
-            url: "bigmachines.com/rest/v1/quote/",
-            fileType: "json",
-        },
-        soap: {
-            url: "bigmachines.com/soap/",
-            fileType: "xml",
-        },
-        generic: "bigmachines.com/admin/interfaceCatalogs/list_ics_resources.jsp",
-    },
-    stylesheets: {
-        stylesheetManager: {
-            url: "bigmachines.com/admin/ui/branding/edit_site_branding.jsp",
-            fileType: "css",
-        },
-        headerFooter: {
-            url: "bigmachines.com/admin/ui/branding/edit_header_footer.jsp",
-            fileType: "html",
-        },
-    },
-    documents: {
-        url: "bigmachines.com/admin/document-designer/",
-        fileType: "xsl",
-    },
-};
-
-// Utility function to check if URL matches a pattern
-function matchesUrlPattern(url, patternKey, subPatternKey = null) {
-    if (!url) return false;
-
-    if (subPatternKey) {
-        const pattern = URL_MATCHERS[patternKey][subPatternKey];
-        return typeof pattern === 'string' ?
-            url.includes(pattern) :
-            url.includes(pattern.pattern);
-    } else {
-        const pattern = URL_MATCHERS[patternKey];
-        return typeof pattern === 'string' ?
-            url.includes(pattern) : false;
-    }
-}
-
 /**
- * Extracts the value of a specified query parameter from a URL.
- * @param {string} url - The URL to search for the query parameter.
- * @param {string} name - The name of the query parameter to extract.
- * @returns {string} The decoded value of the query parameter, or an empty string if not present.
+ * Dynamically fetch rule configurations from rulesList.json.
+ * @returns {Promise<Object[]>} The parsed rules list.
  */
-function getUrlParameter(url, name) {
-    const escapedName = name.replace(/[[\]\\]/g, '\\$&');
-    const regex = new RegExp(`[?&]${escapedName}=([^&#]*)`);
-    const results = regex.exec(url);
-    return results ? decodeURIComponent(results[1].replace(/\+/g, ' ')) : '';
-}
-
-/**
- * Determines the rule type based on the `rule_type` parameter in the URL.
- * @param {string} url - The URL to analyze.
- * @returns {string|null} The rule type or null if not found.
- */
-function determineRuleType(url) {
-    const ruleTypeParam = getUrlParameter(url, 'rule_type');
-    if (ruleTypeParam) {
-        const ruleType = URL_MATCHERS.config.ruleTypes[ruleTypeParam] || `other_rule_type_${ruleTypeParam}`;
-        logDebug(`Detected configuration rule type: ${ruleType}`);
-        return ruleType;
-    }
-    return null;
-}
-
-/**
- * Determines the site type and rule type based on the URL.
- * @param {string} url - The URL to analyze.
- */
-function analyzeUrl(url) {
-    if (url.includes(URL_MATCHERS.config.generic)) {
-        bmSiteType = 'config';
-        bmRuleType = determineRuleType(url);
-    } else if (url.includes(URL_MATCHERS.commerce.generic)) {
-        bmSiteType = 'commerce';
-        if (url.includes(URL_MATCHERS.commerce.action)) {
-            bmRuleType = 'action';
-        } else if (url.includes(URL_MATCHERS.commerce.rule)) {
-            bmRuleType = 'rule';
-        } else if (url.includes(URL_MATCHERS.commerce.ruleInputs)) {
-            bmRuleType = 'rule_inputs';
+async function fetchRulesList() {
+    try {
+        const response = await fetch(chrome.runtime.getURL('rulesList.json'));
+        if (!response.ok) {
+            throw new Error(`Failed to fetch rulesList.json: ${response.status} ${response.statusText}`);
         }
-    } else if (url.includes(URL_MATCHERS.utils)) {
-        bmSiteType = 'utils';
-        bmRuleType = null;
-    } else if (url.includes(URL_MATCHERS.interfaces.rest)) {
-        bmSiteType = 'interfaces';
-        bmRuleType = 'rest';
-    } else if (url.includes(URL_MATCHERS.interfaces.soap)) {
-        bmSiteType = 'interfaces';
-        bmRuleType = 'soap';
-    } else if (url.includes(URL_MATCHERS.stylesheets.stylesheetManager)) {
-        bmSiteType = 'stylesheets';
-        bmRuleType = 'stylesheet';
-    } else if (url.includes(URL_MATCHERS.stylesheets.headerFooter)) {
-        bmSiteType = 'stylesheets';
-        bmRuleType = 'headerFooter';
-    } else if (url.includes(URL_MATCHERS.documents)) {
-        bmSiteType = 'documents';
-        bmRuleType = null;
-        bmFileType = 'xsl';
+        return await response.json();
+    } catch (error) {
+        logDebug("Error fetching rulesList.json:", error);
+        return []; // Return an empty array to prevent further errors
+    }
+}
+
+/**
+ * Determines the site type and rule type based on the URL using rulesList.json.
+ * @param {string} url - The URL to analyze.
+ */
+async function analyzeUrl(url) {
+    const rulesList = await fetchRulesList();
+    const matchingRule = rulesList.find(rule => {
+        const ruleUrl = rule.URL.replace(/\*/g, ''); // Remove wildcard for comparison
+        return url.includes(ruleUrl);
+    });
+
+    if (matchingRule) {
+        bmSiteType = matchingRule.AppArea.toLowerCase();
+        bmRuleType = matchingRule.RuleName.toLowerCase().replace(/\s+/g, '_');
+        bmFileType = matchingRule.fileType || 'bml';
+        logDebug("Matching rule found:", matchingRule);
     } else {
-        logDebug("Unrecognized URL pattern:", url);
+        logDebug("No matching rule found for URL:", url);
     }
 
     logDebug("Site type set to:", bmSiteType);
@@ -220,12 +61,51 @@ function analyzeUrl(url) {
 }
 
 /**
- * Sanitizes a filename by replacing invalid characters with underscores.
- * @param {string} filename - The filename to sanitize.
- * @returns {string} The sanitized filename.
+ * Dynamically set up event listeners for buttons based on rulesList.json.
  */
-function sanitizeFilename(filename) {
-    return filename.replace(/[^a-zA-Z0-9.-]/g, '_');
+async function setupDynamicEventListeners() {
+    const rulesList = await fetchRulesList();
+
+    rulesList.forEach(rule => {
+        const loadButton = document.getElementById(`load${rule.RuleName.replace(/\s+/g, '')}`);
+        const unloadButton = document.getElementById(`unload${rule.RuleName.replace(/\s+/g, '')}`);
+
+        if (loadButton) {
+            loadButton.addEventListener('click', async () => {
+                logDebug(`Load button clicked for rule: ${rule.RuleName}`);
+                const [fileHandle] = await window.showOpenFilePicker();
+                const file = await fileHandle.getFile();
+                const contents = await file.text();
+
+                chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                    chrome.tabs.sendMessage(
+                        tabs[0].id,
+                        { greeting: 'load', code: contents, rule },
+                        function (response) {
+                            logDebug("Load response received:", response);
+                        }
+                    );
+                });
+            });
+        }
+
+        if (unloadButton) {
+            unloadButton.addEventListener('click', () => {
+                logDebug(`Unload button clicked for rule: ${rule.RuleName}`);
+                chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                    chrome.tabs.sendMessage(
+                        tabs[0].id,
+                        { greeting: 'unload', rule },
+                        function (response) {
+                            if (response?.code && response?.filename) {
+                                saveText(`${response.filename}.${rule.fileType}`, response.code, rule.fileType);
+                            }
+                        }
+                    );
+                });
+            });
+        }
+    });
 }
 
 /**
@@ -243,105 +123,393 @@ function saveText(filename, text, filetype = 'bml') {
     tempElem.click();
 }
 
-// Event Listeners for Buttons
-document.getElementById('unload').addEventListener('click', () => {
-    logDebug("Unload button clicked.");
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unload' }, function (response) {
-            if (chrome.runtime.lastError) {
-                logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
-            } else if (response.code && response.filename) {
-                if (response.foldername !== undefined) {
-                    bmSiteType = response.foldername;
-                }
-                logDebug("Received unload response, bmsiteType", bmSiteType);
-                logDebug("Received unload response, saving folder", response.foldername);
-                logDebug("Received unload response, saving file:", response.filename);
-                saveText(response.filename + '.' + bmFileType, response.code, bmFileType);
-            }
+// Ensure buttons exist before assignment
+const unloadBtn = document.getElementById('unload');
+const loadBtn = document.getElementById('load');
+const unloadTestBtn = document.getElementById('unloadTest');
+const loadTestBtn = document.getElementById('loadTest');
+const unloadHeaderHTMLBtn = document.getElementById('unloadHeaderHTML');
+const loadHeaderHTMLBtn = document.getElementById('loadHeaderHTML');
+const unloadFooterHTMLBtn = document.getElementById('unloadFooterHTML');
+const loadFooterHTMLBtn = document.getElementById('loadFooterHTML');
+const unloadCSSBtn = document.getElementById('unloadCSS');
+const loadCSSBtn = document.getElementById('loadCSS');
+const unloadAltCSSBtn = document.getElementById('unloadAltCSS');
+const loadAltCSSBtn = document.getElementById('loadAltCSS');
+const unloadJETCSSBtn = document.getElementById('unloadJETCSS');
+const loadJETCSSBtn = document.getElementById('loadJETCSS');
+const optionsBtn = document.getElementById('options');
+const logsBtn = document.getElementById('logs');
+
+// Ensure content script is injected before sending messages
+async function ensureContentScript(tabId) {
+    try {
+        const response = await chrome.tabs.sendMessage(tabId, { greeting: 'ping' });
+        if (response?.status === 'ok') {
+            logDebug("Content script is already loaded.");
+            return true;
+        }
+    } catch (err) {
+        logDebug("Content script not loaded, injecting now...");
+    }
+
+    try {
+        await chrome.scripting.executeScript({
+            target: { tabId },
+            files: ['content/content.js'], // Replace with the actual content script file name
         });
-    });
-});
+        logDebug("Content script injected successfully.");
+        return true;
+    } catch (err) {
+        logDebug("Failed to inject content script:", err);
+        return false;
+    }
+}
 
-document.getElementById('load').addEventListener('click', async () => {
-    logDebug("Load button clicked.");
-    const [fileHandle] = await window.showOpenFilePicker();
-    const file = await fileHandle.getFile();
-    const contents = await file.text();
-    logDebug("File loaded:", file.name);
-
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        chrome.tabs.sendMessage(
-            tabs[0].id,
-            { greeting: 'load', code: contents },
-            function (response) {
+// Event Listeners for Buttons
+if (unloadBtn) {
+    unloadBtn.addEventListener('click', async () => {
+        logDebug("Unload button clicked.");
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        if (await ensureContentScript(tab.id)) {
+            chrome.tabs.sendMessage(tab.id, { greeting: 'unload' }, function (response) {
                 if (chrome.runtime.lastError) {
                     logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
-                } else {
-                    logDebug("Load response received:", response);
+                } else if (response.code && response.filename) {
+                    if (response.foldername !== undefined) {
+                        bmSiteType = response.foldername;
+                    }
+                    logDebug("Received unload response, bmsiteType", bmSiteType);
+                    logDebug("Received unload response, saving folder", response.foldername);
+                    logDebug("Received unload response, saving file:", response.filename);
+                    saveText(response.filename + '.' + bmFileType, response.code, bmFileType);
                 }
-            }
-        );
+            });
+        }
     });
-});
+}
+
+if (loadBtn) {
+    loadBtn.addEventListener('click', async () => {
+        logDebug("Load button clicked.");
+        const [fileHandle] = await window.showOpenFilePicker();
+        const file = await fileHandle.getFile();
+        const contents = await file.text();
+        logDebug("File loaded:", file.name);
+
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            chrome.tabs.sendMessage(
+                tabs[0].id,
+                { greeting: 'load', code: contents },
+                function (response) {
+                    if (chrome.runtime.lastError) {
+                        logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
+                    } else {
+                        logDebug("Load response received:", response);
+                    }
+                }
+            );
+        });
+    });
+}
 
 // UNLOAD TEST ONCLICK
-document.getElementById('unloadTest').addEventListener('click', () => {
-    logDebug("Unload Test button clicked.");
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unloadTest' }, function (response) {
-            if (chrome.runtime.lastError) {
-                logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
-            } else if (response.testCode && response.filename) {
-                logDebug("Received unloadTest response, saving file:", response.filename);
-                saveText(response.filename + '.test.' + bmFileType, response.testCode, bmFileType);
-            }
-        });
-    });
-});
-
-// LOAD TEST ONCLICK
-document.getElementById('loadTest').addEventListener('click', async () => {
-    logDebug("Load Test button clicked.");
-    const [fileHandle2] = await window.showOpenFilePicker();
-    const file = await fileHandle2.getFile();
-    const contents = await file.text();
-    logDebug("Test file loaded:", file.name);
-
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        chrome.tabs.sendMessage(
-            tabs[0].id,
-            { greeting: 'loadTest', code: contents },
-            function (response) {
+if (unloadTestBtn) {
+    unloadTestBtn.addEventListener('click', () => {
+        logDebug("Unload Test button clicked.");
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unloadTest' }, function (response) {
                 if (chrome.runtime.lastError) {
                     logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
-                } else {
-                    logDebug("Load Test response received:", response);
+                } else if (response.testCode && response.filename) {
+                    logDebug("Received unloadTest response, saving file:", response.filename);
+                    saveText(response.filename + '.test.' + bmFileType, response.testCode, bmFileType);
                 }
-            }
-        );
+            });
+        });
     });
-});
+}
+
+// LOAD TEST ONCLICK
+if (loadTestBtn) {
+    loadTestBtn.addEventListener('click', async () => {
+        logDebug("Load Test button clicked.");
+        const [fileHandle2] = await window.showOpenFilePicker();
+        const file = await fileHandle2.getFile();
+        const contents = await file.text();
+        logDebug("Test file loaded:", file.name);
+
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            chrome.tabs.sendMessage(
+                tabs[0].id,
+                { greeting: 'loadTest', code: contents },
+                function (response) {
+                    if (chrome.runtime.lastError) {
+                        logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
+                    } else {
+                        logDebug("Load Test response received:", response);
+                    }
+                }
+            );
+        });
+    });
+}
+
+// Similar handlers for unloadHeaderHTMLBtn, loadHeaderHTMLBtn, unloadFooterHTMLBtn, loadFooterHTMLBtn,
+// unloadCSSBtn, loadCSSBtn, unloadAltCSSBtn, loadAltCSSBtn, unloadJETCSSBtn, loadJETCSSBtn can be added here following the same pattern.
+
+if (unloadHeaderHTMLBtn) {
+    unloadHeaderHTMLBtn.onclick = async function () {
+        logDebug("Unload Header button clicked.");
+        try {
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (await ensureContentScript(tab.id)) {
+                const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadHeaderHTML' });
+                if (response?.code) {
+                    saveText('header.html', response.code);
+                } else {
+                    throw new Error('Failed to unload header');
+                }
+            } else {
+                throw new Error('Content script injection failed');
+            }
+        } catch (err) {
+            logDebug("Error unloading header:", err);
+        }
+    }
+}
+
+if (loadHeaderHTMLBtn) {
+    loadHeaderHTMLBtn.onclick = async function () {
+        logDebug("Load Header button clicked.");
+        try {
+            const [fileHandle] = await window.showOpenFilePicker();
+            const file = await fileHandle.getFile();
+            const contents = await file.text();
+
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.sendMessage(
+                    tabs[0].id,
+                    { greeting: 'loadHeaderHTML', code: contents },
+                    function (response) {
+                        logDebug("Load Header response received:", response);
+                    }
+                );
+            });
+        } catch (err) {
+            logDebug("Error loading header:", err);
+        }
+    }
+
+}
+
+if(unloadFooterHTMLBtn){
+    unloadFooterHTMLBtn.onclick = async function () {
+        logDebug("Unload Footer button clicked.");
+        try {
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (await ensureContentScript(tab.id)) {
+                const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadFooterHTML' });
+                if (response?.code) {
+                    saveText('footer.html', response.code);
+                } else {
+                    throw new Error('Failed to unload footer');
+                }
+            } else {
+                throw new Error('Content script injection failed');
+            }
+        }
+    } 
+}
+
+if(loadFooterHTMLBtn){
+    loadFooterHTMLBtn.onclick = async function () {
+        logDebug("Load Footer button clicked.");
+        try {
+            const [fileHandle] = await window.showOpenFilePicker();
+            const file = await fileHandle.getFile();
+            const contents = await file.text();
+
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.sendMessage(
+                    tabs[0].id,
+                    { greeting: 'loadFooterHTML', code: contents },
+                    function (response) {
+                        logDebug("Load Footer response received:", response);
+                    }
+                );
+            });
+        } catch (err) {
+            logDebug("Error loading footer:", err);
+        }
+    }
+}
+
+if(unloadCSSBtn) {
+    unloadCSSBtn.onclick = async function () {
+        logDebug("Unload CSS button clicked.");
+        try {
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (await ensureContentScript(tab.id)) {
+                const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadCSS' });
+                if (response?.code) {
+                    saveText('style.css', response.code);
+                } else {
+                    throw new Error('Failed to unload CSS');
+                }
+            } else {
+                throw new Error('Content script injection failed');
+            }
+        } catch (err) {
+            logDebug("Error unloading CSS:", err);
+        }
+    }
+}
+
+if(loadCSSBtn) {
+    loadCSSBtn.onclick = async function () {
+        logDebug("Load CSS button clicked.");
+        try {
+            const [fileHandle] = await window.showOpenFilePicker();
+            const file = await fileHandle.getFile();
+            const contents = await file.text();
+
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.sendMessage(
+                    tabs[0].id,
+                    { greeting: 'loadCSS', code: contents },
+                    function (response) {
+                        logDebug("Load CSS response received:", response);
+                    }
+                );
+            });
+        } catch (err) {
+            logDebug("Error loading CSS:", err);
+        }
+    }
+}
+
+if(unloadAltCSSBtn) {
+    unloadAltCSSBtn.onclick = async function () {
+        logDebug("Unload Alt CSS button clicked.");
+        try {
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (await ensureContentScript(tab.id)) {
+                const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadAltCSS' });
+                if (response?.code) {
+                    saveText('styleAlt.css', response.code);
+                } else {
+                    throw new Error('Failed to unload Alt CSS');
+                }
+            } else {
+                throw new Error('Content script injection failed');
+            }
+        } catch (err) {
+            logDebug("Error unloading Alt CSS:", err);
+        }
+    }
+}
+
+if(loadAltCSSBtn){
+    loadAltCSSBtn.onclick = async function () {
+        logDebug("Load Alt CSS button clicked.");
+        try {
+            const [fileHandle] = await window.showOpenFilePicker();
+            const file = await fileHandle.getFile();
+            const contents = await file.text();
+
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.sendMessage(
+                    tabs[0].id,
+                    { greeting: 'loadAltCSS', code: contents },
+                    function (response) {
+                        logDebug("Load Alt CSS response received:", response);
+                    }
+                );
+            });
+        } catch (err) {
+            logDebug("Error loading Alt CSS:", err);
+        }
+    }
+}
+
+if(unloadJETCSSBtn) {
+    unloadJETCSSBtn.onclick = async function () {
+        logDebug("Unload JET CSS button clicked.");
+        try {
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (await ensureContentScript(tab.id)) {
+                const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadJETCSS' });
+                if (response?.code) {
+                    saveText('styleJET.css', response.code);
+                } else {
+                    throw new Error('Failed to unload JET CSS');
+                }
+            } else {
+                throw new Error('Content script injection failed');
+            }
+        } catch (err) {
+            logDebug("Error unloading JET CSS:", err);
+        }
+    }
+}
+
+if(loadJETCSSBtn) {
+    loadJETCSSBtn.onclick = async function () {
+        logDebug("Load JET CSS button clicked.");
+        try {
+            const [fileHandle] = await window.showOpenFilePicker();
+            const file = await fileHandle.getFile();
+            const contents = await file.text();
+
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.sendMessage(
+                    tabs[0].id,
+                    { greeting: 'loadJETCSS', code: contents },
+                    function (response) {
+                        logDebug("Load JET CSS response received:", response);
+                    }
+                );
+            });
+        } catch (err) {
+            logDebug("Error loading JET CSS:", err);
+        }
+    }
+}
+
+if (optionsBtn) {
+    optionsBtn.onclick = () => {
+        logDebug("Options button clicked");
+        window.location = chrome.runtime.getURL('options/options.html');
+    };
+}
+
+if (logsBtn) {
+    logsBtn.onclick = () => {
+        logDebug("Logs button clicked");
+        // Implement logs functionality if needed
+    };
+}
 
 // Initialize Extension
-chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
     const url = tabs[0]?.url;
     if (url) {
         logDebug("Active tab URL:", url);
-        analyzeUrl(url);
+        await analyzeUrl(url);
     }
 });
 
-logDebug("Extension initialized.");
-
-// FOOTER INFORMATION
-const manifest = chrome.runtime.getManifest();
-
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     logDebug("DOM fully loaded, setting footer information.");
-    document.getElementById('footer').innerHTML = getFooter();
+    const footer = document.getElementById('footer');
+    try {
+        const manifest = chrome.runtime.getManifest(); // Fetch manifest.json dynamically
+        if (footer) {
+            footer.innerHTML = `<p>${manifest.name} v${manifest.version}</p>`;
+        }
+    } catch (error) {
+        logDebug("Error fetching manifest.json:", error);
+    }
+    await setupDynamicEventListeners();
 });
-
-function getFooter() {
-    return '<p>' + manifest.name + ' v' + manifest.version + '</p>';
-}
