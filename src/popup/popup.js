@@ -318,6 +318,8 @@ if(unloadFooterHTMLBtn){
             } else {
                 throw new Error('Content script injection failed');
             }
+        } catch (err) {
+            logDebug("Error unloading footer:", err);
         }
     } 
 }
