@@ -63,7 +63,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         tabId: tabId,
         popup: 'popup/popupInterfacesSOAP.html'
       });
-     } else if(tab.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/ui\/branding\/edit_site_branding\.jsp/.test(tab.url)){
+     } else if(tab?.url && /^https?:\/\/[^\/]*bigmachines\.com\/admin\/ui\/branding\/edit_site_branding\.jsp/.test(tab.url)){
         chrome.action.setPopup({
             tabId: tabId,
             popup: 'popup/popupStyleSheetsCSS.html'
