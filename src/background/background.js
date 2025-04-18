@@ -127,8 +127,16 @@ function cleanUrlParameters(url) {
  * @returns {Promise<Object[]>} The parsed rules list.
  */
 async function fetchRulesList() {
-    const response = await fetch(chrome.runtime.getURL('rulesList.json'));
-    return response.json();
+    try {
+        const response = await fetch(chrome.runtime.getURL('rulesList.json'));
+        if (!response.ok) {
+            throw new Error(`Failed to fetch rulesList.json: ${response.status} ${response.statusText}`);
+        }
+        return await response.json();
+    } catch (error) {
+        logDebug("Error fetching rulesList.json:", error);
+        return []; // Return an empty array to prevent further errors
+    }
 }
 
 // Listen for keyboard shortcut commands
