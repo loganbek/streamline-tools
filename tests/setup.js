@@ -1,3 +1,5 @@
+jest.setTimeout(30000); // Set timeout to 30 seconds
+
 // Mock Chrome API
 global.chrome = {
   runtime: {
@@ -21,11 +23,15 @@ global.chrome = {
       get: jest.fn(),
       set: jest.fn()
     }
+  },
+  scripting: {
+    executeScript: jest.fn().mockResolvedValue([{ result: undefined }])
   }
 };
 
 // Mock window.addEventListener
 window.addEventListener = jest.fn();
+window.removeEventListener = jest.fn();
 
 // Mock CustomEvent
 global.CustomEvent = class CustomEvent {

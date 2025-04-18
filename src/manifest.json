@@ -29,7 +29,12 @@
         "adminCommerceRulesInjected.js",
         "adminConfigInjected.js",
         "adminCommerceActionsInjected.js",
-        "content/content.js"
+        "popup/*",
+        "content/*",
+        "background/*",
+        "admin/*",
+        "options/*",
+        "rulesList.json"
       ],
       "matches": [
         "https://*.bigmachines.com/*"
