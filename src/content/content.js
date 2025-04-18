@@ -285,15 +285,19 @@ chrome.runtime.onMessage.addListener(async function (request, sender, sendRespon
     switch (request.greeting) {
         case 'unload':
             logDebug("Processing unload request for rule:", rule.RuleName);
-            const unloadCode = document.querySelector(rule.codeSelector)?.value || '';
-            sendResponse({ filename: rule.fileName, code: unloadCode });
+            {
+                const unloadCode = document.querySelector(rule.codeSelector)?.value || '';
+                sendResponse({ filename: rule.fileName, code: unloadCode });
+            }
             break;
 
         case 'load':
             logDebug("Processing load request for rule:", rule.RuleName);
-            const loadElement = document.querySelector(rule.codeSelector);
-            if (loadElement) {
-                loadElement.value = request.code;
+            {
+                const loadElement = document.querySelector(rule.codeSelector);
+                if (loadElement) {
+                    loadElement.value = request.code;
+                }
             }
             break;
 
