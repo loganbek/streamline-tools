@@ -166,6 +166,53 @@ async function ensureContentScript(tabId) {
     }
 }
 
+/**
+ * Sends a message to the background script and waits for a response.
+ * @param {Object} message - The message to send.
+ * @returns {Promise<Object>} The response from the background script.
+ */
+function sendMessageToBackground(message) {
+    return new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage(message, (response) => {
+            if (chrome.runtime.lastError) {
+                reject(chrome.runtime.lastError);
+            } else {
+                resolve(response);
+            }
+        });
+    });
+}
+
+// Update event listeners to use synchronized message passing
+if (unloadBtn) {
+    unloadBtn.addEventListener('click', async () => {
+        logDebug("Unload button clicked.");
+        try {
+            const response = await sendMessageToBackground({ greeting: 'unload' });
+            if (response?.code && response?.filename) {
+                saveText(`${response.filename}.${bmFileType}`, response.code, bmFileType);
+            }
+        } catch (error) {
+            logDebug("Error during unload:", error);
+        }
+    });
+}
+
+if (loadBtn) {
+    loadBtn.addEventListener('click', async () => {
+        logDebug("Load button clicked.");
+        try {
+            const [fileHandle] = await window.showOpenFilePicker();
+            const file = await fileHandle.getFile();
+            const contents = await file.text();
+            const response = await sendMessageToBackground({ greeting: 'load', code: contents });
+            logDebug("Load response received:", response);
+        } catch (error) {
+            logDebug("Error during load:", error);
+        }
+    });
+}
+
 // Event Listeners for Buttons
 if (unloadBtn) {
     unloadBtn.addEventListener('click', async () => {

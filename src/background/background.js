@@ -9,7 +9,7 @@ function logDebug(message, ...args) {
     }
 }
 
-// Listen for messages from popup.js
+// Listen for messages from popup.js and handle them synchronously
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     logDebug("Received message from popup.js:", request);
 
@@ -22,14 +22,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
         const activeTabId = tabs[0].id;
 
-        // Forward the message to content.js
+        // Forward the message to content.js and wait for a response
         chrome.tabs.sendMessage(activeTabId, request, (response) => {
             if (chrome.runtime.lastError) {
                 logDebug("Error forwarding message to content.js:", chrome.runtime.lastError.message);
                 sendResponse({ success: false, error: chrome.runtime.lastError.message });
             } else {
                 logDebug("Response from content.js:", response);
-                sendResponse({ success: true, data: response });
+                sendResponse(response);
             }
         });
     });
