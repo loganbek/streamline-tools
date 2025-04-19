@@ -244,18 +244,22 @@ if (loadBtn) {
         const contents = await file.text();
         logDebug("File loaded:", file.name);
 
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            chrome.tabs.sendMessage(
-                tabs[0].id,
-                { greeting: 'load', code: contents },
-                function (response) {
-                    if (chrome.runtime.lastError) {
-                        logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
-                    } else {
-                        logDebug("Load response received:", response);
+        chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
+            if (await ensureContentScript(tabs[0].id)) {
+                chrome.tabs.sendMessage(
+                    tabs[0].id,
+                    { greeting: 'load', code: contents },
+                    function (response) {
+                        if (chrome.runtime.lastError) {
+                            logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
+                        } else {
+                            logDebug("Load response received:", response);
+                        }
                     }
-                }
-            );
+                );
+            } else {
+                logDebug("Failed to inject content script");
+            }
         });
     });
 }
