@@ -334,14 +334,18 @@ if (loadHeaderHTMLBtn) {
             const file = await fileHandle.getFile();
             const contents = await file.text();
 
-            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                chrome.tabs.sendMessage(
-                    tabs[0].id,
-                    { greeting: 'loadHeaderHTML', code: contents },
-                    function (response) {
-                        logDebug("Load Header response received:", response);
-                    }
-                );
+            chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
+                if (await ensureContentScript(tabs[0].id)) {
+                    chrome.tabs.sendMessage(
+                        tabs[0].id,
+                        { greeting: 'loadHeaderHTML', code: contents },
+                        function (response) {
+                            logDebug("Load Header response received:", response);
+                        }
+                    );
+                } else {
+                    logDebug("Failed to inject content script for header loading");
+                }
             });
         } catch (err) {
             logDebug("Error loading header:", err);
