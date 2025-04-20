@@ -124,10 +124,10 @@ function saveText(filename, text, filetype = 'bml') {
 }
 
 // Ensure buttons exist before assignment
-const unloadBtn = document.getElementById('unload');
-const loadBtn = document.getElementById('load');
-const unloadTestBtn = document.getElementById('unloadTest');
-const loadTestBtn = document.getElementById('loadTest');
+const unloadBMLBtn = document.getElementById('unloadBML');
+const loadBMLBtn = document.getElementById('loadBML');
+const unloadTestBMLBtn = document.getElementById('unloadTestBML');
+const loadTestBMLBtn = document.getElementById('loadTestBML');
 const unloadHeaderHTMLBtn = document.getElementById('unloadHeaderHTML');
 const loadHeaderHTMLBtn = document.getElementById('loadHeaderHTML');
 const unloadFooterHTMLBtn = document.getElementById('unloadFooterHTML');
@@ -184,8 +184,8 @@ function sendMessageToBackground(message) {
 }
 
 // Update event listeners to use synchronized message passing
-if (unloadBtn) {
-    unloadBtn.addEventListener('click', async () => {
+if (unloadBMLBtn) {
+    unloadBMLBtn.addEventListener('click', async () => {
         logDebug("Unload button clicked.");
         try {
             const response = await sendMessageToBackground({ greeting: 'unload' });
@@ -198,8 +198,8 @@ if (unloadBtn) {
     });
 }
 
-if (loadBtn) {
-    loadBtn.addEventListener('click', async () => {
+if (loadBMLBtn) {
+    loadBMLBtn.addEventListener('click', async () => {
         logDebug("Load button clicked.");
         try {
             const [fileHandle] = await window.showOpenFilePicker();
@@ -214,8 +214,8 @@ if (loadBtn) {
 }
 
 // Event Listeners for Buttons
-if (unloadBtn) {
-    unloadBtn.addEventListener('click', async () => {
+if (unloadBMLBtn) {
+    unloadBMLBtn.addEventListener('click', async () => {
         logDebug("Unload button clicked.");
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
         if (await ensureContentScript(tab.id)) {
@@ -236,8 +236,8 @@ if (unloadBtn) {
     });
 }
 
-if (loadBtn) {
-    loadBtn.addEventListener('click', async () => {
+if (loadBMLBtn) {
+    loadBMLBtn.addEventListener('click', async () => {
         logDebug("Load button clicked.");
         const [fileHandle] = await window.showOpenFilePicker();
         const file = await fileHandle.getFile();
@@ -265,8 +265,8 @@ if (loadBtn) {
 }
 
 // UNLOAD TEST ONCLICK
-if (unloadTestBtn) {
-    unloadTestBtn.addEventListener('click', () => {
+if (unloadTestBMLBtn) {
+    unloadTestBMLBtn.addEventListener('click', () => {
         logDebug("Unload Test button clicked.");
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unloadTest' }, function (response) {
@@ -282,8 +282,8 @@ if (unloadTestBtn) {
 }
 
 // LOAD TEST ONCLICK
-if (loadTestBtn) {
-    loadTestBtn.addEventListener('click', async () => {
+if (loadTestBMLBtn) {
+    loadTestBMLBtn.addEventListener('click', async () => {
         logDebug("Load Test button clicked.");
         const [fileHandle2] = await window.showOpenFilePicker();
         const file = await fileHandle2.getFile();
@@ -533,6 +533,57 @@ if(loadJETCSSBtn) {
         }
     }
 }
+
+// Add event listeners for Global XSL and XSL buttons
+addButtonClickListener('unloadGlobalXSL', async () => {
+    logDebug("Unload Global XSL button clicked.");
+    try {
+        const response = await sendMessageToBackground({ greeting: 'unloadGlobalXSL' });
+        if (response?.code) {
+            saveText('globalXSL.xsl', response.code, 'xsl');
+        }
+    } catch (error) {
+        logDebug("Error during unloadGlobalXSL:", error);
+    }
+});
+
+addButtonClickListener('loadGlobalXSL', async () => {
+    logDebug("Load Global XSL button clicked.");
+    try {
+        const [fileHandle] = await window.showOpenFilePicker();
+        const file = await fileHandle.getFile();
+        const contents = await file.text();
+        const response = await sendMessageToBackground({ greeting: 'loadGlobalXSL', code: contents });
+        logDebug("Load Global XSL response received:", response);
+    } catch (error) {
+        logDebug("Error during loadGlobalXSL:", error);
+    }
+});
+
+addButtonClickListener('unloadXSL', async () => {
+    logDebug("Unload XSL button clicked.");
+    try {
+        const response = await sendMessageToBackground({ greeting: 'unloadXSL' });
+        if (response?.code) {
+            saveText('file.xsl', response.code, 'xsl');
+        }
+    } catch (error) {
+        logDebug("Error during unloadXSL:", error);
+    }
+});
+
+addButtonClickListener('loadXSL', async () => {
+    logDebug("Load XSL button clicked.");
+    try {
+        const [fileHandle] = await window.showOpenFilePicker();
+        const file = await fileHandle.getFile();
+        const contents = await file.text();
+        const response = await sendMessageToBackground({ greeting: 'loadXSL', code: contents });
+        logDebug("Load XSL response received:", response);
+    } catch (error) {
+        logDebug("Error during loadXSL:", error);
+    }
+});
 
 if (optionsBtn) {
     optionsBtn.onclick = () => {
