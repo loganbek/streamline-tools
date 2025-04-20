@@ -286,7 +286,16 @@ chrome.runtime.onMessage.addListener(async function (request, sender, sendRespon
         case 'unload':
             logDebug("Processing unload request for rule:", rule.RuleName);
             {
-                const unloadCode = document.querySelector(rule.codeSelector)?.value || '';
+                let unloadCode = '';
+                if (rule.RuleName === "Header & Footer") {
+                  if (request.greeting === "unloadHeader") {
+                    unloadCode = document.querySelector(rule.codeSelector1)?.value || '';
+                  } else if (request.greeting === "unloadFooter") {
+                    unloadCode = document.querySelector(rule.codeSelector2)?.value || '';
+                  }
+                } else {
+                  unloadCode = document.querySelector(rule.codeSelector)?.value || '';
+                }
                 sendResponse({ filename: rule.fileName, code: unloadCode });
             }
             break;
