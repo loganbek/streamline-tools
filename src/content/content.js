@@ -223,10 +223,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
   switch (request.greeting) {
       case 'unloadHeaderHTML': {
-          let headerHTMLCode = document.querySelector('textarea[name="header"]')?.value || "";
-          logDebug("Unloading header code", headerHTMLCode);
-          sendResponse({ code: headerHTMLCode });
-          break;
+        let headerHTMLCode = document.querySelector('textarea[name="header"]')?.value || "";
+        // const headerHTMLCode = document.querySelector('textarea[name="header"]')?.value || "";
+        logDebug("Unloading header code", headerHTMLCode);
+        sendResponse({ code: headerHTMLCode });
+        break;
       }
       case 'loadHeaderHTML': {
           let headerHTMLCode = request.code;
