@@ -64,21 +64,32 @@ async function setDynamicPopup(tabId, url) {
     try {
         const rulesList = await fetchRulesList();
         const matchingRule = rulesList.find(rule => {
-            let ruleUrl = rule.URL.replace(/\*/g, ''); // Remove wildcard for comparison
+            const ruleUrl = rule.URL.replace(/\*/g, ''); // Remove wildcard for comparison
             logDebug("ruleUrl:", ruleUrl);
             logDebug("rule:", rule);
-            let cleanedRuleUrl = cleanUrlParameters(ruleURL); // Clean up URL parameters
+            let cleanedRuleUrl = cleanUrlParameters(ruleUrl); // Clean up URL parameters
             
             if (rule.opensNewWindow === "TRUE" && rule.newWindowURL !== "x") {
-                let ruleURL = rule.newWindowURL.replace(/\*/g, ''); // Remove wildcard for comparison
-                let cleanedRuleURL = cleanUrlParameters(ruleURL); // Clean up URL parameters
+                const newWindowUrl = rule.newWindowURL.replace(/\*/g, ''); // Remove wildcard for comparison
+                cleanedRuleUrl = cleanUrlParameters(newWindowUrl); // Clean up URL parameters
             } else if (rule.redirect === "TRUE" && rule.redirectURL !== "x") {
-                let ruleURL = rule.redirectURL.replace(/\*/g, ''); // Remove wildcard for comparison
-                let cleanedRuleURL = cleanUrlParameters(ruleURL); // Clean up URL parameters
+                const redirectUrl = rule.redirectURL.replace(/\*/g, ''); // Remove wildcard for comparison
+                cleanedRuleUrl = cleanUrlParameters(redirectUrl); // Clean up URL parameters
             }
-            logDebug("ruleURL:", ruleURL);
-            logDebug("cleanedRuleURL:", cleanedRuleURL);
-            return (cleanedRuleURL.includes(url) || url.includes(cleanedRuleURL));
+            logDebug("ruleUrl:", ruleUrl);
+            logDebug("cleanedRuleUrl:", cleanedRuleUrl);
+            
+            // More secure URL matching using URL object
+            try {
+                const urlObj = new URL(url);
+                const ruleUrlObj = new URL(cleanedRuleUrl);
+                // Check hostname and path more securely
+                return urlObj.hostname.includes(ruleUrlObj.hostname) &&
+                       urlObj.pathname.startsWith(ruleUrlObj.pathname);
+            } catch (e) {
+                // Fallback with safer string check
+                return url.includes(cleanedRuleUrl);
+            }
         });
 
         if (matchingRule) {
