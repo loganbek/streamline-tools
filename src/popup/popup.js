@@ -197,36 +197,6 @@ function sendMessageToBackground(message) {
     });
 }
 
-// Update event listeners to use synchronized message passing
-if (unloadBMLBtn) {
-    unloadBMLBtn.addEventListener('click', async () => {
-        logDebug("Unload button clicked.");
-        try {
-            const response = await sendMessageToBackground({ greeting: 'unload' });
-            if (response?.code && response?.filename) {
-                saveText(`${response.filename}.${bmFileType}`, response.code, bmFileType);
-            }
-        } catch (error) {
-            logDebug("Error during unload:", error);
-        }
-    });
-}
-
-if (loadBMLBtn) {
-    loadBMLBtn.addEventListener('click', async () => {
-        logDebug("Load button clicked.");
-        try {
-            const [fileHandle] = await window.showOpenFilePicker();
-            const file = await fileHandle.getFile();
-            const contents = await file.text();
-            const response = await sendMessageToBackground({ greeting: 'load', code: contents });
-            logDebug("Load response received:", response);
-        } catch (error) {
-            logDebug("Error during load:", error);
-        }
-    });
-}
-
 // Event Listeners for Buttons
 if (unloadBMLBtn) {
     unloadBMLBtn.addEventListener('click', async () => {
