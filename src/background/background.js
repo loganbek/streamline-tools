@@ -64,19 +64,26 @@ async function setDynamicPopup(tabId, url) {
     try {
         const rulesList = await fetchRulesList();
         const matchingRule = rulesList.find(rule => {
-            const ruleUrl = rule.URL.replace(/\*/g, ''); // Remove wildcard for comparison
-            const cleanedUrl = cleanUrlParameters(url); // Clean up URL parameters
-            return cleanedUrl.includes(ruleUrl);
+            let ruleUrl = rule.URL.replace(/\*/g, ''); // Remove wildcard for comparison
+            logDebug("ruleUrl:", ruleUrl);
+            logDebug("rule:", rule);
+            let cleanedRuleUrl = cleanUrlParameters(ruleURL); // Clean up URL parameters
+            
+            if (rule.opensNewWindow === "TRUE" && rule.newWindowURL !== "x") {
+                let ruleURL = rule.newWindowURL.replace(/\*/g, ''); // Remove wildcard for comparison
+                let cleanedRuleURL = cleanUrlParameters(ruleURL); // Clean up URL parameters
+            } else if (rule.redirect === "TRUE" && rule.redirectURL !== "x") {
+                let ruleURL = rule.redirectURL.replace(/\*/g, ''); // Remove wildcard for comparison
+                let cleanedRuleURL = cleanUrlParameters(ruleURL); // Clean up URL parameters
+            }
+            logDebug("ruleURL:", ruleURL);
+            logDebug("cleanedRuleURL:", cleanedRuleURL);
+            return (cleanedRuleURL.includes(url) || url.includes(cleanedRuleURL));
         });
 
         if (matchingRule) {
             let popupUrl = matchingRule.ui;
 
-            if (matchingRule.opensNewWindow === "TRUE" && matchingRule.newWindowURL !== "x") {
-                popupUrl = matchingRule.newWindowURL;
-            } else if (matchingRule.redirect === "TRUE" && matchingRule.redirectURL !== "x") {
-                popupUrl = matchingRule.redirectURL;
-            }
 
             chrome.action.setPopup({
                 tabId,
@@ -104,6 +111,7 @@ async function setDynamicPopup(tabId, url) {
  */
 function cleanUrlParameters(url) {
     try {
+        logDebug("Cleaning URL parameters for:", url);
         const urlObj = new URL(url);
         const allowedParams = ['rule_id', 'rule_type', 'pline_id', 'segment_id', 'model_id', 'fromList'];
         const cleanedSearchParams = new URLSearchParams();
@@ -131,6 +139,12 @@ async function fetchRulesList() {
         const response = await fetch(chrome.runtime.getURL('rulesList.json'));
         if (!response.ok) {
             throw new Error(`Failed to fetch rulesList.json: ${response.status} ${response.statusText}`);
+        }
+        logDebug("Fetched rulesList.json successfully:", response);
+        // Check if the response is valid JSON
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+            throw new Error("Invalid JSON response from rulesList.json");
         }
         return await response.json();
     } catch (error) {

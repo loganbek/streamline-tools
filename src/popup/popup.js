@@ -123,6 +123,20 @@ function saveText(filename, text, filetype = 'bml') {
     tempElem.click();
 }
 
+/**
+ * Adds a click listener to a button if it exists and ensures only one listener is added.
+ * @param {string} buttonId - The ID of the button.
+ * @param {Function} callback - The function to execute on click.
+ */
+function addButtonClickListener(buttonId, callback) {
+    const button = document.getElementById(buttonId);
+    if (button) {
+        button.onclick = callback;
+    } else {
+        logDebug(`Button with ID "${buttonId}" not found.`);
+    }
+}
+
 // Ensure buttons exist before assignment
 const unloadBMLBtn = document.getElementById('unloadBML');
 const loadBMLBtn = document.getElementById('loadBML');
