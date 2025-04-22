@@ -78,7 +78,7 @@ function injectJs(link) {
 }
 
 // Inject the main script
-injectJs(chrome.runtime.getURL("injected.js"));
+// injectJs(chrome.runtime.getURL("injected.js"));
 
 // Message listener for communication with background script
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
