@@ -222,32 +222,34 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   logDebug("Message received:", request);
 
   switch (request.greeting) {
-      case 'unloadHeaderHTML': {
-        let headerHTMLCode = document.querySelector('textarea[name="header"]')?.value || "";
-        // const headerHTMLCode = document.querySelector('textarea[name="header"]')?.value || "";
-        logDebug("Unloading header code", headerHTMLCode);
-        sendResponse({ code: headerHTMLCode });
-        break;
-      }
-      case 'loadHeaderHTML': {
-          let headerHTMLCode = request.code;
-          logDebug("Loading header code", headerHTMLCode);
-          sendResponse({ status: "Header loaded successfully" });
-          break;
-      }
-      case 'unloadFooterHTML': {
-          let footerHTMLCode = document.querySelector('textarea[name="footer"]')?.value || "";
-          logDebug("Unloading footer code", footerHTMLCode);
-          sendResponse({ code: footerHTMLCode });
-          break;
-      }
+    case "unloadHeaderHTML": {
+      let headerHTMLCode =
+        document.querySelector('textarea[name="header"]')?.value || "";
+      // const headerHTMLCode = document.querySelector('textarea[name="header"]')?.value || "";
+      logDebug("Unloading header code", headerHTMLCode);
+      sendResponse({ code: headerHTMLCode });
+      break;
+    }
+    case "loadHeaderHTML": {
+      let headerHTMLCode = request.code;
+      logDebug("Loading header code", headerHTMLCode);
+      sendResponse({ status: "Header loaded successfully" });
+      break;
+    }
+    case "unloadFooterHTML": {
+      let footerHTMLCode =
+        document.querySelector('textarea[name="footer"]')?.value || "";
+      logDebug("Unloading footer code", footerHTMLCode);
+      sendResponse({ code: footerHTMLCode });
+      break;
+    }
 
-      case 'loadFooterHTML': {
-          let footerHTMLCode = request.code;
-          logDebug("Loading footer code", footerHTMLCode);
-          sendResponse({ status: "Footer loaded successfully" });
-          break;
-      }
+    case "loadFooterHTML": {
+      let footerHTMLCode = request.code;
+      logDebug("Loading footer code", footerHTMLCode);
+      sendResponse({ status: "Footer loaded successfully" });
+      break;
+    }
   }
   return true;
 });
@@ -257,62 +259,63 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
  * @returns {Promise<Object[]>} The parsed rules list.
  */
 async function fetchRulesList() {
-    try {
-        const response = await fetch(chrome.runtime.getURL('rulesList.json'));
-        if (!response.ok) {
-            throw new Error(`Failed to fetch rulesList.json: ${response.status} ${response.statusText}`);
-        }
-        return await response.json();
-    } catch (error) {
-        logDebug("Error fetching rulesList.json:", error);
-        return []; // Return an empty array to prevent further errors
+  try {
+    const response = await fetch(chrome.runtime.getURL("rulesList.json"));
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch rulesList.json: ${response.status} ${response.statusText}`
+      );
     }
+    return await response.json();
+  } catch (error) {
+    logDebug("Error fetching rulesList.json:", error);
+    return []; // Return an empty array to prevent further errors
+  }
 }
 
 /**
  * Process incoming messages dynamically based on rulesList.json.
  */
-chrome.runtime.onMessage.addListener(async function (request, sender, sendResponse) {
-    logDebug("Message received", request);
+chrome.runtime.onMessage.addListener(async function (
+  request,
+  sender,
+  sendResponse
+) {
+  logDebug("Message received", request);
 
-    const rulesList = await fetchRulesList();
-    const rule = rulesList.find(r => r.RuleName === request.rule?.RuleName);
+  const rulesList = await fetchRulesList();
+  const rule = rulesList.find((r) => r.RuleName === request.rule?.RuleName);
 
-    if (!rule) {
-        logDebug("No matching rule found for request:", request.rule);
-        return;
+  if (!rule) {
+    logDebug("No matching rule found for request:", request.rule);
+    return;
+  }
+
+  switch (request.greeting) {
+    case "unload": {
+      logDebug("Processing unload request for rule:", rule.RuleName);
+      let unloadCode = "";
+      if (rule.RuleName === "Header & Footer") {
+        if (request.headerType === "header") {
+          unloadCode = document.querySelector(rule.codeSelector1)?.value || "";
+        } else if (request.headerType === "footer") {
+          unloadCode = document.querySelector(rule.codeSelector2)?.value || "";
+        }
+      } else {
+        unloadCode = document.querySelector(rule.codeSelector)?.value || "";
+      }
+      sendResponse({ filename: rule.fileName, code: unloadCode });
     }
-
-    switch (request.greeting) {
-        case 'unload':
-            logDebug("Processing unload request for rule:", rule.RuleName);
-            {
-                let unloadCode = '';
-                if (rule.RuleName === "Header & Footer") {
-                  if (request.greeting === "unloadHeader") {
-                    unloadCode = document.querySelector(rule.codeSelector1)?.value || '';
-                  } else if (request.greeting === "unloadFooter") {
-                    unloadCode = document.querySelector(rule.codeSelector2)?.value || '';
-                  }
-                } else {
-                  unloadCode = document.querySelector(rule.codeSelector)?.value || '';
-                }
-                sendResponse({ filename: rule.fileName, code: unloadCode });
-            }
-            break;
-
-        case 'load':
-            logDebug("Processing load request for rule:", rule.RuleName);
-            {
-                const loadElement = document.querySelector(rule.codeSelector);
-                if (loadElement) {
-                    loadElement.value = request.code;
-                }
-            }
-            break;
-
-        default:
-            logDebug("Unknown request received", request.greeting);
-    }
-    return true;
+    case "load":
+      logDebug("Processing load request for rule:", rule.RuleName);
+      {
+        const loadElement = document.querySelector(rule.codeSelector);
+        if (loadElement) {
+          loadElement.value = request.code;
+        }
+      }
+    default:
+      logDebug("Unknown request received", request.greeting);
+  }
+  return true;
 });
