@@ -152,6 +152,14 @@ const unloadAltCSSBtn = document.getElementById('unloadAltCSS');
 const loadAltCSSBtn = document.getElementById('loadAltCSS');
 const unloadJETCSSBtn = document.getElementById('unloadJETCSS');
 const loadJETCSSBtn = document.getElementById('loadJETCSS');
+const unloadGlobalXSLBtn = document.getElementById('unloadGlobalXSL');
+const loadGlobalXSLBtn = document.getElementById('loadGlobalXSL');
+const unloadXSLBtn = document.getElementById('unloadXSL');
+const loadXSLBtn = document.getElementById('loadXSL');
+const unloadXMLBtn = document.getElementById('unloadXML');
+const loadXMLBtn = document.getElementById('loadXML');
+const unloadJSONBtn = document.getElementById('unloadJSON');
+const loadJSONBtn = document.getElementById('loadJSON');
 const optionsBtn = document.getElementById('options');
 const logsBtn = document.getElementById('logs');
 
@@ -290,11 +298,9 @@ if (loadTestBMLBtn) {
     });
 }
 
-// Similar handlers for unloadHeaderHTMLBtn, loadHeaderHTMLBtn, unloadFooterHTMLBtn, loadFooterHTMLBtn,
-// unloadCSSBtn, loadCSSBtn, unloadAltCSSBtn, loadAltCSSBtn, unloadJETCSSBtn, loadJETCSSBtn can be added here following the same pattern.
-
+// Header/Footer HTML Handlers
 if (unloadHeaderHTMLBtn) {
-    unloadHeaderHTMLBtn.onclick = async function () {
+    unloadHeaderHTMLBtn.onclick = async function() {
         logDebug("Unload Header button clicked.");
         try {
             const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -315,35 +321,29 @@ if (unloadHeaderHTMLBtn) {
 }
 
 if (loadHeaderHTMLBtn) {
-    loadHeaderHTMLBtn.onclick = async function () {
+    loadHeaderHTMLBtn.onclick = async function() {
         logDebug("Load Header button clicked.");
         try {
             const [fileHandle] = await window.showOpenFilePicker();
             const file = await fileHandle.getFile();
             const contents = await file.text();
-
-            chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
-                if (await ensureContentScript(tabs[0].id)) {
-                    chrome.tabs.sendMessage(
-                        tabs[0].id,
-                        { greeting: 'loadHeaderHTML', code: contents },
-                        function (response) {
-                            logDebug("Load Header response received:", response);
-                        }
-                    );
-                } else {
-                    logDebug("Failed to inject content script for header loading");
-                }
+            chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+                chrome.tabs.sendMessage(
+                    tabs[0].id,
+                    { greeting: 'loadHeaderHTML', code: contents },
+                    function(response) {
+                        logDebug("Load Header response received:", response);
+                    }
+                );
             });
         } catch (err) {
             logDebug("Error loading header:", err);
         }
     }
-
 }
 
-if(unloadFooterHTMLBtn){
-    unloadFooterHTMLBtn.onclick = async function () {
+if (unloadFooterHTMLBtn) {
+    unloadFooterHTMLBtn.onclick = async function() {
         logDebug("Unload Footer button clicked.");
         try {
             const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -360,22 +360,21 @@ if(unloadFooterHTMLBtn){
         } catch (err) {
             logDebug("Error unloading footer:", err);
         }
-    } 
+    }
 }
 
-if(loadFooterHTMLBtn){
-    loadFooterHTMLBtn.onclick = async function () {
+if (loadFooterHTMLBtn) {
+    loadFooterHTMLBtn.onclick = async function() {
         logDebug("Load Footer button clicked.");
         try {
             const [fileHandle] = await window.showOpenFilePicker();
             const file = await fileHandle.getFile();
             const contents = await file.text();
-
-            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
                 chrome.tabs.sendMessage(
                     tabs[0].id,
                     { greeting: 'loadFooterHTML', code: contents },
-                    function (response) {
+                    function(response) {
                         logDebug("Load Footer response received:", response);
                     }
                 );
@@ -386,6 +385,7 @@ if(loadFooterHTMLBtn){
     }
 }
 
+// CSS Handlers
 if(unloadCSSBtn) {
     unloadCSSBtn.onclick = async function () {
         logDebug("Unload CSS button clicked.");
@@ -451,7 +451,7 @@ if(unloadAltCSSBtn) {
     }
 }
 
-if(loadAltCSSBtn){
+if(loadAltCSSBtn) {
     loadAltCSSBtn.onclick = async function () {
         logDebug("Load Alt CSS button clicked.");
         try {
@@ -518,56 +518,146 @@ if(loadJETCSSBtn) {
     }
 }
 
-// Add event listeners for Global XSL and XSL buttons
-addButtonClickListener('unloadGlobalXSL', async () => {
-    logDebug("Unload Global XSL button clicked.");
-    try {
-        const response = await sendMessageToBackground({ greeting: 'unloadGlobalXSL' });
-        if (response?.code) {
-            saveText('globalXSL.xsl', response.code, 'xsl');
+// XSL Document Handlers
+if (unloadGlobalXSLBtn) {
+    unloadGlobalXSLBtn.onclick = async () => {
+        logDebug("Unload Global XSL button clicked.");
+        try {
+            const response = await sendMessageToBackground({ greeting: 'unloadGlobalXSL' });
+            if (response?.code) {
+                saveText('globalXSL.xsl', response.code, 'xsl');
+            }
+        } catch (error) {
+            logDebug("Error during unloadGlobalXSL:", error);
         }
-    } catch (error) {
-        logDebug("Error during unloadGlobalXSL:", error);
-    }
-});
+    };
+}
 
-addButtonClickListener('loadGlobalXSL', async () => {
-    logDebug("Load Global XSL button clicked.");
-    try {
-        const [fileHandle] = await window.showOpenFilePicker();
-        const file = await fileHandle.getFile();
-        const contents = await file.text();
-        const response = await sendMessageToBackground({ greeting: 'loadGlobalXSL', code: contents });
-        logDebug("Load Global XSL response received:", response);
-    } catch (error) {
-        logDebug("Error during loadGlobalXSL:", error);
-    }
-});
-
-addButtonClickListener('unloadXSL', async () => {
-    logDebug("Unload XSL button clicked.");
-    try {
-        const response = await sendMessageToBackground({ greeting: 'unloadXSL' });
-        if (response?.code) {
-            saveText('file.xsl', response.code, 'xsl');
+if (loadGlobalXSLBtn) {
+    loadGlobalXSLBtn.onclick = async () => {
+        logDebug("Load Global XSL button clicked.");
+        try {
+            const [fileHandle] = await window.showOpenFilePicker();
+            const file = await fileHandle.getFile();
+            const contents = await file.text();
+            const response = await sendMessageToBackground({ greeting: 'loadGlobalXSL', code: contents });
+            logDebug("Load Global XSL response received:", response);
+        } catch (error) {
+            logDebug("Error during loadGlobalXSL:", error);
         }
-    } catch (error) {
-        logDebug("Error during unloadXSL:", error);
-    }
-});
+    };
+}
 
-addButtonClickListener('loadXSL', async () => {
-    logDebug("Load XSL button clicked.");
-    try {
-        const [fileHandle] = await window.showOpenFilePicker();
-        const file = await fileHandle.getFile();
-        const contents = await file.text();
-        const response = await sendMessageToBackground({ greeting: 'loadXSL', code: contents });
-        logDebug("Load XSL response received:", response);
-    } catch (error) {
-        logDebug("Error during loadXSL:", error);
-    }
-});
+if (unloadXSLBtn) {
+    unloadXSLBtn.onclick = async () => {
+        logDebug("Unload XSL button clicked.");
+        try {
+            const response = await sendMessageToBackground({ greeting: 'unloadXSL' });
+            if (response?.code) {
+                saveText('file.xsl', response.code, 'xsl');
+            }
+        } catch (error) {
+            logDebug("Error during unloadXSL:", error);
+        }
+    };
+}
+
+if (loadXSLBtn) {
+    loadXSLBtn.onclick = async () => {
+        logDebug("Load XSL button clicked.");
+        try {
+            const [fileHandle] = await window.showOpenFilePicker();
+            const file = await fileHandle.getFile();
+            const contents = await file.text();
+            const response = await sendMessageToBackground({ greeting: 'loadXSL', code: contents });
+            logDebug("Load XSL response received:", response);
+        } catch (error) {
+            logDebug("Error during loadXSL:", error);
+        }
+    };
+}
+
+// SOAP Interface Handlers
+if (unloadXMLBtn) {
+    unloadXMLBtn.onclick = async () => {
+        logDebug("Unload XML button clicked.");
+        try {
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (await ensureContentScript(tab.id)) {
+                const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadXML' });
+                if (response?.code) {
+                    saveText('interface.xml', response.code, 'xml');
+                }
+            }
+        } catch (error) {
+            logDebug("Error unloading XML:", error);
+        }
+    };
+}
+
+if (loadXMLBtn) {
+    loadXMLBtn.onclick = async () => {
+        logDebug("Load XML button clicked.");
+        try {
+            const [fileHandle] = await window.showOpenFilePicker();
+            const file = await fileHandle.getFile();
+            const contents = await file.text();
+            
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (await ensureContentScript(tab.id)) {
+                chrome.tabs.sendMessage(tab.id, { 
+                    greeting: 'loadXML',
+                    code: contents
+                }, response => {
+                    logDebug("Load XML response received:", response);
+                });
+            }
+        } catch (error) {
+            logDebug("Error loading XML:", error);
+        }
+    };
+}
+
+// REST Interface Handlers 
+if (unloadJSONBtn) {
+    unloadJSONBtn.onclick = async () => {
+        logDebug("Unload JSON button clicked.");
+        try {
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (await ensureContentScript(tab.id)) {
+                const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadJSON' });
+                if (response?.code) {
+                    saveText('interface.json', response.code, 'json');
+                }
+            }
+        } catch (error) {
+            logDebug("Error unloading JSON:", error);
+        }
+    };
+}
+
+if (loadJSONBtn) {
+    loadJSONBtn.onclick = async () => {
+        logDebug("Load JSON button clicked.");
+        try {
+            const [fileHandle] = await window.showOpenFilePicker();
+            const file = await fileHandle.getFile();
+            const contents = await file.text();
+            
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (await ensureContentScript(tab.id)) {
+                chrome.tabs.sendMessage(tab.id, {
+                    greeting: 'loadJSON',
+                    code: contents
+                }, response => {
+                    logDebug("Load JSON response received:", response);
+                });
+            }
+        } catch (error) {
+            logDebug("Error loading JSON:", error);
+        }
+    };
+}
 
 if (optionsBtn) {
     optionsBtn.onclick = () => {
