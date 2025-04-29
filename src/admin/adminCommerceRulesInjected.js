@@ -1,42 +1,22 @@
-// ADMIN COMMERCE RULES INJECT
+/**
+ * Streamline Tools - Admin Commerce Rules Injected Script
+ *
+ * This script is injected into Oracle CPQ Cloud admin commerce rules pages to
+ * handle BML code operations including loading, unloading, and validation.
+ *
+ * @version 1.0.0
+ * @license Unlicense
+ */
 
-window.addEventListener('load', function () {
-  main()
-})
+import { setupCommonEventListeners } from './adminSharedUtils';
 
-window.addEventListener('unloadCode', function (evt) {
-  // #textarea
-  iframes = document.getElementsByTagName('iframe')
-  console.log(iframes)
-  textAreaCode = document.getElementsByTagName('iframe')[0].contentDocument.querySelector('#textarea').value
-  console.log(textAreaCode)
-  if (textAreaCode) {
-    testCommerceCode = textAreaCode
-  } else {
-    testCommerceCode = '\n'
+const ADMIN_COMMERCE_RULES_INJECT_DEBUG = true;
+
+setupCommonEventListeners({
+  debug: ADMIN_COMMERCE_RULES_INJECT_DEBUG,
+  debugPrefix: 'ADMIN_COMMERCE_RULES_INJECT_DEBUG',
+  iframeIndex: 0,
+  onAfterLoad: () => {
+    document.getElementById('check')?.click();
   }
-  console.log(textAreaCode)
-  console.log(testCommerceCode)
-  const event = new CustomEvent('PassCodeToBackground', { detail: testCommerceCode })
-  window.dispatchEvent(event)
-})
-
-// Listen for the load code event
-window.addEventListener('loadCode', function (evt) {
-  code = evt.detail
-
-  textarea = document.getElementsByTagName('iframe')[0].contentDocument.querySelector('#textarea')
-  textarea.value = code
-
-  document.getElementById('check').click()
-}, false)
-
-function main () {
-  const textArea = document.getElementById('textarea')
-
-  code = document.querySelector('#textarea').value
-  alert(code)
-
-  const event = new CustomEvent('PassToBackground', { code })
-  window.dispatchEvent(event)
-}
+});
