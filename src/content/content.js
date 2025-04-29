@@ -1,5 +1,6 @@
+const domOps = require('./domOperations');
+
 const CONTENT_DEBUG = true;
-import domOps from './domOperations';
 
 function logDebug(message, ...args) {
   if (CONTENT_DEBUG) {

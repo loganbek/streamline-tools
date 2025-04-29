@@ -1,43 +1,71 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
 const DebugUtils = require('../debugUtils');
-require('dotenv').config({ path: './tests/.env' });
+require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
 let sharedBrowser = null;
 let sharedPage = null;
 let isLoggedIn = false;
 let browserCleanupRegistered = false;
 let lastLoginTime = 0;
-const LOGIN_COOLDOWN = 2000; // 2 second minimum between login attempts
+const LOGIN_COOLDOWN = 2000;
 const MAX_LOGIN_RETRIES = 3;
 
-/**
- * Helper class to manage common test operations
- */
 class TestHelper {
   constructor() {
     this.debugUtils = new DebugUtils();
   }
 
-  /**
-   * Initialize browser and page
-   */
   async init() {
     await this.debugUtils.init();
     
     if (!sharedBrowser) {
-      // Let jest-puppeteer handle browser launch
-      sharedBrowser = global.__BROWSER__;
+      // Get extension path
+      const extensionPath = path.resolve(__dirname, '../../src');
       
+      try {
+        // Try to get browser from jest-puppeteer first
+        sharedBrowser = global.__BROWSER__;
+      } catch (e) {
+        // Fall back to launching our own browser if needed
+        sharedBrowser = await puppeteer.launch({
+          headless: process.env.PUPPETEER_HEADLESS === 'true',
+          defaultViewport: { width: 1920, height: 1080 },
+          args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-web-security',
+            '--disable-features=IsolateOrigins,site-per-process',
+            '--enable-features=NetworkService',
+            `--disable-extensions-except=${extensionPath}`,
+            `--load-extension=${extensionPath}`
+          ],
+          pipe: true
+        });
+      }
+
       if (!sharedBrowser) {
-        throw new Error('Browser not initialized by jest-puppeteer');
+        throw new Error('Failed to initialize browser');
       }
 
       // Create shared page with error handling
       sharedPage = await sharedBrowser.newPage();
       await this.setupPageDebug(sharedPage);
 
-      // Handle crashes and errors
+      // Get extension ID
+      const targets = await sharedBrowser.targets();
+      const extensionTarget = targets.find(
+        target => target.type() === 'background_page' && 
+        target.url().includes('chrome-extension://')
+      );
+      
+      if (extensionTarget) {
+        this.extensionId = extensionTarget.url().split('/')[2];
+        console.log('Extension ID:', this.extensionId);
+      }
+
+      // Set up error handlers
       sharedPage.on('error', error => {
         console.error('Page error:', error);
       });
@@ -46,14 +74,18 @@ class TestHelper {
         console.error('Page error:', error);
       });
 
+      sharedPage.on('console', msg => {
+        if (process.env.DEBUG_TESTS === 'true') {
+          console.log('Page console:', msg.text());
+        }
+      });
+
       // Set default timeout
-      sharedPage.setDefaultTimeout(30000);
+      sharedPage.setDefaultTimeout(parseInt(process.env.TEST_TIMEOUT) || 30000);
 
       if (!browserCleanupRegistered) {
         process.on('exit', async () => {
-          if (sharedPage) {
-            await sharedPage.close().catch(() => {});
-          }
+          if (sharedPage) await sharedPage.close().catch(() => {});
           if (sharedBrowser) {
             await sharedBrowser.close().catch(() => {});
             sharedBrowser = null;
@@ -68,7 +100,8 @@ class TestHelper {
     this.browser = sharedBrowser;
     this.page = sharedPage;
     
-    if (!isLoggedIn) {
+    // Only attempt login if BASE_URL is set
+    if (process.env.BASE_URL && !isLoggedIn) {
       await this.login();
     }
   }

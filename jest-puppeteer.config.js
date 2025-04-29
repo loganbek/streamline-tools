@@ -9,9 +9,12 @@ module.exports = {
       '--disable-setuid-sandbox',
       '--disable-dev-shm-usage',
       '--disable-web-security',
-      '--disable-features=IsolateOrigins,site-per-process'
+      '--disable-features=IsolateOrigins,site-per-process',
+      '--enable-features=NetworkService',
+      `--disable-extensions-except=${path.resolve(__dirname, 'src')}`,
+      `--load-extension=${path.resolve(__dirname, 'src')}`
     ],
-    slowMo: 250 // Add delay between actions to improve stability
+    pipe: true
   },
   browserContext: 'default',
   exitOnPageError: false

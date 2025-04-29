@@ -28,4 +28,4 @@ const domOperations = {
   }
 };
 
-export default domOperations;
+module.exports = domOperations;

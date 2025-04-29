@@ -1,45 +1,34 @@
 module.exports = {
-  verbose: true,
-  testTimeout: 60000,
-  maxConcurrency: 1, // Run tests sequentially
-  maxWorkers: 1, // Use single worker
-  testSequencer: './tests/testSequencer.js',
-  setupFilesAfterEnv: ['./tests/setup.js'],
-  testEnvironmentOptions: {
-    url: 'http://localhost'
-  },
-  moduleFileExtensions: ['js', 'jsx'],
-  testMatch: [
-    '**/tests/unit/**/*.test.js',
-    '**/tests/puppeteer/**/*.test.js'
-  ],
-  transform: {
-    '^.+\\.jsx?$': 'babel-jest'
-  },
-  moduleNameMapper: {
-    '\\.(css|less|scss)$': '<rootDir>/tests/__mocks__/styleMock.js',
-    '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/tests/__mocks__/fileMock.js'
-  },
-  collectCoverageFrom: [
-    'src/**/*.{js,jsx}',
-    '!src/manifest.json',
-    '!src/hot-reload.js',
-    '!**/node_modules/**',
-    '!**/vendor/**'
-  ],
-  coverageReporters: ['text', 'lcov'],
-  coverageDirectory: 'coverage',
   projects: [
     {
-      displayName: 'Unit Tests',
-      testMatch: ['**/tests/unit/**/*.test.js'],
-      testEnvironment: 'jsdom'
+      displayName: 'unit',
+      testMatch: ['<rootDir>/tests/unit/**/*.test.js'],
+      testEnvironment: 'jsdom',
+      setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
+      moduleNameMapper: {
+        '\\.(css|less|scss|sass)$': '<rootDir>/tests/__mocks__/styleMock.js',
+        '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
+          '<rootDir>/tests/__mocks__/fileMock.js'
+      },
+      transform: {
+        '^.+\\.jsx?$': ['babel-jest', { 
+          configFile: './babel.config.js'
+        }]
+      },
+      globals: {
+        __EXTENSION_ID__: 'test-extension-id'
+      }
     },
     {
-      displayName: 'Puppeteer Tests',
-      testMatch: ['**/tests/puppeteer/**/*.test.js'],
-      testEnvironment: 'node',
-      preset: 'jest-puppeteer'
+      displayName: 'puppeteer',
+      testMatch: ['<rootDir>/tests/puppeteer/**/*.test.js'],
+      testEnvironment: 'jest-environment-puppeteer',
+      setupFilesAfterEnv: ['expect-puppeteer', '<rootDir>/tests/setup.js'],
+      globalSetup: 'jest-environment-puppeteer/setup',
+      globalTeardown: 'jest-environment-puppeteer/teardown',
+      testEnvironmentOptions: {
+        url: 'http://localhost'
+      }
     }
   ]
 };
