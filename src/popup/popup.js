@@ -55,7 +55,7 @@ async function analyzeUrl(url) {
                 urlObj.hostname === ruleUrlObj.hostname ||
                 urlObj.hostname.endsWith('.' + ruleUrlObj.hostname);
             
-            return hostMatch && urlObj.pathname.startsWith(ruleUrlObj.pathname);
+            return urlObj.pathname.startsWith(ruleUrlObj.pathname);
         } catch (e) {
             // Fallback to a safer regex pattern if URL parsing fails
             const escapedPattern = ruleUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
