@@ -1,33 +1,45 @@
 module.exports = {
-  preset: 'jest-puppeteer',
   verbose: true,
   testTimeout: 60000,
-  testEnvironment: 'node',
-  moduleFileExtensions: ['js', 'jsx'],
-  testPathIgnorePatterns: [
-    '/node_modules/',
-    'tests/puppeteer/commerceAction.*',
-    'tests/puppeteer/document.*',
-    'tests/puppeteer/interfaces.*',
-    'tests/puppeteer/headerFooter.*',
-    'tests/puppeteer/styleSheet.*'
-  ],
+  maxConcurrency: 1, // Run tests sequentially
+  maxWorkers: 1, // Use single worker
+  testSequencer: './tests/testSequencer.js',
   setupFilesAfterEnv: ['./tests/setup.js'],
+  testEnvironmentOptions: {
+    url: 'http://localhost'
+  },
+  moduleFileExtensions: ['js', 'jsx'],
   testMatch: [
-    '**/tests/puppeteer/extension.test.js',
-    '**/tests/puppeteer/config*.test.js'
+    '**/tests/unit/**/*.test.js',
+    '**/tests/puppeteer/**/*.test.js'
   ],
   transform: {
     '^.+\\.jsx?$': 'babel-jest'
   },
   moduleNameMapper: {
-    '\\.(css|less|scss|sass)$': '<rootDir>/tests/__mocks__/styleMock.js',
-    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': 
-      '<rootDir>/tests/__mocks__/fileMock.js'
+    '\\.(css|less|scss)$': '<rootDir>/tests/__mocks__/styleMock.js',
+    '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/tests/__mocks__/fileMock.js'
   },
   collectCoverageFrom: [
     'src/**/*.{js,jsx}',
+    '!src/manifest.json',
+    '!src/hot-reload.js',
     '!**/node_modules/**',
     '!**/vendor/**'
+  ],
+  coverageReporters: ['text', 'lcov'],
+  coverageDirectory: 'coverage',
+  projects: [
+    {
+      displayName: 'Unit Tests',
+      testMatch: ['**/tests/unit/**/*.test.js'],
+      testEnvironment: 'jsdom'
+    },
+    {
+      displayName: 'Puppeteer Tests',
+      testMatch: ['**/tests/puppeteer/**/*.test.js'],
+      testEnvironment: 'node',
+      preset: 'jest-puppeteer'
+    }
   ]
 };

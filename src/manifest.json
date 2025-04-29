@@ -18,17 +18,19 @@
     "open_in_tab": true
   },
   "background": {
-    "service_worker": "background/background.js"
+    "service_worker": "background/background.js",
+    "type": "module"
   },
+  "content_scripts": [
+    {
+      "matches": ["https://*.bigmachines.com/*"],
+      "js": ["content/content.js"],
+      "run_at": "document_start"
+    }
+  ],
   "web_accessible_resources": [
     {
       "resources": [
-        "jsonpath-1.0.2.js",
-        "injected.js",
-        "adminCommerceInjected.js",
-        "adminCommerceRulesInjected.js",
-        "adminConfigInjected.js",
-        "adminCommerceActionsInjected.js",
         "popup/*",
         "content/*",
         "background/*",
@@ -36,9 +38,7 @@
         "options/*",
         "rulesList.json"
       ],
-      "matches": [
-        "https://*.bigmachines.com/*"
-      ]
+      "matches": ["https://*.bigmachines.com/*"]
     }
   ],
   "side_panel": {

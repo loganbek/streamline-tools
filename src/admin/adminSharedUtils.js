@@ -91,28 +91,30 @@ function validateTextarea(textarea) {
  * @returns {Promise<boolean>} Success status
  */
 export async function injectCode(code, iframeIndex = 0, options = { enableRetries: true }) {
-  if (typeof code !== 'string') {
-    console.error('[INJECT_ERROR] Code must be a string');
-    return false;
-  }
+  try {
+    const iframes = document.getElementsByTagName('iframe');
+    if (!iframes || !iframes[iframeIndex]) {
+      console.error('[INJECT_ERROR] Iframe not found');
+      return false;
+    }
 
-  const inject = async () => {
-    const iframe = document.getElementsByTagName('iframe')[iframeIndex];
+    const iframe = iframes[iframeIndex];
     validateIframe(iframe);
 
     const textarea = iframe.contentDocument.querySelector('#textarea');
-    validateTextarea(textarea);
+    if (!textarea) {
+      console.error('[INJECT_ERROR] Textarea not found');
+      return false;
+    }
 
+    validateTextarea(textarea);
     textarea.value = code;
     return true;
-  };
-
-  try {
-    return options.enableRetries ? 
-      await retryOperation(inject) : 
-      await inject();
   } catch (error) {
     console.error(`[INJECT_ERROR] ${error.message}`);
+    if (options.enableRetries) {
+      return retryOperation(() => injectCode(code, iframeIndex, { ...options, enableRetries: false }));
+    }
     return false;
   }
 }
@@ -125,22 +127,29 @@ export async function injectCode(code, iframeIndex = 0, options = { enableRetrie
  * @returns {Promise<string>} Extracted code or newline
  */
 export async function extractCode(iframeIndex = 0, options = { enableRetries: true }) {
-  const extract = async () => {
-    const iframe = document.getElementsByTagName('iframe')[iframeIndex];
+  try {
+    const iframes = document.getElementsByTagName('iframe');
+    if (!iframes || !iframes[iframeIndex]) {
+      console.error('[EXTRACT_ERROR] Iframe not found');
+      return '\n';
+    }
+
+    const iframe = iframes[iframeIndex];
     validateIframe(iframe);
 
     const textarea = iframe.contentDocument.querySelector('#textarea');
+    if (!textarea) {
+      console.error('[EXTRACT_ERROR] Textarea not found');
+      return '\n';
+    }
+
     validateTextarea(textarea);
-
-    return textarea.value || '\n';
-  };
-
-  try {
-    return options.enableRetries ?
-      await retryOperation(extract) :
-      await extract();
+    return textarea.value;
   } catch (error) {
     console.error(`[EXTRACT_ERROR] ${error.message}`);
+    if (options.enableRetries) {
+      return retryOperation(() => extractCode(iframeIndex, { ...options, enableRetries: false }));
+    }
     return '\n';
   }
 }

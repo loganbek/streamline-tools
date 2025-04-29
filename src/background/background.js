@@ -9,32 +9,91 @@ function logDebug(message, ...args) {
     }
 }
 
-// Listen for messages from popup.js and handle them synchronously
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    logDebug("Received message from popup.js:", request);
+// Add to the top with other state management
+const state = {
+  isIterating: false,
+  iterationCount: 0,
+  lastIterationTime: null
+};
 
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        if (tabs.length === 0) {
-            logDebug("No active tabs found, cannot forward message to content.js.");
-            sendResponse({ success: false, error: "No active tabs found." });
+// Handle extension startup
+chrome.runtime.onStartup.addListener(() => {
+    logDebug("Extension started");
+    initializeExtension();
+});
+
+// Handle extension installation/update
+chrome.runtime.onInstalled.addListener((details) => {
+    logDebug("Extension installed/updated:", details.reason);
+    initializeExtension();
+});
+
+function initializeExtension() {
+    // Clear any stale state
+    chrome.storage.local.get(null, (items) => {
+        const staleKeys = ['currentBML', 'lastError'];
+        for (const key of staleKeys) {
+            if (key in items) {
+                chrome.storage.local.remove(key);
+            }
+        }
+    });
+}
+
+// Listen for messages from popup.js with enhanced error handling
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    logDebug("Received message:", request);
+    
+    // Handle immediate responses
+    if (request.type === 'ping') {
+        sendResponse({ status: 'alive' });
+        return true;
+    }
+
+    // Add to chrome.runtime.onMessage listener
+    if (request.type === 'iterate') {
+        handleIteration();
+        sendResponse({ success: true });
+        return true;
+    }
+
+    // Handle messages that need to be forwarded to content scripts
+    chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
+        if (!tabs.length) {
+            const error = "No active tab found";
+            logDebug(error);
+            sendResponse({ success: false, error });
             return;
         }
 
-        const activeTabId = tabs[0].id;
-
-        // Forward the message to content.js and wait for a response
-        chrome.tabs.sendMessage(activeTabId, request, (response) => {
-            if (chrome.runtime.lastError) {
-                logDebug("Error forwarding message to content.js:", chrome.runtime.lastError.message);
-                sendResponse({ success: false, error: chrome.runtime.lastError.message });
+        const activeTab = tabs[0];
+        
+        try {
+            // Attempt to send message to content script
+            const response = await chrome.tabs.sendMessage(activeTab.id, request);
+            logDebug("Content script response:", response);
+            sendResponse({ success: true, data: response });
+        } catch (error) {
+            // Handle various error cases
+            if (error.message.includes('receiving end does not exist')) {
+                // Content script not ready/injected - retry once
+                setTimeout(async () => {
+                    try {
+                        const retryResponse = await chrome.tabs.sendMessage(activeTab.id, request);
+                        sendResponse({ success: true, data: retryResponse });
+                    } catch (retryError) {
+                        logDebug("Retry failed:", retryError);
+                        sendResponse({ success: false, error: retryError.message });
+                    }
+                }, 1000);
             } else {
-                logDebug("Response from content.js:", response);
-                sendResponse(response);
+                logDebug("Error handling message:", error);
+                sendResponse({ success: false, error: error.message });
             }
-        });
+        }
     });
 
-    // Return true to indicate asynchronous response
+    // Return true to indicate we'll send response asynchronously
     return true;
 });
 
@@ -189,70 +248,42 @@ chrome.commands.onCommand.addListener((command) => {
     }
 });
 
-// Function to handle BML actions
+// Improved BML handling function
 function handleBML(action) {
- const isLoad = action === 'load';
- logDebug(`Executing ${action}BML...`);
- 
- chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-     if (tabs.length === 0) {
-         logDebug(`No active tabs found, exiting ${action}BML.`);
-         return;
-     }
+    const isLoad = action === 'load';
+    logDebug(`Executing ${action}BML...`);
 
-     const tabId = tabs[0].id;
-     logDebug("Found active tab with ID:", tabId);
+    chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
+        if (!tabs.length) {
+            logDebug(`No active tabs found, exiting ${action}BML.`);
+            return;
+        }
 
-     chrome.scripting.executeScript({
-         target: { tabId: tabId },
-         func: (isLoad) => {
-             console.log(`Executing ${isLoad ? 'LOAD' : 'UNLOAD'} BML...`);
-             
-             // Send message to content script to handle BML loading/unloading
-             chrome.runtime.sendMessage({
-                 greeting: isLoad ? "load" : "unload"
-             });
-             
-             // Trigger the appropriate action based on whether we're loading or unloading
-             if (isLoad) {
-                 // For loading BML, we need to get the code from storage and load it
-                 chrome.storage.local.get(['currentBML'], function(result) {
-                     try {
-                         if (result.currentBML) {
-                             chrome.tabs.sendMessage(tabId, {
-                                 greeting: "load",
-                                 code: result.currentBML
-                             }, function() {
-                                 if (chrome.runtime.lastError) {
-                                     console.error("Error loading BML:", chrome.runtime.lastError);
-                                 }
-                             });
-                         } else {
-                             console.warn("No BML code found in storage to load");
-                         }
-                     } catch (error) {
-                         console.error("Error in BML loading process:", error);
-                     }
-                 });
-             } else {
-                 // For unloading BML, we need to get the code from the editor and save it
-                 chrome.tabs.sendMessage(tabId, { greeting: "unload" }, function() {
-                     if (chrome.runtime.lastError) {
-                         console.error("Error unloading BML:", chrome.runtime.lastError);
-                         return;
-                     }
-                 });
-             }
-         },
-         args: [isLoad]
-     });
+        const tabId = tabs[0].id;
 
-     logDebug(`Script injected to ${action} BML.`);
-     if (!isLoad) {
-         chrome.action.enable(tabId);
-         logDebug("Extension action enabled for tab:", tabId);
-     }
- });
+        try {
+            if (isLoad) {
+                const storage = await chrome.storage.local.get(['currentBML']);
+                if (!storage.currentBML) {
+                    throw new Error('No BML code found in storage');
+                }
+                
+                await chrome.tabs.sendMessage(tabId, {
+                    greeting: "load",
+                    code: storage.currentBML
+                });
+            } else {
+                await chrome.tabs.sendMessage(tabId, { greeting: "unload" });
+                chrome.action.enable(tabId);
+            }
+            
+            logDebug(`${action}BML completed successfully`);
+        } catch (error) {
+            logDebug(`Error in ${action}BML:`, error);
+            // Store last error for debugging
+            chrome.storage.local.set({ lastError: error.message });
+        }
+    });
 }
 
 // Function to handle HTML actions
@@ -328,3 +359,48 @@ const loadBML = () => handleBML('load');
 const unloadBML = () => handleBML('unload');
 const loadTestBML = () => handleBML('loadTest');
 const unloadTestBML = () => handleBML('unloadTest');
+
+// Add new function for iteration management
+function handleIteration() {
+  logDebug("Handling iteration");
+  
+  // Query active tab to check iteration state
+  chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
+    if (!tabs.length) {
+      logDebug("No active tab found for iteration");
+      return;
+    }
+
+    try {
+      // Check current iteration state
+      const response = await chrome.tabs.sendMessage(tabs[0].id, { greeting: 'checkIteration' });
+      
+      if (response.isIterating) {
+        logDebug("Already iterating, count:", response.iterationCount);
+        return;
+      }
+
+      // Start new iteration
+      state.isIterating = true;
+      state.iterationCount++;
+      state.lastIterationTime = Date.now();
+      
+      await chrome.tabs.sendMessage(tabs[0].id, { 
+        greeting: 'startIteration',
+        iterationCount: state.iterationCount
+      });
+      
+      // Perform iteration logic
+      await handleBML('unload');
+      await handleBML('load');
+      
+      // End iteration
+      state.isIterating = false;
+      await chrome.tabs.sendMessage(tabs[0].id, { greeting: 'endIteration' });
+      
+    } catch (error) {
+      logDebug("Error during iteration:", error);
+      state.isIterating = false;
+    }
+  });
+}

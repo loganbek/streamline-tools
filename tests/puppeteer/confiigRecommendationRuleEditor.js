@@ -1,25 +1,24 @@
-const puppeteer = require('puppeteer'); // v23.0.0 or later
+const { TestHelper } = require('./helpers');
 const login = require('./login');
 
-describe('Recommendation Rule Editor Tests', () => {
-    let page;
-    
+describe('Configuration Recommendation Rule Editor Tests', () => {
+    let helper;
+
     beforeAll(async () => {
-        const browser = await puppeteer.launch();
-        page = await browser.newPage();
-        await login(page);
+        helper = new TestHelper();
+        await helper.init();
     });
 
     afterAll(async () => {
-        await page.close();
+        await helper.cleanup();
     });
 
-    test('should navigate to recommendation rule editor and verify extension functionality', async () => {
+    test('should navigate through recommendation rule editor', async () => {
+        const page = helper.page;
         const timeout = 5000;
         page.setDefaultTimeout(timeout);
 
-        // Navigate to Admin section
-        await page.goto('https://devmcnichols.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=5268044&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true', {
+        await page.goto(`${process.env.BASE_URL}/admin/configuration/rules/edit_rule.jsp?rule_id=5268044&rule_type=1&pline_id=-1&segment_id=11&model_id=-1&fromList=true`, {
             waitUntil: 'networkidle0'
         });
 

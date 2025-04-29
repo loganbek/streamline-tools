@@ -1,152 +1,96 @@
 const puppeteer = require('puppeteer'); // v23.0.0 or later
 require('dotenv').config(); // Add this to load environment variables
+const { TestHelper } = require('./helpers');
+const login = require('./login');
 
-(async () => {
-    // Check if password environment variable exists
-    if (!process.env.CPQ_PASSWORD || !process.env.CPQ_USERNAME) {
-        console.error('Error: CPQ_PASSWORD and/or CPQ_USERNAME environment variable is not set');
-        process.exit(1);
-    }
+describe('Login to Header & Footer Tests', () => {
+    let helper;
 
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    const timeout = 5000;
-    page.setDefaultTimeout(timeout);
+    beforeAll(async () => {
+        helper = new TestHelper();
+        await helper.init();
+    });
 
-    {
-        const targetPage = page;
-        await targetPage.setViewport({
+    afterAll(async () => {
+        await helper.cleanup();
+    });
+
+    test('should login and navigate to header & footer', async () => {
+        const page = helper.page;
+        await login(page);
+
+        await page.setViewport({
             width: 759,
             height: 882
-        })
-    }
-    {
-        const targetPage = page;
-        await targetPage.goto('https://devmcnichols.bigmachines.com/commerce/display_company_profile.jsp?redirectUrl=%2Flogout.jsp%3F_bm_trail_refresh_%3Dtrue&hash_param=');
-    }
-    {
-        const targetPage = page;
-        await puppeteer.Locator.race([
-            targetPage.locator('::-p-aria(Username:)'),
-            targetPage.locator('#username'),
-            targetPage.locator('::-p-xpath(//*[@id=\\"username\\"])'),
-            targetPage.locator(':scope >>> #username')
-        ])
-            .setTimeout(timeout)
-            .click({
-              offset: {
-                x: 73.33333206176758,
-                y: 3.666656494140625,
-              },
-            });
-    }
-    {
-        const targetPage = page;
-        await puppeteer.Locator.race([
-            targetPage.locator('::-p-aria(Username:)'),
-            targetPage.locator('#username'),
-            targetPage.locator('::-p-xpath(//*[@id=\\"username\\"])'),
-            targetPage.locator(':scope >>> #username')
-        ])
-            .setTimeout(timeout)
-            .fill('process.env.CPQ_USERNAME'); // Use environment variable here
-    }
-    
-    {
-        const targetPage = page;
-        await puppeteer.Locator.race([
-            targetPage.locator('::-p-aria(Password:)'),
-            targetPage.locator('#psword'),
-            targetPage.locator('::-p-xpath(//*[@id=\\"psword\\"])'),
-            targetPage.locator(':scope >>> #psword')
-        ])
-            .setTimeout(timeout)
-            .fill(process.env.CPQ_PASSWORD); // Use environment variable here
-    }
-    {
-        const targetPage = page;
-        const promises = [];
-        const startWaitingForEvents = () => {
-            promises.push(targetPage.waitForNavigation());
-        }
-        await puppeteer.Locator.race([
-            targetPage.locator('div.login-button div'),
-            targetPage.locator('::-p-xpath(//*[@id=\\"login-form\\"]/div[3]/table/tbody/tr/td[2]/div)'),
-            targetPage.locator(':scope >>> div.login-button div')
-        ])
-            .setTimeout(timeout)
-            .on('action', () => startWaitingForEvents())
-            .click({
-              offset: {
-                x: 49.33333206176758,
-                y: 13.33331298828125,
-              },
-            });
-        await Promise.all(promises);
-    }
-    {
-        const targetPage = page;
-        await puppeteer.Locator.race([
-            targetPage.locator('#ui-id-1'),
-            targetPage.locator('::-p-xpath(//*[@id=\\"ui-id-1\\"])'),
-            targetPage.locator(':scope >>> #ui-id-1')
-        ])
-            .setTimeout(timeout)
-            .click({
-              offset: {
-                x: 98.67706298828125,
-                y: 1.625,
-              },
-            });
-    }
-    {
-        const targetPage = page;
-        const promises = [];
-        const startWaitingForEvents = () => {
-            promises.push(targetPage.waitForNavigation());
-        }
-        await puppeteer.Locator.race([
-            targetPage.locator('::-p-aria(Admin[role=\\"image\\"])'),
-            targetPage.locator('#ui-id-4 span.oj-navigationlist-item-icon'),
-            targetPage.locator('::-p-xpath(//*[@id=\\"ui-id-4\\"]/a/span[1])'),
-            targetPage.locator(':scope >>> #ui-id-4 span.oj-navigationlist-item-icon')
-        ])
-            .setTimeout(timeout)
-            .on('action', () => startWaitingForEvents())
-            .click({
-              offset: {
-                x: 11.67706298828125,
-                y: 11.197916030883789,
-              },
-            });
-        await Promise.all(promises);
-    }
-    {
-        const targetPage = page;
-        const promises = [];
-        const startWaitingForEvents = () => {
-            promises.push(targetPage.waitForNavigation());
-        }
-        await puppeteer.Locator.race([
-            targetPage.locator('::-p-aria(Header & Footer)'),
-            targetPage.locator('div:nth-of-type(3) > ul:nth-of-type(2) > li > ul > li:nth-of-type(1) > a'),
-            targetPage.locator('::-p-xpath(//*[@id=\\"list-display\\"]/div[3]/ul[2]/li/ul/li[1]/a)'),
-            targetPage.locator(':scope >>> div:nth-of-type(3) > ul:nth-of-type(2) > li > ul > li:nth-of-type(1) > a')
-        ])
-            .setTimeout(timeout)
-            .on('action', () => startWaitingForEvents())
-            .click({
-              offset: {
-                x: 59.40625,
-                y: 6.33331298828125,
-              },
-            });
-        await Promise.all(promises);
-    }
+        });
 
-    await browser.close();
+        // Navigate to Header & Footer
+        const promises = [];
+        const startWaitingForEvents = () => {
+            promises.push(page.waitForNavigation());
+        };
 
-})().catch(err => {
-    console.error(err);
-    process.exit(1);
+        await puppeteer.Locator.race([
+            page.locator('::-p-aria(Admin[role=\\"image\\"])'),
+            page.locator('#ui-id-4 span.oj-navigationlist-item-icon'),
+            page.locator('::-p-xpath(//*[@id=\\"ui-id-4\\"]/a/span[1])'),
+            page.locator(':scope >>> #ui-id-4 span.oj-navigationlist-item-icon')
+        ])
+            .setTimeout(5000)
+            .on('action', () => startWaitingForEvents())
+            .click({
+                offset: {
+                    x: 11.67706298828125,
+                    y: 11.197916030883789,
+                },
+            });
+        await Promise.all(promises);
+
+        // Click Header & Footer link
+        const headerFooterPromises = [];
+        const waitForHeaderFooter = () => {
+            headerFooterPromises.push(page.waitForNavigation());
+        };
+
+        await puppeteer.Locator.race([
+            page.locator('::-p-aria(Header & Footer)'),
+            page.locator('div:nth-of-type(3) > ul:nth-of-type(2) > li > ul > li:nth-of-type(1) > a')
+        ])
+            .setTimeout(5000)
+            .on('action', () => waitForHeaderFooter())
+            .click({
+                offset: {
+                    x: 59.40625,
+                    y: 6.33331298828125,
+                },
+            });
+        await Promise.all(headerFooterPromises);
+
+        // Verify we're on the Header & Footer page
+        const pageTitle = await page.title();
+        expect(pageTitle).toContain('Header & Footer');
+    });
+
+    test('should handle header & footer content editing', async () => {
+        const popup = await helper.verifyPopupPage('popupHeaderFooterHTML.html');
+
+        const testContent = `
+<header>
+    <div class="custom-header">Test Header</div>
+</header>
+<footer>
+    <div class="custom-footer">Test Footer</div>
+</footer>`;
+
+        await helper.testLoad(popup, 'header_footer.html', testContent, '#contentEditor');
+        
+        // Verify content loaded correctly
+        const editorContent = await helper.page.$eval('#contentEditor', el => el.value);
+        expect(editorContent).toBe(testContent);
+
+        // Test HTML validation
+        await popup.click('#validateHTML');
+        const validationResult = await helper.page.$eval('.validation-result', el => el.textContent);
+        expect(validationResult).toContain('valid');
+    });
 });

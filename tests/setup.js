@@ -1,68 +1,87 @@
-require('dotenv').config({ path: './tests/.env' });
-const puppeteer = require('puppeteer');
 const { setDefaultOptions } = require('expect-puppeteer');
 const dotenv = require('dotenv');
 
-dotenv.config();
+// Load environment variables
+dotenv.config({ path: './tests/.env' });
 
+// Configure longer timeouts for stability
 jest.setTimeout(60000);
-
 setDefaultOptions({ timeout: 30000 });
 
 // Set test environment
 process.env.NODE_ENV = 'test';
 
-// Load dotenv for test credentials
-require('dotenv').config({ path: './tests/.env' });
+// Configure Jest environment
+const jestConfig = {
+  maxConcurrency: 1,
+  maxWorkers: 1,
+  testTimeout: 60000,
+  setupFilesAfterEnv: ['expect-puppeteer']
+};
 
-// Mock Chrome API
+// Add environment validation
+beforeAll(async () => {
+  // Verify required environment variables
+  const requiredVars = ['CPQ_USERNAME', 'CPQ_PASSWORD'];
+  const missing = requiredVars.filter(varName => !process.env[varName]);
+  
+  if (missing.length > 0) {
+    throw new Error(`Missing required environment variables: ${missing.join(', ')}`);
+  }
+});
+
+// Handle test failures
+afterEach(async () => {
+  if (global.__LAST_TEST_FAILED__) {
+    // Take screenshot on failure if we have an active page
+    const page = global.page;
+    if (page) {
+      await page.screenshot({
+        path: `test-failures/failure-${Date.now()}.png`,
+        fullPage: true
+      });
+    }
+  }
+});
+
+// Global error handler
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+// Mock Chrome API for unit tests
 global.chrome = {
   runtime: {
-    getURL: jest.fn(path => `chrome-extension://fake-extension-id/${path}`),
+    getURL: jest.fn(path => `chrome-extension://fake-id/${path}`),
     onMessage: {
       addListener: jest.fn(),
       removeListener: jest.fn()
     },
     sendMessage: jest.fn()
   },
+  scripting: {
+    executeScript: jest.fn()
+  },
   tabs: {
     query: jest.fn(),
-    sendMessage: jest.fn()
-  },
-  storage: {
-    sync: {
-      get: jest.fn(),
-      set: jest.fn()
-    },
-    local: {
-      get: jest.fn(),
-      set: jest.fn()
-    }
-  },
-  scripting: {
-    executeScript: jest.fn().mockResolvedValue([{ result: undefined }])
+    sendMessage: jest.fn(),
+    create: jest.fn(),
+    update: jest.fn()
   }
 };
 
-// Mock CustomEvent if not provided by jsdom
-if (typeof CustomEvent !== 'function') {
-  global.CustomEvent = class CustomEvent {
-    constructor(type, options = {}) {
-      this.type = type;
-      this.detail = options?.detail;
-    }
-  };
-}
-
-beforeAll(async () => {
-  // Ensure required env vars are set
-  if (!process.env.CPQ_USERNAME || !process.env.CPQ_PASSWORD) {
-    console.error('Missing required environment variables');
-    process.exit(1);
+// Add custom error matchers
+expect.extend({
+  toBeValidationError(received, type) {
+    return {
+      message: () =>
+        `expected ${received} to be a validation error of type ${type}`,
+      pass: received && received.type === type
+    };
   }
-  // Add any global setup needed
 });
 
-afterAll(async () => {
-  // Cleanup after all tests
-});
+// Export configuration
+module.exports = {
+  jestConfig
+};

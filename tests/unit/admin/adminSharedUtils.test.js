@@ -34,49 +34,49 @@ describe('Admin Shared Utils', () => {
   });
 
   describe('injectCode', () => {
-    test('should inject code into textarea', () => {
-      const result = utils.injectCode('New code');
+    test('should inject code into textarea', async () => {
+      const result = await utils.injectCode('New code');
       expect(result).toBe(true);
       expect(document.getElementsByTagName('iframe')[0].contentDocument.querySelector('#textarea').value)
         .toBe('New code');
     });
 
-    test('should return false if iframe not found', () => {
+    test('should return false if iframe not found', async () => {
       document.getElementsByTagName.mockReturnValue([]);
-      const result = utils.injectCode('New code');
+      const result = await utils.injectCode('New code');
       expect(result).toBe(false);
     });
 
-    test('should return false if textarea not found', () => {
+    test('should return false if textarea not found', async () => {
       document.getElementsByTagName.mockReturnValue([{
         contentDocument: {
           querySelector: () => null
         }
       }]);
-      const result = utils.injectCode('New code');
+      const result = await utils.injectCode('New code');
       expect(result).toBe(false);
     });
   });
 
   describe('extractCode', () => {
-    test('should extract code from textarea', () => {
-      const code = utils.extractCode();
+    test('should extract code from textarea', async () => {
+      const code = await utils.extractCode();
       expect(code).toBe('Test code');
     });
 
-    test('should return newline if iframe not found', () => {
+    test('should return newline if iframe not found', async () => {
       document.getElementsByTagName.mockReturnValue([]);
-      const code = utils.extractCode();
+      const code = await utils.extractCode();
       expect(code).toBe('\n');
     });
 
-    test('should return newline if textarea not found', () => {
+    test('should return newline if textarea not found', async () => {
       document.getElementsByTagName.mockReturnValue([{
         contentDocument: {
           querySelector: () => null
         }
       }]);
-      const code = utils.extractCode();
+      const code = await utils.extractCode();
       expect(code).toBe('\n');
     });
   });
@@ -128,10 +128,10 @@ describe('Admin Shared Utils', () => {
       expect(onLoad).toHaveBeenCalled();
     });
 
-    test('should handle loadCode with custom afterLoad handler', () => {
+    test('should handle loadCode with custom afterLoad handler', async () => {
       const onAfterLoad = jest.fn();
       utils.setupCommonEventListeners({ debug: true, onAfterLoad });
-      listeners.loadCode({ detail: 'Test code' });
+      await listeners.loadCode({ detail: 'Test code' });
       expect(onAfterLoad).toHaveBeenCalledWith('Test code');
     });
 

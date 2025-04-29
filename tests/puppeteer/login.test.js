@@ -1,45 +1,54 @@
-const puppeteer = require('puppeteer');
+const { TestHelper } = require('./helpers');
+const login = require('./login');
 require('dotenv').config({ path: './tests/.env' });
 
 describe('Login Tests', () => {
-    let browser;
-    let page;
+    let helper;
 
     beforeAll(async () => {
-        if (!process.env.CPQ_USERNAME || !process.env.CPQ_PASSWORD) {
-            throw new Error('CPQ_USERNAME and CPQ_PASSWORD environment variables must be set');
-        }
-
-        browser = await puppeteer.launch({
-            headless: false,
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage',
-                '--disable-extensions-except=./src',
-                '--load-extension=./src'
-            ]
-        });
-        page = await browser.newPage();
-        await page.setViewport({ width: 1920, height: 1080 });
+        helper = new TestHelper();
+        await helper.init();
     });
 
     afterAll(async () => {
-        if (browser) {
-            await browser.close();
-        }
+        await helper.cleanup();
     });
 
-    test('should login successfully', async () => {
-        await page.goto('http://localhost:3000/login');
-        await page.waitForSelector('#username');
-        await page.type('#username', process.env.CPQ_USERNAME);
-        await page.type('#password', process.env.CPQ_PASSWORD);
-        await page.click('button[type="submit"]');
-        await page.waitForNavigation();
+    test('should successfully login', async () => {
+        await login(helper.page);
         
-        // Verify successful login
-        const pageTitle = await page.title();
-        expect(pageTitle).toContain('Dashboard');
+        const title = await helper.page.title();
+        expect(title).toContain('Home');
+    });
+
+    test('should handle failed login', async () => {
+        const page = helper.page;
+        await page.goto(process.env.BASE_URL);
+
+        await page.type('#username', 'invalid_user');
+        await page.type('#password', 'invalid_password');
+
+        await Promise.all([
+            page.waitForNavigation(),
+            page.click('input[type="submit"]')
+        ]);
+
+        const errorMessage = await page.$eval('.error-message', el => el.textContent);
+        expect(errorMessage).toContain('Invalid credentials');
+    });
+
+    test('should redirect to login page when session expires', async () => {
+        await login(helper.page);
+        
+        // Wait for session timeout (mock it for test)
+        await helper.page.evaluate(() => {
+            localStorage.removeItem('session_token');
+        });
+
+        // Try to access protected page
+        await helper.page.goto(`${process.env.BASE_URL}/admin`);
+        
+        const currentUrl = helper.page.url();
+        expect(currentUrl).toContain('login');
     });
 });
