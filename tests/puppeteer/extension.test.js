@@ -1,62 +1,75 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
-require('dotenv').config();
-
+require('dotenv').config({ path: './tests/.env' });
+const { getExtensionId } = require('./helpers');
 
 describe('Chrome Extension Tests', () => {
     let browser;
     let page;
-    let extensionId = process.env.EXTENSION_ID;
+    let extensionId;
 
     beforeAll(async () => {
-        browser = await puppeteer.launch({ headless: false });
-        page = await browser.newPage();
+        const extensionPath = path.resolve(__dirname, '../../src');
+        
+        try {
+            browser = await puppeteer.launch({
+                headless: false,
+                args: [
+                    `--disable-extensions-except=${extensionPath}`,
+                    `--load-extension=${extensionPath}`,
+                    '--no-sandbox',
+                    '--disable-dev-shm-usage'
+                ],
+                timeout: 30000
+            });
 
-        await page.goto('chrome-extension://' + extensionId + 'popup.html');
+            // Wait for extension to be properly loaded
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            page = await browser.newPage();
+            extensionId = await getExtensionId(browser);
+            
+            if (!extensionId) {
+                throw new Error('Failed to get extension ID - extension may not have loaded properly');
+            }
+        } catch (error) {
+            console.error('Failed to initialize extension testing:', error);
+            if (browser) {
+                await browser.close();
+            }
+            throw error;
+        }
     });
 
     afterAll(async () => {
-        await browser.close();
+        try {
+            if (page) {
+                await page.close();
+            }
+            if (browser) {
+                await browser.close();
+            }
+        } catch (error) {
+            console.error('Error during cleanup:', error);
+        }
     });
 
-    test('should display the correct title', async () => {
+    beforeEach(async () => {
+        try {
+            await page.goto(`chrome-extension://${extensionId}/options/options.html`, {
+                waitUntil: 'networkidle0',
+                timeout: 30000
+            });
+        } catch (error) {
+            console.error('Failed to load options page:', error);
+            throw error;
+        }
+    });
+
+    test('should load extension options page', async () => {
+        // Verify the options page loads correctly
+        await page.waitForSelector('body');
         const title = await page.title();
-        expect(title).toBe('Expected Title');
+        expect(title).toBe('Streamline CPQ Tools Options');
     });
-
-    // Add more tests as needed
 });
-
-// import puppeteer from 'puppeteer';
-// import path from 'path';
-
-// const pathToExtension = path.join(process.cwd(), 'streamline-tools');
-// const browser = await puppeteer.launch({
-//   args: [
-//     `--disable-extensions-except=${pathToExtension}`,
-//     `--load-extension=${pathToExtension}`,
-//   ],
-// });
-
-// const workerTarget = await browser.waitForTarget(
-//   // Assumes that there is only one service worker created by the extension and its URL ends with background.js.
-//   target =>
-//     target.type() === 'service_worker' &&
-//     target.url().endsWith('background.js'),
-// );
-
-// const worker = await workerTarget.worker();
-
-// // Open a popup (available for Canary channels).
-// await worker.evaluate('chrome.action.openPopup();');
-
-// const popupTarget = await browser.waitForTarget(
-//   // Assumes that there is only one page with the URL ending with popup.html and that is the popup created by the extension.
-//   target => target.type() === 'page' && target.url().endsWith('popup.html'),
-// );
-
-// const popupPage = popupTarget.asPage();
-
-// // Test the popup page as you would any other page.
-
-// await browser.close();

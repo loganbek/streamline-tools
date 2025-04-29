@@ -1,4 +1,5 @@
 const CONTENT_DEBUG = true;
+import domOps from './domOperations';
 
 function logDebug(message, ...args) {
   if (CONTENT_DEBUG) {
@@ -23,236 +24,287 @@ if (typeof testCode === "undefined") {
 }
 
 // Event listeners for custom events
-window.addEventListener(
-  "PassToBackground",
-  function (evt) {
-    code = evt.detail;
-    logDebug("PassToBackground event received", code);
-  },
-  false
-);
+domOps.addEventListener(window, "PassToBackground", function (evt) {
+  code = evt.detail;
+  logDebug("PassToBackground event received", code);
+}, false);
 
-window.addEventListener(
-  "PassCommentHeader",
-  function (evt) {
-    commentHeader = evt.detail;
-    logDebug("PassCommentHeader event received", commentHeader);
-  },
-  false
-);
+domOps.addEventListener(window, "PassCommentHeader", function (evt) {
+  commentHeader = evt.detail;
+  logDebug("PassCommentHeader event received", commentHeader);
+}, false);
 
-window.addEventListener(
-  "PassCodeToBackground",
-  function (evt) {
-    code = evt.detail;
-    logDebug("PassCodeToBackground event received", code);
-  },
-  false
-);
+domOps.addEventListener(window, "PassCodeToBackground", function (evt) {
+  code = evt.detail;
+  logDebug("PassCodeToBackground event received", code);
+}, false);
 
-window.addEventListener(
-  "PassTestCodeToBackground",
-  function (evt) {
-    testCode = evt.detail;
-    logDebug("PassTestCodeToBackground event received", testCode);
-  },
-  false
-);
+domOps.addEventListener(window, "PassTestCodeToBackground", function (evt) {
+  testCode = evt.detail;
+  logDebug("PassTestCodeToBackground event received", testCode);
+}, false);
 
-window.addEventListener(
-  "unloadCode",
-  function (evt) {
-    code = evt.detail;
-    logDebug("unloadCode event received", code);
-  },
-  false
-);
+domOps.addEventListener(window, "unloadCode", function (evt) {
+  code = evt.detail;
+  logDebug("unloadCode event received", code);
+}, false);
 
 // Function to inject a script into the page
 function injectJs(link) {
+  // Skip script injection in test environment
+  if (process.env.NODE_ENV === 'test') {
+    logDebug("Skipping script injection in test environment");
+    return;
+  }
+  
   logDebug("Injecting script", link);
-  const scr = document.createElement("script");
+  const scr = domOps.createElement("script");
   scr.type = "text/javascript";
   scr.src = link;
-  document.getElementsByTagName("head")[0].appendChild(scr);
+  domOps.appendChild(domOps.getHead(), scr);
 }
 
-// Inject the main script
-// injectJs(chrome.runtime.getURL("injected.js"));
+// Inject the main script only in non-test environment
+if (process.env.NODE_ENV !== 'test') {
+  injectJs(chrome.runtime.getURL("injected.js"));
+}
 
-// Message listener for communication with background script
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+// Single consolidated message listener for all interactions
+chrome.runtime.onMessage.addListener(async function (request, sender, sendResponse) {
   logDebug("Message received", request);
 
-  let filename = document.getElementById("variableName")?.value || "nofilename";
-  filename = processFilename(filename);
-  logDebug("Filename processed", filename);
+  try {
+    // Handle command API messages
+    if (request.direction) {
+      logDebug("Command API message received for direction:", request.direction);
+      return true;
+    }
 
-  switch (request.greeting) {
-    case "unload":
-      logDebug("Processing unload request");
-      const unloadEvent = new CustomEvent("unloadCode", {
-        detail: request.code,
-      });
-      window.dispatchEvent(unloadEvent);
+    // Get matching rule from rulesList.json
+    const rulesList = await fetchRulesList();
+    
+    // Handle rule-specific request if provided
+    if (request.rule?.RuleName) {
+      const rule = rulesList.find((r) => r.RuleName === request.rule.RuleName);
+      if (!rule) {
+        logDebug("No matching rule found for request:", request.rule);
+        sendResponse({ error: "Rule not found" });
+        return true;
+      }
+      return handleRuleSpecificMessage(rule, request, sendResponse);
+    }
 
-      if (code && !code.startsWith(commentHeader)) {
-        code = commentHeader + "\n\n" + code;
+    // Find matching rule based on URL for general requests
+    const rule = rulesList.find(r => {
+      if (!r.URL) return false;
+      const urlPattern = r.URL.replace(/\*/g, '');
+      return window.location.href.includes(urlPattern);
+    });
+
+    if (!rule) {
+      logDebug("No matching rule found for URL:", window.location.href);
+      // Still handle special cases even if no rule matches
+      if (request.greeting.includes("HTML") || request.greeting.includes("CSS") || request.greeting.includes("XML")) {
+        handleSpecialCaseMessages(request, sendResponse);
+        return true;
+      }
+      sendResponse({ error: "No matching rule found for this page" });
+      return true;
+    }
+
+    // Get filename using the rule's selector
+    let filename = "";
+    if (rule.fileNameSelector) {
+      try {
+        const filenameElement = domOps.querySelector(rule.fileNameSelector);
+        filename = filenameElement ? filenameElement.value : "nofilename";
+        if (rule.fileNameSelector2) {
+          const filename2Element = domOps.querySelector(rule.fileNameSelector2);
+          if (filename2Element) {
+            filename = filename2Element.value;
+          }
+        }
+      } catch (error) {
+        logDebug("Error getting filename:", error);
+        filename = "nofilename";
+      }
+    }
+    
+    logDebug("Processing for rule:", rule.RuleName, "filename:", filename);
+
+    switch (request.greeting) {
+      case "unload": {
+        const unloadEvent = new CustomEvent("unloadCode", { detail: request.code });
+        domOps.dispatchEvent(window, unloadEvent);
+
+        // Get code using the rule's selector
+        let code = "";
+        try {
+          if (rule.codeSelector) {
+            const codeElement = domOps.querySelector(rule.codeSelector);
+            code = codeElement ? codeElement.value : "";
+            if (rule.codeSelector2) {
+              const code2Element = domOps.querySelector(rule.codeSelector2);
+              if (code2Element) {
+                code = code2Element.value;
+              }
+            }
+          }
+        } catch (error) {
+          logDebug("Error getting code:", error);
+          sendResponse({ error: "Failed to get code from page" });
+          return true;
+        }
+
+        if (code && !code.startsWith(commentHeader)) {
+          code = commentHeader + "\n\n" + code;
+        }
+
+        sendResponse({
+          filename: filename,
+          code: code,
+          rule: rule
+        });
+        break;
       }
 
-      const isUtil = document
-        .querySelector('span[id^="ext-gen"]')
-        ?.innerHTML.includes("Util");
-      const foldername = isUtil ? "util" : "comm";
+      case "load": {
+        if (!rule.codeSelector) {
+          logDebug("No code selector found for rule", rule);
+          sendResponse({ error: "No code selector found for this rule" });
+          return true;
+        }
 
-      sendResponse({
-        filename: filename,
-        foldername: foldername,
-        code: code,
-      });
-      logDebug("Unload response sent", filename, code);
-      break;
+        const loadEvent = new CustomEvent("loadCode", { detail: request.code });
+        domOps.dispatchEvent(window, loadEvent);
 
-    case "unloadTest":
-      logDebug("Processing unloadTest request");
-      const unloadTestEvent = new CustomEvent("unloadTestCode", {
-        detail: request.code,
-      });
-      window.dispatchEvent(unloadTestEvent);
+        try {
+          const codeElement = domOps.querySelector(rule.codeSelector);
+          if (codeElement) {
+            codeElement.value = request.code;
+          }
 
-      sendResponse({
-        filename: filename,
-        testCode: testCode,
-      });
-      logDebug("UnloadTest response sent", filename, testCode);
-      break;
+          if (rule.codeSelector2) {
+            const code2Element = domOps.querySelector(rule.codeSelector2);
+            if (code2Element) {
+              code2Element.value = request.code;
+            }
+          }
+        } catch (error) {
+          logDebug("Error setting code:", error);
+          sendResponse({ error: "Failed to set code on page" });
+          return true;
+        }
 
-    case "load":
-      logDebug("Processing load request", request.code);
-      const loadEvent = new CustomEvent("loadCode", { detail: request.code });
-      window.dispatchEvent(loadEvent);
-      break;
-
-    case "loadTest":
-      logDebug("Processing loadTest request", request.code);
-      const loadTestEvent = new CustomEvent("loadTestCode", {
-        detail: request.code,
-      });
-      window.dispatchEvent(loadTestEvent);
-      break;
-
-    case "filename":
-      sendResponse({ filename: filename });
-      logDebug("Filename request handled", filename);
-      break;
-
-    case "unloadHeader":
-      const headerCode = document.querySelector("#header_content")?.value || "";
-      logDebug("Unloading header code");
-      sendResponse({ code: headerCode });
-      break;
-
-    case "loadHeader":
-      logDebug("Loading header code");
-      if (document.querySelector("#header_content")) {
-        document.querySelector("#header_content").value = request.code;
+        sendResponse({ status: "Code loaded successfully" });
+        break;
       }
-      sendResponse({ status: "Header loaded successfully" });
-      break;
 
-    case "unloadHeaderHTML":
-      const headerHTMLCode =
-        document.getElementsByName("header")[0].childNodes[0] || "";
-      logDebug("Unloading header HTML code");
-      sendResponse({ code: headerHTMLCode });
-      break;
+      case "unloadTest":
+      case "loadTest": {
+        if (!rule.hasTest || rule.hasTest === "FALSE") {
+          sendResponse({ error: "This rule does not support test operations" });
+          return true;
+        }
+        
+        const eventName = request.greeting === "unloadTest" ? "unloadTestCode" : "loadTestCode";
+        const testEvent = new CustomEvent(eventName, { detail: request.code });
+        domOps.dispatchEvent(window, testEvent);
 
-    case "unloadFooterHTML":
-      const footerHTMLCode =
-        document.getElementsByName("footer")[0].childNodes[0] || "";
-      logDebug("Unloading footer HTML code");
-      sendResponse({ code: footerHTMLCode });
-      break;
-
-    case "unloadFooter":
-      const footerCode = document.querySelector("#footer_content")?.value || "";
-      logDebug("Unloading footer code");
-      sendResponse({ code: footerCode });
-      break;
-
-    case "loadFooter":
-      logDebug("Loading footer code");
-      if (document.querySelector("#footer_content")) {
-        document.querySelector("#footer_content").value = request.code;
+        if (request.greeting === "unloadTest") {
+          sendResponse({
+            filename: filename,
+            testCode: testCode
+          });
+        }
+        break;
       }
-      sendResponse({ status: "Footer loaded successfully" });
-      break;
 
-    default:
-      logDebug("Unknown request received", request.greeting);
+      case "filename":
+        sendResponse({ filename: filename });
+        break;
+
+      default:
+        // Handle special cases
+        if (request.greeting.includes("HTML") || request.greeting.includes("CSS") || request.greeting.includes("XML")) {
+          handleSpecialCaseMessages(request, sendResponse);
+        } else {
+          logDebug("Unknown request received", request.greeting);
+          sendResponse({ error: "Unknown request type" });
+        }
+    }
+  } catch (error) {
+    logDebug("Error processing message:", error);
+    sendResponse({ error: "Internal error processing request" });
   }
   return true;
 });
 
-// Function to process filename
-function processFilename(filename) {
-  if (!filename) {
-    filename = "nofilename";
+// Helper function to handle rule-specific messages
+function handleRuleSpecificMessage(rule, request, sendResponse) {
+  switch (request.greeting) {
+    case "unload": {
+      logDebug("Processing unload request for rule:", rule.RuleName);
+      let unloadCode = "";
+      if (rule.RuleName === "Header & Footer") {
+        if (request.headerType === "header") {
+          unloadCode = domOps.querySelector(rule.codeSelector1)?.value || "";
+        } else if (request.headerType === "footer") {
+          unloadCode = domOps.querySelector(rule.codeSelector2)?.value || "";
+        }
+      } else {
+        unloadCode = domOps.querySelector(rule.codeSelector)?.value || "";
+      }
+      sendResponse({ filename: rule.fileName, code: unloadCode });
+      return true;
+    }
+    case "load": {
+      logDebug("Processing load request for rule:", rule.RuleName);
+      const loadElement = domOps.querySelector(rule.codeSelector);
+      if (loadElement) {
+        loadElement.value = request.code;
+        sendResponse({ status: "Code loaded successfully" });
+      } else {
+        sendResponse({ error: "Element not found" });
+      }
+      return true;
+    }
+    default:
+      logDebug("Unknown rule-specific request received", request.greeting);
+      sendResponse({ error: "Unknown request type" });
+      return true;
   }
-  logDebug("processFilename processed filename", filename);
-  return filename;
 }
 
-// Command API listener
-chrome.runtime.onMessage.addListener(function (message) {
-  const { direction } = message;
-  logDebug("Message received for direction", direction);
+// Helper function to handle special case messages (HTML/CSS/XML)
+function handleSpecialCaseMessages(request, sendResponse) {
+  const selectorMap = {
+    HeaderHTML: 'textarea[name="header"]',
+    FooterHTML: 'textarea[name="footer"]',
+    CSS: 'textarea[name="css"]',
+    AltCSS: 'textarea[name="alternate_css"]',
+    JETCSS: 'textarea[name="jet_css"]',
+    GlobalXSL: 'textarea[name="global_xsl"]',
+    XML: 'textarea[name="xml"]'
+  };
 
-  if (direction === "unload_bml") {
-    logDebug("unload_bml received - content.js");
-  } else if (direction === "load_bml") {
-    logDebug("load_bml received - content.js");
+  const type = Object.keys(selectorMap).find(key => request.greeting.includes(key));
+  if (!type) return;
+
+  const selector = selectorMap[type];
+  if (request.greeting.startsWith("unload")) {
+    const code = domOps.querySelector(selector)?.value || "";
+    logDebug(`Unloading ${type} code`);
+    sendResponse({ code });
+  } else if (request.greeting.startsWith("load")) {
+    logDebug(`Loading ${type} code`);
+    const element = domOps.querySelector(selector);
+    if (element) {
+      element.value = request.code;
+    }
+    sendResponse({ status: `${type} loaded successfully` });
   }
-});
-
-logDebug("Content script loaded");
-
-// Message listener for popupHeaderFooterHTML.js interactions
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  logDebug("Message received:", request);
-
-  switch (request.greeting) {
-    case "unloadHeaderHTML": {
-      let headerHTMLCode =
-        document.querySelector('textarea[name="header"]')?.value || "";
-      // const headerHTMLCode = document.querySelector('textarea[name="header"]')?.value || "";
-      logDebug("Unloading header code", headerHTMLCode);
-      sendResponse({ code: headerHTMLCode });
-      break;
-    }
-    case "loadHeaderHTML": {
-      let headerHTMLCode = request.code;
-      logDebug("Loading header code", headerHTMLCode);
-      sendResponse({ status: "Header loaded successfully" });
-      break;
-    }
-    case "unloadFooterHTML": {
-      let footerHTMLCode =
-        document.querySelector('textarea[name="footer"]')?.value || "";
-      logDebug("Unloading footer code", footerHTMLCode);
-      sendResponse({ code: footerHTMLCode });
-      break;
-    }
-
-    case "loadFooterHTML": {
-      let footerHTMLCode = request.code;
-      logDebug("Loading footer code", footerHTMLCode);
-      sendResponse({ status: "Footer loaded successfully" });
-      break;
-    }
-  }
-  return true;
-});
+}
 
 /**
  * Dynamically fetch rule configurations from rulesList.json.
@@ -273,49 +325,7 @@ async function fetchRulesList() {
   }
 }
 
-/**
- * Process incoming messages dynamically based on rulesList.json.
- */
-chrome.runtime.onMessage.addListener(async function (
-  request,
-  sender,
-  sendResponse
-) {
-  logDebug("Message received", request);
-
-  const rulesList = await fetchRulesList();
-  const rule = rulesList.find((r) => r.RuleName === request.rule?.RuleName);
-
-  if (!rule) {
-    logDebug("No matching rule found for request:", request.rule);
-    return;
-  }
-
-  switch (request.greeting) {
-    case "unload": {
-      logDebug("Processing unload request for rule:", rule.RuleName);
-      let unloadCode = "";
-      if (rule.RuleName === "Header & Footer") {
-        if (request.headerType === "header") {
-          unloadCode = document.querySelector(rule.codeSelector1)?.value || "";
-        } else if (request.headerType === "footer") {
-          unloadCode = document.querySelector(rule.codeSelector2)?.value || "";
-        }
-      } else {
-        unloadCode = document.querySelector(rule.codeSelector)?.value || "";
-      }
-      sendResponse({ filename: rule.fileName, code: unloadCode });
-    }
-    case "load":
-      logDebug("Processing load request for rule:", rule.RuleName);
-      {
-        const loadElement = document.querySelector(rule.codeSelector);
-        if (loadElement) {
-          loadElement.value = request.code;
-        }
-      }
-    default:
-      logDebug("Unknown request received", request.greeting);
-  }
-  return true;
-});
+// Export domOps for testing
+if (process.env.NODE_ENV === 'test') {
+  module.exports = { domOps };
+}

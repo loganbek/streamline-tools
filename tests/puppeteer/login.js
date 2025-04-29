@@ -1,127 +1,61 @@
-const puppeteer = require('puppeteer'); // v23.0.0 or later
-// require('dotenv').config(); // Add this to load environment variables
+const puppeteer = require('puppeteer');
+const dotenv = require('dotenv');
+dotenv.config({ path: './tests/.env' });
 
 const username = process.env.CPQ_USERNAME;
 const password = process.env.CPQ_PASSWORD;
 
-(async () => {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
+if (!username || !password) {
+    console.error('Error: CPQ_USERNAME and CPQ_PASSWORD environment variables must be set');
+    process.exit(1);
+}
+
+async function login(page) {
     const timeout = 5000;
     page.setDefaultTimeout(timeout);
 
-    {
-        const targetPage = page;
-        await targetPage.setViewport({
-            width: 2148,
-            height: 1908
-        })
+    await page.setViewport({ width: 1920, height: 1080 });
+    
+    await page.goto(process.env.BASE_URL);
+    
+    // Wait for and fill in login form
+    await page.waitForSelector('#username');
+    await page.type('#username', process.env.USERNAME);
+    await page.type('#password', process.env.PASSWORD);
+    
+    // Click login button and wait for navigation
+    await Promise.all([
+        page.waitForNavigation(),
+        page.click('input[type="submit"]')
+    ]);
+    
+    // Verify we're logged in
+    const title = await page.title();
+    if (!title.includes('Home')) {
+        throw new Error('Login failed - could not verify successful login');
     }
-    {
-        const targetPage = page;
-        await targetPage.goto('chrome://new-tab-page/');
-    }
-    {
-        const targetPage = page;
-        await targetPage.goto('https://devmcnichols.bigmachines.com/commerce/display_company_profile.jsp');
-    }
-    {
-        const targetPage = page;
-        await puppeteer.Locator.race([
-            targetPage.locator('::-p-aria(Username:)'),
-            targetPage.locator('#username'),
-            targetPage.locator('::-p-xpath(//*[@id=\\"username\\"])'),
-            targetPage.locator(':scope >>> #username')
-        ])
-            .setTimeout(timeout)
-            .click({
-              offset: {
-                x: 80,
-                y: 13,
-              },
-            });
-    }
-    {
-        const targetPage = page;
-        await puppeteer.Locator.race([
-            targetPage.locator('::-p-aria(Username:)'),
-            targetPage.locator('#username'),
-            targetPage.locator('::-p-xpath(//*[@id=\\"username\\"])'),
-            targetPage.locator(':scope >>> #username')
-        ])
-            .setTimeout(timeout)
-            .fill(username);
-    }
-    {
-        const targetPage = page;
-        await targetPage.keyboard.down('Tab');
-    }
-    {
-        const targetPage = page;
-        await targetPage.keyboard.up('Tab');
-    }
-    {
-        const targetPage = page;
-        await puppeteer.Locator.race([
-            targetPage.locator('::-p-aria(Password:)'),
-            targetPage.locator('#psword'),
-            targetPage.locator('::-p-xpath(//*[@id=\\"psword\\"])'),
-            targetPage.locator(':scope >>> #psword')
-        ])
-            .setTimeout(timeout)
-            .click({
-              offset: {
-                x: 122,
-                y: 4,
-              },
-            });
-    }
-    {
-        const targetPage = page;
-        await targetPage.keyboard.down('Control');
-    }
-    {
-        const targetPage = page;
-        await targetPage.keyboard.up('Control');
-    }
-    {
-        const targetPage = page;
-        await puppeteer.Locator.race([
-            targetPage.locator('::-p-aria(Password:)'),
-            targetPage.locator('#psword'),
-            targetPage.locator('::-p-xpath(//*[@id=\\"psword\\"])'),
-            targetPage.locator(':scope >>> #psword')
-        ])
-            .setTimeout(timeout)
-            .fill(password);
-    }
-    {
-        const targetPage = page;
-        const promises = [];
-        const startWaitingForEvents = () => {
-            promises.push(targetPage.waitForNavigation());
+}
+
+// Export the login function to be used by other test files
+module.exports = login;
+
+// If this script is run directly, execute the login flow
+if (require.main === module) {
+    (async () => {
+        const browser = await puppeteer.launch({
+            headless: "new", // Use new headless mode
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+        });
+        const page = await browser.newPage();
+        
+        try {
+            await login(page);
+            console.log('Login successful');
+        } catch (err) {
+            console.error('Login failed:', err);
+            process.exit(1);
+        } finally {
+            await browser.close();
         }
-        await puppeteer.Locator.race([
-            targetPage.locator('::-p-aria(Log in[role=\\"link\\"])'),
-            targetPage.locator('#log_in'),
-            targetPage.locator('::-p-xpath(//*[@id=\\"log_in\\"])'),
-            targetPage.locator(':scope >>> #log_in'),
-            targetPage.locator('::-p-text(Log in)')
-        ])
-            .setTimeout(timeout)
-            .on('action', () => startWaitingForEvents())
-            .click({
-              offset: {
-                x: 29,
-                y: 12,
-              },
-            });
-        await Promise.all(promises);
-    }
-
-    await browser.close();
-
-})().catch(err => {
-    console.error(err);
-    process.exit(1);
-});
+    })();
+}

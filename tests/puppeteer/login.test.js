@@ -1,123 +1,45 @@
-const puppeteer = require('puppeteer'); // v23.0.0 or later
+const puppeteer = require('puppeteer');
+require('dotenv').config({ path: './tests/.env' });
 
-(async () => {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    const timeout = 5000;
-    page.setDefaultTimeout(timeout);
+describe('Login Tests', () => {
+    let browser;
+    let page;
 
-    {
-        const targetPage = page;
-        await targetPage.setViewport({
-            width: 2148,
-            height: 1908
-        })
-    }
-    {
-        const targetPage = page;
-        await targetPage.goto('chrome://new-tab-page/');
-    }
-    {
-        const targetPage = page;
-        await targetPage.goto('https://devmcnichols.bigmachines.com/commerce/display_company_profile.jsp');
-    }
-    {
-        const targetPage = page;
-        await puppeteer.Locator.race([
-            targetPage.locator('::-p-aria(Username:)'),
-            targetPage.locator('#username'),
-            targetPage.locator('::-p-xpath(//*[@id=\\"username\\"])'),
-            targetPage.locator(':scope >>> #username')
-        ])
-            .setTimeout(timeout)
-            .click({
-              offset: {
-                x: 80,
-                y: 13,
-              },
-            });
-    }
-    {
-        const targetPage = page;
-        await puppeteer.Locator.race([
-            targetPage.locator('::-p-aria(Username:)'),
-            targetPage.locator('#username'),
-            targetPage.locator('::-p-xpath(//*[@id=\\"username\\"])'),
-            targetPage.locator(':scope >>> #username')
-        ])
-            .setTimeout(timeout)
-            .fill('cwilliams');
-    }
-    {
-        const targetPage = page;
-        await targetPage.keyboard.down('Tab');
-    }
-    {
-        const targetPage = page;
-        await targetPage.keyboard.up('Tab');
-    }
-    {
-        const targetPage = page;
-        await puppeteer.Locator.race([
-            targetPage.locator('::-p-aria(Password:)'),
-            targetPage.locator('#psword'),
-            targetPage.locator('::-p-xpath(//*[@id=\\"psword\\"])'),
-            targetPage.locator(':scope >>> #psword')
-        ])
-            .setTimeout(timeout)
-            .click({
-              offset: {
-                x: 122,
-                y: 4,
-              },
-            });
-    }
-    {
-        const targetPage = page;
-        await targetPage.keyboard.down('Control');
-    }
-    {
-        const targetPage = page;
-        await targetPage.keyboard.up('Control');
-    }
-    {
-        const targetPage = page;
-        await puppeteer.Locator.race([
-            targetPage.locator('::-p-aria(Password:)'),
-            targetPage.locator('#psword'),
-            targetPage.locator('::-p-xpath(//*[@id=\\"psword\\"])'),
-            targetPage.locator(':scope >>> #psword')
-        ])
-            .setTimeout(timeout)
-            .fill('SQq7$T^MJf%S$N^&');
-    }
-    {
-        const targetPage = page;
-        const promises = [];
-        const startWaitingForEvents = () => {
-            promises.push(targetPage.waitForNavigation());
+    beforeAll(async () => {
+        if (!process.env.CPQ_USERNAME || !process.env.CPQ_PASSWORD) {
+            throw new Error('CPQ_USERNAME and CPQ_PASSWORD environment variables must be set');
         }
-        await puppeteer.Locator.race([
-            targetPage.locator('::-p-aria(Log in[role=\\"link\\"])'),
-            targetPage.locator('#log_in'),
-            targetPage.locator('::-p-xpath(//*[@id=\\"log_in\\"])'),
-            targetPage.locator(':scope >>> #log_in'),
-            targetPage.locator('::-p-text(Log in)')
-        ])
-            .setTimeout(timeout)
-            .on('action', () => startWaitingForEvents())
-            .click({
-              offset: {
-                x: 29,
-                y: 12,
-              },
-            });
-        await Promise.all(promises);
-    }
 
-    await browser.close();
+        browser = await puppeteer.launch({
+            headless: false,
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-extensions-except=./src',
+                '--load-extension=./src'
+            ]
+        });
+        page = await browser.newPage();
+        await page.setViewport({ width: 1920, height: 1080 });
+    });
 
-})().catch(err => {
-    console.error(err);
-    process.exit(1);
+    afterAll(async () => {
+        if (browser) {
+            await browser.close();
+        }
+    });
+
+    test('should login successfully', async () => {
+        await page.goto('http://localhost:3000/login');
+        await page.waitForSelector('#username');
+        await page.type('#username', process.env.CPQ_USERNAME);
+        await page.type('#password', process.env.CPQ_PASSWORD);
+        await page.click('button[type="submit"]');
+        await page.waitForNavigation();
+        
+        // Verify successful login
+        const pageTitle = await page.title();
+        expect(pageTitle).toContain('Dashboard');
+    });
 });

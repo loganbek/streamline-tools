@@ -1,4 +1,19 @@
-jest.setTimeout(30000); // Set timeout to 30 seconds
+require('dotenv').config({ path: './tests/.env' });
+const puppeteer = require('puppeteer');
+const { setDefaultOptions } = require('expect-puppeteer');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+jest.setTimeout(60000);
+
+setDefaultOptions({ timeout: 30000 });
+
+// Set test environment
+process.env.NODE_ENV = 'test';
+
+// Load dotenv for test credentials
+require('dotenv').config({ path: './tests/.env' });
 
 // Mock Chrome API
 global.chrome = {
@@ -29,28 +44,25 @@ global.chrome = {
   }
 };
 
-// Mock window.addEventListener
-window.addEventListener = jest.fn();
-window.removeEventListener = jest.fn();
-
-// Mock CustomEvent
-global.CustomEvent = class CustomEvent {
-  constructor(event, params) {
-    this.event = event;
-    this.detail = params ? params.detail : undefined;
-  }
-};
-
-// Mock document functions that might be used
-document.createElement = jest.fn(tagName => {
-  const element = {
-    tagName,
-    style: {},
-    setAttribute: jest.fn(),
-    appendChild: jest.fn()
+// Mock CustomEvent if not provided by jsdom
+if (typeof CustomEvent !== 'function') {
+  global.CustomEvent = class CustomEvent {
+    constructor(type, options = {}) {
+      this.type = type;
+      this.detail = options?.detail;
+    }
   };
-  return element;
+}
+
+beforeAll(async () => {
+  // Ensure required env vars are set
+  if (!process.env.CPQ_USERNAME || !process.env.CPQ_PASSWORD) {
+    console.error('Missing required environment variables');
+    process.exit(1);
+  }
+  // Add any global setup needed
 });
 
-// Helper for testing DOM events
-window.dispatchEvent = jest.fn();
+afterAll(async () => {
+  // Cleanup after all tests
+});

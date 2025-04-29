@@ -123,7 +123,15 @@ async function setDynamicPopup(tabId, url) {
 function cleanUrlParameters(url) {
     try {
         logDebug("Cleaning URL parameters for:", url);
-        const urlObj = new URL(url);
+        // Add protocol if missing
+        let urlWithProtocol = url;
+        if (url.startsWith('*.') || url.startsWith('.')) {
+            urlWithProtocol = 'https://' + url.replace(/^\*\.?/, '');
+        } else if (!url.match(/^[a-zA-Z]+:\/\//)) {
+            urlWithProtocol = 'https://' + url;
+        }
+        
+        const urlObj = new URL(urlWithProtocol);
         const allowedParams = ['rule_id', 'rule_type', 'pline_id', 'segment_id', 'model_id', 'fromList'];
         const cleanedSearchParams = new URLSearchParams();
 
