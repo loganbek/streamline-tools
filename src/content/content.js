@@ -31,7 +31,13 @@ async function fetchRulesList() {
 }
 
 function findMatchingRule(url) {
-  return state.rules.find(rule => url.includes(rule.URL));
+  return state.rules.find(rule => {
+    try {
+      return new URL(url).href.match(rule.pattern ?? rule.URL);
+    } catch {
+      return false;
+    }
+  });
 }
 
 // Initialize content script
