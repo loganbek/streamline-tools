@@ -25,35 +25,37 @@ class TestHelper {
   async init() {
     await this.debugUtils.init();
     
-    // Use or create shared browser instance
     if (!sharedBrowser) {
-      sharedBrowser = await puppeteer.launch({
-        headless: false,
-        slowMo: parseInt(process.env.SLOWMO || '250'),
-        args: [
-          `--disable-extensions-except=${path.resolve(__dirname, '../../src')}`,
-          `--load-extension=${path.resolve(__dirname, '../../src')}`,
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-          '--disable-dev-shm-usage',
-          '--disable-web-security',
-          '--disable-features=IsolateOrigins,site-per-process',
-        ],
-        defaultViewport: { 
-          width: 1920, 
-          height: 1080 
-        }
-      });
+      // Let jest-puppeteer handle browser launch
+      sharedBrowser = global.__BROWSER__;
       
-      // Create shared page
+      if (!sharedBrowser) {
+        throw new Error('Browser not initialized by jest-puppeteer');
+      }
+
+      // Create shared page with error handling
       sharedPage = await sharedBrowser.newPage();
       await this.setupPageDebug(sharedPage);
 
-      // Register cleanup handler only once
+      // Handle crashes and errors
+      sharedPage.on('error', error => {
+        console.error('Page error:', error);
+      });
+
+      sharedPage.on('pageerror', error => {
+        console.error('Page error:', error);
+      });
+
+      // Set default timeout
+      sharedPage.setDefaultTimeout(30000);
+
       if (!browserCleanupRegistered) {
         process.on('exit', async () => {
+          if (sharedPage) {
+            await sharedPage.close().catch(() => {});
+          }
           if (sharedBrowser) {
-            await sharedBrowser.close();
+            await sharedBrowser.close().catch(() => {});
             sharedBrowser = null;
             sharedPage = null;
             isLoggedIn = false;
@@ -63,11 +65,9 @@ class TestHelper {
       }
     }
     
-    // Use shared instances
     this.browser = sharedBrowser;
     this.page = sharedPage;
     
-    // Login if not already logged in
     if (!isLoggedIn) {
       await this.login();
     }

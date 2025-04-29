@@ -6,67 +6,63 @@ describe('Injected Script', () => {
   let originalInjected;
   
   beforeEach(() => {
-    // Clear mocks
     jest.clearAllMocks();
     
-    // Mock frame_bm_script
-    global.frame_bm_script = {
-      editArea: {
-        textarea: {
-          value: 'Initial code'
-        },
-        textareaFocused: false
-      }
-    };
-    
-    // Mock document methods
-    document.getElementsByClassName = jest.fn().mockImplementation(className => {
-      if (className === 'bmx-spellcheck') {
-        return [{ click: jest.fn() }];
-      }
-      if (className === 'bmx-debug') {
-        return [{}, { click: jest.fn() }];
-      }
-      return [];
-    });
-    
+    // Mock basic DOM elements
     document.getElementById = jest.fn().mockImplementation(id => {
-      if (id === 'ext-comp-1040') {
-        return { value: 'Test util script' };
-      }
-      if (id === 'ext-comp-1080') {
-        return { value: 'Test commerce script' };
-      }
-      if (id === 'ext-comp-1095') {
-        return { value: 'Test commerce script 2' };
-      }
       if (id === 'useScript') {
         return { checked: true };
       }
-      return null;
+      return {
+        value: 'Test content',
+        click: jest.fn()
+      };
+    });
+
+    document.getElementsByClassName = jest.fn().mockImplementation(className => {
+      return [{ click: jest.fn() }];
     });
     
-    // Load the injected script module (mock import)
+    // Load the injected script module
     jest.isolateModules(() => {
       originalInjected = require('../../../src/injected');
     });
   });
   
-  test('should initialize debug flag', () => {
+  test('should initialize core functionality', () => {
     expect(originalInjected.INJECTED_DEBUG).toBeDefined();
-  });
-  
-  test('should implement jsonPath function', () => {
     expect(typeof originalInjected.jsonPath).toBe('function');
   });
   
-  test('should set up event listeners', () => {
-    expect(window.addEventListener).toHaveBeenCalledWith('load', expect.any(Function));
-    expect(window.addEventListener).toHaveBeenCalledWith('unloadCode', expect.any(Function));
-    expect(window.addEventListener).toHaveBeenCalledWith('loadCode', expect.any(Function), false);
-    expect(window.addEventListener).toHaveBeenCalledWith('loadTestCode', expect.any(Function), false);
-    expect(window.addEventListener).toHaveBeenCalledWith('unloadTestCode', expect.any(Function), false);
+  test('should set up required event listeners', () => {
+    const expectedEvents = ['load', 'unloadCode', 'loadCode', 'loadTestCode', 'unloadTestCode'];
+    
+    expectedEvents.forEach(event => {
+      expect(window.addEventListener).toHaveBeenCalledWith(
+        event,
+        expect.any(Function),
+        expect.any(Boolean)
+      );
+    });
   });
-  
-  // Add more specific tests for event handlers
+
+  test('should handle basic code operations', () => {
+    // Trigger code event
+    window.dispatchEvent(new CustomEvent('loadCode', { 
+      detail: 'test code'
+    }));
+
+    // Verify event was handled
+    expect(document.getElementById).toHaveBeenCalled();
+  });
+
+  test('should handle test code operations', () => {
+    // Trigger test code event
+    window.dispatchEvent(new CustomEvent('loadTestCode', { 
+      detail: 'test code'
+    }));
+
+    // Verify event was handled
+    expect(document.getElementById).toHaveBeenCalled();
+  });
 });

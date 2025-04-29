@@ -10,26 +10,44 @@ function logDebug(message, ...args) {
 // State management
 const state = {
   initialized: false,
-  commentHeader: "// ",
-  code: "",
-  testCode: "",
+  rules: [],
+  currentRule: null,
   retryAttempts: 0,
   maxRetries: 3,
   isIterating: false,
   iterationCount: 0
 };
 
+async function fetchRulesList() {
+  try {
+    const response = await fetch(chrome.runtime.getURL('rulesList.json'));
+    if (response.ok) {
+      state.rules = await response.json();
+      logDebug("Rules loaded:", state.rules.length);
+    }
+  } catch (error) {
+    logDebug("Error loading rules:", error);
+  }
+}
+
+function findMatchingRule(url) {
+  return state.rules.find(rule => url.includes(rule.URL));
+}
+
 // Initialize content script
-function initialize() {
+async function initialize() {
   if (state.initialized) return;
   
   try {
-    // Register all event listeners
+    await fetchRulesList();
     setupEventListeners();
     state.initialized = true;
     logDebug("Content script initialized successfully");
     
-    // Notify background script that content script is ready
+    // Find matching rule for current page
+    state.currentRule = findMatchingRule(window.location.href);
+    logDebug("Current rule:", state.currentRule);
+
     chrome.runtime.sendMessage({ type: 'contentScriptReady' });
   } catch (error) {
     logDebug("Initialization error:", error);
@@ -41,51 +59,53 @@ function initialize() {
 }
 
 function setupEventListeners() {
-  // Event listeners for custom events with error handling
   const eventHandlers = {
-    'PassToBackground': (evt) => {
-      state.code = evt.detail;
-      logDebug("PassToBackground event handled", { length: state.code.length });
-    },
-    'PassCommentHeader': (evt) => {
-      state.commentHeader = evt.detail;
-      logDebug("PassCommentHeader event handled", state.commentHeader);
-    },
-    'PassCodeToBackground': (evt) => {
-      state.code = evt.detail;
-      logDebug("PassCodeToBackground event handled", { length: state.code.length });
-    },
-    'PassTestCodeToBackground': (evt) => {
-      state.testCode = evt.detail;
-      logDebug("PassTestCodeToBackground event handled", { length: state.testCode.length });
-    },
-    'unloadCode': (evt) => {
-      state.code = evt.detail;
-      logDebug("unloadCode event handled", { length: state.code.length });
-    }
+    'PassToBackground': handlePassToBackground,
+    'PassCommentHeader': handlePassCommentHeader,
+    'PassCodeToBackground': handlePassCodeToBackground,
+    'PassTestCodeToBackground': handlePassTestCode,
+    'unloadCode': handleUnloadCode
   };
 
   Object.entries(eventHandlers).forEach(([event, handler]) => {
-    domOps.addEventListener(window, event, (evt) => {
-      try {
-        handler(evt);
-      } catch (error) {
-        logDebug(`Error handling ${event}:`, error);
-      }
-    }, false);
+    domOps.addEventListener(window, event, handler, false);
   });
 
-  // Add iteration event handlers
-  window.addEventListener('startIteration', (evt) => {
+  window.addEventListener('startIteration', () => {
     state.isIterating = true;
     state.iterationCount++;
-    logDebug("Starting iteration:", state.iterationCount);
   });
 
-  window.addEventListener('endIteration', (evt) => {
+  window.addEventListener('endIteration', () => {
     state.isIterating = false;
-    logDebug("Ending iteration:", state.iterationCount);
   });
+}
+
+// Event handlers
+function handlePassToBackground(evt) {
+  dispatchCodeEvent('code', evt.detail);
+}
+
+function handlePassCommentHeader(evt) {
+  dispatchCodeEvent('commentHeader', evt.detail);
+}
+
+function handlePassCodeToBackground(evt) {
+  dispatchCodeEvent('code', evt.detail);
+}
+
+function handlePassTestCode(evt) {
+  dispatchCodeEvent('testCode', evt.detail);
+}
+
+function handleUnloadCode(evt) {
+  dispatchCodeEvent('code', evt.detail);
+}
+
+function dispatchCodeEvent(type, code) {
+  domOps.dispatchEvent(window, new CustomEvent('codeUpdate', {
+    detail: { type, code, rule: state.currentRule }
+  }));
 }
 
 // Message handling from background script
@@ -97,34 +117,28 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       throw new Error('Content script not fully initialized');
     }
 
-    // Handle command API messages
-    if (request.direction) {
-      logDebug("Command API message received for direction:", request.direction);
-      sendResponse({ success: true });
-      return true;
+    if (!state.currentRule && !request.rule) {
+      throw new Error('No matching rule found for this page');
     }
 
-    // Handle BML-related messages
-    if (request.greeting === 'load' || request.greeting === 'unload') {
-      handleBMLMessage(request, sendResponse);
-      return true;
-    }
-
-    // Handle special case messages
-    if (isSpecialCaseMessage(request.greeting)) {
+    const rule = request.rule || state.currentRule;
+    
+    if (request.greeting === 'unload') {
+      handleUnloadRequest(rule, request, sendResponse);
+    } else if (request.greeting === 'load') {
+      handleLoadRequest(rule, request, sendResponse);
+    } else if (request.greeting === 'unloadTest') {
+      handleTestRequest(rule, sendResponse);
+    } else if (isSpecialCaseMessage(request.greeting)) {
       handleSpecialCaseMessages(request, sendResponse);
-      return true;
-    }
-
-    if (request.greeting === 'checkIteration') {
+    } else if (request.greeting === 'checkIteration') {
       sendResponse({
         isIterating: state.isIterating,
         iterationCount: state.iterationCount
       });
-      return true;
+    } else {
+      sendResponse({ error: 'Unknown message type' });
     }
-
-    sendResponse({ error: 'Unknown message type' });
   } catch (error) {
     logDebug("Error handling message:", error);
     sendResponse({ error: error.message });
@@ -133,29 +147,92 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   return true;
 });
 
-function handleBMLMessage(request, sendResponse) {
+function handleUnloadRequest(rule, request, sendResponse) {
   try {
-    if (request.greeting === 'load' && request.code) {
-      // Handle load request
-      const textarea = domOps.getTextArea();
-      if (!textarea) {
-        throw new Error('Textarea not found');
-      }
-      textarea.value = request.code;
-      sendResponse({ success: true });
-    } else if (request.greeting === 'unload') {
-      // Handle unload request
-      const textarea = domOps.getTextArea();
-      if (!textarea) {
-        throw new Error('Textarea not found');
-      }
-      state.code = textarea.value;
-      sendResponse({ success: true, code: state.code });
+    const selector = request.headerType ? 
+      rule[`codeSelector${request.headerType === 'header' ? '1' : '2'}`] :
+      rule.codeSelector;
+    
+    if (!selector) {
+      throw new Error('No code selector found for this rule');
     }
+
+    const element = domOps.querySelector(selector);
+    if (!element) {
+      throw new Error('Code element not found');
+    }
+
+    const code = element.value || element.textContent;
+    const filename = getFilename(rule);
+
+    sendResponse({
+      filename,
+      code,
+      rule
+    });
   } catch (error) {
-    logDebug("Error handling BML message:", error);
     sendResponse({ error: error.message });
   }
+}
+
+function handleLoadRequest(rule, request, sendResponse) {
+  try {
+    const selector = rule.codeSelector;
+    if (!selector) {
+      throw new Error('No code selector found for this rule');
+    }
+
+    const element = domOps.querySelector(selector);
+    if (!element) {
+      throw new Error('Code element not found');
+    }
+
+    element.value = request.code;
+    sendResponse({ status: 'Code loaded successfully' });
+  } catch (error) {
+    sendResponse({ error: error.message });
+  }
+}
+
+function handleTestRequest(rule, sendResponse) {
+  try {
+    if (rule.hasTest !== 'TRUE') {
+      throw new Error('No test configuration for this rule');
+    }
+
+    domOps.dispatchEvent(window, new CustomEvent('unloadTestCode'));
+    sendResponse({ status: 'Test operation completed' });
+  } catch (error) {
+    sendResponse({ error: error.message });
+  }
+}
+
+function handleSpecialCaseMessages(request, sendResponse) {
+  try {
+    const type = request.greeting.toLowerCase();
+    const selector = type.includes('header') ? 'textarea[name="header"]' :
+                    type.includes('footer') ? 'textarea[name="footer"]' :
+                    'textarea[name="content"]';
+
+    const element = domOps.querySelector(selector);
+    if (!element) {
+      throw new Error(`${type} element not found`);
+    }
+
+    if (request.greeting.startsWith('unload')) {
+      sendResponse({ code: element.value });
+    } else {
+      element.value = request.code;
+      sendResponse({ status: 'Content updated successfully' });
+    }
+  } catch (error) {
+    sendResponse({ error: error.message });
+  }
+}
+
+function getFilename(rule) {
+  const element = domOps.querySelector(rule.fileNameSelector);
+  return element ? element.value || element.textContent : 'unknown.js';
 }
 
 function isSpecialCaseMessage(greeting) {

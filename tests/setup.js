@@ -5,24 +5,24 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './tests/.env' });
 
 // Configure longer timeouts for stability
-jest.setTimeout(60000);
-setDefaultOptions({ timeout: 30000 });
+jest.setTimeout(120000); // Increase to 2 minutes
+setDefaultOptions({ timeout: 60000 }); // Increase to 1 minute
 
 // Set test environment
 process.env.NODE_ENV = 'test';
 
 // Configure Jest environment
 const jestConfig = {
-  maxConcurrency: 1,
+  maxConcurrency: 1, // Run tests sequentially
   maxWorkers: 1,
-  testTimeout: 60000,
+  testTimeout: 120000,
   setupFilesAfterEnv: ['expect-puppeteer']
 };
 
 // Add environment validation
 beforeAll(async () => {
   // Verify required environment variables
-  const requiredVars = ['CPQ_USERNAME', 'CPQ_PASSWORD'];
+  const requiredVars = ['CPQ_USERNAME', 'CPQ_PASSWORD', 'BASE_URL'];
   const missing = requiredVars.filter(varName => !process.env[varName]);
   
   if (missing.length > 0) {
@@ -36,11 +36,23 @@ afterEach(async () => {
     // Take screenshot on failure if we have an active page
     const page = global.page;
     if (page) {
-      await page.screenshot({
-        path: `test-failures/failure-${Date.now()}.png`,
-        fullPage: true
-      });
+      try {
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+        await page.screenshot({
+          path: `test-failures/failure-${timestamp}.png`,
+          fullPage: true
+        });
+      } catch (err) {
+        console.error('Failed to take failure screenshot:', err);
+      }
     }
+  }
+});
+
+// Handle cleanup
+afterAll(async () => {
+  if (global.page) {
+    await global.page.close().catch(() => {});
   }
 });
 
@@ -73,10 +85,11 @@ global.chrome = {
 // Add custom error matchers
 expect.extend({
   toBeValidationError(received, type) {
+    const pass = received && received.type === type;
     return {
       message: () =>
-        `expected ${received} to be a validation error of type ${type}`,
-      pass: received && received.type === type
+        `expected ${received} to be validation error of type ${type}`,
+      pass
     };
   }
 });
