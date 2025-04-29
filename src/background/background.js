@@ -143,18 +143,20 @@ async function setDynamicPopup(tabId, url) {
                 const urlObj = new URL(url);
                 const ruleUrlObj = new URL(cleanedRuleUrl);
                 // Check hostname and path more securely
-                return urlObj.hostname.includes(ruleUrlObj.hostname) &&
-                       urlObj.pathname.startsWith(ruleUrlObj.pathname);
+                const hostMatch = 
+                    urlObj.hostname === ruleUrlObj.hostname ||
+                    urlObj.hostname.endsWith('.' + ruleUrlObj.hostname);
+                return hostMatch && urlObj.pathname.startsWith(ruleUrlObj.pathname);
             } catch (e) {
                 // Fallback with safer string check
-                return url.includes(cleanedRuleUrl);
+                const escapedPattern = cleanedRuleUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(`^https?:\\/\\/([^\\/]*\\.)?${escapedPattern}\\/`);
+                return regex.test(url);
             }
         });
 
         if (matchingRule) {
             let popupUrl = matchingRule.ui;
-
-
             chrome.action.setPopup({
                 tabId,
                 popup: 'popup/' + popupUrl,
@@ -288,7 +290,7 @@ function handleBML(action) {
 
 // Function to handle HTML actions
 function handleHTML(action) {
- const isLoad = action === 'load';
+ const isLoad = action.startsWith('load');
  logDebug(`Executing ${action}HTML...`);
 
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -300,16 +302,19 @@ function handleHTML(action) {
       const tabId = tabs[0].id;
       logDebug("Found active tab with ID:", tabId);
 
-      chrome.scripting.executeScript({
-          target: { tabId: tabId },
-          func: (isLoad) => {
-          // TODO: Implement actual HTML loading/unloading logic
-          console.log(`Executing ${isLoad ? 'LOAD' : 'UNLOAD'} HTML...`);
-          },
-          args: [isLoad]
+      // Send appropriate message to content script based on action
+      chrome.tabs.sendMessage(tabId, {
+          greeting: isLoad ? `load${action}HTML` : `unload${action}HTML`,
+          type: action.includes('Head') ? 'header' : 'footer'
+      }, (response) => {
+          if (chrome.runtime.lastError) {
+              console.error(`Error ${isLoad ? 'loading' : 'unloading'} HTML:`, chrome.runtime.lastError);
+              return;
+          }
+          logDebug(`HTML ${isLoad ? 'loaded' : 'unloaded'} successfully:`, response);
       });
 
-      logDebug(`Script injected to ${action} HTML.`);
+      logDebug(`Message sent to content script to ${action} HTML.`);
       if (!isLoad) {
           chrome.action.enable(tabId);
           logDebug("Extension action enabled for tab:", tabId);
@@ -319,16 +324,24 @@ function handleHTML(action) {
 
 // Implement unloadHeadHTML function
 function unloadHeaderHTML() {
-    //get Head HTML code from editor for unloading
-    const code = Document.querySelector('textarea[name="header"]').value;
-    logDebug("Unloading Head HTML code:", code);
-    // Send the code back to the popup or wherever needed
-    chrome.runtime.sendMessage({ greeting: "unloadHeadHTML", code: code }, function(response) {
-        if (chrome.runtime.lastError) {
-            console.error("Error unloading Head HTML:", chrome.runtime.lastError);
-        } else {
-            logDebug("Head HTML unloaded successfully:", response);
+    // Background script can't access page DOM - need to message the content script
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        if (tabs.length === 0) {
+            logDebug("No active tabs found, can't unload header HTML.");
+            return;
         }
+        
+        chrome.tabs.sendMessage(tabs[0].id, { greeting: "unloadHeaderHTML" }, (response) => {
+            if (chrome.runtime.lastError) {
+                console.error("Error getting header HTML:", chrome.runtime.lastError);
+                return;
+            }
+            
+            if (response?.code) {
+                logDebug("Unloading Header HTML code:", response.code);
+                chrome.runtime.sendMessage({ greeting: "unloadHeaderHTML", code: response.code });
+            }
+        });
     });
 }
 

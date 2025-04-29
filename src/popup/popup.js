@@ -44,7 +44,24 @@ async function analyzeUrl(url) {
     const rulesList = await fetchRulesList();
     const matchingRule = rulesList.find(rule => {
         const ruleUrl = rule.URL.replace(/\*/g, ''); // Remove wildcard for comparison
-        return url.includes(ruleUrl);
+        
+        // More secure URL matching using URL object
+        try {
+            const urlObj = new URL(url);
+            const ruleUrlObj = new URL(ruleUrl.startsWith('http') ? ruleUrl : 'https://' + ruleUrl);
+            
+            // Compare hostname and path parts more securely
+            const hostMatch = 
+                urlObj.hostname === ruleUrlObj.hostname ||
+                urlObj.hostname.endsWith('.' + ruleUrlObj.hostname);
+            
+            return hostMatch && urlObj.pathname.startsWith(ruleUrlObj.pathname);
+        } catch (e) {
+            // Fallback to a safer regex pattern if URL parsing fails
+            const escapedPattern = ruleUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const regex = new RegExp(`^https?:\\/\\/([^\\/]*\\.)?${escapedPattern}\\/`);
+            return regex.test(url);
+        }
     });
 
     if (matchingRule) {
@@ -77,31 +94,39 @@ async function setupDynamicEventListeners() {
                 const file = await fileHandle.getFile();
                 const contents = await file.text();
 
-                chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                    chrome.tabs.sendMessage(
-                        tabs[0].id,
-                        { greeting: 'load', code: contents, rule },
-                        function (response) {
-                            logDebug("Load response received:", response);
-                        }
-                    );
+                chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
+                    if (await ensureContentScript(tabs[0].id)) {
+                        chrome.tabs.sendMessage(
+                            tabs[0].id,
+                            { greeting: 'load', code: contents, rule },
+                            function (response) {
+                                logDebug("Load response received:", response);
+                            }
+                        );
+                    } else {
+                        logDebug("Failed to inject content script for rule:", rule.RuleName);
+                    }
                 });
             });
         }
 
         if (unloadButton) {
-            unloadButton.addEventListener('click', () => {
+            unloadButton.addEventListener('click', async () => {
                 logDebug(`Unload button clicked for rule: ${rule.RuleName}`);
-                chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                    chrome.tabs.sendMessage(
-                        tabs[0].id,
-                        { greeting: 'unload', rule },
-                        function (response) {
-                            if (response?.code && response?.filename) {
-                                saveText(`${response.filename}.${rule.fileType}`, response.code, rule.fileType);
+                chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
+                    if (await ensureContentScript(tabs[0].id)) {
+                        chrome.tabs.sendMessage(
+                            tabs[0].id,
+                            { greeting: 'unload', rule },
+                            function (response) {
+                                if (response?.code && response?.filename) {
+                                    saveText(`${response.filename}.${rule.fileType}`, response.code, rule.fileType);
+                                }
                             }
-                        }
-                    );
+                        );
+                    } else {
+                        logDebug("Failed to inject content script for rule:", rule.RuleName);
+                    }
                 });
             });
         }
@@ -258,10 +283,11 @@ if (loadBMLBtn) {
 
 // UNLOAD TEST ONCLICK
 if (unloadTestBMLBtn) {
-    unloadTestBMLBtn.addEventListener('click', () => {
+    unloadTestBMLBtn.addEventListener('click', async () => {
         logDebug("Unload Test button clicked.");
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unloadTest' }, function (response) {
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        if (await ensureContentScript(tab.id)) {
+            chrome.tabs.sendMessage(tab.id, { greeting: 'unloadTest' }, function (response) {
                 if (chrome.runtime.lastError) {
                     logDebug("Error sending message to content script:", chrome.runtime.lastError.message);
                 } else if (response.testCode && response.filename) {
@@ -269,7 +295,9 @@ if (unloadTestBMLBtn) {
                     saveText(response.filename + '.test.' + bmFileType, response.testCode, bmFileType);
                 }
             });
-        });
+        } else {
+            logDebug("Failed to inject content script for unload test");
+        }
     });
 }
 
@@ -282,9 +310,10 @@ if (loadTestBMLBtn) {
         const contents = await file.text();
         logDebug("Test file loaded:", file.name);
 
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        if (await ensureContentScript(tab.id)) {
             chrome.tabs.sendMessage(
-                tabs[0].id,
+                tab.id,
                 { greeting: 'loadTest', code: contents },
                 function (response) {
                     if (chrome.runtime.lastError) {
@@ -294,7 +323,9 @@ if (loadTestBMLBtn) {
                     }
                 }
             );
-        });
+        } else {
+            logDebug("Failed to inject content script for load test");
+        }
     });
 }
 
@@ -327,15 +358,19 @@ if (loadHeaderHTMLBtn) {
             const [fileHandle] = await window.showOpenFilePicker();
             const file = await fileHandle.getFile();
             const contents = await file.text();
-            chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+            
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (await ensureContentScript(tab.id)) {
                 chrome.tabs.sendMessage(
-                    tabs[0].id,
+                    tab.id,
                     { greeting: 'loadHeaderHTML', code: contents },
                     function(response) {
                         logDebug("Load Header response received:", response);
                     }
                 );
-            });
+            } else {
+                throw new Error('Content script injection failed');
+            }
         } catch (err) {
             logDebug("Error loading header:", err);
         }
@@ -370,15 +405,19 @@ if (loadFooterHTMLBtn) {
             const [fileHandle] = await window.showOpenFilePicker();
             const file = await fileHandle.getFile();
             const contents = await file.text();
-            chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+            
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (await ensureContentScript(tab.id)) {
                 chrome.tabs.sendMessage(
-                    tabs[0].id,
+                    tab.id,
                     { greeting: 'loadFooterHTML', code: contents },
                     function(response) {
                         logDebug("Load Footer response received:", response);
                     }
                 );
-            });
+            } else {
+                throw new Error('Content script injection failed');
+            }
         } catch (err) {
             logDebug("Error loading footer:", err);
         }
@@ -415,15 +454,18 @@ if(loadCSSBtn) {
             const file = await fileHandle.getFile();
             const contents = await file.text();
 
-            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (await ensureContentScript(tab.id)) {
                 chrome.tabs.sendMessage(
-                    tabs[0].id,
+                    tab.id,
                     { greeting: 'loadCSS', code: contents },
                     function (response) {
                         logDebug("Load CSS response received:", response);
                     }
                 );
-            });
+            } else {
+                throw new Error('Content script injection failed for CSS loading');
+            }
         } catch (err) {
             logDebug("Error loading CSS:", err);
         }
@@ -459,15 +501,18 @@ if(loadAltCSSBtn) {
             const file = await fileHandle.getFile();
             const contents = await file.text();
 
-            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (await ensureContentScript(tab.id)) {
                 chrome.tabs.sendMessage(
-                    tabs[0].id,
+                    tab.id,
                     { greeting: 'loadAltCSS', code: contents },
                     function (response) {
                         logDebug("Load Alt CSS response received:", response);
                     }
                 );
-            });
+            } else {
+                throw new Error('Content script injection failed for Alt CSS loading');
+            }
         } catch (err) {
             logDebug("Error loading Alt CSS:", err);
         }
@@ -503,15 +548,18 @@ if(loadJETCSSBtn) {
             const file = await fileHandle.getFile();
             const contents = await file.text();
 
-            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (await ensureContentScript(tab.id)) {
                 chrome.tabs.sendMessage(
-                    tabs[0].id,
+                    tab.id,
                     { greeting: 'loadJETCSS', code: contents },
                     function (response) {
                         logDebug("Load JET CSS response received:", response);
                     }
                 );
-            });
+            } else {
+                throw new Error('Content script injection failed for JET CSS loading');
+            }
         } catch (err) {
             logDebug("Error loading JET CSS:", err);
         }
