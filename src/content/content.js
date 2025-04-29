@@ -247,7 +247,9 @@ function isSpecialCaseMessage(greeting) {
     greeting.includes('HeaderHTML') ||
     greeting.includes('FooterHTML') ||
     greeting.includes('CSS') ||
-    greeting.includes('XML')
+    greeting.includes('XML') ||
+    greeting.includes('XSL') ||
+    greeting.includes('JSON')
   );
 }
 
