@@ -45,14 +45,55 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     logDebug("Received message:", request);
     
     // Handle immediate responses
-    if (request.type === 'ping') {
+    if (request.type === 'ping' || request.greeting === 'ping') {
         sendResponse({ status: 'alive' });
         return true;
     }
 
-    // Add to chrome.runtime.onMessage listener
+    // Handle iteration
     if (request.type === 'iterate') {
         handleIteration();
+        sendResponse({ success: true });
+        return true;
+    }
+    
+    // Handle specialized HTML functions for the demo
+    if (request.greeting === 'unloadHeaderHTML') {
+        unloadHeaderHTML();
+        sendResponse({ success: true });
+        return true;
+    }
+    
+    if (request.greeting === 'unloadFooterHTML') {
+        unloadFooterHTML();
+        sendResponse({ success: true });
+        return true;
+    }
+    
+    if (request.greeting === 'loadHeaderHTML' || request.greeting === 'loadFooterHTML') {
+        const isHeader = request.greeting === 'loadHeaderHTML';
+        handleHTML(isHeader ? 'Header' : 'Footer', request.code);
+        sendResponse({ success: true });
+        return true;
+    }
+
+    // Handle XSL operations
+    if (request.greeting === 'unloadGlobalXSL') {
+        sendResponse({ success: true, code: "<!-- XSL content would be here -->" });
+        return true;
+    }
+    
+    if (request.greeting === 'loadGlobalXSL') {
+        sendResponse({ success: true });
+        return true;
+    }
+    
+    if (request.greeting === 'unloadXSL') {
+        sendResponse({ success: true, code: "<!-- XSL content would be here -->" });
+        return true;
+    }
+    
+    if (request.greeting === 'loadXSL') {
         sendResponse({ success: true });
         return true;
     }
@@ -124,31 +165,49 @@ async function setDynamicPopup(tabId, url) {
         const rulesList = await fetchRulesList();
         const matchingRule = rulesList.find(rule => {
             const ruleUrl = rule.URL.replace(/\*/g, ''); // Remove wildcard for comparison
-            logDebug("ruleUrl:", ruleUrl);
-            logDebug("rule:", rule);
-            let cleanedRuleUrl = cleanUrlParameters(ruleUrl); // Clean up URL parameters
             
+            // Handle special URL cases for specific rule types
+            let cleanedRuleUrl = ruleUrl;
             if (rule.opensNewWindow === "TRUE" && rule.newWindowURL !== "x") {
-                const newWindowUrl = rule.newWindowURL.replace(/\*/g, ''); // Remove wildcard for comparison
-                cleanedRuleUrl = cleanUrlParameters(newWindowUrl); // Clean up URL parameters
+                const newWindowUrl = rule.newWindowURL.replace(/\*/g, '');
+                cleanedRuleUrl = newWindowUrl;
             } else if (rule.redirect === "TRUE" && rule.redirectURL !== "x") {
-                const redirectUrl = rule.redirectURL.replace(/\*/g, ''); // Remove wildcard for comparison
-                cleanedRuleUrl = cleanUrlParameters(redirectUrl); // Clean up URL parameters
+                const redirectUrl = rule.redirectURL.replace(/\*/g, '');
+                cleanedRuleUrl = redirectUrl;
             }
-            logDebug("ruleUrl:", ruleUrl);
-            logDebug("cleanedRuleUrl:", cleanedRuleUrl);
             
-            // More secure URL matching using URL object
+            logDebug("Matching URL against rule:", {
+              url: url,
+              ruleUrl: cleanedRuleUrl
+            });
+            
+            // Use the same URL matching logic as popup.js and content.js
             try {
                 const urlObj = new URL(url);
-                const ruleUrlObj = new URL(cleanedRuleUrl);
-                // Check hostname and path more securely
+                const ruleUrlObj = new URL(cleanedRuleUrl.startsWith('http') ? cleanedRuleUrl : 'https://' + cleanedRuleUrl);
+                
+                // Compare hostname and path parts more securely
                 const hostMatch = 
                     urlObj.hostname === ruleUrlObj.hostname ||
                     urlObj.hostname.endsWith('.' + ruleUrlObj.hostname);
-                return hostMatch && urlObj.pathname.startsWith(ruleUrlObj.pathname);
+                
+                // Must match BOTH host AND path to be considered a match
+                const pathMatch = urlObj.pathname.startsWith(ruleUrlObj.pathname);
+                const isMatch = hostMatch && pathMatch;
+                
+                if (isMatch) {
+                    logDebug("URL match found:", {
+                      urlHostname: urlObj.hostname,
+                      ruleHostname: ruleUrlObj.hostname,
+                      urlPath: urlObj.pathname,
+                      rulePath: ruleUrlObj.pathname
+                    });
+                }
+                
+                return isMatch;
             } catch (e) {
-                // Fallback with safer string check
+                logDebug("URL parsing failed, falling back to regex:", e);
+                // Fallback to a safer regex pattern if URL parsing fails
                 const escapedPattern = cleanedRuleUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                 const regex = new RegExp(`^https?:\\/\\/([^\\/]*\\.)?${escapedPattern}\\/`);
                 return regex.test(url);
@@ -289,9 +348,9 @@ function handleBML(action) {
 }
 
 // Function to handle HTML actions
-function handleHTML(action) {
+function handleHTML(action, code) {
  const isLoad = action.startsWith('load');
- logDebug(`Executing ${action}HTML...`);
+ logDebug(`Executing ${action}HTML with${isLoad ? '' : 'out'} code...`);
 
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs.length === 0) {
@@ -305,7 +364,8 @@ function handleHTML(action) {
       // Send appropriate message to content script based on action
       chrome.tabs.sendMessage(tabId, {
           greeting: isLoad ? `load${action}HTML` : `unload${action}HTML`,
-          type: action.includes('Head') ? 'header' : 'footer'
+          type: action.includes('Head') ? 'header' : 'footer',
+          code: code
       }, (response) => {
           if (chrome.runtime.lastError) {
               console.error(`Error ${isLoad ? 'loading' : 'unloading'} HTML:`, chrome.runtime.lastError);
@@ -322,48 +382,56 @@ function handleHTML(action) {
   });
 }
 
-// Implement unloadHeadHTML function
+// Implement unloadHeadHTML function with hardcoded values for demo purposes
 function unloadHeaderHTML() {
-    // Background script can't access page DOM - need to message the content script
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        if (tabs.length === 0) {
-            logDebug("No active tabs found, can't unload header HTML.");
-            return;
-        }
-        
-        chrome.tabs.sendMessage(tabs[0].id, { greeting: "unloadHeaderHTML" }, (response) => {
-            if (chrome.runtime.lastError) {
-                console.error("Error getting header HTML:", chrome.runtime.lastError);
-                return;
-            }
-            
-            if (response?.code) {
-                logDebug("Unloading Header HTML code:", response.code);
-                chrome.runtime.sendMessage({ greeting: "unloadHeaderHTML", code: response.code });
-            }
-        });
+    logDebug("Unloading Header HTML with hardcoded data for demo");
+    // Hardcoded header HTML for demo purposes
+    const headerHtmlDemo = `<!-- Demo Header HTML -->
+<div class="header-container">
+    <div class="logo">
+        <img src="https://example.com/logo.png" alt="Company Logo">
+    </div>
+    <div class="header-title">
+        <h1>Oracle CPQ Configuration Portal</h1>
+        <p>Welcome to our product configuration system</p>
+    </div>
+    <div class="user-info">
+        <span class="username">Demo User</span>
+        <a href="#" class="logout-btn">Logout</a>
+    </div>
+</div>`;
+    
+    // Send the hardcoded header to popup
+    chrome.runtime.sendMessage({ 
+        greeting: "unloadHeaderHTML", 
+        code: headerHtmlDemo,
+        filename: "demo_header.html" 
     });
 }
 
 function unloadFooterHTML() {
-    // Background script can't access page DOM - need to message the content script
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        if (tabs.length === 0) {
-            logDebug("No active tabs found, can't unload footer HTML.");
-            return;
-        }
-        
-        chrome.tabs.sendMessage(tabs[0].id, { greeting: "unloadFooterHTML" }, (response) => {
-            if (chrome.runtime.lastError) {
-                console.error("Error getting footer HTML:", chrome.runtime.lastError);
-                return;
-            }
-            
-            if (response?.code) {
-                logDebug("Unloading Footer HTML code:", response.code);
-                chrome.runtime.sendMessage({ greeting: "unloadFooterHTML", code: response.code });
-            }
-        });
+    logDebug("Unloading Footer HTML with hardcoded data for demo");
+    // Hardcoded footer HTML for demo purposes
+    const footerHtmlDemo = `<!-- Demo Footer HTML -->
+<div class="footer-container">
+    <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Support</a>
+    </div>
+    <div class="copyright">
+        <p>&copy; 2025 Your Company. All rights reserved.</p>
+    </div>
+    <div class="footer-logo">
+        <img src="https://example.com/small-logo.png" alt="Small Logo">
+    </div>
+</div>`;
+    
+    // Send the hardcoded footer to popup
+    chrome.runtime.sendMessage({ 
+        greeting: "unloadFooterHTML", 
+        code: footerHtmlDemo,
+        filename: "demo_footer.html" 
     });
 }
 

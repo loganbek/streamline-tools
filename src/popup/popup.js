@@ -55,7 +55,8 @@ async function analyzeUrl(url) {
                 urlObj.hostname === ruleUrlObj.hostname ||
                 urlObj.hostname.endsWith('.' + ruleUrlObj.hostname);
             
-            return urlObj.pathname.startsWith(ruleUrlObj.pathname);
+            // Must match both host AND path to be considered a match
+            return hostMatch && urlObj.pathname.startsWith(ruleUrlObj.pathname);
         } catch (e) {
             // Fallback to a safer regex pattern if URL parsing fails
             const escapedPattern = ruleUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -191,24 +192,84 @@ const logsBtn = document.getElementById('logs');
 // Ensure content script is injected before sending messages
 async function ensureContentScript(tabId) {
     try {
-        const response = await chrome.tabs.sendMessage(tabId, { greeting: 'ping' });
-        if (response?.status === 'ok') {
-            logDebug("Content script is already loaded.");
-            return true;
+        logDebug("Ensuring content script is loaded and ready...");
+        
+        // First try to ping the content script
+        try {
+            const response = await new Promise((resolve, reject) => {
+                chrome.tabs.sendMessage(tabId, { greeting: 'ping' }, response => {
+                    if (chrome.runtime.lastError) {
+                        reject(chrome.runtime.lastError);
+                    } else {
+                        resolve(response);
+                    }
+                });
+                
+                // Add safety timeout
+                setTimeout(() => reject(new Error("Ping timed out")), 500);
+            });
+            
+            if (response?.status === 'ok') {
+                logDebug("Content script is already loaded and responsive");
+                return true;
+            }
+        } catch (pingErr) {
+            logDebug("Content script not responding to ping:", pingErr.message);
         }
-    } catch (err) {
-        logDebug("Content script not loaded, injecting now...");
-    }
 
-    try {
-        await chrome.scripting.executeScript({
-            target: { tabId },
-            files: ['content/content.js'], // Replace with the actual content script file name
-        });
-        logDebug("Content script injected successfully.");
-        return true;
+        // Need to inject the script
+        logDebug("Injecting content script...");
+        try {
+            await chrome.scripting.executeScript({
+                target: { tabId },
+                files: ['content/content.js']
+            });
+            logDebug("Content script injected successfully");
+        } catch (injectErr) {
+            logDebug("Failed to inject content script:", injectErr);
+            return false;
+        }
+        
+        // Wait for content script to initialize
+        let attempts = 0;
+        const maxAttempts = 10;
+        const baseDelay = 100; // ms
+        
+        logDebug("Waiting for content script to initialize...");
+        while (attempts < maxAttempts) {
+            try {
+                // Exponential backoff with jitter for retry attempts
+                const delay = baseDelay * Math.pow(1.5, attempts) * (0.9 + Math.random() * 0.2);
+                await new Promise(resolve => setTimeout(resolve, delay));
+                
+                logDebug(`Ping attempt ${attempts + 1}/${maxAttempts}...`);
+                const pingResponse = await new Promise((resolve, reject) => {
+                    chrome.tabs.sendMessage(tabId, { greeting: 'ping' }, response => {
+                        if (chrome.runtime.lastError) {
+                            reject(chrome.runtime.lastError);
+                        } else {
+                            resolve(response);
+                        }
+                    });
+                    
+                    // Add safety timeout
+                    setTimeout(() => reject(new Error("Ping timed out")), 500);
+                });
+                
+                if (pingResponse?.status === 'ok') {
+                    logDebug("Content script responded successfully after injection");
+                    return true;
+                }
+            } catch (retryErr) {
+                attempts++;
+                logDebug(`Waiting for content script (attempt ${attempts}/${maxAttempts}): ${retryErr.message}`);
+            }
+        }
+        
+        logDebug("Content script injection failed after maximum retry attempts");
+        return false;
     } catch (err) {
-        logDebug("Failed to inject content script:", err);
+        logDebug("Critical error ensuring content script:", err);
         return false;
     }
 }
