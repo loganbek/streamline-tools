@@ -364,7 +364,7 @@ function handleHTML(action, code) {
       // Send appropriate message to content script based on action
       chrome.tabs.sendMessage(tabId, {
           greeting: isLoad ? `load${action}HTML` : `unload${action}HTML`,
-          type: action.includes('Head') ? 'header' : 'footer',
+          headerType: action.toLowerCase().includes('head') ? 'header' : 'footer',
           code: code
       }, (response) => {
           if (chrome.runtime.lastError) {
