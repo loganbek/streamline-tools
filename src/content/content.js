@@ -1,12 +1,15 @@
 // Immediately set up ping handler at the top level for immediate response
 // We'll use direct DOM APIs instead of require modules
 
-const CONTENT_DEBUG = true;
+// Check if CONTENT_DEBUG is already defined to avoid redeclaration errors
+if (typeof CONTENT_DEBUG === 'undefined') {
+  const CONTENT_DEBUG = true;
+}
 let SCRIPT_READY = false; // Flag to indicate if the script is ready to receive messages
 let PING_READY = true; // Flag to ensure ping always responds, even if other parts fail
 
 function logDebug(message, ...args) {
-  if (CONTENT_DEBUG) {
+  if (window.CONTENT_DEBUG || CONTENT_DEBUG) {
     console.log("[CONTENT_DEBUG]", message, ...args);
   }
 }
