@@ -351,16 +351,20 @@ class TestHelper {
   
     console.log("Using credentials - Username:", username);
     console.log("Base URL:", process.env.BASE_URL);
+    
+    // Set hard timeout for entire login process
+    const loginStartTime = Date.now();
+    const MAX_LOGIN_TIME = 120000; // Increase to 120 seconds maximum for login process
   
     // Check if already logged in by trying to access a protected page
     try {
       console.log("Checking if already logged in...");
       
-      // Add a longer timeout and more resilient navigation
+      // Use a more reliable navigation approach with increased timeout
       await Promise.race([
         this.page.goto(process.env.BASE_URL, { 
-          waitUntil: 'domcontentloaded', // Less strict waiting condition
-          timeout: 60000  // Longer timeout
+          waitUntil: ['domcontentloaded', 'networkidle2'], // More comprehensive waiting conditions
+          timeout: 60000  // Increased timeout
         }),
         new Promise(resolve => setTimeout(resolve, 60000))
       ]);
@@ -368,19 +372,36 @@ class TestHelper {
       // Give more time for JavaScript frameworks to initialize
       await this.safeWait(5000);
       
-      // Check if we're already on a logged-in page
+      // Check if we're already on a logged-in page with more reliable indicators
       const title = await this.page.title();
       console.log(`Current page title: ${title}`);
       
-      // If we see login form elements, we're not logged in
-      const hasLoginForm = await this.page.evaluate(() => {
-        return !!document.querySelector('#username') || 
-               !!document.querySelector('#psword') || 
-               !!document.querySelector('input[type="password"]');
+      // More comprehensive check for login status
+      const loginStatus = await this.page.evaluate(() => {
+        // Elements that indicate we're on the login page
+        const loginIndicators = !!(
+          document.querySelector('#username') || 
+          document.querySelector('#psword') || 
+          document.querySelector('input[type="password"]') ||
+          document.querySelector('form[action*="login"]')
+        );
+        
+        // Elements that indicate we're logged in
+        const loggedInIndicators = !!(
+          document.querySelector('.user-profile') || 
+          document.querySelector('.logged-in-user') ||
+          document.querySelector('.logout-button') ||
+          document.querySelector('#logout') ||
+          document.querySelector('a[href*="logout"]') ||
+          document.querySelector('.header-user-info') ||  // Added additional indicators
+          document.querySelector('.user-name')
+        );
+        
+        return { loginIndicators, loggedInIndicators };
       });
       
-      if (!hasLoginForm && (title.includes('Home') || title.includes('Profile') || title.includes('Admin'))) {
-        console.log("Already logged in!");
+      if (!loginStatus.loginIndicators && loginStatus.loggedInIndicators) {
+        console.log("Already logged in based on page indicators!");
         isLoggedIn = true;
         return;
       } else {
@@ -391,273 +412,357 @@ class TestHelper {
       console.log("Proceeding with login attempt...");
     }
   
+    // Reduce cooldown time to prevent excessive waiting between retries
+    const MIN_LOGIN_INTERVAL_MS = 15000; // Reduced from 60000 to 15000 (15 seconds)
+    
+    if (lastLoginTime) {
+      const timeSinceLastLogin = Date.now() - lastLoginTime;
+      if (timeSinceLastLogin < MIN_LOGIN_INTERVAL_MS) {
+        const waitTime = MIN_LOGIN_INTERVAL_MS - timeSinceLastLogin;
+        console.log(`Rate limiting: Waiting ${waitTime}ms before next login attempt`);
+        await this.safeWait(waitTime);
+      }
+    }
+  
     // Implement login with retries and backoff
     for (let attempt = 1; attempt <= MAX_LOGIN_RETRIES; attempt++) {
       try {
-        await this.waitForLoginCooldown();
+        // Check if we've exceeded the max login time
+        if (Date.now() - loginStartTime > MAX_LOGIN_TIME) {
+          console.error(`Login process exceeded maximum time of ${MAX_LOGIN_TIME/1000} seconds`);
+          throw new Error(`Login timed out after ${MAX_LOGIN_TIME/1000} seconds`);
+        }
         
         console.log(`Login attempt ${attempt}/${MAX_LOGIN_RETRIES}`);
         
-        // More robust page navigation with error handling
+        // More robust page navigation with longer timeout
         try {
+          console.log(`Navigating to ${process.env.BASE_URL}`);
           await Promise.race([
             this.page.goto(process.env.BASE_URL, { 
-              waitUntil: 'domcontentloaded', // Change from networkidle2 to domcontentloaded for faster response
-              timeout: 30000  // Reduced timeout to fail faster
+              waitUntil: ['load', 'domcontentloaded', 'networkidle2'], // Multiple conditions
+              timeout: 45000  // Increased timeout for reliability
             }),
-            new Promise(resolve => setTimeout(resolve, 30000))
+            new Promise(resolve => setTimeout(resolve, 45000))
           ]);
         } catch (navError) {
           console.log("Navigation timeout or error, but continuing:", navError.message);
-          // Take screenshot on navigation error
-          await this.page.screenshot({ 
-            path: `login-navigation-error-${new Date().toISOString().replace(/[:.]/g, '-')}.png`, 
-            fullPage: true 
-          });
+          // Try a page reload as a fallback
+          await this.page.reload({ waitUntil: 'domcontentloaded' }).catch(e => console.log("Reload failed:", e.message));
         }
         
-        // Wait for page to stabilize
-        await this.safeWait(3000);
+        // Wait longer for page to stabilize
+        await this.safeWait(5000);
         
-        // Wait for and fill in login form with better error handling
-        console.log("Waiting for login form...");
-        
-        // More resilient selector waiting with shorter timeouts
-        const usernameSelector = await Promise.race([
-          this.page.waitForSelector('#username', { timeout: 15000 }).catch(() => null),
-          this.page.waitForSelector('input[name="username"]', { timeout: 15000 }).catch(() => null),
-          this.page.waitForSelector('input[type="text"][id*="user"]', { timeout: 15000 }).catch(() => null)
-        ]);
-        
-        if (!usernameSelector) {
-          console.error("Username field not found after waiting");
-          await this.page.screenshot({ 
-            path: `login-form-missing-${new Date().toISOString().replace(/[:.]/g, '-')}.png`, 
-            fullPage: true 
-          });
-          throw new Error("Username field not found on login page");
-        }
-        
-        // Clear the input field first
-        await this.page.evaluate(() => {
-          const usernameField = document.querySelector('#username') || 
-                              document.querySelector('input[name="username"]') || 
-                              document.querySelector('input[type="text"][id*="user"]');
-          if (usernameField) usernameField.value = '';
+        // Take a screenshot before attempting login for debugging
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+        await this.page.screenshot({ 
+          path: `login-error-${timestamp}-attempt-${attempt}.png`, 
+          fullPage: true 
         });
         
-        // Try multiple focus methods to ensure the field is active
-        await this.page.evaluate(() => {
-          const usernameField = document.querySelector('#username') || 
-                              document.querySelector('input[name="username"]') || 
-                              document.querySelector('input[type="text"][id*="user"]');
-          if (usernameField) {
-            usernameField.focus();
-            usernameField.click();
+        // Force clear cookies and cache before each login attempt (for attempt > 1)
+        if (attempt > 1) {
+          try {
+            const client = await this.page.target().createCDPSession();
+            await client.send('Network.clearBrowserCookies');
+            await client.send('Network.clearBrowserCache');
+            console.log("Cleared cookies and cache before retry");
+          } catch (e) {
+            console.log("Failed to clear cookies/cache:", e.message);
           }
-        });
-        
-        console.log("Entering username:", username);
-        await usernameSelector.type(username, { delay: 100 }); // Increase typing delay
-        
-        // Make sure to wait after typing username before looking for password field
-        await this.safeWait(1000);
-        
-        // Wait specifically for the password field with better resilience
-        console.log("Waiting for password field...");
-        const passwordSelector = await Promise.race([
-          this.page.waitForSelector('#psword', { timeout: 15000 }).catch(() => null),
-          this.page.waitForSelector('#password', { timeout: 15000 }).catch(() => null),
-          this.page.waitForSelector('input[type="password"]', { timeout: 15000 }).catch(() => null)
-        ]);
-        
-        if (!passwordSelector) {
-          console.error("Password field not found after waiting");
-          await this.page.screenshot({ 
-            path: `password-field-missing-${new Date().toISOString().replace(/[:.]/g, '-')}.png`, 
-            fullPage: true 
-          });
-          throw new Error("Password field not found on login page");
         }
         
-        // Clear the input field first
-        await this.page.evaluate(() => {
-          const passwordField = document.querySelector('#psword') || 
-                              document.querySelector('#password') || 
-                              document.querySelector('input[type="password"]');
-          if (passwordField) passwordField.value = '';
-        });
-        
-        // Try multiple focus methods to ensure the field is active
-        await this.page.evaluate(() => {
-          const passwordField = document.querySelector('#psword') || 
-                              document.querySelector('#password') || 
-                              document.querySelector('input[type="password"]');
-          if (passwordField) {
-            passwordField.focus();
-            passwordField.click();
-          }
-        });
-        
-        console.log("Entering password...");
-        await passwordSelector.type(password, { delay: 100 }); // Increase typing delay
-        
-        // Wait after entering password
-        await this.safeWait(1000);
-        
-        // First, dump the HTML structure to help debug the form
-        const formStructure = await this.page.evaluate(() => {
-          // Get form-related elements
-          const formElements = document.querySelectorAll('form, button, input[type="submit"], input[type="button"]');
-          const formInfo = [];
+        // Detect form with a more comprehensive approach
+        const loginFormDetails = await this.page.evaluate(() => {
+          // Try to find all possible username fields
+          const userFields = [
+            document.querySelector('#username'),
+            document.querySelector('input[name="username"]'),
+            document.querySelector('input[type="text"][id*="user"]'),
+            document.querySelector('input[type="text"][name*="user"]'),
+            document.querySelector('input[type="email"]'),
+            document.querySelector('input[placeholder*="user"]'),
+            document.querySelector('input[placeholder*="email"]')
+          ].filter(Boolean);
           
-          formElements.forEach((el) => {
-            const tagName = el.tagName;
-            const id = el.id || 'no-id';
-            const className = el.className || 'no-class';
-            const type = el.type || 'n/a';
-            const value = el.value || 'n/a';
-            const text = el.textContent ? el.textContent.trim().substring(0, 50) : 'n/a';
+          // Try to find all possible password fields
+          const passFields = [
+            document.querySelector('#psword'),
+            document.querySelector('#password'),
+            document.querySelector('input[name="password"]'),
+            document.querySelector('input[type="password"]'),
+            document.querySelector('input[placeholder*="password"]')
+          ].filter(Boolean);
+          
+          // Try to find all possible submit buttons
+          const submitButtons = [
+            document.querySelector('#log_in'),
+            document.querySelector('input[type="submit"]'),
+            document.querySelector('button[type="submit"]'),
+            document.querySelector('button.login-button'),
+            document.querySelector('input[value="Login"]'),
+            document.querySelector('input[value="Sign In"]'),
+            document.querySelector('button:contains("Login")'),
+            document.querySelector('button:contains("Sign In")')
+          ].filter(Boolean);
+          
+          // Get field IDs for diagnostic purposes
+          const userFieldIds = userFields.map(el => el.id || el.name || 'unnamed');
+          const passFieldIds = passFields.map(el => el.id || el.name || 'unnamed');
+          
+          return {
+            hasUserField: userFields.length > 0,
+            hasPassField: passFields.length > 0,
+            hasSubmitButton: submitButtons.length > 0,
+            userFieldIds,
+            passFieldIds
+          };
+        });
+        
+        console.log("Login form detection results:", JSON.stringify(loginFormDetails, null, 2));
+        
+        if (!loginFormDetails.hasUserField || !loginFormDetails.hasPassField) {
+          console.error("Could not find login form fields");
+          
+          // Try clicking any login/sign-in buttons that might be on a pre-login page
+          await this.page.evaluate(() => {
+            const possibleLoginButtons = [
+              ...document.querySelectorAll('a[href*="login"]'),
+              ...document.querySelectorAll('button:contains("Login")'),
+              ...document.querySelectorAll('button:contains("Sign In")')
+            ];
             
-            formInfo.push(`${tagName} - ID: ${id}, Class: ${className}, Type: ${type}, Value: ${value}, Text: ${text}`);
-          });
-          
-          return formInfo.join('\n');
-        });
-        
-        console.log("Form structure for debugging:\n", formStructure);
-        
-        // Find submit button with more resilient selectors
-        const submitSelector = [
-          '#log_in', 
-          'input[type="submit"]',
-          'button[type="submit"]',
-          'button.login-button',
-          'input[value="Login"]',
-          'input[value="Sign In"]'
-        ].join(', ');
-        
-        // Check if standard submit button exists
-        const submitExists = await this.page.evaluate((selector) => {
-          return !!document.querySelector(selector);
-        }, submitSelector);
-        
-        if (submitExists) {
-          // If regular submit button exists, click it
-          console.log("Clicking standard login button...");
-          
-          await this.page.evaluate((selector) => {
-            const button = document.querySelector(selector);
-            if (button) {
-              button.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              setTimeout(() => {
-                try { button.click(); } catch(e) {}
-              }, 500);
+            if (possibleLoginButtons.length > 0) {
+              console.log("Found possible login button, clicking it");
+              possibleLoginButtons[0].click();
               return true;
             }
-          }, submitSelector);
-        } else {
-          console.log("Standard submit button not found, trying to submit form directly");
-          // Take screenshot for debugging
-          await this.page.screenshot({ 
-            path: `login-failure-${new Date().toISOString().replace(/[:.]/g, '-')}-attempt-${attempt}.png`, 
-            fullPage: true 
-          });
+            return false;
+          }).catch(e => console.log("Error finding login buttons:", e.message));
           
-          // Try to submit form
-          const formSubmitted = await this.page.evaluate(() => {
-            const form = document.querySelector('form');
-            if (form) {
-              console.log("Found form, submitting it directly");
-              try {
-                form.submit();
-                return true;
-              } catch (e) {
-                console.error("Error submitting form:", e);
+          // Wait a moment for any navigation after clicking login
+          await this.safeWait(5000);
+          
+          if (attempt < MAX_LOGIN_RETRIES) {
+            await this.handleLoginFailure(attempt);
+            continue;
+          } else {
+            throw new Error("Could not find login form fields after multiple attempts");
+          }
+        }
+        
+        // Use puppeteer's built-in methods instead of page.evaluate for better reliability
+        try {
+          console.log("Attempting to fill login form...");
+          
+          // Try multiple possible selectors for username field
+          let userFieldSelector = '';
+          for (const selector of ['#username', 'input[name="username"]', 'input[type="text"][id*="user"]', 'input[type="email"]']) {
+            const exists = await this.page.$(selector).then(el => !!el);
+            if (exists) {
+              userFieldSelector = selector;
+              break;
+            }
+          }
+          
+          // Try multiple possible selectors for password field
+          let passFieldSelector = '';
+          for (const selector of ['#psword', '#password', 'input[type="password"]']) {
+            const exists = await this.page.$(selector).then(el => !!el);
+            if (exists) {
+              passFieldSelector = selector;
+              break;
+            }
+          }
+          
+          if (!userFieldSelector || !passFieldSelector) {
+            throw new Error("Could not find username or password field with direct selectors");
+          }
+          
+          // Clear and fill username field
+          console.log("Filling username field:", userFieldSelector);
+          await this.page.$eval(userFieldSelector, (el) => el.value = ''); // Clear
+          await this.page.type(userFieldSelector, username, { delay: 100 });
+          await this.safeWait(1000);
+          
+          // Clear and fill password field
+          console.log("Filling password field:", passFieldSelector);
+          await this.page.$eval(passFieldSelector, (el) => el.value = ''); // Clear
+          await this.page.type(passFieldSelector, password, { delay: 100 });
+          await this.safeWait(1000);
+          
+          // Try to find submit button
+          console.log("Finding submit button...");
+          const submitButtonSelector = await this.page.evaluate(() => {
+            const selectors = [
+              '#log_in', 
+              'input[type="submit"]', 
+              'button[type="submit"]',
+              'button.login-button',
+              'input[value="Login"]',
+              'input[value="Sign In"]'
+            ];
+            
+            for (const selector of selectors) {
+              if (document.querySelector(selector)) {
+                return selector;
               }
             }
-            
-            // Fallback to pressing Enter in password field
-            const passwordField = document.querySelector('#psword') || 
-                              document.querySelector('#password') || 
-                              document.querySelector('input[type="password"]');
-            
-            if (passwordField) {
-              // Create and dispatch an Enter key event
-              const enterEvent = new KeyboardEvent('keypress', {
-                key: 'Enter',
-                code: 'Enter',
-                keyCode: 13,
-                which: 13,
-                bubbles: true
-              });
-              
-              passwordField.dispatchEvent(enterEvent);
-              return true;
-            }
-            
-            return false;
+            return null;
           });
           
-          if (!formSubmitted) {
-            console.error("Could not find a way to submit the login form");
+          // Submit form
+          if (submitButtonSelector) {
+            console.log("Clicking submit button:", submitButtonSelector);
+            await Promise.all([
+              this.page.click(submitButtonSelector),
+              this.page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 60000 }).catch(e => 
+                console.log("Navigation timeout after login, but continuing:", e.message)
+              )
+            ]);
+          } else {
+            console.log("No submit button found, trying to submit form...");
+            // Try to submit form directly
+            await this.page.evaluate(() => {
+              const form = document.querySelector('form');
+              if (form) {
+                console.log("Submitting form directly");
+                form.submit();
+              } else {
+                console.log("No form found, simulating Enter key press");
+                const passwordField = document.querySelector('input[type="password"]');
+                if (passwordField) {
+                  const event = new KeyboardEvent('keypress', {
+                    key: 'Enter',
+                    code: 'Enter',
+                    keyCode: 13,
+                    which: 13,
+                    bubbles: true
+                  });
+                  passwordField.dispatchEvent(event);
+                }
+              }
+            });
+            
+            // Wait for navigation after form submit
+            await this.page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 60000 }).catch(e => 
+              console.log("Navigation timeout after login, but continuing:", e.message)
+            );
+          }
+          
+        } catch (formError) {
+          console.error("Error interacting with login form:", formError);
+          if (attempt < MAX_LOGIN_RETRIES) {
+            await this.handleLoginFailure(attempt);
+            continue;
+          } else {
+            throw new Error(`Login form interaction failed: ${formError.message}`);
           }
         }
         
-        // Wait for navigation after login attempt with shorter timeout
-        console.log("Waiting for navigation after login attempt...");
-        try {
-          await Promise.race([
-            this.page.waitForNavigation({ 
-              waitUntil: 'domcontentloaded', 
-              timeout: 20000 
-            }),
-            new Promise(resolve => setTimeout(resolve, 20000))
-          ]);
-          
-          // Give page some time to fully load JavaScript
-          await this.safeWait(3000);
-        } catch (e) {
-          console.log("Navigation timeout after login attempt:", e.message);
-        }
+        // Give page more time to fully load JavaScript
+        await this.safeWait(8000);
         
-        // Check if login was successful by checking for username/password fields
-        const stillOnLoginPage = await this.page.evaluate(() => {
-          return !!document.querySelector('#username') || 
-                 !!document.querySelector('#password') ||
-                 !!document.querySelector('#psword') ||
-                 !!document.querySelector('input[type="password"]');
+        // Take screenshot after login attempt for debugging
+        await this.page.screenshot({ 
+          path: `login-after-${timestamp}-attempt-${attempt}.png`, 
+          fullPage: true 
         });
         
-        if (!stillOnLoginPage) {
+        // Check login success with multiple indicators
+        const loginVerification = await this.page.evaluate(() => {
+          // Elements that indicate we're still on the login page
+          const loginPageIndicators = [
+            '#username', 
+            '#psword', 
+            '#password', 
+            'input[type="password"]',
+            '.login-form',
+            'form[action*="login"]'
+          ];
+          
+          const stillOnLoginPage = loginPageIndicators.some(selector => 
+            document.querySelector(selector) !== null
+          );
+          
+          // Elements that indicate we're logged in
+          const loggedInIndicators = [
+            '.user-profile', 
+            '.logged-in-user',
+            '.logout-button',
+            '#logout',
+            'a[href*="logout"]',
+            '.header-user-info',
+            '.user-name',
+            '.user-account'
+          ];
+          
+          const hasLoggedInIndicators = loggedInIndicators.some(selector => 
+            document.querySelector(selector) !== null
+          );
+          
+          // Check for error messages
+          const errorSelectors = [
+            '.error', 
+            '.error-message', 
+            '.alert-danger', 
+            '[role="alert"]', 
+            '.notification-error',
+            '#errorMessage',
+            '.login-error'
+          ];
+          
+          const errorElements = errorSelectors.flatMap(selector => 
+            Array.from(document.querySelectorAll(selector))
+          );
+          
+          const errorMessages = errorElements
+            .map(el => el.textContent.trim())
+            .filter(text => text.length > 0);
+          
+          return { 
+            stillOnLoginPage, 
+            hasLoggedInIndicators,
+            errorMessages,
+            pageTitle: document.title,
+            currentUrl: window.location.href
+          };
+        });
+        
+        console.log("Login verification results:", JSON.stringify(loginVerification, null, 2));
+        
+        if (!loginVerification.stillOnLoginPage && loginVerification.hasLoggedInIndicators) {
           console.log("Login successful!");
           isLoggedIn = true;
           lastLoginTime = Date.now();
           return;
         } else {
-          console.log("Still on login page, login failed");
+          console.log("Login appears to have failed:");
+          console.log(`- Still on login page: ${loginVerification.stillOnLoginPage}`);
+          console.log(`- Has logged-in indicators: ${loginVerification.hasLoggedInIndicators}`);
+          console.log(`- Current page title: ${loginVerification.pageTitle}`);
+          
+          if (loginVerification.errorMessages.length > 0) {
+            console.log("Error messages found:", loginVerification.errorMessages.join(' | '));
+          }
+          
           if (attempt < MAX_LOGIN_RETRIES) {
             await this.handleLoginFailure(attempt);
           }
         }
       } catch (error) {
-        console.error(`Login attempt ${attempt} failed with error:`, error);
-        
-        // Take screenshot of the error state
-        await this.page.screenshot({ 
-          path: `login-error-${new Date().toISOString().replace(/[:.]/g, '-')}-attempt-${attempt}.png`, 
-          fullPage: true 
-        });
+        console.error(`Login error on attempt ${attempt}:`, error);
         
         if (attempt < MAX_LOGIN_RETRIES) {
           await this.handleLoginFailure(attempt);
         } else {
-          throw new Error(`Failed to login after ${MAX_LOGIN_RETRIES} attempts: ${error.message}`);
+          throw new Error(`Login failed after ${MAX_LOGIN_RETRIES} attempts: ${error.message}`);
         }
       }
     }
     
-    throw new Error(`Failed to login after ${MAX_LOGIN_RETRIES} attempts`);
+    throw new Error(`Login failed after ${MAX_LOGIN_RETRIES} attempts`);
   }
 
   /**

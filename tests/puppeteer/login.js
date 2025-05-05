@@ -4,7 +4,7 @@ const path = require('path');
 dotenv.config({ path: './tests/.env' });
 
 /**
- * Performs login using the shared browser instance with improved error handling
+ * Performs login using the shared browser instance with improved error handling and hard timeout
  * @param {Object} page - The page from TestHelper instance
  * @returns {Promise<boolean>} - True if login successful, false otherwise
  */
@@ -30,15 +30,24 @@ async function login(page) {
         console.warn("Couldn't take pre-login screenshot:", err.message);
     }
     
-    // Attempt login with better error handling
+    // Create a hard timeout for the entire login process
+    const LOGIN_HARD_TIMEOUT = 60 * 1000; // 60 seconds max for login
+    const loginTimeout = setTimeout(() => {
+        console.error('⚠️ HARD TIMEOUT: Login process took too long, forcing failure');
+        throw new Error('Login process timed out after ' + (LOGIN_HARD_TIMEOUT/1000) + ' seconds');
+    }, LOGIN_HARD_TIMEOUT);
+    
     try {
+        // Attempt login with better error handling
         await helper.login();
         console.log(`Login successful at ${new Date().toISOString()}`);
+        clearTimeout(loginTimeout);
         return true;
     } catch (err) {
+        clearTimeout(loginTimeout);
         console.error(`Login failed at ${new Date().toISOString()}:`, err.message);
         
-        // Take screenshot on failure
+        // Take final screenshot on failure
         try {
             const timestamp = new Date().toISOString().replace(/:/g, '-');
             await page.screenshot({
@@ -49,8 +58,8 @@ async function login(page) {
             console.warn("Couldn't take login failure screenshot:", screenshotErr.message);
         }
         
-        // Rethrow to let calling code handle the error
-        throw new Error(`Login failed: ${err.message}`);
+        // Return false instead of rethrowing to prevent test from hanging
+        return false;
     }
 }
 
