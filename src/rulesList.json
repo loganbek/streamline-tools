@@ -23,7 +23,7 @@
     "redirect": "TRUE",
     "redirectURL": "*.bigmachines.com/admin/configuration/rules/edit_rule.jsp?rule_id=4951171&rule_type=11&pline_id=-1&segment_id=11&model_id=-1&fromList=true",
     "URL2": "x",
-    "recordingName": "confiigRecommendationRuleEditor"
+    "recordingName": "configRecommendationRuleEditor"
   },
   {
     "AppArea": "Config",
@@ -231,7 +231,7 @@
     "redirect": "FALSE",
     "redirectURL": "x",
     "URL2": "x",
-    "recordingName": "commereceHiding"
+    "recordingName": "commerceHiding"
   },
   {
     "AppArea": "Commerce",
