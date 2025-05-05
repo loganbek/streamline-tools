@@ -301,25 +301,156 @@ function handleLoadTestRequest(rule, request, sendResponse) {
 
 function handleSpecialCaseMessages(request, sendResponse) {
   try {
+    logDebug(`Handling special case message: ${request.greeting}`);
     const type = request.greeting.toLowerCase();
-    const selector = type.includes('header') ? 'textarea[name="header"]' :
-                    type.includes('footer') ? 'textarea[name="footer"]' :
-                    'textarea[name="content"]';
+    
+    // First load rulesList to get the correct selectors
+    fetch(chrome.runtime.getURL('rulesList.json'))
+      .then(response => response.json())
+      .then(rulesList => {
+        // Find the rule for Header & Footer or other special cases
+        let rule = null;
+        let elementSelector = null;
+        
+        if (type.includes('headerhtml')) {
+          rule = rulesList.find(r => r.AppArea === 'Stylesheets' && r.RuleName === 'Header & Footer');
+          elementSelector = rule ? rule.codeSelector : 'textarea[name="header"]';
+        } else if (type.includes('footerhtml')) {
+          rule = rulesList.find(r => r.AppArea === 'Stylesheets' && r.RuleName === 'Header & Footer');
+          elementSelector = rule ? rule.codeSelector2 : 'textarea[name="footer"]';
+        } else if (type.includes('css')) {
+          rule = rulesList.find(r => r.AppArea === 'Stylesheets' && r.RuleName === 'Stylesheet Manager');
+          elementSelector = rule ? rule.codeSelector : 'pre';
+        } else if (type.includes('xml') || type.includes('json')) {
+          rule = rulesList.find(r => 
+            (r.AppArea === 'Interfaces' && r.RuleName === 'REST') || 
+            (r.AppArea === 'Interfaces' && r.RuleName === 'SOAP')
+          );
+          elementSelector = rule ? rule.codeSelector : 'pre';
+        }
+        
+        logDebug(`Using selector from rulesList: ${elementSelector}`);
+        
+        // Convert selector string to actual DOM operation
+        let element = null;
+        if (elementSelector) {
+          if (elementSelector.includes('document.querySelector')) {
+            // Extract the selector string from the code and execute it
+            const selectorMatch = elementSelector.match(/document\.querySelector\(['"]([^'"]+)['"]\)/);
+            if (selectorMatch && selectorMatch[1]) {
+              element = document.querySelector(selectorMatch[1]);
+              logDebug(`Using extracted selector: ${selectorMatch[1]}`);
+            }
+          } else {
+            // Use the selector directly
+            element = document.querySelector(elementSelector);
+          }
+        }
+        
+        // Fallback selectors if the element wasn't found
+        if (!element) {
+          logDebug('Element not found with primary selector, trying fallbacks');
+          const fallbackSelectors = [];
+          
+          if (type.includes('headerhtml')) {
+            fallbackSelectors.push(
+              'textarea[name="header"]', 
+              '#header-content',
+              'textarea#header',
+              'textarea[id*="header"]'
+            );
+          } else if (type.includes('footerhtml')) {
+            fallbackSelectors.push(
+              'textarea[name="footer"]',
+              '#footer-content',
+              'textarea#footer',
+              'textarea[id*="footer"]'
+            );
+          }
+          
+          // Try fallback selectors
+          for (const selector of fallbackSelectors) {
+            element = document.querySelector(selector);
+            if (element) {
+              logDebug(`Found element using fallback selector: ${selector}`);
+              break;
+            }
+          }
+          
+          // Check for iframe content if still not found
+          if (!element) {
+            const iframes = document.querySelectorAll('iframe');
+            for (const iframe of iframes) {
+              try {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                if (type.includes('headerhtml')) {
+                  element = iframeDoc.querySelector('textarea[name="header"]');
+                } else if (type.includes('footerhtml')) {
+                  element = iframeDoc.querySelector('textarea[name="footer"]');
+                }
+                
+                if (element) {
+                  logDebug('Found element in iframe');
+                  break;
+                }
+              } catch (iframeError) {
+                logDebug('Error accessing iframe content:', iframeError);
+              }
+            }
+          }
+        }
+        
+        if (!element) {
+          throw new Error(`${type} element not found - tried multiple selectors`);
+        }
 
-    const element = document.querySelector(selector);
-    if (!element) {
-      throw new Error(`${type} element not found`);
-    }
-
-    if (request.greeting.startsWith('unload')) {
-      sendResponse({ code: element.value });
-    } else {
-      element.value = request.code;
-      sendResponse({ status: 'Content updated successfully' });
-    }
+        if (request.greeting.startsWith('unload')) {
+          const code = element.value || element.innerHTML || element.textContent || '';
+          logDebug(`Unloaded content length: ${code.length} characters`);
+          
+          // For header/footer HTML, match the exact response structure expected by popup.js
+          if (type.includes('html')) {
+            sendResponse({ 
+              code: code,
+              status: 'success'
+            });
+          } else {
+            sendResponse({ code });
+          }
+        } else {
+          // Handle load operations
+          if (element.tagName === 'TEXTAREA' || element.hasAttribute('contenteditable')) {
+            element.value = request.code;
+            // Trigger change event for potential editor frameworks
+            triggerInputEvents(element);
+          } else {
+            element.innerHTML = request.code;
+          }
+          
+          sendResponse({ status: 'Content updated successfully' });
+        }
+      })
+      .catch(error => {
+        logDebug("Error loading rulesList.json:", error);
+        sendResponse({ error: error.message });
+      });
+      
+    // Return true to indicate we'll send the response asynchronously
+    return true;
   } catch (error) {
+    logDebug("Error handling special case message:", error);
     sendResponse({ error: error.message });
+    return false;
   }
+}
+
+// Helper function to trigger input events to notify any JavaScript frameworks of the change
+function triggerInputEvents(element) {
+  // Create and dispatch events
+  ['input', 'change'].forEach(eventName => {
+    const event = new Event(eventName, { bubbles: true });
+    element.dispatchEvent(event);
+  });
 }
 
 function getFilename(rule) {
