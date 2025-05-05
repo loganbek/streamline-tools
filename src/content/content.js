@@ -1,21 +1,19 @@
 // Immediately set up ping handler at the top level for immediate response
 // We'll use direct DOM APIs instead of require modules
 
-// Check if CONTENT_DEBUG is already defined to avoid redeclaration errors
-if (typeof CONTENT_DEBUG === 'undefined') {
-  const CONTENT_DEBUG = true;
-}
-let SCRIPT_READY = false; // Flag to indicate if the script is ready to receive messages
-let PING_READY = true; // Flag to ensure ping always responds, even if other parts fail
+// Use window object to store global variables to avoid redeclaration errors
+window.CONTENT_DEBUG = window.CONTENT_DEBUG !== undefined ? window.CONTENT_DEBUG : true;
+window.SCRIPT_READY = window.SCRIPT_READY !== undefined ? window.SCRIPT_READY : false;
+window.PING_READY = window.PING_READY !== undefined ? window.PING_READY : true;
 
 function logDebug(message, ...args) {
-  if (window.CONTENT_DEBUG || CONTENT_DEBUG) {
+  if (window.CONTENT_DEBUG) {
     console.log("[CONTENT_DEBUG]", message, ...args);
   }
 }
 
-// State management
-const state = {
+// State management - use a namespaced approach to avoid conflicts
+window.streamlineState = window.streamlineState || {
   initialized: false,
   rules: [],
   currentRule: null,
@@ -24,6 +22,9 @@ const state = {
   isIterating: false,
   iterationCount: 0
 };
+
+// Use local reference for cleaner code
+const state = window.streamlineState;
 
 // IMPORTANT: Dedicated message listener with immediate ping response
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -38,7 +39,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
   
   // For non-ping messages, check if script is ready
-  if (!SCRIPT_READY) {
+  if (!window.SCRIPT_READY) {
     logDebug("Message received before script ready:", request);
     sendResponse({ error: 'Script not fully initialized yet' });
     return true;
@@ -104,7 +105,7 @@ async function initialize() {
     }
     
     // Set ping ready immediately (defensive programming)
-    PING_READY = true;
+    window.PING_READY = true;
     
     // Fetch rules list
     await fetchRulesList();
@@ -118,7 +119,7 @@ async function initialize() {
     
     // Mark as fully initialized
     state.initialized = true;
-    SCRIPT_READY = true;
+    window.SCRIPT_READY = true;
     
     logDebug("Content script initialization COMPLETE");
     
