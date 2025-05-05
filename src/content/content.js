@@ -2,7 +2,7 @@
 // We'll use direct DOM APIs instead of require modules
 
 // Use window object to store global variables to avoid redeclaration errors
-window.CONTENT_DEBUG = window.CONTENT_DEBUG !== undefined ? window.CONTENT_DEBUG : true;
+window.CONTENT_DEBUG = window.CONTENT_DEBUG !== undefined ? window.CONTENT_DEBUG : false; // Set to true only during development
 window.SCRIPT_READY = window.SCRIPT_READY !== undefined ? window.SCRIPT_READY : false;
 window.PING_READY = window.PING_READY !== undefined ? window.PING_READY : true;
 
@@ -145,9 +145,14 @@ async function fetchRulesList() {
     if (response.ok) {
       state.rules = await response.json();
       logDebug("Rules loaded:", state.rules.length);
+    } else {
+      logDebug(`Error loading rules: Server responded with ${response.status} ${response.statusText}`);
+      throw new Error(`Failed to load rules: ${response.status} ${response.statusText}`);
     }
+    return true;
   } catch (error) {
     logDebug("Error loading rules:", error);
+    return false;
   }
 }
 
@@ -180,7 +185,7 @@ function setupEventListeners() {
   const eventHandlers = {
     'PassToBackground': handlePassToBackground,
     'PassCommentHeader': handlePassCommentHeader,
-    'PassCodeToBackground': handlePassCodeToBackground,
+    'PassCodeToBackground': handlePassToBackground, // Reuse the existing handler instead of duplicate
     'PassTestCodeToBackground': handlePassTestCode,
     'unloadCode': handleUnloadCode
   };
@@ -256,7 +261,10 @@ function handleUnloadRequest(rule, request, sendResponse) {
 
 function handleLoadRequest(rule, request, sendResponse) {
   try {
-    const selector = rule.codeSelector;
+    const selector = request.headerType ? 
+      rule[`codeSelector${request.headerType === 'header' ? '1' : '2'}`] :
+      rule.codeSelector;
+
     if (!selector) {
       throw new Error('No code selector found for this rule');
     }
@@ -267,6 +275,8 @@ function handleLoadRequest(rule, request, sendResponse) {
     }
 
     element.value = request.code;
+    // Trigger input events to notify frameworks of the change
+    triggerInputEvents(element);
     sendResponse({ status: 'Code loaded successfully' });
   } catch (error) {
     sendResponse({ error: error.message });
@@ -308,9 +318,12 @@ function handleSpecialCaseMessages(request, sendResponse) {
     logDebug(`Handling special case message: ${request.greeting}`);
     const type = request.greeting.toLowerCase();
     
-    // First load rulesList to get the correct selectors
-    fetch(chrome.runtime.getURL('rulesList.json'))
-      .then(response => response.json())
+    // Use already loaded rules if available, or fetch them if needed
+    const rulesPromise = state.rules.length > 0
+      ? Promise.resolve(state.rules)
+      : fetch(chrome.runtime.getURL('rulesList.json')).then(response => response.json());
+    
+    rulesPromise
       .then(rulesList => {
         // Find the rule for Header & Footer or other special cases
         let rule = null;
@@ -341,7 +354,7 @@ function handleSpecialCaseMessages(request, sendResponse) {
           if (elementSelector.includes('document.querySelector')) {
             // Extract the selector string from the code and execute it
             const selectorMatch = elementSelector.match(/document\.querySelector\(['"]([^'"]+)['"]\)/);
-            if (selectorMatch && selectorMatch[1]) {
+            if (selectorMatch?.[1]) {
               element = document.querySelector(selectorMatch[1]);
               logDebug(`Using extracted selector: ${selectorMatch[1]}`);
             }
@@ -435,7 +448,7 @@ function handleSpecialCaseMessages(request, sendResponse) {
         }
       })
       .catch(error => {
-        logDebug("Error loading rulesList.json:", error);
+        logDebug("Error processing rules list:", error);
         sendResponse({ error: error.message });
       });
       
