@@ -67,7 +67,7 @@ describe('Header & Footer Tests', () => {
             ]);
             
             // Wait for any redirects or JS initialization
-            await helper.page.waitForTimeout(3000);
+            await helper.safeWait(3000);
             
             console.log("On admin page, now navigating to header/footer editor...");
             // Then navigate to the header/footer editor with more resilient navigation
@@ -93,7 +93,7 @@ describe('Header & Footer Tests', () => {
                            !document.querySelector('.loading-indicator') &&
                            !document.querySelector('.x-mask-loading');
                 }, { timeout: 10000 }),
-                helper.page.waitForTimeout(10000)
+                helper.safeWait(10000)
             ]);
             
             console.log("Taking screenshot of current admin page state...");
@@ -146,7 +146,7 @@ describe('Header & Footer Tests', () => {
                     }
                     
                     // Wait before next check
-                    await helper.page.waitForTimeout(3000);
+                    await helper.safeWait(3000);
                 }
             }
             
@@ -156,11 +156,11 @@ describe('Header & Footer Tests', () => {
                 
                 // Try clicking on the page to activate any pending scripts
                 await helper.page.mouse.click(100, 100);
-                await helper.page.waitForTimeout(1000);
+                await helper.safeWait(1000);
                 
                 // Try triggering a reload of the page
                 await helper.page.reload({ waitUntil: 'networkidle2' });
-                await helper.page.waitForTimeout(3000);
+                await helper.safeWait(3000);
                 
                 // Take final screenshot to debug
                 await helper.page.screenshot({ 
@@ -226,12 +226,12 @@ describe('Header & Footer Tests', () => {
                 if (attempt === 3) throw error;
                 
                 // Wait before retrying
-                await helper.page.waitForTimeout(2000);
+                await helper.safeWait(2000);
                 
                 // Try refreshing the page to reset state
                 if (attempt > 1) {
                     await helper.page.reload({ waitUntil: 'networkidle2' });
-                    await helper.page.waitForTimeout(3000);
+                    await helper.safeWait(3000);
                 }
             }
         }
@@ -266,12 +266,12 @@ describe('Header & Footer Tests', () => {
                 if (attempt === 3) throw error;
                 
                 // Wait before retrying
-                await helper.page.waitForTimeout(3000);
+                await helper.safeWait(3000);
                 
                 // Try refreshing the frame
                 try {
                     await frame.evaluate(() => window.location.reload());
-                    await helper.page.waitForTimeout(2000);
+                    await helper.safeWait(2000);
                 } catch (e) {
                     console.warn("Could not refresh frame:", e.message);
                 }
@@ -297,12 +297,12 @@ describe('Header & Footer Tests', () => {
                 if (attempt === 3) throw error;
                 
                 // Wait before retrying
-                await helper.page.waitForTimeout(2000);
+                await helper.safeWait(2000);
                 
                 // Try refreshing the page to reset state
                 if (attempt > 1) {
                     await helper.page.reload({ waitUntil: 'networkidle2' });
-                    await helper.page.waitForTimeout(3000);
+                    await helper.safeWait(3000);
                 }
             }
         }
@@ -332,18 +332,18 @@ describe('Header & Footer Tests', () => {
                         break;
                     } else if (attempt < 3) {
                         console.warn("Button not found, will retry...");
-                        await helper.page.waitForTimeout(2000);
+                        await helper.safeWait(2000);
                     } else {
                         throw new Error("Unload Header button not found after multiple attempts");
                     }
                 } catch (e) {
                     if (attempt === 3) throw e;
-                    await helper.page.waitForTimeout(1000);
+                    await helper.safeWait(1000);
                 }
             }
             
             // Allow time for the unload operation
-            await helper.page.waitForTimeout(2000);
+            await helper.safeWait(2000);
         } catch (error) {
             console.error("Error during header unload test:", error);
             
@@ -391,7 +391,7 @@ describe('Header & Footer Tests', () => {
                 }
                 
                 // Wait before retrying
-                await helper.page.waitForTimeout(3000);
+                await helper.safeWait(3000);
             }
         }
         
@@ -413,12 +413,12 @@ describe('Header & Footer Tests', () => {
                 if (attempt === 3) throw error;
                 
                 // Wait before retrying
-                await helper.page.waitForTimeout(2000);
+                await helper.safeWait(2000);
                 
                 // Try refreshing the page to reset state
                 if (attempt > 1) {
                     await helper.page.reload({ waitUntil: 'networkidle2' });
-                    await helper.page.waitForTimeout(3000);
+                    await helper.safeWait(3000);
                 }
             }
         }
@@ -448,18 +448,18 @@ describe('Header & Footer Tests', () => {
                         break;
                     } else if (attempt < 3) {
                         console.warn("Button not found, will retry...");
-                        await helper.page.waitForTimeout(2000);
+                        await helper.safeWait(2000);
                     } else {
                         throw new Error("Unload Footer button not found after multiple attempts");
                     }
                 } catch (e) {
                     if (attempt === 3) throw e;
-                    await helper.page.waitForTimeout(1000);
+                    await helper.safeWait(1000);
                 }
             }
             
             // Allow time for the unload operation
-            await helper.page.waitForTimeout(2000);
+            await helper.safeWait(2000);
         } catch (error) {
             console.error("Error during footer unload test:", error);
             
@@ -507,7 +507,7 @@ describe('Header & Footer Tests', () => {
                 }
                 
                 // Wait before retrying
-                await helper.page.waitForTimeout(3000);
+                await helper.safeWait(3000);
             }
         }
         
@@ -529,12 +529,12 @@ describe('Header & Footer Tests', () => {
                 if (attempt === 3) throw error;
                 
                 // Wait before retrying
-                await helper.page.waitForTimeout(2000);
+                await helper.safeWait(2000);
                 
                 // Try refreshing the page to reset state
                 if (attempt > 1) {
                     await helper.page.reload({ waitUntil: 'networkidle2' });
-                    await helper.page.waitForTimeout(3000);
+                    await helper.safeWait(3000);
                 }
             }
         }
@@ -583,7 +583,7 @@ describe('Header & Footer Tests', () => {
                 }
                 
                 // Wait before retrying
-                await helper.page.waitForTimeout(3000);
+                await helper.safeWait(3000);
             }
         }
         

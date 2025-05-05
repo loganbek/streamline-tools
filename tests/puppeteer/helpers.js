@@ -12,6 +12,14 @@ let browserCleanupRegistered = false;
 let lastLoginTime = 0;
 const LOGIN_COOLDOWN = 2000;
 const MAX_LOGIN_RETRIES = 3;
+// Set consistent timeout values to prevent tests from running indefinitely
+const TIMEOUTS = {
+  NAVIGATION: 15000, // Navigation timeout (15s)
+  PAGE_ACTION: 10000, // Actions like clicks, form fills (10s)
+  NETWORK_IDLE: 8000, // Waiting for network idle (8s)
+  ELEMENT_APPEARANCE: 10000, // Waiting for elements to appear (10s)
+  TEST_DEFAULT: 45000 // Default test timeout (45s instead of 90s)
+};
 
 /**
  * Gets the extension ID from a running browser instance
@@ -87,6 +95,28 @@ async function getBrowserInstance() {
     throw new Error('Failed to initialize browser');
   }
   
+  // Register signal handlers for graceful shutdown
+  ['SIGINT', 'SIGTERM', 'SIGHUP'].forEach(signal => {
+    process.on(signal, async () => {
+      console.log(`\nReceived ${signal}, closing browser gracefully...`);
+      if (sharedBrowser) {
+        try {
+          await sharedBrowser.close();
+        } catch (err) {
+          console.error("Error closing browser:", err);
+        } finally {
+          process.exit(0);
+        }
+      }
+    });
+  });
+  
+  // Also handle unhandled promise rejections
+  process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+    // Don't exit process here, just log it to help with debugging
+  });
+  
   return sharedBrowser;
 }
 
@@ -95,6 +125,25 @@ class TestHelper {
     this.debugUtils = new DebugUtils();
     this.recorder = null; // Add recorder property
     this.videoPath = null; // Add video path property
+  }
+
+  /**
+   * Safe wait method that handles waitForTimeout compatibility issues
+   * @param {number} ms - Milliseconds to wait
+   * @returns {Promise<void>}
+   */
+  async safeWait(ms) {
+    try {
+      if (this.page && typeof this.page.waitForTimeout === 'function') {
+        await this.page.waitForTimeout(ms);
+      } else {
+        // Fallback for older versions or if method is unavailable
+        await new Promise(resolve => setTimeout(resolve, ms));
+      }
+    } catch (error) {
+      console.warn(`Warning: waitForTimeout failed, using setTimeout fallback: ${error.message}`);
+      await new Promise(resolve => setTimeout(resolve, ms));
+    }
   }
 
   async init() {
@@ -245,7 +294,7 @@ class TestHelper {
       if (timeSinceLastLogin < MIN_LOGIN_INTERVAL_MS) {
         const waitTime = MIN_LOGIN_INTERVAL_MS - timeSinceLastLogin;
         console.log(`Rate limiting: Waiting ${waitTime}ms before next login attempt`);
-        await this.page.waitForTimeout(waitTime);
+        await this.safeWait(waitTime);
       }
     }
   }
@@ -317,7 +366,7 @@ class TestHelper {
       ]);
       
       // Give more time for JavaScript frameworks to initialize
-      await this.page.waitForTimeout(5000);
+      await this.safeWait(5000);
       
       // Check if we're already on a logged-in page
       const title = await this.page.title();
@@ -354,9 +403,9 @@ class TestHelper {
           await Promise.race([
             this.page.goto(process.env.BASE_URL, { 
               waitUntil: 'domcontentloaded', // Change from networkidle2 to domcontentloaded for faster response
-              timeout: 60000
+              timeout: 30000  // Reduced timeout to fail faster
             }),
-            new Promise(resolve => setTimeout(resolve, 60000))
+            new Promise(resolve => setTimeout(resolve, 30000))
           ]);
         } catch (navError) {
           console.log("Navigation timeout or error, but continuing:", navError.message);
@@ -368,16 +417,16 @@ class TestHelper {
         }
         
         // Wait for page to stabilize
-        await this.page.waitForTimeout(3000);
+        await this.safeWait(3000);
         
         // Wait for and fill in login form with better error handling
         console.log("Waiting for login form...");
         
-        // More resilient selector waiting with longer timeouts
+        // More resilient selector waiting with shorter timeouts
         const usernameSelector = await Promise.race([
-          this.page.waitForSelector('#username', { timeout: 30000 }).catch(() => null),
-          this.page.waitForSelector('input[name="username"]', { timeout: 30000 }).catch(() => null),
-          this.page.waitForSelector('input[type="text"][id*="user"]', { timeout: 30000 }).catch(() => null)
+          this.page.waitForSelector('#username', { timeout: 15000 }).catch(() => null),
+          this.page.waitForSelector('input[name="username"]', { timeout: 15000 }).catch(() => null),
+          this.page.waitForSelector('input[type="text"][id*="user"]', { timeout: 15000 }).catch(() => null)
         ]);
         
         if (!usernameSelector) {
@@ -412,14 +461,14 @@ class TestHelper {
         await usernameSelector.type(username, { delay: 100 }); // Increase typing delay
         
         // Make sure to wait after typing username before looking for password field
-        await this.page.waitForTimeout(1000);
+        await this.safeWait(1000);
         
         // Wait specifically for the password field with better resilience
         console.log("Waiting for password field...");
         const passwordSelector = await Promise.race([
-          this.page.waitForSelector('#psword', { timeout: 30000 }).catch(() => null),
-          this.page.waitForSelector('#password', { timeout: 30000 }).catch(() => null),
-          this.page.waitForSelector('input[type="password"]', { timeout: 30000 }).catch(() => null)
+          this.page.waitForSelector('#psword', { timeout: 15000 }).catch(() => null),
+          this.page.waitForSelector('#password', { timeout: 15000 }).catch(() => null),
+          this.page.waitForSelector('input[type="password"]', { timeout: 15000 }).catch(() => null)
         ]);
         
         if (!passwordSelector) {
@@ -454,7 +503,7 @@ class TestHelper {
         await passwordSelector.type(password, { delay: 100 }); // Increase typing delay
         
         // Wait after entering password
-        await this.page.waitForTimeout(1000);
+        await this.safeWait(1000);
         
         // First, dump the HTML structure to help debug the form
         const formStructure = await this.page.evaluate(() => {
@@ -478,42 +527,12 @@ class TestHelper {
         
         console.log("Form structure for debugging:\n", formStructure);
         
-        // Look specifically for the "Continue to iterate?" button or text
-        const continueButtonInfo = await this.page.evaluate(() => {
-          // Look for any text mentioning "continue to iterate"
-          const allElements = Array.from(document.querySelectorAll('*'));
-          const elementsWithContinueText = allElements.filter(el => {
-            const text = el.textContent || '';
-            return text.toLowerCase().includes('continue to iterate');
-          });
-          
-          if (elementsWithContinueText.length > 0) {
-            return {
-              found: true,
-              count: elementsWithContinueText.length,
-              text: elementsWithContinueText.map(el => ({
-                tag: el.tagName,
-                text: el.textContent.trim(),
-                isClickable: el.tagName === 'BUTTON' || el.tagName === 'A' || el.tagName === 'INPUT'
-              }))
-            };
-          } else {
-            return { found: false };
-          }
-        });
-        
-        if (continueButtonInfo.found) {
-          console.log("Found 'Continue to iterate?' text:", JSON.stringify(continueButtonInfo, null, 2));
-        }
-        
         // Find submit button with more resilient selectors
         const submitSelector = [
           '#log_in', 
           'input[type="submit"]',
           'button[type="submit"]',
           'button.login-button',
-          'button:contains("Login")',
-          'button:contains("Sign In")',
           'input[value="Login"]',
           'input[value="Sign In"]'
         ].join(', ');
@@ -531,125 +550,73 @@ class TestHelper {
             const button = document.querySelector(selector);
             if (button) {
               button.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              setTimeout(() => button.click(), 500);
+              setTimeout(() => {
+                try { button.click(); } catch(e) {}
+              }, 500);
+              return true;
             }
           }, submitSelector);
         } else {
-          console.log("Standard submit button not found, looking for 'Continue to iterate?' button");
+          console.log("Standard submit button not found, trying to submit form directly");
           // Take screenshot for debugging
           await this.page.screenshot({ 
             path: `login-failure-${new Date().toISOString().replace(/[:.]/g, '-')}-attempt-${attempt}.png`, 
             fullPage: true 
           });
           
-          // Enhanced method to find and click the "Continue to iterate?" button
-          const continueBtnClicked = await this.page.evaluate(() => {
-            // More aggressive approach to find the button
-            
-            // 1. Try direct text search first (case insensitive)
-            const textSearch = (text) => {
-              text = text.toLowerCase();
-              return Array.from(document.querySelectorAll('button, a, input[type="submit"], input[type="button"], .btn, .button'))
-                .find(el => (el.textContent && el.textContent.toLowerCase().includes(text)) || 
-                           (el.value && el.value.toLowerCase().includes(text)));
-            };
-            
-            // Try multiple text variations to find the button
-            const continueBtn = 
-              textSearch('continue to iterate?') || 
-              textSearch('continue to iterate') || 
-              textSearch('continue') ||
-              // Sometimes the text might be in a span inside the button
-              Array.from(document.querySelectorAll('button, a, .btn'))
-                .find(el => Array.from(el.querySelectorAll('*'))
-                  .some(child => child.textContent && 
-                    (child.textContent.toLowerCase().includes('continue to iterate') ||
-                     child.textContent.toLowerCase().includes('continue'))));
-            
-            if (continueBtn) {
-              // Try different clicking methods
+          // Try to submit form
+          const formSubmitted = await this.page.evaluate(() => {
+            const form = document.querySelector('form');
+            if (form) {
+              console.log("Found form, submitting it directly");
               try {
-                console.log("Found continue button:", continueBtn.outerHTML);
-                
-                // Generate synthetic click event
-                const clickEvent = new MouseEvent('click', {
-                  bubbles: true,
-                  cancelable: true,
-                  view: window
-                });
-                
-                // 1. Try dispatchEvent
-                continueBtn.dispatchEvent(clickEvent);
-                
-                // 2. Try direct click
-                setTimeout(() => continueBtn.click(), 200);
-                
-                // 3. If it's a link, try simulating href navigation
-                if (continueBtn.tagName === 'A' && continueBtn.href) {
-                  setTimeout(() => {
-                    console.log("Using link navigation:", continueBtn.href);
-                    window.location.href = continueBtn.href;
-                  }, 400);
-                }
-                
-                // 4. If it's in a form, try submitting the form
-                const form = continueBtn.closest('form');
-                if (form) {
-                  setTimeout(() => form.submit(), 600);
-                }
-                
-                return true;
-              } catch (e) {
-                console.error("Error clicking continue button:", e);
-                return false;
-              }
-            }
-            
-            // Try to find and submit any form as last resort
-            const loginForm = document.querySelector('form');
-            if (loginForm) {
-              console.log("Trying direct form submission");
-              try {
-                loginForm.submit();
+                form.submit();
                 return true;
               } catch (e) {
                 console.error("Error submitting form:", e);
-                return false;
               }
+            }
+            
+            // Fallback to pressing Enter in password field
+            const passwordField = document.querySelector('#psword') || 
+                              document.querySelector('#password') || 
+                              document.querySelector('input[type="password"]');
+            
+            if (passwordField) {
+              // Create and dispatch an Enter key event
+              const enterEvent = new KeyboardEvent('keypress', {
+                key: 'Enter',
+                code: 'Enter',
+                keyCode: 13,
+                which: 13,
+                bubbles: true
+              });
+              
+              passwordField.dispatchEvent(enterEvent);
+              return true;
             }
             
             return false;
           });
           
-          if (continueBtnClicked) {
-            console.log("Successfully found and clicked 'Continue' button or submitted form");
-          } else {
-            console.error("Failed to find any clickable Continue button or form");
-            
-            // As last resort, try pressing Enter key in the password field
-            console.log("Trying Enter key in password field as last resort");
-            try {
-              await passwordSelector.press('Enter');
-              console.log("Pressed Enter key in password field");
-            } catch (e) {
-              console.error("Error pressing Enter key:", e);
-            }
+          if (!formSubmitted) {
+            console.error("Could not find a way to submit the login form");
           }
         }
         
-        // Wait for navigation after login attempt with extended timeout
+        // Wait for navigation after login attempt with shorter timeout
         console.log("Waiting for navigation after login attempt...");
         try {
           await Promise.race([
             this.page.waitForNavigation({ 
               waitUntil: 'domcontentloaded', 
-              timeout: 60000 
+              timeout: 20000 
             }),
-            new Promise(resolve => setTimeout(resolve, 60000))
+            new Promise(resolve => setTimeout(resolve, 20000))
           ]);
           
           // Give page some time to fully load JavaScript
-          await this.page.waitForTimeout(5000);
+          await this.safeWait(3000);
         } catch (e) {
           console.log("Navigation timeout after login attempt:", e.message);
         }
@@ -972,11 +939,11 @@ class TestHelper {
         console.log("Navigating to admin page to ensure extension is activated there...");
         await this.page.goto(`${process.env.BASE_URL}/admin/header_footer/edit.jsp`, {
           waitUntil: 'networkidle2',
-          timeout: 30000
+          timeout: 20000 // Reduced timeout
         });
         
         // Wait a moment for any page initialization
-        await this.page.waitForTimeout(2000);
+        await this.safeWait(2000);
         
         // Take screenshot of current admin page for debugging
         await this.page.screenshot({ path: 'admin-page-extension-setup.png', fullPage: true });
@@ -994,8 +961,38 @@ class TestHelper {
           console.log("Extension not detected on page, triggering content script activation...");
           
           // Try to trigger extension activation by refreshing the page
-          await this.page.reload({ waitUntil: 'networkidle2', timeout: 20000 });
-          await this.page.waitForTimeout(2000);
+          await this.page.reload({ waitUntil: 'networkidle2', timeout: 15000 });
+          await this.safeWait(2000);
+          
+          // Check if extension loaded after reload
+          const extensionLoadedAfterReload = await this.page.evaluate(() => {
+            return !!(document.querySelector('#streamline-tools-root') || 
+                    document.querySelector('#unloadHeaderHTML') ||
+                    document.querySelector('#loadHeaderHTML'));
+          });
+          
+          if (extensionLoadedAfterReload) {
+            console.log("Extension loaded after page refresh");
+          } else {
+            console.warn("Extension still not detected after refresh, trying direct activation");
+            
+            // Try to access the extension popup as a last resort
+            if (this.extensionId) {
+              try {
+                await this.page.goto(`chrome-extension://${this.extensionId}/popup/popup.html`, {
+                  waitUntil: 'domcontentloaded',
+                  timeout: 5000
+                });
+                await this.safeWait(1000);
+                await this.page.goto(`${process.env.BASE_URL}/admin/header_footer/edit.jsp`, {
+                  waitUntil: 'networkidle2',
+                  timeout: 15000
+                });
+              } catch (e) {
+                console.warn("Direct extension activation failed:", e.message);
+              }
+            }
+          }
         }
         
         console.log("Extension setup on admin page complete");
@@ -1078,7 +1075,7 @@ class TestHelper {
     try {
       // Open extensions page
       await this.page.goto('chrome://extensions/', { waitUntil: 'domcontentloaded' });
-      await this.page.waitForTimeout(3000); // Wait to view the page
+      await this.safeWait(3000); // Wait to view the page
       await this.page.screenshot({ path: 'chrome-extensions-page.png' });
       
       // If we have extension ID, try to focus on our extension
@@ -1098,7 +1095,7 @@ class TestHelper {
             }
             return false;
           }, this.extensionId);
-          await this.page.waitForTimeout(2000);
+          await this.safeWait(2000);
           await this.page.screenshot({ path: 'chrome-extensions-detail.png' });
         } catch (err) {
           console.log("Could not focus on extension details:", err.message);

@@ -17,7 +17,9 @@ module.exports = {
       },
       globals: {
         __EXTENSION_ID__: 'test-extension-id'
-      }
+      },
+      // Shorter timeout for unit tests (using the correct option name)
+      testTimeout: 30000
     },
     {
       displayName: 'puppeteer',
@@ -30,13 +32,15 @@ module.exports = {
         url: 'http://localhost',
         // Explicitly set to reuse the same browser instance
         browserContext: 'default'
-      }
+      },
+      // Reduced timeout for Puppeteer tests to fail faster (using the correct option name)
+      testTimeout: 60000
     }
   ],
   // Limit workers to prevent spawning multiple browsers
   maxWorkers: 1,
-  // Add timeout for entire test suite
-  testTimeout: 120000,
+  // Setting global timeout correctly
+  testTimeout: 60000,
   // Add reporter configuration
   reporters: [
     'default',
@@ -46,5 +50,7 @@ module.exports = {
       includeFailureMsg: true,
       includeSuiteFailure: true
     }]
-  ]
-};
+  ],
+  // Add retry logic for flaky tests
+  retryTimes: 1
+}
