@@ -27,8 +27,14 @@ module.exports = {
       globalSetup: 'jest-environment-puppeteer/setup',
       globalTeardown: 'jest-environment-puppeteer/teardown',
       testEnvironmentOptions: {
-        url: 'http://localhost'
+        url: 'http://localhost',
+        // Explicitly set to reuse the same browser instance
+        browserContext: 'default'
       }
     }
-  ]
+  ],
+  // Limit workers to prevent spawning multiple browsers
+  maxWorkers: 1,
+  // Add timeout for entire test suite
+  testTimeout: 120000
 };

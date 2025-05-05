@@ -2,20 +2,28 @@ const path = require('path');
 
 module.exports = {
   launch: {
-    headless: 'new',
-    defaultViewport: { width: 1920, height: 1080 },
+    // Use headless mode for CI and false for interactive debugging
+    headless: process.env.CI === 'true',
+    devtools: process.env.DEBUG_TESTS === 'true',
+    defaultViewport: { width: 1280, height: 800 },
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
       '--disable-dev-shm-usage',
-      '--disable-web-security',
-      '--disable-features=IsolateOrigins,site-per-process',
-      '--enable-features=NetworkService',
+      // Load the extension
       `--disable-extensions-except=${path.resolve(__dirname, 'src')}`,
       `--load-extension=${path.resolve(__dirname, 'src')}`
     ],
-    pipe: true
+    // Increase timeout for better stability with extensions
+    timeout: 60000,
+    slowMo: 50
   },
+  // Use default context
   browserContext: 'default',
-  exitOnPageError: false
+  exitOnPageError: false,
+  // Add connection timeout
+  connect: {
+    timeout: 60000,
+    slowMo: 100
+  }
 };

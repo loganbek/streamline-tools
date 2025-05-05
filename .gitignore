@@ -7,3 +7,13 @@ node_modules
 .package-lock.json
 .env
 
+# Chrome user data directory created during tests
+.chrome-user-data/
+
+# Test artifacts
+*.png
+test-failures/
+login-failure-*.png
+extension-verification-failure-*.png
+popup-verification-failure-*.png
+
