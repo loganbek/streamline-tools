@@ -22,10 +22,6 @@ module.exports = {
   },
   // Use default context
   browserContext: 'default',
-  exitOnPageError: false,
-  connect: {
-    timeout: 60000,
-    // Slightly increase slowMo for better visual tracking
-    slowMo: 150 // Increased from 100
-  }
+  exitOnPageError: false
+  // connect block removed to fix globalSetup error
 };

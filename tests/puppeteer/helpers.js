@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
+const fs = require('fs').promises; // Add fs.promises for directory operations
 const DebugUtils = require('../debugUtils');
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
@@ -92,6 +93,8 @@ async function getBrowserInstance() {
 class TestHelper {
   constructor() {
     this.debugUtils = new DebugUtils();
+    this.recorder = null; // Add recorder property
+    this.videoPath = null; // Add video path property
   }
 
   async init() {
@@ -694,6 +697,9 @@ class TestHelper {
    * Clean up browser
    */
   async cleanup() {
+    // Stop any active recording before closing
+    await this.stopRecording();
+    
     // Only close browser when process is ending
     if (process.env.NODE_ENV === 'test' && process.env.JEST_WORKER_ID === '1') {
       if (sharedBrowser) {
@@ -1000,6 +1006,113 @@ class TestHelper {
       return true;
     } catch (error) {
       console.error("Error setting up extension:", error);
+      return false;
+    }
+  }
+
+  /**
+   * Start video recording for the current page
+   * @param {string} filePath - Path to save the video file
+   */
+  async startRecording(filePath) {
+    if (this.recorder) {
+      console.log("Recording already in progress. Stopping previous recording.");
+      await this.stopRecording(false); // Don't save the previous recording
+    }
+    
+    try {
+      // Ensure directory exists
+      const dir = path.dirname(filePath);
+      await fs.mkdir(dir, { recursive: true }).catch(err => {
+        if (err.code !== 'EEXIST') throw err;
+      });
+      
+      console.log(`Starting video recording to: ${filePath}`);
+      this.videoPath = filePath;
+      // Use page.screencast() - available in Puppeteer v24+
+      this.recorder = await this.page.screencast({ path: filePath });
+      return true;
+    } catch (error) {
+      console.error("Failed to start video recording:", error);
+      this.recorder = null;
+      this.videoPath = null;
+      return false;
+    }
+  }
+
+  /**
+   * Stop video recording
+   * @param {boolean} saveVideo - Whether to keep the video (true) or delete it (false)
+   */
+  async stopRecording(saveVideo = true) {
+    if (this.recorder) {
+      try {
+        console.log("Stopping video recording...");
+        await this.recorder.stop();
+        console.log(`Recording stopped. Video ${saveVideo ? 'saved to' : 'will be deleted from'}: ${this.videoPath}`);
+        
+        if (!saveVideo && this.videoPath) {
+          console.log(`Deleting video file: ${this.videoPath}`);
+          try {
+            await fs.unlink(this.videoPath).catch(err => {
+              if (err.code !== 'ENOENT') console.error(`Error deleting video: ${err.message}`);
+            });
+          } catch (unlinkError) {
+            console.error(`Failed to delete video file ${this.videoPath}:`, unlinkError);
+          }
+        }
+      } catch (error) {
+        console.error("Error stopping video recording:", error);
+      } finally {
+        this.recorder = null;
+        if (!saveVideo) this.videoPath = null;
+      }
+    }
+  }
+
+  /**
+   * Show the extension being added to the browser
+   */
+  async showExtensionInBrowser() {
+    console.log("Navigating to Chrome Extensions page to show extension...");
+    try {
+      // Open extensions page
+      await this.page.goto('chrome://extensions/', { waitUntil: 'domcontentloaded' });
+      await this.page.waitForTimeout(3000); // Wait to view the page
+      await this.page.screenshot({ path: 'chrome-extensions-page.png' });
+      
+      // If we have extension ID, try to focus on our extension
+      if (this.extensionId) {
+        try {
+          // Try to find and click the extension card or details
+          await this.page.evaluate((extId) => {
+            const cards = Array.from(document.querySelectorAll('extensions-item, extensions-card, .extension-list-item'));
+            for (const card of cards) {
+              if (card.innerHTML && card.innerHTML.includes(extId)) {
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                setTimeout(() => {
+                  try { card.click(); } catch(e) {}
+                }, 500);
+                return true;
+              }
+            }
+            return false;
+          }, this.extensionId);
+          await this.page.waitForTimeout(2000);
+          await this.page.screenshot({ path: 'chrome-extensions-detail.png' });
+        } catch (err) {
+          console.log("Could not focus on extension details:", err.message);
+        }
+      }
+      
+      // Return to the app
+      if (process.env.BASE_URL) {
+        await this.page.goto(process.env.BASE_URL, { waitUntil: 'domcontentloaded' });
+      }
+      
+      return true;
+    } catch (error) {
+      console.error("Error showing extension in browser:", error);
       return false;
     }
   }

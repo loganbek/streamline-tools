@@ -1,8 +1,10 @@
 const { TestHelper } = require('./helpers');
 const path = require('path');
+const fs = require('fs').promises;
 
 describe('Configuration Rules Tests', () => {
     let helper;
+    let currentTestName = '';
 
     beforeAll(async () => {
         helper = new TestHelper();
@@ -11,6 +13,28 @@ describe('Configuration Rules Tests', () => {
 
     afterAll(async () => {
         await helper.cleanup();
+    });
+
+    beforeEach(async () => {
+        // Get current test name for video file naming
+        currentTestName = expect.getState().currentTestName.replace(/\s+/g, '_');
+        
+        // Set up video directory
+        const videoDir = path.join(__dirname, 'test-videos');
+        await fs.mkdir(videoDir, { recursive: true }).catch(err => {
+            if (err.code !== 'EEXIST') console.error("Error creating video directory:", err);
+        });
+        
+        // Start recording this test
+        console.log(`Starting recording for test: ${currentTestName}`);
+        await helper.startRecording(path.join(videoDir, `${currentTestName}.webm`));
+    });
+
+    afterEach(async () => {
+        // Stop recording and always save the video
+        console.log(`Test "${currentTestName}" finished`);
+        await helper.stopRecording(true); // Always save the video
+        currentTestName = '';
     });
 
     test('should handle constraint rules', async () => {

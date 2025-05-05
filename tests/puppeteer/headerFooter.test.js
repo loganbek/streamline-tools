@@ -1,8 +1,11 @@
 const { TestHelper } = require('./helpers');
 const login = require('./login');
+const path = require('path'); // Add path for video file paths
+const fs = require('fs').promises; // Add fs for directory creation
 
 describe('Header & Footer Tests', () => {
     let helper;
+    let currentTestName = ''; // Variable to track current test name for video files
     // Test content for header and footer
     const headerContent = `<!-- Test Header Content -->
 <div class="test-header">
@@ -22,7 +25,9 @@ describe('Header & Footer Tests', () => {
         await helper.init();
         console.log("Login process starting...");
         await login(helper.page);
-        console.log("Login completed, pinning extension to toolbar...");
+        console.log("Login completed, showing extension in browser...");
+        await helper.showExtensionInBrowser(); // Show extension in browser
+        console.log("Pinning extension to toolbar...");
         await helper.pinExtensionToToolbar();
         console.log("Test setup complete");
     }, 180000); // Extend timeout for initialization
@@ -32,6 +37,23 @@ describe('Header & Footer Tests', () => {
     });
 
     beforeEach(async () => {
+        // Get the current test name for use in video file naming
+        currentTestName = expect.getState().currentTestName.replace(/\s+/g, '_');
+        
+        // Create and ensure the videos directory exists
+        const videoDir = path.join(__dirname, 'test-videos');
+        try {
+            await fs.mkdir(videoDir, { recursive: true });
+        } catch (error) {
+            if (error.code !== 'EEXIST') {
+                console.error("Error creating video directory:", error);
+            }
+        }
+        
+        // Start recording this test
+        console.log(`Starting recording for test: ${currentTestName}`);
+        await helper.startRecording(path.join(videoDir, `${currentTestName}.webm`));
+
         console.log("Navigating to header/footer admin page...");
         try {
             // First go to the admin main page with more resilient navigation
@@ -158,6 +180,13 @@ describe('Header & Footer Tests', () => {
             throw error;
         }
     }, 90000); // Extend timeout for initialization
+
+    afterEach(async () => {
+        // Stop recording and always save the video, regardless of test outcome
+        console.log(`Test "${currentTestName}" finished`);
+        await helper.stopRecording(true); // Always save the video
+        currentTestName = ''; // Reset current test name
+    });
 
     test('should load header & footer interface', async () => {
         console.log("Testing header & footer interface loading...");

@@ -2,9 +2,12 @@ const puppeteer = require('puppeteer'); // v23.0.0 or later
 require('dotenv').config(); // Add this to load environment variables
 const { TestHelper } = require('./helpers');
 const login = require('./login');
+const path = require('path');
+const fs = require('fs').promises;
 
 describe('Login to Header & Footer Tests', () => {
     let helper;
+    let currentTestName = '';
 
     beforeAll(async () => {
         helper = new TestHelper();
@@ -13,6 +16,28 @@ describe('Login to Header & Footer Tests', () => {
 
     afterAll(async () => {
         await helper.cleanup();
+    });
+    
+    beforeEach(async () => {
+        // Get current test name for video file naming
+        currentTestName = expect.getState().currentTestName.replace(/\s+/g, '_');
+        
+        // Set up video directory
+        const videoDir = path.join(__dirname, 'test-videos');
+        await fs.mkdir(videoDir, { recursive: true }).catch(err => {
+            if (err.code !== 'EEXIST') console.error("Error creating video directory:", err);
+        });
+        
+        // Start recording this test
+        console.log(`Starting recording for test: ${currentTestName}`);
+        await helper.startRecording(path.join(videoDir, `${currentTestName}.webm`));
+    });
+
+    afterEach(async () => {
+        // Stop recording and always save the video
+        console.log(`Test "${currentTestName}" finished`);
+        await helper.stopRecording(true); // Always save the video
+        currentTestName = '';
     });
 
     test('should login and navigate to header & footer', async () => {
