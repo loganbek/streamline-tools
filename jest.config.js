@@ -36,5 +36,15 @@ module.exports = {
   // Limit workers to prevent spawning multiple browsers
   maxWorkers: 1,
   // Add timeout for entire test suite
-  testTimeout: 120000
+  testTimeout: 120000,
+  // Add reporter configuration
+  reporters: [
+    'default',
+    ['jest-html-reporter', {
+      pageTitle: 'Test Report',
+      outputPath: './test-report.html',
+      includeFailureMsg: true,
+      includeSuiteFailure: true
+    }]
+  ]
 };

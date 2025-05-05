@@ -17,3 +17,7 @@ login-failure-*.png
 extension-verification-failure-*.png
 popup-verification-failure-*.png
 
+# Ensure test videos are NOT ignored
+!test-videos/
+!tests/puppeteer/test-videos/
+
