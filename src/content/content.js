@@ -167,7 +167,7 @@ function findMatchingRule(url) {
       
       // Compare hostname and path parts more securely
       const hostMatch = 
-          urlObj.hostname === ruleUrlObj.hostname ||
+          //urlObj.hostname === ruleUrlObj.hostname ||
           urlObj.hostname.endsWith('.' + ruleUrlObj.hostname);
       
       // Must match both host AND path to be considered a match
