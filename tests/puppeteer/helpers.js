@@ -1317,8 +1317,81 @@ class TestHelper {
       
       console.log(`Starting video recording to: ${filePath}`);
       this.videoPath = filePath;
-      // Use page.screencast() - available in Puppeteer v24+
-      this.recorder = await this.page.screencast({ path: filePath });
+      
+      // Use CDP for recording instead of screencast() for better compatibility
+      const client = await this.page.target().createCDPSession();
+      
+      // Start screencast using CDP
+      await client.send('Page.startScreencast', { 
+        format: 'jpeg', 
+        quality: 80,
+        everyNthFrame: 1
+      });
+      
+      // Create a write stream for the video file
+      const { createFFmpeg } = require('@ffmpeg/ffmpeg');
+      const ffmpeg = createFFmpeg({ log: false });
+      await ffmpeg.load();
+      
+      // Store frames
+      const frames = [];
+      
+      // Handle screencast frames
+      client.on('Page.screencastFrame', async ({ data, sessionId }) => {
+        // Acknowledge the frame to receive more
+        await client.send('Page.screencastFrameAck', { sessionId });
+        
+        // Add frame to collection
+        const buffer = Buffer.from(data, 'base64');
+        frames.push(buffer);
+      });
+      
+      // Store client and frames in this object
+      this.recorder = {
+        client,
+        frames,
+        filePath,
+        ffmpeg,
+        stop: async () => {
+          // Stop screencast
+          await client.send('Page.stopScreencast').catch(e => console.error("Error stopping screencast:", e));
+          
+          console.log(`Processing ${frames.length} frames for video...`);
+          if (frames.length === 0) {
+            console.warn("No frames were captured, video will be empty");
+            return;
+          }
+          
+          try {
+            // Process frames into video with ffmpeg
+            for (let i = 0; i < frames.length; i++) {
+              ffmpeg.FS('writeFile', `frame_${i}.jpg`, frames[i]);
+            }
+            
+            // Run ffmpeg command to create video
+            await ffmpeg.run(
+              '-framerate', '10',
+              '-pattern_type', 'glob',
+              '-i', 'frame_*.jpg',
+              '-c:v', 'libx264',
+              '-pix_fmt', 'yuv420p',
+              '-vf', 'pad=ceil(iw/2)*2:ceil(ih/2)*2',
+              'output.mp4'
+            );
+            
+            // Read the output file
+            const data = ffmpeg.FS('readFile', 'output.mp4');
+            
+            // Write to the destination
+            await fs.writeFile(filePath, Buffer.from(data));
+            
+            console.log(`Video saved to ${filePath}`);
+          } catch (error) {
+            console.error("Error creating video file:", error);
+          }
+        }
+      };
+      
       return true;
     } catch (error) {
       console.error("Failed to start video recording:", error);

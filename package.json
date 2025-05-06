@@ -37,5 +37,8 @@
     "globals": [
       "chrome"
     ]
+  },
+  "dependencies": {
+    "@ffmpeg/ffmpeg": "^0.12.15"
   }
 }
