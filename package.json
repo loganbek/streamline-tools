@@ -31,7 +31,8 @@
     "jest-environment-puppeteer": "^11.0.0",
     "jest-html-reporter": "^3.10.2",
     "jsdom": "^21.1.0",
-    "puppeteer": "^24.7.2"
+    "puppeteer": "^24.7.2",
+    "puppeteer-screen-recorder": "^2.1.2"
   },
   "standard": {
     "globals": [

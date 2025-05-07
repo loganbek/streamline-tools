@@ -120,6 +120,44 @@ async function getBrowserInstance() {
   return sharedBrowser;
 }
 
+// Mocks the File System Access API for testing
+async function mockFileSystemAccessAPI(page, fileContent, fileName = 'test.bml') {
+  await page.evaluate(
+    ({ fileContent, fileName }) => {
+      // Store the original showOpenFilePicker if it exists
+      const originalShowOpenFilePicker = window.showOpenFilePicker;
+      
+      // Mock the File System Access API
+      window.showOpenFilePicker = async () => {
+        console.log('[MOCK] showOpenFilePicker called');
+        
+        // Mock file handle
+        const fileHandle = {
+          getFile: async () => {
+            // Create a mock File object
+            return new File(
+              [fileContent], 
+              fileName, 
+              { type: 'text/plain' }
+            );
+          },
+          name: fileName
+        };
+        
+        return [fileHandle];
+      };
+      
+      // Add a way to restore the original function if needed
+      window.__restoreShowOpenFilePicker = () => {
+        window.showOpenFilePicker = originalShowOpenFilePicker;
+      };
+      
+      console.log('[MOCK] File System Access API mocked successfully');
+    },
+    { fileContent, fileName }
+  );
+}
+
 class TestHelper {
   constructor() {
     this.debugUtils = new DebugUtils();
@@ -572,18 +610,24 @@ class TestHelper {
             (document.querySelector('#psword') || document.querySelector('#password') || document.querySelector('input[type="password"]'))
           );
           
-          // Check for SSO button
+          // Check for SSO button - using proper selectors now
           const ssoButton = !!(
             document.querySelector('a[href*="sso"]') || 
-            document.querySelector('button:contains("SSO")') ||
-            document.querySelector('a:contains("Single Sign-On")')
+            document.querySelector('button[data-id="sso"]') ||
+            document.querySelector('a:has-text("Single Sign-On")') ||
+            document.querySelector('button.sso-button') ||
+            document.querySelectorAll('button').length > 0 && Array.from(document.querySelectorAll('button')).some(btn => 
+              btn.textContent && btn.textContent.toLowerCase().includes('sso')
+            )
           );
           
           // Check for OAuth/external login options
           const oauthOptions = !!(
             document.querySelector('a[href*="oauth"]') ||
-            document.querySelector('button:contains("Sign in with")') ||
-            document.querySelector('a:contains("Sign in with")')
+            document.querySelector('a:has-text("Sign in with")') ||
+            document.querySelectorAll('a').length > 0 && Array.from(document.querySelectorAll('a')).some(a => 
+              a.textContent && a.textContent.toLowerCase().includes('sign in with')
+            )
           );
           
           return { standardForm, ssoButton, oauthOptions };
@@ -1318,80 +1362,24 @@ class TestHelper {
       console.log(`Starting video recording to: ${filePath}`);
       this.videoPath = filePath;
       
-      // Use CDP for recording instead of screencast() for better compatibility
-      const client = await this.page.target().createCDPSession();
+      // Use the built-in puppeteer-screen-recorder
+      const { PuppeteerScreenRecorder } = require('puppeteer-screen-recorder');
       
-      // Start screencast using CDP
-      await client.send('Page.startScreencast', { 
-        format: 'jpeg', 
-        quality: 80,
-        everyNthFrame: 1
-      });
-      
-      // Create a write stream for the video file
-      const { createFFmpeg } = require('@ffmpeg/ffmpeg');
-      const ffmpeg = createFFmpeg({ log: false });
-      await ffmpeg.load();
-      
-      // Store frames
-      const frames = [];
-      
-      // Handle screencast frames
-      client.on('Page.screencastFrame', async ({ data, sessionId }) => {
-        // Acknowledge the frame to receive more
-        await client.send('Page.screencastFrameAck', { sessionId });
-        
-        // Add frame to collection
-        const buffer = Buffer.from(data, 'base64');
-        frames.push(buffer);
-      });
-      
-      // Store client and frames in this object
-      this.recorder = {
-        client,
-        frames,
-        filePath,
-        ffmpeg,
-        stop: async () => {
-          // Stop screencast
-          await client.send('Page.stopScreencast').catch(e => console.error("Error stopping screencast:", e));
-          
-          console.log(`Processing ${frames.length} frames for video...`);
-          if (frames.length === 0) {
-            console.warn("No frames were captured, video will be empty");
-            return;
-          }
-          
-          try {
-            // Process frames into video with ffmpeg
-            for (let i = 0; i < frames.length; i++) {
-              ffmpeg.FS('writeFile', `frame_${i}.jpg`, frames[i]);
-            }
-            
-            // Run ffmpeg command to create video
-            await ffmpeg.run(
-              '-framerate', '10',
-              '-pattern_type', 'glob',
-              '-i', 'frame_*.jpg',
-              '-c:v', 'libx264',
-              '-pix_fmt', 'yuv420p',
-              '-vf', 'pad=ceil(iw/2)*2:ceil(ih/2)*2',
-              'output.mp4'
-            );
-            
-            // Read the output file
-            const data = ffmpeg.FS('readFile', 'output.mp4');
-            
-            // Write to the destination
-            await fs.writeFile(filePath, Buffer.from(data));
-            
-            console.log(`Video saved to ${filePath}`);
-          } catch (error) {
-            console.error("Error creating video file:", error);
-          }
-        }
+      const config = {
+        followNewTab: true,
+        fps: 25,
+        quality: 100,
+        format: 'mp4',
+        videoFrame: {
+          width: 1024,
+          height: 768
+        },
+        aspectRatio: '4:3'
       };
       
+      this.recorder = new PuppeteerScreenRecorder(this.page, config);
+      await this.recorder.start(filePath);
+      console.log("Recording started successfully");
       return true;
     } catch (error) {
       console.error("Failed to start video recording:", error);
@@ -1476,6 +1464,14 @@ class TestHelper {
       console.error("Error showing extension in browser:", error);
       return false;
     }
+  }
+
+  /**
+   * Setup file picker mock for a specific test
+   */
+  async setupFileMock(content, fileName) {
+    await mockFileSystemAccessAPI(this.page, content, fileName);
+    console.log(`Mocked file picker for "${fileName}" with content length: ${content.length}`);
   }
 }
 

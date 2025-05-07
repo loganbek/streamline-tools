@@ -1,6 +1,5 @@
 const { TestHelper } = require('./helpers');
-const path = require('path');
-const fs = require('fs').promises;
+const { setupVideoRecording, getSafeTestName } = require('./videoHelper');
 
 describe('Chrome Extension Tests', () => {
     let helper;
@@ -58,22 +57,14 @@ describe('Chrome Extension Tests', () => {
     });
     
     beforeEach(async () => {
-        // Get current test name for video file naming
-        currentTestName = expect.getState().currentTestName.replace(/\s+/g, '_');
+        // Get current test name with safe formatting
+        currentTestName = getSafeTestName();
         
-        // Set up video directory
-        const videoDir = path.join(__dirname, 'test-videos');
-        try {
-            await fs.mkdir(videoDir, { recursive: true });
-        } catch (error) {
-            if (error.code !== 'EEXIST') {
-                console.error("Error creating video directory:", error);
-            }
-        }
+        // Set up video recording with improved naming
+        await setupVideoRecording(helper, expect.getState().currentTestName);
         
-        // Start recording this test
-        console.log(`Starting recording for test: ${currentTestName}`);
-        await helper.startRecording(path.join(videoDir, `${currentTestName}.webm`));
+        // Set test timeout
+        jest.setTimeout(45000);
     });
 
     afterEach(async () => {

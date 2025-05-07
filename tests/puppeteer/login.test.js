@@ -1,12 +1,11 @@
 const { TestHelper } = require('./helpers');
 const login = require('./login');
-const path = require('path');
-const fs = require('fs').promises;
+const { setupVideoRecording, getSafeTestName } = require('./videoHelper');
 require('dotenv').config({ path: './tests/.env' });
 
 describe('Login Tests', () => {
     let helper;
-    let currentTestName = ''; // Track current test name for video naming
+    let currentTestName = '';
     const TEST_TIMEOUT = 60000; // 60 seconds max per test
 
     beforeAll(async () => {
@@ -20,31 +19,20 @@ describe('Login Tests', () => {
     });
 
     beforeEach(async () => {
-        // Get current test name for video file naming
-        currentTestName = expect.getState().currentTestName.replace(/\s+/g, '_');
+        // Get current test name with safe formatting
+        currentTestName = getSafeTestName();
         
-        // Set up video directory
-        const videoDir = path.join(__dirname, 'test-videos');
-        try {
-            await fs.mkdir(videoDir, { recursive: true });
-        } catch (error) {
-            if (error.code !== 'EEXIST') {
-                console.error("Error creating video directory:", error);
-            }
-        }
+        // Set up video recording with improved naming
+        await setupVideoRecording(helper, expect.getState().currentTestName);
         
-        // Start recording this test
-        console.log(`Starting recording for test: ${currentTestName}`);
-        await helper.startRecording(path.join(videoDir, `${currentTestName}.webm`));
-        
-        // Start test timeout to force completion
+        // Set test timeout
         jest.setTimeout(TEST_TIMEOUT);
     });
 
     afterEach(async () => {
         // Stop recording and always save the video
         console.log(`Test "${currentTestName}" finished`);
-        await helper.stopRecording(true); // Always save the video
+        await helper.stopRecording(true);
         currentTestName = '';
     });
 

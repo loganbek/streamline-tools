@@ -311,40 +311,226 @@ chrome.commands.onCommand.addListener((command) => {
 
 // Improved BML handling function
 function handleBML(action) {
-    const isLoad = action === 'load';
-    logDebug(`Executing ${action}BML...`);
+    const isLoad = action.startsWith('load');
+    logDebug(`Executing ${action}BML with${isLoad ? '' : 'out'} code...`);
 
-    chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
-        if (!tabs.length) {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        if (tabs.length === 0) {
             logDebug(`No active tabs found, exiting ${action}BML.`);
             return;
         }
 
         const tabId = tabs[0].id;
+        logDebug("Found active tab with ID:", tabId);
 
-        try {
-            if (isLoad) {
-                const storage = await chrome.storage.local.get(['currentBML']);
-                if (!storage.currentBML) {
-                    throw new Error('No BML code found in storage');
-                }
-                
-                await chrome.tabs.sendMessage(tabId, {
-                    greeting: "load",
-                    code: storage.currentBML
-                });
-            } else {
-                await chrome.tabs.sendMessage(tabId, { greeting: "unload" });
-                chrome.action.enable(tabId);
-            }
-            
-            logDebug(`${action}BML completed successfully`);
-        } catch (error) {
-            logDebug(`Error in ${action}BML:`, error);
-            // Store last error for debugging
-            chrome.storage.local.set({ lastError: error.message });
+        // For loading, we need to get the file content first
+        if (isLoad) {
+            loadFileWithPicker(tabId, action);
+        } else {
+            // For unloading, directly send the message to content script
+            chrome.tabs.sendMessage(tabId, { greeting: action }, (response) => {
+                handleUnloadResponse(response, action, tabId);
+            });
         }
     });
+}
+
+/**
+ * Handles loading a file using the File System Access API
+ * @param {number} tabId - The tab ID to send the message to
+ * @param {string} action - The action to perform ('load' or 'loadTest')
+ */
+async function loadFileWithPicker(tabId, action) {
+    try {
+        // Use executeScript to run file picker in the tab context
+        chrome.scripting.executeScript({
+            target: { tabId },
+            function: async () => {
+                try {
+                    // Handle environments where showOpenFilePicker isn't available (e.g., tests)
+                    if (typeof window.showOpenFilePicker !== 'function') {
+                        console.warn('showOpenFilePicker not available, using fallback file input');
+                        return { error: 'FILE_PICKER_NOT_AVAILABLE' };
+                    }
+
+                    const [fileHandle] = await window.showOpenFilePicker();
+                    const file = await fileHandle.getFile();
+                    const content = await file.text();
+                    return { 
+                        content, 
+                        fileName: fileHandle.name,
+                        success: true
+                    };
+                } catch (error) {
+                    console.error('Error in file picker:', error);
+                    
+                    // Handle user cancellation vs actual errors
+                    if (error.name === 'AbortError') {
+                        return { error: 'USER_CANCELLED' };
+                    }
+                    
+                    return { 
+                        error: error.message || 'Unknown error in file picker',
+                        errorName: error.name,
+                        errorStack: error.stack
+                    };
+                }
+            }
+        }, (results) => {
+            if (chrome.runtime.lastError) {
+                console.error('Error executing script:', chrome.runtime.lastError);
+                return;
+            }
+
+            const result = results?.[0]?.result;
+            logDebug('File picker result:', result);
+
+            if (result?.success && result.content) {
+                // Send the file content to the content script
+                chrome.tabs.sendMessage(tabId, { 
+                    greeting: action, 
+                    code: result.content 
+                }, (response) => {
+                    if (chrome.runtime.lastError) {
+                        console.error(`Error sending message to tab ${tabId}:`, chrome.runtime.lastError);
+                    } else {
+                        logDebug(`${action} response:`, response);
+                    }
+                });
+            } else if (result?.error === 'FILE_PICKER_NOT_AVAILABLE') {
+                // Fallback to input element for testing environments
+                useFallbackFileInput(tabId, action);
+            } else if (result?.error === 'USER_CANCELLED') {
+                logDebug('User cancelled file selection');
+            } else {
+                console.error('Error picking file:', result?.error || 'Unknown error');
+            }
+        });
+    } catch (error) {
+        console.error('Error in loadFileWithPicker:', error);
+    }
+}
+
+/**
+ * Fallback method using a file input element for environments without File System Access API
+ * @param {number} tabId - The tab ID to send the message to
+ * @param {string} action - The action to perform ('load' or 'loadTest')
+ */
+function useFallbackFileInput(tabId, action) {
+    chrome.scripting.executeScript({
+        target: { tabId },
+        function: (actionType) => {
+            return new Promise((resolve) => {
+                // Create and configure file input
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.accept = '.bml,.js,.xsl,.css,.html,.json,.xml';
+                fileInput.style.position = 'fixed';
+                fileInput.style.top = '20px';
+                fileInput.style.left = '20px';
+                fileInput.style.zIndex = '9999';
+                
+                // Handle file selection
+                fileInput.onchange = (event) => {
+                    const file = event.target.files[0];
+                    if (!file) {
+                        resolve({ error: 'No file selected' });
+                        document.body.removeChild(fileInput);
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const content = e.target.result;
+                        resolve({
+                            content,
+                            fileName: file.name,
+                            success: true
+                        });
+                        document.body.removeChild(fileInput);
+                    };
+                    
+                    reader.onerror = (error) => {
+                        resolve({ error: error.message || 'Error reading file' });
+                        document.body.removeChild(fileInput);
+                    };
+                    
+                    reader.readAsText(file);
+                };
+                
+                // Handle cancellation
+                const cleanup = () => {
+                    if (document.body.contains(fileInput)) {
+                        document.body.removeChild(fileInput);
+                        resolve({ error: 'USER_CANCELLED' });
+                    }
+                };
+                
+                // Add timeout for auto-removal
+                setTimeout(() => cleanup(), 30000);
+                
+                // Add to DOM and trigger click
+                document.body.appendChild(fileInput);
+                fileInput.click();
+            });
+        },
+        args: [action]
+    }, (results) => {
+        if (chrome.runtime.lastError) {
+            console.error('Error executing script:', chrome.runtime.lastError);
+            return;
+        }
+
+        const result = results?.[0]?.result;
+        if (result?.success && result.content) {
+            chrome.tabs.sendMessage(tabId, { 
+                greeting: action, 
+                code: result.content 
+            }, (response) => {
+                logDebug(`${action} response with fallback:`, response);
+            });
+        } else {
+            logDebug('Fallback file input result:', result);
+        }
+    });
+}
+
+/**
+ * Handle the response from unload operations
+ * @param {Object} response - The response from the content script
+ * @param {string} action - The action that was performed
+ * @param {number} tabId - The tab ID
+ */
+function handleUnloadResponse(response, action, tabId) {
+    if (chrome.runtime.lastError) {
+        console.error(`Error in ${action}:`, chrome.runtime.lastError);
+        return;
+    }
+
+    logDebug(`${action} response:`, response);
+    
+    // Check if the response is valid
+    if (!response || response.error) {
+        console.error(`Error in ${action}:`, response?.error || 'No response');
+        return;
+    }
+    
+    // For tests, ensure we have a valid filename
+    if (!response.filename && action.includes('Test')) {
+        // Generate a default test filename if none provided
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+        response.filename = `test-script-${timestamp}.bml`;
+        logDebug(`Generated default test filename: ${response.filename}`);
+    }
+    
+    // Save the unloaded code to a file
+    if (response.code) {
+        downloadTextFile(response.code, response.filename || 'bml_code.bml');
+        
+        // Enable extension if needed
+        chrome.action.enable(tabId);
+        logDebug("Extension action enabled for tab:", tabId);
+    }
 }
 
 // Function to handle HTML actions

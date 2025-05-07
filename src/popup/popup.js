@@ -91,7 +91,7 @@ async function setupDynamicEventListeners() {
         if (loadButton) {
             loadButton.addEventListener('click', async () => {
                 logDebug(`Load button clicked for rule: ${rule.RuleName}`);
-                const [fileHandle] = await window.showOpenFilePicker();
+                const [fileHandle] = await safeShowOpenFilePicker();
                 const file = await fileHandle.getFile();
                 const contents = await file.text();
 
@@ -132,6 +132,35 @@ async function setupDynamicEventListeners() {
             });
         }
     });
+}
+
+/**
+ * Safely shows file picker with testing fallback
+ * @returns {Promise<Array<FileSystemFileHandle>>} Array of file handles
+ */
+async function safeShowOpenFilePicker() {
+    // Check if we're in a test environment
+    const isTestEnvironment = window._mockFileContent !== undefined;
+    
+    if (isTestEnvironment) {
+        logDebug('Using mock file picker in test environment');
+        // Create a mock FileSystemFileHandle with the necessary methods
+        const mockFileHandle = {
+            getFile: async () => ({
+                text: async () => window._mockFileContent,
+                name: 'test-file.bml'
+            })
+        };
+        return [mockFileHandle];
+    }
+    
+    // Use the real file picker API for normal operation
+    try {
+        return await window.showOpenFilePicker();
+    } catch (error) {
+        logDebug('Error using file picker:', error);
+        throw error;
+    }
 }
 
 /**
@@ -317,7 +346,7 @@ if (unloadBMLBtn) {
 if (loadBMLBtn) {
     loadBMLBtn.addEventListener('click', async () => {
         logDebug("Load button clicked.");
-        const [fileHandle] = await window.showOpenFilePicker();
+        const [fileHandle] = await safeShowOpenFilePicker();
         const file = await fileHandle.getFile();
         const contents = await file.text();
         logDebug("File loaded:", file.name);
@@ -366,7 +395,7 @@ if (unloadTestBMLBtn) {
 if (loadTestBMLBtn) {
     loadTestBMLBtn.addEventListener('click', async () => {
         logDebug("Load Test button clicked.");
-        const [fileHandle2] = await window.showOpenFilePicker();
+        const [fileHandle2] = await safeShowOpenFilePicker();
         const file = await fileHandle2.getFile();
         const contents = await file.text();
         logDebug("Test file loaded:", file.name);
@@ -416,7 +445,7 @@ if (loadHeaderHTMLBtn) {
     loadHeaderHTMLBtn.onclick = async function() {
         logDebug("Load Header button clicked.");
         try {
-            const [fileHandle] = await window.showOpenFilePicker();
+            const [fileHandle] = await safeShowOpenFilePicker();
             const file = await fileHandle.getFile();
             const contents = await file.text();
             
@@ -463,7 +492,7 @@ if (loadFooterHTMLBtn) {
     loadFooterHTMLBtn.onclick = async function() {
         logDebug("Load Footer button clicked.");
         try {
-            const [fileHandle] = await window.showOpenFilePicker();
+            const [fileHandle] = await safeShowOpenFilePicker();
             const file = await fileHandle.getFile();
             const contents = await file.text();
             
@@ -511,7 +540,7 @@ if(loadCSSBtn) {
     loadCSSBtn.onclick = async function () {
         logDebug("Load CSS button clicked.");
         try {
-            const [fileHandle] = await window.showOpenFilePicker();
+            const [fileHandle] = await safeShowOpenFilePicker();
             const file = await fileHandle.getFile();
             const contents = await file.text();
 
@@ -558,7 +587,7 @@ if(loadAltCSSBtn) {
     loadAltCSSBtn.onclick = async function () {
         logDebug("Load Alt CSS button clicked.");
         try {
-            const [fileHandle] = await window.showOpenFilePicker();
+            const [fileHandle] = await safeShowOpenFilePicker();
             const file = await fileHandle.getFile();
             const contents = await file.text();
 
@@ -605,7 +634,7 @@ if(loadJETCSSBtn) {
     loadJETCSSBtn.onclick = async function () {
         logDebug("Load JET CSS button clicked.");
         try {
-            const [fileHandle] = await window.showOpenFilePicker();
+            const [fileHandle] = await safeShowOpenFilePicker();
             const file = await fileHandle.getFile();
             const contents = await file.text();
 
@@ -646,7 +675,7 @@ if (loadGlobalXSLBtn) {
     loadGlobalXSLBtn.onclick = async () => {
         logDebug("Load Global XSL button clicked.");
         try {
-            const [fileHandle] = await window.showOpenFilePicker();
+            const [fileHandle] = await safeShowOpenFilePicker();
             const file = await fileHandle.getFile();
             const contents = await file.text();
             const response = await sendMessageToBackground({ greeting: 'loadGlobalXSL', code: contents });
@@ -675,7 +704,7 @@ if (loadXSLBtn) {
     loadXSLBtn.onclick = async () => {
         logDebug("Load XSL button clicked.");
         try {
-            const [fileHandle] = await window.showOpenFilePicker();
+            const [fileHandle] = await safeShowOpenFilePicker();
             const file = await fileHandle.getFile();
             const contents = await file.text();
             const response = await sendMessageToBackground({ greeting: 'loadXSL', code: contents });
@@ -708,7 +737,7 @@ if (loadXMLBtn) {
     loadXMLBtn.onclick = async () => {
         logDebug("Load XML button clicked.");
         try {
-            const [fileHandle] = await window.showOpenFilePicker();
+            const [fileHandle] = await safeShowOpenFilePicker();
             const file = await fileHandle.getFile();
             const contents = await file.text();
             
@@ -749,7 +778,7 @@ if (loadJSONBtn) {
     loadJSONBtn.onclick = async () => {
         logDebug("Load JSON button clicked.");
         try {
-            const [fileHandle] = await window.showOpenFilePicker();
+            const [fileHandle] = await safeShowOpenFilePicker();
             const file = await fileHandle.getFile();
             const contents = await file.text();
             

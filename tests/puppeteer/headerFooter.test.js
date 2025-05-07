@@ -1,11 +1,12 @@
 const { TestHelper } = require('./helpers');
 const login = require('./login');
-const path = require('path'); // Add path for video file paths
-const fs = require('fs').promises; // Add fs for directory creation
+const path = require('path');
+const fs = require('fs').promises;
+const { setupVideoRecording, getSafeTestName, bypassLogin } = require('./videoHelper');
 
 describe('Header & Footer Tests', () => {
     let helper;
-    let currentTestName = ''; // Variable to track current test name for video files
+    let currentTestName = '';
     // Test content for header and footer
     const headerContent = `<!-- Test Header Content -->
 <div class="test-header">
@@ -22,11 +23,25 @@ describe('Header & Footer Tests', () => {
     beforeAll(async () => {
         console.log("Starting Header & Footer Tests setup...");
         helper = new TestHelper();
+        
+        // Decide whether to bypass login based on environment variable
+        // Set BYPASS_LOGIN=true to skip the login process for testing
+        if (process.env.BYPASS_LOGIN === 'true') {
+            bypassLogin(helper);
+        }
+        
         await helper.init();
-        console.log("Login process starting...");
-        await login(helper.page);
-        console.log("Login completed, showing extension in browser...");
-        await helper.showExtensionInBrowser(); // Show extension in browser
+        
+        // Only perform login if not bypassed
+        if (process.env.BYPASS_LOGIN !== 'true') {
+            console.log("Login process starting...");
+            await login(helper.page);
+            console.log("Login completed, showing extension in browser...");
+        } else {
+            console.log("Login bypassed. Setting up extension directly...");
+        }
+        
+        await helper.showExtensionInBrowser();
         console.log("Pinning extension to toolbar...");
         await helper.pinExtensionToToolbar();
         console.log("Test setup complete");
@@ -37,22 +52,18 @@ describe('Header & Footer Tests', () => {
     });
 
     beforeEach(async () => {
-        // Get the current test name for use in video file naming
-        currentTestName = expect.getState().currentTestName.replace(/\s+/g, '_');
+        // Get current test name with safe formatting
+        currentTestName = getSafeTestName();
         
-        // Create and ensure the videos directory exists
-        const videoDir = path.join(__dirname, 'test-videos');
-        try {
-            await fs.mkdir(videoDir, { recursive: true });
-        } catch (error) {
-            if (error.code !== 'EEXIST') {
-                console.error("Error creating video directory:", error);
-            }
-        }
+        // Set up video recording with improved naming
+        await setupVideoRecording(helper, expect.getState().currentTestName);
         
-        // Start recording this test
+        // Set test timeout
+        jest.setTimeout(90000);
+        
+        // Continue with the rest of the setup
         console.log(`Starting recording for test: ${currentTestName}`);
-        await helper.startRecording(path.join(videoDir, `${currentTestName}.webm`));
+        await helper.startRecording(path.join(__dirname, 'test-videos', `${currentTestName}.webm`));
 
         console.log("Navigating to header/footer admin page...");
         try {
@@ -179,13 +190,13 @@ describe('Header & Footer Tests', () => {
             });
             throw error;
         }
-    }, 90000); // Extend timeout for initialization
+    });
 
     afterEach(async () => {
-        // Stop recording and always save the video, regardless of test outcome
+        // Stop recording and always save the video
         console.log(`Test "${currentTestName}" finished`);
         await helper.stopRecording(true); // Always save the video
-        currentTestName = ''; // Reset current test name
+        currentTestName = '';
     });
 
     test('should load header & footer interface', async () => {
