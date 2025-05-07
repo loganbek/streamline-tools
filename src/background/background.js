@@ -339,84 +339,92 @@ function handleBML(action) {
  * Handles loading a file using the File System Access API
  * @param {number} tabId - The tab ID to send the message to
  * @param {string} action - The action to perform ('load' or 'loadTest')
+ * @param {function} callback - Optional callback function when operation completes
  */
-async function loadFileWithPicker(tabId, action) {
-    try {
-        // Use executeScript to run file picker in the tab context
-        chrome.scripting.executeScript({
-            target: { tabId },
-            function: async () => {
-                try {
-                    // Handle environments where showOpenFilePicker isn't available (e.g., tests)
-                    if (typeof window.showOpenFilePicker !== 'function') {
-                        console.warn('showOpenFilePicker not available, using fallback file input');
-                        return { error: 'FILE_PICKER_NOT_AVAILABLE' };
-                    }
+async function loadFileWithPicker(tabId, action, callback) {
+  try {
+    // Use executeScript to run file picker in the tab context
+    chrome.scripting.executeScript({
+      target: { tabId },
+      function: async () => {
+        try {
+          // Handle environments where showOpenFilePicker isn't available (e.g., tests)
+          if (typeof window.showOpenFilePicker !== 'function') {
+            console.warn('showOpenFilePicker not available, using fallback file input');
+            return { error: 'FILE_PICKER_NOT_AVAILABLE' };
+          }
 
-                    const [fileHandle] = await window.showOpenFilePicker();
-                    const file = await fileHandle.getFile();
-                    const content = await file.text();
-                    return { 
-                        content, 
-                        fileName: fileHandle.name,
-                        success: true
-                    };
-                } catch (error) {
-                    console.error('Error in file picker:', error);
-                    
-                    // Handle user cancellation vs actual errors
-                    if (error.name === 'AbortError') {
-                        return { error: 'USER_CANCELLED' };
-                    }
-                    
-                    return { 
-                        error: error.message || 'Unknown error in file picker',
-                        errorName: error.name,
-                        errorStack: error.stack
-                    };
-                }
-            }
-        }, (results) => {
-            if (chrome.runtime.lastError) {
-                console.error('Error executing script:', chrome.runtime.lastError);
-                return;
-            }
+          const [fileHandle] = await window.showOpenFilePicker();
+          const file = await fileHandle.getFile();
+          const content = await file.text();
+          return { 
+            content, 
+            fileName: fileHandle.name,
+            success: true
+          };
+        } catch (error) {
+          console.error('Error in file picker:', error);
+          
+          // Handle user cancellation vs actual errors
+          if (error.name === 'AbortError') {
+            return { error: 'USER_CANCELLED' };
+          }
+          
+          return { 
+            error: error.message || 'Unknown error in file picker',
+            errorName: error.name,
+            errorStack: error.stack
+          };
+        }
+      }
+    }, (results) => {
+      if (chrome.runtime.lastError) {
+        console.error('Error executing script:', chrome.runtime.lastError);
+        if (callback) callback(false);
+        return;
+      }
 
-            const result = results?.[0]?.result;
-            logDebug('File picker result:', result);
+      const result = results?.[0]?.result;
+      logDebug('File picker result:', result);
 
-            if (result?.success && result.content) {
-                // Send the file content to the content script
-                chrome.tabs.sendMessage(tabId, { 
-                    greeting: action, 
-                    code: result.content 
-                }, (response) => {
-                    if (chrome.runtime.lastError) {
-                        console.error(`Error sending message to tab ${tabId}:`, chrome.runtime.lastError);
-                    } else {
-                        logDebug(`${action} response:`, response);
-                    }
-                });
-            } else if (result?.error === 'FILE_PICKER_NOT_AVAILABLE') {
-                // Fallback to input element for testing environments
-                useFallbackFileInput(tabId, action);
-            } else if (result?.error === 'USER_CANCELLED') {
-                logDebug('User cancelled file selection');
-            } else {
-                console.error('Error picking file:', result?.error || 'Unknown error');
-            }
+      if (result?.success && result.content) {
+        // Send the file content to the content script
+        chrome.tabs.sendMessage(tabId, { 
+          greeting: action, 
+          code: result.content 
+        }, (response) => {
+          if (chrome.runtime.lastError) {
+            console.error(`Error sending message to tab ${tabId}:`, chrome.runtime.lastError);
+            if (callback) callback(false);
+          } else {
+            logDebug(`${action} response:`, response);
+            if (callback) callback(true);
+          }
         });
-    } catch (error) {
-        console.error('Error in loadFileWithPicker:', error);
-    }
+      } else if (result?.error === 'FILE_PICKER_NOT_AVAILABLE') {
+        // Fallback to input element for testing environments
+        useFallbackFileInput(tabId, action, callback);
+      } else if (result?.error === 'USER_CANCELLED') {
+        logDebug('User cancelled file selection');
+        if (callback) callback(false);
+      } else {
+        console.error('Error picking file:', result?.error || 'Unknown error');
+        if (callback) callback(false);
+      }
+    });
+  } catch (error) {
+    console.error('Error in loadFileWithPicker:', error);
+    if (callback) callback(false);
+  }
 }
 
 /**
  * Fallback method using a file input element for environments without File System Access API
  * @param {number} tabId - The tab ID to send the message to
  * @param {string} action - The action to perform ('load' or 'loadTest')
+ * @param {function} callback - Optional callback function when operation completes
  */
-function useFallbackFileInput(tabId, action) {
+function useFallbackFileInput(tabId, action, callback) {
     chrome.scripting.executeScript({
         target: { tabId },
         function: (actionType) => {
@@ -478,6 +486,7 @@ function useFallbackFileInput(tabId, action) {
     }, (results) => {
         if (chrome.runtime.lastError) {
             console.error('Error executing script:', chrome.runtime.lastError);
+            if (callback) callback(false);
             return;
         }
 
@@ -488,9 +497,11 @@ function useFallbackFileInput(tabId, action) {
                 code: result.content 
             }, (response) => {
                 logDebug(`${action} response with fallback:`, response);
+                if (callback) callback(true);
             });
         } else {
             logDebug('Fallback file input result:', result);
+            if (callback) callback(false);
         }
     });
 }
@@ -632,42 +643,103 @@ function handleIteration() {
   logDebug("Handling iteration");
   
   // Query active tab to check iteration state
-  chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     if (!tabs.length) {
       logDebug("No active tab found for iteration");
       return;
     }
 
-    try {
-      // Check current iteration state
-      const response = await chrome.tabs.sendMessage(tabs[0].id, { greeting: 'checkIteration' });
+    // First check if already iterating
+    chrome.tabs.sendMessage(tabs[0].id, { greeting: 'checkIteration' }, (response) => {
+      if (chrome.runtime.lastError) {
+        logDebug("Error checking iteration state:", chrome.runtime.lastError);
+        return;
+      }
       
-      if (response.isIterating) {
+      if (response && response.isIterating) {
         logDebug("Already iterating, count:", response.iterationCount);
         return;
       }
-
+      
       // Start new iteration
       state.isIterating = true;
       state.iterationCount++;
       state.lastIterationTime = Date.now();
       
-      await chrome.tabs.sendMessage(tabs[0].id, { 
+      chrome.tabs.sendMessage(tabs[0].id, { 
         greeting: 'startIteration',
         iterationCount: state.iterationCount
+      }, (startResponse) => {
+        logDebug("Iteration started:", startResponse);
+        
+        // Step 1: Unload content - using callback pattern instead of await
+        chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unload' }, (unloadResponse) => {
+          if (chrome.runtime.lastError) {
+            logDebug("Error during unload:", chrome.runtime.lastError);
+            endIteration(tabs[0].id);
+            return;
+          }
+          
+          logDebug("Content unloaded:", unloadResponse);
+          
+          // If we need to save unloaded content to a file in a non-blocking way
+          if (unloadResponse && unloadResponse.code) {
+            downloadTextFile(unloadResponse.code, unloadResponse.filename || 'bml_code.bml');
+          }
+          
+          // Step 2: Load new content - converted to use callback pattern
+          loadFileWithPicker(tabs[0].id, 'load', (loadSuccess) => {
+            // Whether load succeeds or fails, end the iteration
+            setTimeout(() => {
+              endIteration(tabs[0].id);
+            }, 500); // Small delay to ensure UI updates
+          });
+        });
       });
-      
-      // Perform iteration logic
-      await handleBML('unload');
-      await handleBML('load');
-      
-      // End iteration
-      state.isIterating = false;
-      await chrome.tabs.sendMessage(tabs[0].id, { greeting: 'endIteration' });
-      
-    } catch (error) {
-      logDebug("Error during iteration:", error);
-      state.isIterating = false;
-    }
+    });
   });
+  
+  // Helper to end iteration and notify content script
+  function endIteration(tabId) {
+    state.isIterating = false;
+    chrome.tabs.sendMessage(tabId, { greeting: 'endIteration' }, (response) => {
+      logDebug("Iteration ended:", response);
+    });
+  }
+}
+
+/**
+ * Downloads text content as a file
+ * @param {string} content - The text content to save
+ * @param {string} filename - The name to give the file
+ */
+function downloadTextFile(content, filename) {
+  try {
+    // Create a blob from the text content
+    const blob = new Blob([content], { type: 'text/plain' });
+    
+    // Create object URL for the blob
+    const url = URL.createObjectURL(blob);
+    
+    // Create a temporary download link
+    const downloadLink = document.createElement('a');
+    downloadLink.href = url;
+    downloadLink.download = filename || 'download.txt';
+    
+    // Append to the document temporarily
+    document.body.appendChild(downloadLink);
+    
+    // Programmatically click the link to trigger download
+    downloadLink.click();
+    
+    // Clean up
+    document.body.removeChild(downloadLink);
+    URL.revokeObjectURL(url);
+    
+    logDebug(`File "${filename}" created for download`);
+    return true;
+  } catch (error) {
+    console.error('Error downloading file:', error);
+    return false;
+  }
 }
