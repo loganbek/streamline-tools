@@ -1,5 +1,4 @@
 const puppeteer = require('puppeteer');
-const { PuppeteerScreenRecorder } = require('puppeteer-screen-recorder');
 const fs = require('fs').promises;
 const fs_sync = require('fs');
 const path = require('path');
@@ -16,25 +15,18 @@ function log(message) {
 }
 
 (async () => {
-  log('Starting video test with enhanced diagnostics...');
+  log('Starting video test with native Puppeteer recording...');
   log(`Log file: ${logFile}`);
-  
-  // First check if puppeteer-screen-recorder is properly installed
-  try {
-    log('Checking puppeteer-screen-recorder version...');
-    const pkg = require('puppeteer-screen-recorder/package.json');
-    log(`Using puppeteer-screen-recorder version: ${pkg.version}`);
-  } catch (error) {
-    log(`Error loading puppeteer-screen-recorder package: ${error.message}`);
-    log('Please ensure the package is installed with: npm install puppeteer-screen-recorder');
-    process.exit(1);
-  }
   
   // Use a directory that's guaranteed to be writable
   const videoDir = path.join(os.tmpdir(), 'streamline-test-videos');
   log(`Using video directory: ${videoDir}`);
   
   let browser;
+  let cdpSession;
+  let frameBuffer = [];
+  let recordingStartTime;
+  
   try {
     // Create directory first
     await fs.mkdir(videoDir, { recursive: true });
@@ -52,27 +44,42 @@ function log(message) {
     log('Browser page created');
     
     // Use timestamp for unique filename
-    const fileName = `video-test-${Date.now()}.mp4`;
+    const fileName = `video-test-${Date.now()}.webm`;
     const videoPath = path.join(videoDir, fileName);
     log(`Video will be saved to: ${videoPath}`);
     
-    // Configure the recorder with explicit settings
-    const config = {
-      followNewTab: true,
-      fps: 25,
-      quality: 100,
-      format: 'mp4',
-      videoFrame: {
-        width: 1280,
-        height: 720
-      }
-    };
+    // Start recording using CDP
+    log('Setting up CDP session for recording...');
+    cdpSession = await page.target().createCDPSession();
     
-    log(`Creating recorder with config: ${JSON.stringify(config)}`);
-    const recorder = new PuppeteerScreenRecorder(page, config);
+    // Initialize frame buffer and recording state
+    log('Starting screencast...');
+    await cdpSession.send('Page.startScreencast', {
+      format: 'jpeg',
+      quality: 90,
+      everyNthFrame: 1
+    });
     
-    log('Starting recording...');
-    await recorder.start(videoPath);
+    recordingStartTime = Date.now();
+    
+    // Set up event listener for screencast frames
+    cdpSession.on('Page.screencastFrame', async (frameObject) => {
+      // Acknowledge the frame to receive more frames
+      await cdpSession.send('Page.screencastFrameAck', {
+        sessionId: frameObject.sessionId
+      }).catch(e => log(`Error acknowledging frame: ${e.message}`));
+      
+      // Store the frame data and metadata
+      frameBuffer.push({
+        data: frameObject.data,
+        timestamp: Date.now() - recordingStartTime,
+        metadata: {
+          width: frameObject.metadata.width,
+          height: frameObject.metadata.height
+        }
+      });
+    });
+    
     log('Recording started successfully');
     
     log('Navigating to example.com...');
@@ -115,11 +122,52 @@ function log(message) {
     });
     
     log('Stopping recording...');
-    await recorder.stop();
-    log('Recording stopped');
+    await cdpSession.send('Page.stopScreencast');
+    log(`Recording stopped with ${frameBuffer.length} frames captured`);
     
-    // Verify the recording was created
+    // Save the recording using ffmpeg
+    log('Converting frames to video...');
     try {
+      // Save frames to temporary directory
+      const tempDir = path.join(os.tmpdir(), `video-frames-${Date.now()}`);
+      fs_sync.mkdirSync(tempDir, { recursive: true });
+      log(`Created temporary directory for frames: ${tempDir}`);
+      
+      // Write frames to disk
+      for (let i = 0; i < frameBuffer.length; i++) {
+        const frame = frameBuffer[i];
+        const frameData = Buffer.from(frame.data, 'base64');
+        const framePath = path.join(tempDir, `frame-${i.toString().padStart(6, '0')}.jpg`);
+        fs_sync.writeFileSync(framePath, frameData);
+      }
+      log(`Wrote ${frameBuffer.length} frames to disk`);
+      
+      // Build ffmpeg command to convert frames to video
+      const { exec } = require('child_process');
+      const ffmpegCmd = `ffmpeg -framerate 15 -i "${path.join(tempDir, 'frame-%06d.jpg')}" -c:v libvpx-vp9 -pix_fmt yuv420p "${videoPath}"`;
+      
+      log(`Running ffmpeg command: ${ffmpegCmd}`);
+      await new Promise((resolve, reject) => {
+        exec(ffmpegCmd, (error, stdout, stderr) => {
+          if (error) {
+            log(`ffmpeg error: ${error.message}`);
+            reject(error);
+            return;
+          }
+          if (stderr) log(`ffmpeg stderr: ${stderr}`);
+          if (stdout) log(`ffmpeg stdout: ${stdout}`);
+          resolve();
+        });
+      });
+      
+      // Clean up temp files
+      for (let i = 0; i < frameBuffer.length; i++) {
+        const framePath = path.join(tempDir, `frame-${i.toString().padStart(6, '0')}.jpg`);
+        fs_sync.unlinkSync(framePath);
+      }
+      fs_sync.rmdirSync(tempDir);
+      
+      // Verify the video file exists and has content
       const stats = await fs.stat(videoPath);
       log(`Video created successfully: ${videoPath}`);
       log(`Video file size: ${stats.size} bytes`);
@@ -129,8 +177,22 @@ function log(message) {
       } else {
         log('Video recording test SUCCESSFUL!');
       }
-    } catch (fileError) {
-      log(`ERROR: Video file not found: ${fileError.message}`);
+    } catch (ffmpegError) {
+      log(`Error creating video with ffmpeg: ${ffmpegError.message}`);
+      log('Falling back to saving frames as individual images...');
+      
+      // Fallback: Save frames as individual images
+      const framesDir = `${videoPath.replace(/\.\w+$/, '')}-frames`;
+      await fs.mkdir(framesDir, { recursive: true });
+      
+      // Save frames as individual images
+      for (let i = 0; i < frameBuffer.length; i++) {
+        const frame = frameBuffer[i];
+        const frameData = Buffer.from(frame.data, 'base64');
+        await fs.writeFile(path.join(framesDir, `frame-${i.toString().padStart(6, '0')}.jpg`), frameData);
+      }
+      
+      log(`Saved ${frameBuffer.length} frames to ${framesDir}`);
     }
     
     // List files in video directory to confirm
@@ -144,6 +206,7 @@ function log(message) {
   } catch (error) {
     log(`ERROR during test execution: ${error.stack || error.message}`);
   } finally {
+    frameBuffer = [];
     if (browser) {
       log('Closing browser...');
       await browser.close();

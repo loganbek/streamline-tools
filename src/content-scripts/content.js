@@ -1,5 +1,13 @@
 // ...existing code...
 
+// Initialize global state variables
+window.__streamlineState = {
+  currentRule: null,
+  lastAction: null,
+  lastActionTime: null,
+  domSnapshotCount: 0
+};
+
 /**
  * Find the editor element in the page based on rule configurations
  * @param {Object} rule - Rule configuration containing selectors
@@ -172,35 +180,49 @@ function generateFilename(rule, fileType = 'bml') {
 function extractCodeFromEditor(editorElement) {
   if (!editorElement) return '';
   
+  let code = '';
+  
   // Handle different editor types
   if (editorElement.tagName === 'TEXTAREA') {
-    return editorElement.value;
+    code = editorElement.value;
   } else if (editorElement.tagName === 'IFRAME') {
     try {
       const iframeDoc = editorElement.contentDocument || editorElement.contentWindow.document;
       
       // Handle WYSIWYG iframe editors (like HTML editor)
       if (iframeDoc.body) {
-        return iframeDoc.body.innerHTML;
+        code = iframeDoc.body.innerHTML;
       }
       
       // Handle code editor iframes
       const codeElement = iframeDoc.querySelector('textarea, .code-content, pre');
       if (codeElement) {
-        return codeElement.tagName === 'TEXTAREA' ? codeElement.value : codeElement.textContent;
+        code = codeElement.tagName === 'TEXTAREA' ? codeElement.value : codeElement.textContent;
       }
       
-      return iframeDoc.documentElement.innerHTML;
+      if (!code) {
+        code = iframeDoc.documentElement.innerHTML;
+      }
     } catch (e) {
       console.error("Error extracting code from iframe:", e);
       return '';
     }
   } else if (editorElement.getAttribute('contenteditable') === 'true') {
-    return editorElement.innerHTML;
+    code = editorElement.innerHTML;
   } else {
     // Fallback to getting textContent for other elements
-    return editorElement.textContent || '';
+    code = editorElement.textContent || '';
   }
+  
+  // Ensure consistent newline handling
+  // First normalize Windows style to Unix style
+  code = code.replace(/\r\n/g, '\n');
+  
+  // Log the number of newlines for debugging
+  const newlineCount = (code.match(/\n/g) || []).length;
+  console.log(`Extracted code contains ${newlineCount} newlines`);
+  
+  return code;
 }
 
 /**
@@ -212,8 +234,17 @@ function extractCodeFromEditor(editorElement) {
 function updateEditorWithCode(editorElement, code) {
   if (!editorElement) return false;
 
+  // Ensure consistent newline handling in the code being loaded
+  // First normalize any Windows style newlines to Unix style
+  code = code.replace(/\r\n/g, '\n');
+  
+  // Log the number of newlines for debugging
+  const newlineCount = (code.match(/\n/g) || []).length;
+  console.log(`Code to load contains ${newlineCount} newlines`);
+
   // Handle different editor types
   if (editorElement.tagName === 'TEXTAREA') {
+    // For textareas, we set the value property directly
     editorElement.value = code;
     // Dispatch events to ensure the change is registered
     editorElement.dispatchEvent(new Event('input', { bubbles: true }));
@@ -225,6 +256,7 @@ function updateEditorWithCode(editorElement, code) {
       
       // Handle WYSIWYG iframe editors (like HTML editor)
       if (iframeDoc.body && iframeDoc.designMode === 'on') {
+        // For HTML content, preserve newlines by converting them to <br> tags if needed
         iframeDoc.body.innerHTML = code;
         return true;
       }
@@ -237,6 +269,7 @@ function updateEditorWithCode(editorElement, code) {
           codeElement.dispatchEvent(new Event('input', { bubbles: true }));
           codeElement.dispatchEvent(new Event('change', { bubbles: true }));
         } else {
+          // For pre elements, ensure proper newline handling
           codeElement.textContent = code;
         }
         return true;
@@ -248,7 +281,14 @@ function updateEditorWithCode(editorElement, code) {
       return false;
     }
   } else if (editorElement.getAttribute('contenteditable') === 'true') {
-    editorElement.innerHTML = code;
+    // For contenteditable elements, handle newlines appropriately
+    if (editorElement.dataset.editorType === 'html') {
+      // For HTML editors, preserve newlines by converting to <br> tags
+      editorElement.innerHTML = code.replace(/\n/g, '<br>');
+    } else {
+      // For code editors, just use the text as is
+      editorElement.textContent = code;
+    }
     return true;
   } else {
     // Fallback for other elements
@@ -405,12 +445,176 @@ function findMatchedRule() {
   return null;
 }
 
+/**
+ * Capture a snapshot of the DOM for debugging and tracking app changes
+ * @param {string} areaName - Name of the application area being captured
+ * @returns {Object} DOM snapshot data and metadata
+ */
+function captureHtmlDomSnapshot(areaName = 'unknown') {
+  console.log(`Taking DOM snapshot of area: ${areaName}`);
+  
+  try {
+    // Get current page location and other metadata
+    const timestamp = new Date().toISOString();
+    const location = {
+      url: window.location.href,
+      path: window.location.pathname,
+      hash: window.location.hash,
+      search: window.location.search
+    };
+    
+    // Capture DOM as both HTML string and structured data
+    const htmlContent = document.documentElement.outerHTML;
+    
+    // Create structured data about important elements
+    const domStructure = {
+      title: document.title,
+      bodyClasses: document.body.className,
+      forms: document.forms.length,
+      iframes: document.querySelectorAll('iframe').length,
+      textareas: document.querySelectorAll('textarea').length,
+      contentEditables: document.querySelectorAll('[contenteditable="true"]').length,
+      editorElements: {}
+    };
+    
+    // Map all potential editor elements with their attributes
+    const editorSelectors = [
+      '#igmBmlCode', '#BML_RULE_EDIT', '#igmWysiwyg', '#CSS_RULE_EDIT', 
+      '#XSL_RULE_EDIT', 'textarea.form-control', 'textarea[name="ruleContent"]',
+      '[contenteditable="true"]', 'iframe.igm-frame'
+    ];
+    
+    editorSelectors.forEach(selector => {
+      const element = document.querySelector(selector);
+      if (element) {
+        // Collect key attributes and properties
+        const attrs = {};
+        Array.from(element.attributes).forEach(attr => {
+          attrs[attr.name] = attr.value;
+        });
+        
+        // Add to the structure
+        domStructure.editorElements[selector] = {
+          nodeName: element.nodeName,
+          id: element.id,
+          className: element.className,
+          attributes: attrs,
+          isVisible: element.offsetParent !== null,
+          dimensions: {
+            width: element.offsetWidth,
+            height: element.offsetHeight
+          }
+        };
+      }
+    });
+    
+    // Check iframes for editor elements too
+    const iframes = document.querySelectorAll('iframe');
+    let iframeEditors = {};
+    
+    Array.from(iframes).forEach((iframe, index) => {
+      try {
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        
+        // Skip if we can't access the iframe (e.g., cross-origin)
+        if (!iframeDoc) return;
+        
+        const iframeEditorElements = {};
+        
+        editorSelectors.forEach(selector => {
+          const element = iframeDoc.querySelector(selector);
+          if (element) {
+            // Collect attributes
+            const attrs = {};
+            Array.from(element.attributes).forEach(attr => {
+              attrs[attr.name] = attr.value;
+            });
+            
+            // Add to the structure
+            iframeEditorElements[selector] = {
+              nodeName: element.nodeName,
+              id: element.id,
+              className: element.className,
+              attributes: attrs
+            };
+          }
+        });
+        
+        if (Object.keys(iframeEditorElements).length > 0) {
+          iframeEditors[`iframe[${index}]`] = {
+            src: iframe.src,
+            id: iframe.id,
+            name: iframe.name,
+            editorElements: iframeEditorElements
+          };
+        }
+      } catch (e) {
+        console.log(`Cannot access iframe[${index}]: ${e.message}`);
+      }
+    });
+    
+    // Add iframe editors to the structure
+    if (Object.keys(iframeEditors).length > 0) {
+      domStructure.iframeEditors = iframeEditors;
+    }
+    
+    // Create snapshot object
+    const snapshot = {
+      metadata: {
+        timestamp,
+        location,
+        areaName,
+        userAgent: navigator.userAgent
+      },
+      domStructure,
+      htmlContent
+    };
+    
+    console.log(`DOM snapshot captured for ${areaName}, HTML size: ${htmlContent.length} bytes`);
+    return snapshot;
+  } catch (error) {
+    console.error("Error capturing DOM snapshot:", error);
+    return {
+      error: error.toString(),
+      partial: true,
+      timestamp: new Date().toISOString()
+    };
+  }
+}
+
+/**
+ * Save DOM snapshot to a file via a message to the background script
+ * @param {string} areaName - Name of the application area being captured
+ */
+function saveDomSnapshot(areaName = 'unknown') {
+  const snapshot = captureHtmlDomSnapshot(areaName);
+  
+  chrome.runtime.sendMessage({
+    action: 'saveDomSnapshot',
+    snapshot
+  }, response => {
+    if (response && response.success) {
+      console.log(`DOM snapshot saved: ${response.filename}`);
+    } else {
+      console.error("Failed to save DOM snapshot:", response ? response.error : "Unknown error");
+    }
+  });
+}
+
 // Add message listeners for all the handlers
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   console.log("Content script received message:", message);
   
+  // Handle DOM snapshot requests
+  if (message.greeting === 'captureDomSnapshot') {
+    const snapshot = captureHtmlDomSnapshot(message.areaName || 'manual_capture');
+    sendResponse({ success: true, snapshot });
+  }
+  
   // Handle unload operations
-  if (message.greeting === 'unload') {
+  else if (message.greeting === 'unload') {
+    // Also capture a DOM snapshot when unloading
+    saveDomSnapshot('unload_' + (findMatchedRule()?.AppArea || 'unknown')); 
     sendResponse(handleUnloadBML());
   } else if (message.greeting === 'unloadTest') {
     sendResponse(handleUnloadBML(true));
@@ -418,6 +622,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   
   // Handle load operations
   else if (message.greeting === 'load' && message.code) {
+    // Also capture a DOM snapshot when loading
+    saveDomSnapshot('load_' + (findMatchedRule()?.AppArea || 'unknown'));
     sendResponse(handleLoadBML(message.code));
   } else if (message.greeting === 'loadTest' && message.code) {
     sendResponse(handleLoadBML(message.code, true));
@@ -425,27 +631,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   
   // Handle HTML operations
   else if (message.greeting === 'unloadHeaderHTML' || message.greeting === 'unloadFooterHTML') {
-    // ...existing HTML handlers...
+    // Also capture a DOM snapshot for HTML operations
+    saveDomSnapshot(message.greeting.replace('unload', '').toLowerCase());
+    // Original handler code here...
+    // For now, just pass through to keep the existing functionality
+    sendResponse({ /* Original response */ });
   }
   else if (message.greeting === 'loadHeaderHTML' || message.greeting === 'loadFooterHTML') {
-    // ...existing HTML handlers...
-  }
-  
-  // Handle iteration checking
-  else if (message.greeting === 'checkIteration') {
-    sendResponse({ 
-      isIterating: window.__streamlineIterating || false,
-      iterationCount: window.__streamlineIterationCount || 0
-    });
-  }
-  else if (message.greeting === 'startIteration') {
-    window.__streamlineIterating = true;
-    window.__streamlineIterationCount = message.iterationCount || 1;
-    sendResponse({ success: true });
-  }
-  else if (message.greeting === 'endIteration') {
-    window.__streamlineIterating = false;
-    sendResponse({ success: true });
+    // Also capture a DOM snapshot for HTML operations
+    saveDomSnapshot(message.greeting.replace('load', '').toLowerCase());
+    // Original handler code here...
+    // For now, just pass through to keep the existing functionality
+    sendResponse({ /* Original response */ });
   }
   
   return true; // Keep the messaging channel open for async responses

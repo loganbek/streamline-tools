@@ -11,9 +11,7 @@ function logDebug(message, ...args) {
 
 // Add to the top with other state management
 const state = {
-  isIterating: false,
-  iterationCount: 0,
-  lastIterationTime: null
+  // Removed iteration-related state properties
 };
 
 // Handle extension startup
@@ -49,11 +47,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sendResponse({ status: 'alive' });
         return true;
     }
-
-    // Handle iteration
-    if (request.type === 'iterate') {
-        handleIteration();
-        sendResponse({ success: true });
+    
+    // Handle DOM snapshot saving
+    if (request.action === 'saveDomSnapshot' && request.snapshot) {
+        saveDomSnapshot(request.snapshot)
+            .then(result => sendResponse(result))
+            .catch(error => sendResponse({ 
+                success: false, 
+                error: error.toString() 
+            }));
         return true;
     }
     
@@ -638,76 +640,6 @@ const unloadBML = () => handleBML('unload');
 const loadTestBML = () => handleBML('loadTest');
 const unloadTestBML = () => handleBML('unloadTest');
 
-// Add new function for iteration management
-function handleIteration() {
-  logDebug("Handling iteration");
-  
-  // Query active tab to check iteration state
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    if (!tabs.length) {
-      logDebug("No active tab found for iteration");
-      return;
-    }
-
-    // First check if already iterating
-    chrome.tabs.sendMessage(tabs[0].id, { greeting: 'checkIteration' }, (response) => {
-      if (chrome.runtime.lastError) {
-        logDebug("Error checking iteration state:", chrome.runtime.lastError);
-        return;
-      }
-      
-      if (response && response.isIterating) {
-        logDebug("Already iterating, count:", response.iterationCount);
-        return;
-      }
-      
-      // Start new iteration
-      state.isIterating = true;
-      state.iterationCount++;
-      state.lastIterationTime = Date.now();
-      
-      chrome.tabs.sendMessage(tabs[0].id, { 
-        greeting: 'startIteration',
-        iterationCount: state.iterationCount
-      }, (startResponse) => {
-        logDebug("Iteration started:", startResponse);
-        
-        // Step 1: Unload content - using callback pattern instead of await
-        chrome.tabs.sendMessage(tabs[0].id, { greeting: 'unload' }, (unloadResponse) => {
-          if (chrome.runtime.lastError) {
-            logDebug("Error during unload:", chrome.runtime.lastError);
-            endIteration(tabs[0].id);
-            return;
-          }
-          
-          logDebug("Content unloaded:", unloadResponse);
-          
-          // If we need to save unloaded content to a file in a non-blocking way
-          if (unloadResponse && unloadResponse.code) {
-            downloadTextFile(unloadResponse.code, unloadResponse.filename || 'bml_code.bml');
-          }
-          
-          // Step 2: Load new content - converted to use callback pattern
-          loadFileWithPicker(tabs[0].id, 'load', (loadSuccess) => {
-            // Whether load succeeds or fails, end the iteration
-            setTimeout(() => {
-              endIteration(tabs[0].id);
-            }, 500); // Small delay to ensure UI updates
-          });
-        });
-      });
-    });
-  });
-  
-  // Helper to end iteration and notify content script
-  function endIteration(tabId) {
-    state.isIterating = false;
-    chrome.tabs.sendMessage(tabId, { greeting: 'endIteration' }, (response) => {
-      logDebug("Iteration ended:", response);
-    });
-  }
-}
-
 /**
  * Downloads text content as a file
  * @param {string} content - The text content to save
@@ -715,7 +647,16 @@ function handleIteration() {
  */
 function downloadTextFile(content, filename) {
   try {
-    // Create a blob from the text content
+    // Ensure consistent newline handling
+    // First normalize Windows style to Unix style
+    content = content.replace(/\r\n/g, '\n');
+    
+    // Log the number of newlines for debugging
+    const newlineCount = (content.match(/\n/g) || []).length;
+    logDebug(`Saving file with ${newlineCount} newlines`);
+    
+    // Create a blob from the text content with proper line endings
+    // We use the native line endings of the platform here
     const blob = new Blob([content], { type: 'text/plain' });
     
     // Create object URL for the blob
@@ -741,5 +682,55 @@ function downloadTextFile(content, filename) {
   } catch (error) {
     console.error('Error downloading file:', error);
     return false;
+  }
+}
+
+/**
+ * Saves a DOM snapshot to a file
+ * @param {Object} snapshot - The DOM snapshot object from content script
+ * @returns {Promise<Object>} Result with success status and filename
+ */
+async function saveDomSnapshot(snapshot) {
+  try {
+    logDebug("Saving DOM snapshot:", snapshot.metadata);
+    
+    // Create a unique filename with timestamp and area name
+    const timestamp = snapshot.metadata?.timestamp || new Date().toISOString();
+    const formattedTimestamp = timestamp.replace(/:/g, '-').replace(/\./g, '-');
+    const areaName = (snapshot.metadata?.areaName || 'unknown').replace(/[^\w-]/g, '_');
+    const filenamePrefix = snapshot.metadata?.location?.path ? 
+      snapshot.metadata.location.path.replace(/\//g, '_').replace(/[^\w-]/g, '_') : 
+      'page';
+      
+    const filename = `dom-snapshot-${filenamePrefix}-${areaName}-${formattedTimestamp}`;
+    
+    // Create two files: one for the HTML and one for the metadata/structure
+    
+    // 1. Save the full HTML content
+    const htmlFilename = `${filename}.html`;
+    const htmlContent = snapshot.htmlContent || '<html><body><h1>HTML content not available</h1></body></html>';
+    downloadTextFile(htmlContent, htmlFilename);
+    
+    // 2. Save the structured metadata as JSON
+    // Remove the full HTML content from the JSON to keep file size reasonable
+    const jsonSnapshot = { ...snapshot };
+    delete jsonSnapshot.htmlContent;
+    
+    const jsonFilename = `${filename}.json`;
+    const jsonContent = JSON.stringify(jsonSnapshot, null, 2);
+    downloadTextFile(jsonContent, jsonFilename);
+    
+    logDebug(`DOM snapshot saved as ${htmlFilename} and ${jsonFilename}`);
+    return { 
+      success: true, 
+      filename: htmlFilename,
+      jsonFilename: jsonFilename
+    };
+  } catch (error) {
+    console.error("Error saving DOM snapshot:", error);
+    return { 
+      success: false, 
+      error: error.toString() 
+    };
   }
 }

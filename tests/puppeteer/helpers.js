@@ -161,10 +161,15 @@ async function mockFileSystemAccessAPI(page, fileContent, fileName = 'test.bml')
 class TestHelper {
   constructor() {
     this.debugUtils = new DebugUtils();
-    this.recorder = null; // Add recorder property
-    this.videoPath = null; // Add video path property
+    this.cdpSession = null;     // CDP session for video recording
+    this.frameBuffer = [];      // Buffer to store video frames
+    this.isRecording = false;   // Recording status flag
+    this.videoPath = null;      // Path to save the video
     this.recordingStartTime = null;
     this.testName = null;
+    this.isPaused = false;      // Flag to indicate if recording is paused
+    this.pauseStartTime = null; // Timestamp when recording was paused
+    this.totalPausedTime = 0;   // Total time recording has been paused
   }
 
   /**
@@ -1262,133 +1267,302 @@ class TestHelper {
   }
 
   /**
-   * Start video recording for the current test
+   * Start video recording for the current test using native Puppeteer capabilities
    * @param {string} testName - Name of the test being recorded (optional)
    * @param {string} customPath - Custom path to save the video file (optional)
    * @returns {Promise<boolean>} - Whether recording started successfully
    */
   async startRecording(testName, customPath = null) {
-    if (this.recorder) {
-      console.log("Recording already in progress. Stopping previous recording.");
-      await this.stopRecording(false); // Don't save the previous recording
+    if (this.isRecording) {
+      console.log('Video recording already in progress');
+      return true;
     }
     
     try {
-      // Import required modules
-      const path = require('path');
-      const fs = require('fs').promises;
-      const { PuppeteerScreenRecorder } = require('puppeteer-screen-recorder');
-      
       // Set test name and video path
       this.testName = testName || `test-${Date.now()}`;
       const sanitizedTestName = this.testName.replace(/[^a-zA-Z0-9-_]/g, '_');
-      
+      const videoDir = 'test-videos';
+
+      // Create videos directory if it doesn't exist
+      await fs.mkdir(videoDir, { recursive: true }).catch(err => {
+        if (err.code !== 'EEXIST') throw err;
+      });
+
       if (customPath) {
-        this.videoPath = customPath;
+        // Remove any local user-specific path information from custom path
+        const filename = path.basename(customPath);
+        this.videoPath = path.join(videoDir, filename);
       } else {
-        // Create videos directory if it doesn't exist
-        const videoDir = path.join(__dirname, '../test-videos');
-        await fs.mkdir(videoDir, { recursive: true }).catch(err => {
-          if (err.code !== 'EEXIST') throw err;
-        });
-        this.videoPath = path.join(videoDir, `${sanitizedTestName}-${Date.now()}.mp4`);
+        this.videoPath = path.join(videoDir, `${sanitizedTestName}-${Date.now()}.webm`);
       }
       
       console.log(`Starting video recording for test: ${this.testName}`);
-      console.log(`Video will be saved to: ${this.videoPath}`);
+      // Only log the filename for privacy
+      console.log(`Video will be saved as: ${path.basename(this.videoPath)}`);
       
-      // Configure recorder with optimal settings
-      const config = {
-        followNewTab: true,
-        fps: 25,
-        quality: 100,
-        format: 'mp4',
-        videoFrame: {
-          width: 1280,
-          height: 720
-        },
-        aspectRatio: '16:9'
-      };
+      // Access the Chrome DevTools Protocol (CDP) session
+      this.cdpSession = await this.page.target().createCDPSession();
       
-      this.recorder = new PuppeteerScreenRecorder(this.page, config);
-      await this.recorder.start(this.videoPath);
+      // Start screencast using CDP
+      await this.cdpSession.send('Page.startScreencast', {
+        format: 'jpeg',
+        quality: 90,
+        everyNthFrame: 1
+      });
+      
+      this.isRecording = true;
       this.recordingStartTime = Date.now();
-      console.log('Video recording started successfully');
+      this.frameBuffer = [];
+      this.isPaused = false;
+      this.pauseStartTime = null;
+      this.totalPausedTime = 0;
+      
+      // Set up event listener for screencast frames
+      this.cdpSession.on('Page.screencastFrame', async (frameObject) => {
+        // Only add frames if not paused
+        if (!this.isPaused) {
+          // Acknowledge the frame to receive more frames
+          await this.cdpSession.send('Page.screencastFrameAck', {
+            sessionId: frameObject.sessionId
+          }).catch(e => console.error(`Error acknowledging frame: ${e.message}`));
+          
+          // Store the frame data and metadata (only if recording is active)
+          if (this.isRecording) {
+            this.frameBuffer.push({
+              data: frameObject.data,
+              timestamp: Date.now() - this.recordingStartTime - this.totalPausedTime,
+              metadata: {
+                width: frameObject.metadata.width,
+                height: frameObject.metadata.height
+              }
+            });
+          }
+        } else {
+          // Still need to acknowledge frames when paused
+          await this.cdpSession.send('Page.screencastFrameAck', {
+            sessionId: frameObject.sessionId
+          }).catch(e => console.error(`Error acknowledging paused frame: ${e.message}`));
+        }
+      });
+      
       return true;
     } catch (error) {
-      console.error('Failed to start video recording:', error);
-      this.recorder = null;
-      this.videoPath = null;
-      this.recordingStartTime = null;
+      console.error('Error starting video recording:', error);
+      this.isRecording = false;
       return false;
     }
   }
-  
+
   /**
-   * Stop video recording
+   * Stop video recording and save frames as video file
    * @param {boolean} saveVideo - Whether to keep the video (true) or delete it (false)
    * @returns {Promise<string|null>} Path to the saved video or null if recording failed/wasn't saved
    */
   async stopRecording(saveVideo = true) {
-    if (!this.recorder) {
-      console.log('No video recorder running, nothing to stop');
+    if (!this.isRecording || !this.cdpSession) {
+      console.log('No video recording in progress, nothing to stop');
       return null;
     }
     
     try {
       console.log('Stopping video recording...');
-      await this.recorder.stop();
+      this.isRecording = false;
       
-      const recordingDuration = (Date.now() - this.recordingStartTime) / 1000;
-      console.log(`Video recording stopped after ${recordingDuration.toFixed(2)} seconds`);
+      // If recording was paused, update total paused time
+      if (this.isPaused && this.pauseStartTime) {
+        this.totalPausedTime += (Date.now() - this.pauseStartTime);
+        this.pauseStartTime = null;
+        this.isPaused = false;
+      }
       
-      if (saveVideo) {
-        console.log(`Video saved to: ${this.videoPath}`);
+      // Stop the screencast
+      await this.cdpSession.send('Page.stopScreencast')
+        .catch(e => console.error('Error stopping screencast:', e.message));
+      
+      const recordingDuration = (Date.now() - this.recordingStartTime - this.totalPausedTime) / 1000;
+      console.log(`Video recording stopped after ${recordingDuration.toFixed(2)} seconds with ${this.frameBuffer.length} frames`);
+      
+      if (!saveVideo || this.frameBuffer.length === 0) {
+        console.log('Not saving video recording');
+        this.frameBuffer = [];
+        this.recordingStartTime = null;
+        this.totalPausedTime = 0;
+        this.cdpSession = null;
+        return null;
+      }
+      
+      console.log(`Saving video to: ${this.videoPath}`);
+      
+      // Use ffmpeg to convert frames to video if available
+      try {
+        // Save frames to temporary directory
+        const fs = require('fs');
+        const path = require('path');
+        const os = require('os');
+        const { exec } = require('child_process');
+        const util = require('util');
+        const execPromise = util.promisify(exec);
+        
+        // Create temp directory for frames
+        const tempDir = path.join(os.tmpdir(), `video-frames-${Date.now()}`);
+        fs.mkdirSync(tempDir, { recursive: true });
+        
+        // Write frames to disk
+        console.log(`Writing ${this.frameBuffer.length} frames to temporary directory: ${tempDir}`);
+        for (let i = 0; i < this.frameBuffer.length; i++) {
+          const frame = this.frameBuffer[i];
+          const frameData = Buffer.from(frame.data, 'base64');
+          fs.writeFileSync(path.join(tempDir, `frame-${i.toString().padStart(6, '0')}.jpg`), frameData);
+        }
+        
+        // Generate timestamp file for variable framerate support
+        const timestampFile = path.join(tempDir, 'timestamps.txt');
+        let timestampContent = '';
+        for (let i = 0; i < this.frameBuffer.length; i++) {
+          // Convert timestamp from ms to seconds for ffmpeg
+          const timestamp = this.frameBuffer[i].timestamp / 1000;
+          timestampContent += `file 'frame-${i.toString().padStart(6, '0')}.jpg'\nduration ${i > 0 ? (timestamp - this.frameBuffer[i-1].timestamp/1000).toFixed(3) : 0.04}\n`;
+        }
+        // Add final entry with same duration as the one before it
+        if (this.frameBuffer.length > 0) {
+          timestampContent += `file 'frame-${(this.frameBuffer.length-1).toString().padStart(6, '0')}.jpg'\n`;
+        }
+        fs.writeFileSync(timestampFile, timestampContent);
+        
+        // Build ffmpeg command to convert frames to video using the timestamp file for accurate timing
+        const ffmpegCmd = `ffmpeg -f concat -safe 0 -i "${timestampFile}" -c:v libvpx-vp9 -pix_fmt yuv420p -auto-alt-ref 0 "${this.videoPath}"`;
+        
+        console.log(`Running ffmpeg command: ${ffmpegCmd}`);
+        await execPromise(ffmpegCmd);
+        
+        // Clean up temp files
+        console.log('Cleaning up temporary frame files');
+        for (let i = 0; i < this.frameBuffer.length; i++) {
+          const framePath = path.join(tempDir, `frame-${i.toString().padStart(6, '0')}.jpg`);
+          fs.unlinkSync(framePath);
+        }
+        fs.unlinkSync(timestampFile);
+        fs.rmdirSync(tempDir);
         
         // Verify the video file exists and has content
-        const fs = require('fs');
         if (fs.existsSync(this.videoPath)) {
           const stats = fs.statSync(this.videoPath);
           if (stats.size > 0) {
-            console.log(`Video file verified: ${stats.size} bytes`);
+            console.log(`Video successfully saved: ${stats.size} bytes`);
             const savedPath = this.videoPath;
             
-            // Clear recording state
-            this.recorder = null;
-            this.videoPath = null;
+            // Reset recording state
+            this.frameBuffer = [];
             this.recordingStartTime = null;
+            this.totalPausedTime = 0;
+            this.videoPath = null;
+            this.cdpSession = null;
             
             return savedPath;
-          } else {
-            console.error('Video file exists but is empty');
           }
-        } else {
-          console.error('Video file was not created');
         }
-      } else {
-        console.log(`Deleting video file: ${this.videoPath}`);
-        try {
-          const fs = require('fs');
-          if (fs.existsSync(this.videoPath)) {
-            fs.unlinkSync(this.videoPath);
-            console.log('Video file deleted successfully');
-          }
-        } catch (unlinkError) {
-          console.error(`Failed to delete video file ${this.videoPath}:`, unlinkError);
+      } catch (ffmpegError) {
+        console.error('Error using ffmpeg to create video:', ffmpegError);
+        console.log('Falling back to saving frames as individual images...');
+        
+        // Fallback: Save frames as individual images
+        const fs = require('fs');
+        const path = require('path');
+        
+        // Create directory for frames
+        const framesDir = `${this.videoPath.replace(/\.\w+$/, '')}-frames`;
+        fs.mkdirSync(framesDir, { recursive: true });
+        
+        // Save frames as individual images
+        for (let i = 0; i < this.frameBuffer.length; i++) {
+          const frame = this.frameBuffer[i];
+          const frameData = Buffer.from(frame.data, 'base64');
+          fs.writeFileSync(path.join(framesDir, `frame-${i.toString().padStart(6, '0')}.jpg`), frameData);
         }
+        
+        console.log(`Saved ${this.frameBuffer.length} frames to ${framesDir}`);
       }
       
-      // Clear recording state
-      this.recorder = null;
-      this.videoPath = null;
+      // Reset recording state
+      this.frameBuffer = [];
       this.recordingStartTime = null;
+      this.totalPausedTime = 0;
+      this.videoPath = null;
+      this.cdpSession = null;
+      
       return null;
     } catch (error) {
       console.error('Error stopping video recording:', error);
-      this.recorder = null;
-      this.videoPath = null;
+      this.isRecording = false;
+      this.frameBuffer = [];
       this.recordingStartTime = null;
+      this.totalPausedTime = 0;
+      this.videoPath = null;
+      this.cdpSession = null;
       return null;
+    }
+  }
+
+  /**
+   * Pause video recording temporarily
+   * @returns {Promise<boolean>} Whether the recording was successfully paused
+   */
+  async pauseRecording() {
+    if (!this.isRecording || this.isPaused || !this.cdpSession) {
+      console.log('Cannot pause recording: recording is not active or already paused');
+      return false;
+    }
+
+    try {
+      console.log('Pausing video recording...');
+      this.isPaused = true;
+      this.pauseStartTime = Date.now();
+      
+      // Stop receiving frames from CDP session
+      await this.cdpSession.send('Page.stopScreencast')
+        .catch(e => console.error('Error stopping screencast while pausing:', e.message));
+      
+      console.log('Video recording paused successfully');
+      return true;
+    } catch (error) {
+      console.error('Failed to pause video recording:', error);
+      return false;
+    }
+  }
+
+  /**
+   * Resume a paused video recording
+   * @returns {Promise<boolean>} Whether the recording was successfully resumed
+   */
+  async resumeRecording() {
+    if (!this.isRecording || !this.isPaused || !this.cdpSession) {
+      console.log('Cannot resume recording: recording is not active or not paused');
+      return false;
+    }
+
+    try {
+      console.log('Resuming video recording...');
+      
+      // Calculate total pause duration
+      if (this.pauseStartTime) {
+        this.totalPausedTime += (Date.now() - this.pauseStartTime);
+        this.pauseStartTime = null;
+      }
+      
+      // Restart screencast
+      await this.cdpSession.send('Page.startScreencast', {
+        format: 'jpeg',
+        quality: 90,
+        everyNthFrame: 1
+      });
+      
+      this.isPaused = false;
+      console.log('Video recording resumed successfully');
+      return true;
+    } catch (error) {
+      console.error('Failed to resume video recording:', error);
+      return false;
     }
   }
 

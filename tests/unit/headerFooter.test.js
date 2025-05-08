@@ -1,18 +1,27 @@
+// Setup Chrome API mocks before importing the background script
+global.chrome = {
+  tabs: {
+    query: jest.fn(),
+    sendMessage: jest.fn()
+  },
+  runtime: {
+    getURL: jest.fn().mockReturnValue('mocked-url'),
+    lastError: null,
+    onStartup: {
+      addListener: jest.fn()
+    },
+    onInstalled: {
+      addListener: jest.fn()
+    },
+    onMessage: {
+      addListener: jest.fn()
+    }
+  }
+};
+
 const backgroundScript = require('../../src/background/background');
 
 describe('Header & Footer Functionality', () => {
-  // Mock the chrome API
-  global.chrome = {
-    tabs: {
-      query: jest.fn(),
-      sendMessage: jest.fn()
-    },
-    runtime: {
-      getURL: jest.fn().mockReturnValue('mocked-url'),
-      lastError: null
-    }
-  };
-
   beforeEach(() => {
     // Reset mocks before each test
     jest.clearAllMocks();

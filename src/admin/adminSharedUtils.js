@@ -16,6 +16,22 @@ const RETRY_ATTEMPTS = 3;
 const RETRY_DELAY = 500; // ms
 
 /**
+ * Converts a string to camelCase format
+ * @param {string} str - String to convert to camelCase
+ * @returns {string} The converted camelCase string
+ */
+export function toCamelCase(str) {
+  if (typeof str !== 'string' || !str) {
+    return '';
+  }
+  
+  // Handle strings with spaces, hyphens, underscores
+  return str
+    .replace(/[-_\s]+(.)?/g, (_, char) => char ? char.toUpperCase() : '')
+    .replace(/^(.)/, (match) => match.toLowerCase());
+}
+
+/**
  * Records performance metrics for operations
  * @param {string} operation - Name of operation
  * @param {number} duration - Duration in ms 
