@@ -163,6 +163,8 @@ class TestHelper {
     this.debugUtils = new DebugUtils();
     this.recorder = null; // Add recorder property
     this.videoPath = null; // Add video path property
+    this.recordingStartTime = null;
+    this.testName = null;
   }
 
   /**
@@ -1260,79 +1262,133 @@ class TestHelper {
   }
 
   /**
-   * Start video recording for the current page
-   * @param {string} filePath - Path to save the video file
+   * Start video recording for the current test
+   * @param {string} testName - Name of the test being recorded (optional)
+   * @param {string} customPath - Custom path to save the video file (optional)
+   * @returns {Promise<boolean>} - Whether recording started successfully
    */
-  async startRecording(filePath) {
+  async startRecording(testName, customPath = null) {
     if (this.recorder) {
       console.log("Recording already in progress. Stopping previous recording.");
       await this.stopRecording(false); // Don't save the previous recording
     }
     
     try {
-      // Ensure directory exists
-      const dir = path.dirname(filePath);
-      await fs.mkdir(dir, { recursive: true }).catch(err => {
-        if (err.code !== 'EEXIST') throw err;
-      });
-      
-      console.log(`Starting video recording to: ${filePath}`);
-      this.videoPath = filePath;
-      
-      // Use the built-in puppeteer-screen-recorder
+      // Import required modules
+      const path = require('path');
+      const fs = require('fs').promises;
       const { PuppeteerScreenRecorder } = require('puppeteer-screen-recorder');
       
+      // Set test name and video path
+      this.testName = testName || `test-${Date.now()}`;
+      const sanitizedTestName = this.testName.replace(/[^a-zA-Z0-9-_]/g, '_');
+      
+      if (customPath) {
+        this.videoPath = customPath;
+      } else {
+        // Create videos directory if it doesn't exist
+        const videoDir = path.join(__dirname, '../test-videos');
+        await fs.mkdir(videoDir, { recursive: true }).catch(err => {
+          if (err.code !== 'EEXIST') throw err;
+        });
+        this.videoPath = path.join(videoDir, `${sanitizedTestName}-${Date.now()}.mp4`);
+      }
+      
+      console.log(`Starting video recording for test: ${this.testName}`);
+      console.log(`Video will be saved to: ${this.videoPath}`);
+      
+      // Configure recorder with optimal settings
       const config = {
         followNewTab: true,
         fps: 25,
         quality: 100,
         format: 'mp4',
         videoFrame: {
-          width: 1024,
-          height: 768
+          width: 1280,
+          height: 720
         },
-        aspectRatio: '4:3'
+        aspectRatio: '16:9'
       };
       
       this.recorder = new PuppeteerScreenRecorder(this.page, config);
-      await this.recorder.start(filePath);
-      console.log("Recording started successfully");
+      await this.recorder.start(this.videoPath);
+      this.recordingStartTime = Date.now();
+      console.log('Video recording started successfully');
       return true;
     } catch (error) {
-      console.error("Failed to start video recording:", error);
+      console.error('Failed to start video recording:', error);
       this.recorder = null;
       this.videoPath = null;
+      this.recordingStartTime = null;
       return false;
     }
   }
-
+  
   /**
    * Stop video recording
    * @param {boolean} saveVideo - Whether to keep the video (true) or delete it (false)
+   * @returns {Promise<string|null>} Path to the saved video or null if recording failed/wasn't saved
    */
   async stopRecording(saveVideo = true) {
-    if (this.recorder) {
-      try {
-        console.log("Stopping video recording...");
-        await this.recorder.stop();
-        console.log(`Recording stopped. Video ${saveVideo ? 'saved to' : 'will be deleted from'}: ${this.videoPath}`);
+    if (!this.recorder) {
+      console.log('No video recorder running, nothing to stop');
+      return null;
+    }
+    
+    try {
+      console.log('Stopping video recording...');
+      await this.recorder.stop();
+      
+      const recordingDuration = (Date.now() - this.recordingStartTime) / 1000;
+      console.log(`Video recording stopped after ${recordingDuration.toFixed(2)} seconds`);
+      
+      if (saveVideo) {
+        console.log(`Video saved to: ${this.videoPath}`);
         
-        if (!saveVideo && this.videoPath) {
-          console.log(`Deleting video file: ${this.videoPath}`);
-          try {
-            await fs.unlink(this.videoPath).catch(err => {
-              if (err.code !== 'ENOENT') console.error(`Error deleting video: ${err.message}`);
-            });
-          } catch (unlinkError) {
-            console.error(`Failed to delete video file ${this.videoPath}:`, unlinkError);
+        // Verify the video file exists and has content
+        const fs = require('fs');
+        if (fs.existsSync(this.videoPath)) {
+          const stats = fs.statSync(this.videoPath);
+          if (stats.size > 0) {
+            console.log(`Video file verified: ${stats.size} bytes`);
+            const savedPath = this.videoPath;
+            
+            // Clear recording state
+            this.recorder = null;
+            this.videoPath = null;
+            this.recordingStartTime = null;
+            
+            return savedPath;
+          } else {
+            console.error('Video file exists but is empty');
           }
+        } else {
+          console.error('Video file was not created');
         }
-      } catch (error) {
-        console.error("Error stopping video recording:", error);
-      } finally {
-        this.recorder = null;
-        if (!saveVideo) this.videoPath = null;
+      } else {
+        console.log(`Deleting video file: ${this.videoPath}`);
+        try {
+          const fs = require('fs');
+          if (fs.existsSync(this.videoPath)) {
+            fs.unlinkSync(this.videoPath);
+            console.log('Video file deleted successfully');
+          }
+        } catch (unlinkError) {
+          console.error(`Failed to delete video file ${this.videoPath}:`, unlinkError);
+        }
       }
+      
+      // Clear recording state
+      this.recorder = null;
+      this.videoPath = null;
+      this.recordingStartTime = null;
+      return null;
+    } catch (error) {
+      console.error('Error stopping video recording:', error);
+      this.recorder = null;
+      this.videoPath = null;
+      this.recordingStartTime = null;
+      return null;
     }
   }
 
@@ -1657,6 +1713,105 @@ class TestHelper {
     } catch (err) {
       // If page context is destroyed, use regular sleep
       await this.sleep(ms);
+    }
+  }
+
+  /**
+   * Start recording the current test
+   * @param {string} testName - Name of the test being recorded
+   * @returns {Promise<void>}
+   */
+  async startRecording(testName) {
+    if (this.recorder) {
+      console.log('Video recorder already running, stopping previous recording');
+      await this.stopRecording();
+    }
+
+    try {
+      const { PuppeteerScreenRecorder } = require('puppeteer-screen-recorder');
+      const path = require('path');
+      const fs = require('fs');
+      
+      // Create directory if it doesn't exist
+      const videoDir = path.join(__dirname, 'test-videos');
+      if (!fs.existsSync(videoDir)) {
+        fs.mkdirSync(videoDir, { recursive: true });
+        console.log(`Created video directory: ${videoDir}`);
+      }
+      
+      this.testName = testName || `test-${Date.now()}`;
+      const sanitizedTestName = this.testName.replace(/[^a-zA-Z0-9-_]/g, '_');
+      this.videoPath = path.join(videoDir, `${sanitizedTestName}-${Date.now()}.mp4`);
+      
+      const config = {
+        followNewTab: true,
+        fps: 25,
+        videoFrame: {
+          width: 1280,
+          height: 720
+        },
+        aspectRatio: '16:9'
+      };
+      
+      console.log(`Starting video recording for test: ${this.testName}`);
+      console.log(`Video will be saved to: ${this.videoPath}`);
+      
+      this.recorder = new PuppeteerScreenRecorder(this.page, config);
+      await this.recorder.start(this.videoPath);
+      this.recordingStartTime = Date.now();
+      console.log('Video recording started successfully');
+      return true;
+    } catch (error) {
+      console.error('Failed to start video recording:', error);
+      this.recorder = null;
+      this.videoPath = null;
+      return false;
+    }
+  }
+  
+  /**
+   * Stop recording the current test
+   * @returns {Promise<string|null>} Path to the recorded video or null if recording failed
+   */
+  async stopRecording() {
+    if (!this.recorder) {
+      console.log('No video recorder running, nothing to stop');
+      return null;
+    }
+    
+    try {
+      console.log('Stopping video recording...');
+      await this.recorder.stop();
+      
+      const recordingDuration = (Date.now() - this.recordingStartTime) / 1000;
+      console.log(`Video recording stopped after ${recordingDuration.toFixed(2)} seconds`);
+      console.log(`Video saved to: ${this.videoPath}`);
+      
+      const fs = require('fs');
+      // Verify the video file exists and has content
+      if (fs.existsSync(this.videoPath)) {
+        const stats = fs.statSync(this.videoPath);
+        if (stats.size > 0) {
+          console.log(`Video file verified: ${stats.size} bytes`);
+          const returnPath = this.videoPath;
+          this.recorder = null;
+          this.videoPath = null;
+          this.recordingStartTime = null;
+          return returnPath;
+        } else {
+          console.error('Video file exists but is empty');
+        }
+      } else {
+        console.error('Video file was not created');
+      }
+      
+      return null;
+    } catch (error) {
+      console.error('Error stopping video recording:', error);
+      this.recorder = null;
+      this.videoPath = null;
+      this.recordingStartTime = null;
+      return null;
     }
   }
 }
