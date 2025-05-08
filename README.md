@@ -140,11 +140,11 @@ This project follows the [StandardJS](https://standardjs.com/) style guide. To e
 
 Before running tests, ensure you have completed the following setup:
 
-1. Create a `.env` file in the project root with the following variables:
+1. Create a `.env` file in the `tests` directory with the following variables:
    ```
    CPQ_USERNAME=your_username
    CPQ_PASSWORD=your_password
-   BASE_URL=your_cpq_instance_url
+   BASE_URL=your_cpq_instance_url  # e.g., https://yourinstance.bigmachines.com
    ```
 
 2. Install dependencies:
@@ -153,6 +153,27 @@ Before running tests, ensure you have completed the following setup:
    ```
 
 ### Running Tests
+
+#### Focused CPQ Testing (Recommended)
+
+We've streamlined the testing approach to focus directly on the 16 rule types defined in `src/rulesList.json`, ensuring comprehensive coverage of all Oracle CPQ Cloud application areas.
+
+- **Quick Testing** - Run one test from each application area:
+  ```bash
+  npm run test:cpq-sample
+  ```
+
+- **Full Testing** - Run all tests for the 16 rule types:
+  ```bash
+  npm run test:cpq-all
+  ```
+
+- **Default Option** - Same as full testing:
+  ```bash
+  npm run test:cpq
+  ```
+
+#### Legacy Test Options
 
 - Run all tests:
   ```bash
@@ -163,6 +184,12 @@ Before running tests, ensure you have completed the following setup:
   ```bash
   npm run test:unit        # Run unit tests only
   npm run test:puppeteer   # Run Puppeteer integration tests
+  npm run test:config      # Test configuration rules
+  npm run test:commerce    # Test commerce rules
+  npm run test:interfaces  # Test interfaces
+  npm run test:stylesheets # Test stylesheets
+  npm run test:documents   # Test document designer
+  npm run test:utils       # Test utility functions
   ```
 
 - Run tests in watch mode (useful during development):
@@ -174,26 +201,35 @@ Before running tests, ensure you have completed the following setup:
 
 The test suite is organized as follows:
 
+- `tests/puppeteer/rulesList-master.test.js` - Tests all 16 rule types from rulesList.json
+- `tests/puppeteer/rulesList-sample.test.js` - Tests one rule from each app area
 - `tests/unit/` - Unit tests for individual components
-- `tests/puppeteer/` - Integration tests using Puppeteer
 - `tests/__mocks__/` - Mock implementations for testing
 
-### Writing Tests
+### Managing Test Files
 
-When adding new features, please ensure:
-1. Unit tests cover the core functionality
-2. Integration tests verify the feature works in a real browser environment
-3. Tests focus on essential functionality rather than implementation details
+If you need to organize your test files or clean up unnecessary tests, use the provided script:
+
+```bash
+# Move unnecessary test files to archive folder
+node organize-tests.js
+
+# Preview what files would be moved without actually moving them
+node organize-tests.js --dry-run
+
+# Restore archived test files
+node organize-tests.js --restore
+```
 
 ### Debugging Tests
 
 If tests fail, you can:
-1. Check the `test-logs/` directory for detailed error logs
-2. Use the `--debug` flag for verbose output:
+1. Check the screenshots captured during test execution
+2. Review video recordings in the `test-videos/` directory
+3. Use the `--verbose` flag for detailed output:
    ```bash
-   npm test -- --debug
+   node run-cpq-tests.js --all --verbose
    ```
-3. Review screenshots of failed tests in `test-failures/`
 
 ## Keyboard Shortcuts
 
