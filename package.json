@@ -15,7 +15,10 @@
     "test:interfaces": "jest --selectProjects puppeteer --testPathPattern='interfaces.*\\.test\\.js$'",
     "test:stylesheets": "jest --selectProjects puppeteer --testPathPattern='(headerFooter|stylesheet).*\\.test\\.js$'",
     "test:documents": "jest --selectProjects puppeteer --testPathPattern='document.*\\.test\\.js$'",
-    "test:utils": "jest --selectProjects puppeteer --testPathPattern='utils.*\\.test\\.js$'"
+    "test:utils": "jest --selectProjects puppeteer --testPathPattern='utils.*\\.test\\.js$'",
+    "test:cpq-all": "node run-cpq-tests.js --all",
+    "test:cpq-sample": "node run-cpq-tests.js --sample",
+    "test:cpq": "node run-cpq-tests.js"
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",

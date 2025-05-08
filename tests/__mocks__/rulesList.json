@@ -1,8 +1,0 @@
-[
-  {
-    "URL": "test.com",
-    "codeSelector": "#test-code-element",
-    "fileNameSelector": "#test-file-element",
-    "hasTest": "TRUE"
-  }
-]
