@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs').promises; // Add fs.promises for directory operations
 const DebugUtils = require('../debugUtils');
+const loginModule = require('./login'); // Import the unified login module
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
 // Global browser state management to prevent multiple instances
@@ -9,6 +10,7 @@ let sharedBrowser = null;
 let sharedPage = null;
 let isLoggedIn = false;
 let browserCleanupRegistered = false;
+// These variables were used by the old login implementation, but we'll keep them for compatibility
 let lastLoginTime = 0;
 const LOGIN_COOLDOWN = 2000;
 const MAX_LOGIN_RETRIES = 3;
@@ -274,7 +276,7 @@ class TestHelper {
       await this.detectExtensionId();
       
       // Only attempt login if BASE_URL is set and not already logged in
-      if (process.env.BASE_URL && !isLoggedIn) {
+      if (process.env.BASE_URL && !isLoggedIn && process.env.BYPASS_LOGIN !== 'true') {
         await this.login();
       }
     } catch (error) {
@@ -513,374 +515,31 @@ class TestHelper {
   }
 
   /**
-   * Handles login to Oracle CPQ Cloud with rate limiting and retry logic
+   * Updated login method that uses the unified login module
+   * Replaces the old implementation with a reference to the shared module
    */
   async login() {
-    if (!process.env.BASE_URL) {
-      throw new Error('BASE_URL environment variable must be set');
-    }
-  
-    const username = process.env.CPQ_USERNAME;
-    const password = process.env.CPQ_PASSWORD;
-  
-    if (!username || !password) {
-      throw new Error('CPQ_USERNAME and CPQ_PASSWORD environment variables must be set');
-    }
-  
-    console.log("Using credentials - Username:", username);
-    console.log("Base URL:", process.env.BASE_URL);
-    
-    // Set hard timeout for entire login process
-    const loginStartTime = Date.now();
-    const MAX_LOGIN_TIME = 120000; // 2 minutes maximum for login process
-  
-    // Enhanced check if already logged in
     try {
-      console.log("Checking if already logged in...");
+      console.log("Using unified login module from TestHelper");
       
-      await Promise.race([
-        this.page.goto(process.env.BASE_URL, { 
-          waitUntil: ['domcontentloaded', 'networkidle2'],
-          timeout: 30000
-        }),
-        new Promise(resolve => setTimeout(resolve, 30000))
-      ]);
+      // Track whether login was attempted for rate limiting
+      lastLoginTime = Date.now();
       
-      // Give page time to stabilize
-      await this.safeWait(2000);
+      // Call the unified login implementation
+      const loginSuccess = await loginModule(this.page);
       
-      // Improved login status check with consolidated indicators
-      const isLoggedIn = await this.page.evaluate(() => {
-        // Common login page elements
-        const loginElements = [
-          '#username', 
-          '#password',
-          'input[name="username"]',
-          'input[type="password"]',
-          'form[action*="login"]',
-          'input[type="submit"][value="Login"]',
-          'button[type="submit"]'
-        ];
-        
-        // Common logged-in indicators
-        const loggedInElements = [
-          '.user-profile',
-          '.logged-in-user',
-          '.logout-button',
-          '#logout',
-          'a[href*="logout"]',
-          '.header-user-info',
-          '.user-name',
-          '#navUserMenu',
-          '.nx-header',
-          '.crm-ribbon'
-        ];
-        
-        // Check if any login elements exist
-        const hasLoginElements = loginElements.some(selector => 
-          document.querySelector(selector) !== null
-        );
-        
-        // Check if any logged-in indicators exist
-        const hasLoggedInIndicators = loggedInElements.some(selector => 
-          document.querySelector(selector) !== null
-        );
-        
-        return {
-          hasLoginElements,
-          hasLoggedInIndicators,
-          url: window.location.href,
-          title: document.title
-        };
-      });
-      
-      console.log("Login status check:", JSON.stringify(isLoggedIn, null, 2));
-      
-      if (!isLoggedIn.hasLoginElements && isLoggedIn.hasLoggedInIndicators) {
-        console.log("Already logged in based on page indicators!");
-        this.isLoggedIn = true;
-        return;
+      if (loginSuccess) {
+        isLoggedIn = true;
+        console.log("Login successful via unified module");
       } else {
-        console.log("Not logged in yet, proceeding with login...");
+        console.error("Login failed via unified module");
       }
-    } catch (e) {
-      console.log("Error checking login status:", e.message);
+      
+      return loginSuccess;
+    } catch (error) {
+      console.error("Error during login:", error);
+      return false;
     }
-  
-    // Rate limiting safeguard
-    const MIN_LOGIN_INTERVAL_MS = 5000; // 5 seconds
-    
-    if (this.lastLoginTime) {
-      const timeSinceLastLogin = Date.now() - this.lastLoginTime;
-      if (timeSinceLastLogin < MIN_LOGIN_INTERVAL_MS) {
-        const waitTime = MIN_LOGIN_INTERVAL_MS - timeSinceLastLogin;
-        console.log(`Rate limiting: Waiting ${waitTime}ms before next login attempt`);
-        await this.safeWait(waitTime);
-      }
-    }
-  
-    // Optimized retry logic
-    const MAX_RETRIES = 3;
-    
-    for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
-      try {
-        // Check if we've exceeded the max login time
-        if (Date.now() - loginStartTime > MAX_LOGIN_TIME) {
-          throw new Error(`Login timed out after ${MAX_LOGIN_TIME/1000} seconds`);
-        }
-        
-        console.log(`Login attempt ${attempt}/${MAX_RETRIES}`);
-        
-        // Clear state before each attempt
-        try {
-          const client = await this.page.target().createCDPSession();
-          await client.send('Network.clearBrowserCookies');
-          await client.send('Network.clearBrowserCache');
-          console.log("Cleared cookies and cache before navigation");
-        } catch (e) {
-          console.log("Failed to clear browser state:", e.message);
-        }
-        
-        // Navigate to login page
-        try {
-          await Promise.race([
-            this.page.goto(process.env.BASE_URL, { 
-              waitUntil: ['domcontentloaded'],
-              timeout: 30000
-            }),
-            new Promise(resolve => setTimeout(resolve, 30000))
-          ]);
-        } catch (navError) {
-          console.log("Navigation timeout or error, but continuing:", navError.message);
-        }
-        
-        // Enhanced waiting strategy
-        await this.safeWait(2000);
-        
-        // Take a screenshot only on the final attempt
-        if (attempt === MAX_RETRIES) {
-          const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-          try {
-            await this.page.screenshot({ 
-              path: `login-before-${timestamp}-final.png`, 
-              fullPage: true 
-            });
-          } catch (err) {
-            console.log("Screenshot failed:", err.message);
-          }
-        }
-        
-        // Unified login field selectors
-        const userNameSelectors = ['#username', 'input[name="username"]', 'input[type="text"][id*="user"]', 'input[type="email"]'];
-        const passwordSelectors = ['#password', '#psword', 'input[name="password"]', 'input[type="password"]'];
-        const submitSelectors = ['#log_in', 'input[type="submit"]', 'button[type="submit"]', 'button.login-button'];
-        
-        // Fill username with waiting and fallback strategy
-        let userFieldFound = false;
-        for (const selector of userNameSelectors) {
-          try {
-            await this.page.waitForSelector(selector, { timeout: 5000 })
-              .then(async (el) => {
-                console.log(`Found username field with selector: ${selector}`);
-                await el.click({ clickCount: 3 }); 
-                await el.type(username, { delay: 50 });
-                userFieldFound = true;
-              })
-              .catch(() => {});
-              
-            if (userFieldFound) break;
-          } catch (e) {}
-        }
-        
-        if (!userFieldFound) {
-          console.log("Could not find username field with any selector");
-          continue; // Try next attempt
-        }
-        
-        // Fill password with waiting and fallback strategy
-        let passFieldFound = false;
-        for (const selector of passwordSelectors) {
-          try {
-            await this.page.waitForSelector(selector, { timeout: 5000 })
-              .then(async (el) => {
-                console.log(`Found password field with selector: ${selector}`);
-                await el.click({ clickCount: 3 });
-                await el.type(password, { delay: 50 });
-                passFieldFound = true;
-              })
-              .catch(() => {});
-              
-            if (passFieldFound) break;
-          } catch (e) {}
-        }
-        
-        if (!passFieldFound) {
-          console.log("Could not find password field with any selector");
-          continue; // Try next attempt
-        }
-        
-        // Submit form with multiple strategies
-        let submitted = false;
-        
-        // 1. Try submit button click
-        for (const selector of submitSelectors) {
-          if (submitted) break;
-          try {
-            await this.page.waitForSelector(selector, { timeout: 5000 })
-              .then(async (button) => {
-                console.log(`Found submit button with selector: ${selector}`);
-                await Promise.all([
-                  button.click(),
-                  this.page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 30000 })
-                    .catch(() => console.log("Navigation promise after submit resolved or timed out"))
-                ]);
-                submitted = true;
-              })
-              .catch(() => {});
-          } catch (e) {}
-        }
-        
-        // 2. If button click failed, try pressing Enter on password field
-        if (!submitted) {
-          try {
-            const passwordField = await this.page.$('input[type="password"]');
-            if (passwordField) {
-              console.log("Submitting by pressing Enter on password field");
-              await Promise.all([
-                passwordField.press('Enter'),
-                this.page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 30000 })
-                  .catch(() => console.log("Navigation after Enter key resolved or timed out"))
-              ]);
-              submitted = true;
-            }
-          } catch (e) {}
-        }
-        
-        // 3. If that also failed, try submitting the form directly
-        if (!submitted) {
-          try {
-            console.log("Trying to submit form directly");
-            const formSubmitted = await this.page.evaluate(() => {
-              const form = document.querySelector('form');
-              if (form) {
-                form.submit();
-                return true;
-              }
-              return false;
-            });
-            
-            if (formSubmitted) {
-              await this.page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 30000 })
-                .catch(() => console.log("Navigation after form submit resolved or timed out"));
-              submitted = true;
-            }
-          } catch (e) {}
-        }
-        
-        if (!submitted) {
-          console.log("Could not submit login form with any method");
-          continue; // Try next attempt
-        }
-        
-        // Wait for page to load after login
-        await this.safeWait(5000);
-        
-        // Take screenshot only on the final attempt
-        if (attempt === MAX_RETRIES) {
-          const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-          try {
-            await this.page.screenshot({ 
-              path: `login-after-${timestamp}-final.png`, 
-              fullPage: true 
-            });
-          } catch (err) {}
-        }
-        
-        // Check login success with comprehensive verification
-        const loginSuccess = await this.page.evaluate(() => {
-          // Elements that indicate we're still on the login page
-          const loginPageSelectors = [
-            '#username', 
-            '#password', 
-            'input[type="password"]',
-            '.login-form',
-            'form[action*="login"]'
-          ];
-          
-          // Elements that indicate we're logged in
-          const loggedInSelectors = [
-            '.user-profile', 
-            '.logged-in-user',
-            '.logout-button',
-            '#logout',
-            'a[href*="logout"]',
-            '.user-account',
-            '.header-user-info',
-            '#navUserMenu'
-          ];
-          
-          // Error message indicators
-          const errorSelectors = [
-            '.error', 
-            '.error-message', 
-            '.alert-danger', 
-            '[role="alert"]', 
-            '#errorMessage',
-            '.login-error'
-          ];
-          
-          const stillOnLoginPage = loginPageSelectors.some(selector => 
-            document.querySelector(selector) !== null
-          );
-          
-          const hasLoggedInIndicators = loggedInSelectors.some(selector => 
-            document.querySelector(selector) !== null
-          );
-          
-          const hasErrorMessages = errorSelectors.some(selector => {
-            const el = document.querySelector(selector);
-            return el && el.textContent.trim().length > 0;
-          });
-          
-          return {
-            success: !stillOnLoginPage && hasLoggedInIndicators && !hasErrorMessages,
-            stillOnLoginPage,
-            hasLoggedInIndicators,
-            hasErrorMessages,
-            url: window.location.href,
-            title: document.title
-          };
-        });
-        
-        console.log("Login verification:", JSON.stringify(loginSuccess, null, 2));
-        
-        if (loginSuccess.success) {
-          console.log("Login successful!");
-          this.isLoggedIn = true;
-          this.lastLoginTime = Date.now();
-          return;
-        }
-        
-        // Wait before next attempt
-        if (attempt < MAX_RETRIES) {
-          const backoffTime = Math.min(Math.pow(2, attempt) * 2000, 10000);
-          console.log(`Login failed, waiting ${backoffTime}ms before retry...`);
-          await this.sleep(backoffTime);
-        }
-      } catch (error) {
-        console.error(`Login error on attempt ${attempt}:`, error);
-        
-        if (attempt < MAX_RETRIES) {
-          const backoffTime = Math.min(Math.pow(2, attempt) * 2000, 10000);
-          console.log(`Login error, waiting ${backoffTime}ms before retry...`);
-          await this.sleep(backoffTime);
-        } else {
-          throw new Error(`Login failed after ${MAX_RETRIES} attempts: ${error.message}`);
-        }
-      }
-    }
-    
-    throw new Error(`Login failed after ${MAX_RETRIES} attempts`);
   }
 
   /**
