@@ -56,7 +56,11 @@ async function analyzeUrl(url) {
                 urlObj.hostname.endsWith('.' + ruleUrlObj.hostname);
             
             // Must match both host AND path to be considered a match
-            return hostMatch && urlObj.pathname.startsWith(ruleUrlObj.pathname);
+            // return hostMatch && urlObj.pathname.startsWith(ruleUrlObj.pathname);
+            // debug urlObj.pathname and ruleUrlObj.pathname
+            logDebug("URL Pathname:", urlObj.pathname);
+            logDebug("Rule URL Pathname:", ruleUrlObj.pathname);
+            return urlObj.pathname.startsWith(ruleUrlObj.pathname);
         } catch (e) {
             // Fallback to a safer regex pattern if URL parsing fails
             const escapedPattern = ruleUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
