@@ -165,13 +165,8 @@ function findMatchingRule(url) {
       const urlObj = new URL(url);
       const ruleUrlObj = new URL(ruleUrl.startsWith('http') ? ruleUrl : 'https://' + ruleUrl);
       
-      // Compare hostname and path parts more securely
-      const hostMatch = 
-          //urlObj.hostname === ruleUrlObj.hostname ||
-          urlObj.hostname.endsWith('.' + ruleUrlObj.hostname);
-      
-      // Must match both host AND path to be considered a match
-      return hostMatch && urlObj.pathname.startsWith(ruleUrlObj.pathname);
+      // Match only based on path, no hostname matching
+      return urlObj.pathname.startsWith(ruleUrlObj.pathname);
     } catch (e) {
       // Fallback to a safer regex pattern if URL parsing fails
       const escapedPattern = ruleUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

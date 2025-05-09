@@ -56,8 +56,6 @@ async function analyzeUrl(url) {
                 urlObj.hostname.endsWith('.' + ruleUrlObj.hostname);
             
             // Must match both host AND path to be considered a match
-            // return hostMatch && urlObj.pathname.startsWith(ruleUrlObj.pathname);
-            // debug urlObj.pathname and ruleUrlObj.pathname
             logDebug("URL Pathname:", urlObj.pathname);
             logDebug("Rule URL Pathname:", ruleUrlObj.pathname);
             return urlObj.pathname.startsWith(ruleUrlObj.pathname);
@@ -125,7 +123,7 @@ async function setupDynamicEventListeners() {
                             { greeting: 'unload', rule },
                             function (response) {
                                 if (response?.code && response?.filename) {
-                                    saveText(`${response.filename}.${rule.fileType}`, response.code, rule.fileType);
+                                    saveText(`${response.filename}.${rule.fileType}`, response.code, rule.fileType, rule.savePath);
                                 }
                             }
                         );
@@ -168,18 +166,151 @@ async function safeShowOpenFilePicker() {
 }
 
 /**
- * Saves text content to a file.
+ * Saves text content to a file with proper directory structure.
  * @param {string} filename - The name of the file.
  * @param {string} text - The content to save.
  * @param {string} filetype - The file type (default: 'bml').
+ * @param {string} savePath - The path to save the file to (from rulesList.json).
  */
-function saveText(filename, text, filetype = 'bml') {
-    logDebug("Saving file:", filename);
-    const mimeType = filetype === 'xsl' ? 'application/xml' : 'text/plain';
-    const tempElem = document.createElement('a');
-    tempElem.setAttribute('href', `data:${mimeType};charset=utf-8,${encodeURIComponent(text)}`);
-    tempElem.setAttribute('download', filename);
-    tempElem.click();
+function saveText(filename, text, filetype = 'bml', savePath = '') {
+    let finalPath = '';
+    let finalFilename = filename;
+    let dirPath = '';
+    
+    // Get current subdomain from active tab URL
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        if (!tabs || tabs.length === 0) {
+            logDebug("Error: No active tab found");
+            return;
+        }
+        
+        let subdomain = "default";
+        try {
+            const url = new URL(tabs[0].url);
+            // Extract subdomain from URL
+            if (url.hostname.includes(".bigmachines.com")) {
+                // Handle URLs like: subdomain.bigmachines.com
+                const parts = url.hostname.split(".bigmachines.com")[0].split(".");
+                subdomain = parts[parts.length - 1]; // Get the last part before bigmachines.com
+                logDebug("Extracted subdomain:", subdomain);
+            } else {
+                // For other URLs, use hostname as subdomain
+                subdomain = url.hostname.replace(/\./g, "-");
+                logDebug("Using hostname as subdomain:", subdomain);
+            }
+        } catch (error) {
+            logDebug("Error extracting subdomain:", error);
+            // Default to 'dev' if we can't extract a subdomain
+            subdomain = "dev";
+        }
+        
+        // Dynamically create base path using the subdomain
+        const basePath = `bigmachines/${subdomain}`;
+        logDebug("Using dynamic base path:", basePath);
+        
+        if (savePath) {
+            logDebug("Original savePath:", savePath);
+            
+            // Handle tilde for home directory
+            const cleanPath = savePath.replace(/^~\//, '').replace(/\/$/, '');
+            logDebug("Cleaned savePath:", cleanPath);
+            
+            // Handle special case where savePath contains placeholders
+            if (cleanPath.includes('(header/footer)')) {
+                // Extract the base directory part 
+                const parts = cleanPath.split('(header/footer)');
+                const baseDirPath = parts[0];
+                const fileType = filename.split('.')[0]; // 'header' or 'footer'
+                
+                // Create directory path with actual header/footer value and include base path
+                dirPath = `${basePath}/${baseDirPath}${fileType}`;
+                finalFilename = filename;
+                logDebug("Special case - Dir path:", dirPath);
+                logDebug("Special case - Final filename:", finalFilename);
+            } 
+            // Handle paths with fileName placeholder
+            else if (cleanPath.includes('fileName')) {
+                // Extract base filename without extension
+                const baseFilename = filename.split('.')[0]; // e.g. 'style' from 'style.css'
+                // Replace fileName with actual filename but preserve directory structure
+                dirPath = `${basePath}/${cleanPath.substring(0, cleanPath.lastIndexOf('/'))}`;
+                finalFilename = baseFilename + '.' + filetype;
+                logDebug("Placeholder - Dir path:", dirPath);
+                logDebug("Placeholder - Final filename:", finalFilename);
+            } 
+            // Standard path
+            else {
+                // Separate directory path from filename
+                dirPath = `${basePath}/${cleanPath}`;
+                logDebug("Standard path - Dir path:", dirPath);
+                logDebug("Standard path - Final filename:", finalFilename);
+            }
+            
+            // Combine into finalPath for logging
+            finalPath = `${dirPath}/${finalFilename}`;
+        } else {
+            // No path specified, but still use base path
+            dirPath = basePath;
+            finalPath = `${dirPath}/${finalFilename}`;
+            logDebug("No savePath, using base path with filename:", finalPath);
+        }
+        
+        logDebug("Final directory path for download:", dirPath);
+        logDebug("Final filename for download:", finalFilename);
+        logDebug("Full path representation:", finalPath);
+        
+        try {
+            // Set appropriate MIME type for the file
+            let mimeType;
+            switch (filetype) {
+                case 'xsl':
+                    mimeType = 'application/xml';
+                    break;
+                case 'html':
+                    mimeType = 'text/html';
+                    break;
+                case 'css':
+                    mimeType = 'text/css';
+                    break;
+                case 'json':
+                    mimeType = 'application/json';
+                    break;
+                case 'xml':
+                    mimeType = 'application/xml';
+                    break;
+                default:
+                    mimeType = 'text/plain';
+            }
+            
+            // Create a blob with the content
+            const blob = new Blob([text], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            
+            // Send message to background script with directory path and filename separated
+            chrome.runtime.sendMessage({
+                action: 'saveToDirectory',
+                data: {
+                    url: url,
+                    dirPath: dirPath, 
+                    filename: finalFilename,
+                    fullPath: finalPath,
+                    overwrite: true // Add flag to overwrite existing files
+                }
+            }, (response) => {
+                if (response && response.success) {
+                    logDebug("File saved successfully:", response.path || finalPath);
+                } else {
+                    logDebug("Error saving file:", response?.error || "Unknown error");
+                }
+                
+                // Clean up the blob URL
+                URL.revokeObjectURL(url);
+            });
+            
+        } catch (error) {
+            logDebug("Error preparing file download:", error);
+        }
+    });
 }
 
 /**
@@ -432,7 +563,16 @@ if (unloadHeaderHTMLBtn) {
             if (await ensureContentScript(tab.id)) {
                 const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadHeaderHTML' });
                 if (response?.code) {
-                    saveText('header.html', response.code);
+                    // Get the Header & Footer rule from rulesList.json to get the savePath
+                    const rulesList = await fetchRulesList();
+                    const headerRule = rulesList.find(r => r.AppArea === 'Stylesheets' && r.RuleName === 'Header & Footer');
+                    let savePath = '';
+                    if (headerRule && headerRule.savePath) {
+                        // Replace placeholder in savePath if needed (header/footer)
+                        savePath = headerRule.savePath.replace('(header/footer)', 'header');
+                        logDebug("Using savePath for header:", savePath);
+                    }
+                    saveText('header.html', response.code, 'html', savePath);
                 } else {
                     throw new Error('Failed to unload header');
                 }
@@ -479,7 +619,16 @@ if (unloadFooterHTMLBtn) {
             if (await ensureContentScript(tab.id)) {
                 const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadFooterHTML' });
                 if (response?.code) {
-                    saveText('footer.html', response.code);
+                    // Get the Header & Footer rule from rulesList.json to get the savePath
+                    const rulesList = await fetchRulesList();
+                    const footerRule = rulesList.find(r => r.AppArea === 'Stylesheets' && r.RuleName === 'Header & Footer');
+                    let savePath = '';
+                    if (footerRule && footerRule.savePath) {
+                        // Replace placeholder in savePath if needed (header/footer)
+                        savePath = footerRule.savePath.replace('(header/footer)', 'footer');
+                        logDebug("Using savePath for footer:", savePath);
+                    }
+                    saveText('footer.html', response.code, 'html', savePath);
                 } else {
                     throw new Error('Failed to unload footer');
                 }
@@ -527,7 +676,15 @@ if(unloadCSSBtn) {
             if (await ensureContentScript(tab.id)) {
                 const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadCSS' });
                 if (response?.code) {
-                    saveText('style.css', response.code);
+                    // Get the Stylesheet Manager rule from rulesList.json to get the savePath
+                    const rulesList = await fetchRulesList();
+                    const cssRule = rulesList.find(r => r.AppArea === 'Stylesheets' && r.RuleName === 'Stylesheet Manager');
+                    let savePath = '';
+                    if (cssRule && cssRule.savePath) {
+                        savePath = cssRule.savePath.replace('fileName', 'style');
+                        logDebug("Using savePath for CSS:", savePath);
+                    }
+                    saveText('style.css', response.code, 'css', savePath);
                 } else {
                     throw new Error('Failed to unload CSS');
                 }
@@ -574,7 +731,15 @@ if(unloadAltCSSBtn) {
             if (await ensureContentScript(tab.id)) {
                 const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadAltCSS' });
                 if (response?.code) {
-                    saveText('styleAlt.css', response.code);
+                    // Get the Stylesheet Manager rule from rulesList.json to get the savePath
+                    const rulesList = await fetchRulesList();
+                    const cssRule = rulesList.find(r => r.AppArea === 'Stylesheets' && r.RuleName === 'Stylesheet Manager');
+                    let savePath = '';
+                    if (cssRule && cssRule.savePath) {
+                        savePath = cssRule.savePath.replace('fileName', 'styleAlt');
+                        logDebug("Using savePath for Alt CSS:", savePath);
+                    }
+                    saveText('styleAlt.css', response.code, 'css', savePath);
                 } else {
                     throw new Error('Failed to unload Alt CSS');
                 }
@@ -621,7 +786,15 @@ if(unloadJETCSSBtn) {
             if (await ensureContentScript(tab.id)) {
                 const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadJETCSS' });
                 if (response?.code) {
-                    saveText('styleJET.css', response.code);
+                    // Get the Stylesheet Manager rule from rulesList.json to get the savePath
+                    const rulesList = await fetchRulesList();
+                    const cssRule = rulesList.find(r => r.AppArea === 'Stylesheets' && r.RuleName === 'Stylesheet Manager');
+                    let savePath = '';
+                    if (cssRule && cssRule.savePath) {
+                        savePath = cssRule.savePath.replace('fileName', 'styleJET');
+                        logDebug("Using savePath for JET CSS:", savePath);
+                    }
+                    saveText('styleJET.css', response.code, 'css', savePath);
                 } else {
                     throw new Error('Failed to unload JET CSS');
                 }
@@ -667,7 +840,15 @@ if (unloadGlobalXSLBtn) {
         try {
             const response = await sendMessageToBackground({ greeting: 'unloadGlobalXSL' });
             if (response?.code) {
-                saveText('globalXSL.xsl', response.code, 'xsl');
+                // Get the Global XSL rule from rulesList.json to get the savePath
+                const rulesList = await fetchRulesList();
+                const xslRule = rulesList.find(r => r.AppArea === 'Documents' && r.RuleName === 'Global XSL');
+                let savePath = '';
+                if (xslRule && xslRule.savePath) {
+                    savePath = xslRule.savePath.replace('fileName', 'globalXSL');
+                    logDebug("Using savePath for Global XSL:", savePath);
+                }
+                saveText('globalXSL.xsl', response.code, 'xsl', savePath);
             }
         } catch (error) {
             logDebug("Error during unloadGlobalXSL:", error);
@@ -696,7 +877,15 @@ if (unloadXSLBtn) {
         try {
             const response = await sendMessageToBackground({ greeting: 'unloadXSL' });
             if (response?.code) {
-                saveText('file.xsl', response.code, 'xsl');
+                // Get the Document XSL rule from rulesList.json to get the savePath
+                const rulesList = await fetchRulesList();
+                const xslRule = rulesList.find(r => r.AppArea === 'Documents' && r.RuleName === 'Global XSL');
+                let savePath = '';
+                if (xslRule && xslRule.savePath) {
+                    savePath = xslRule.savePath.replace('fileName', 'file');
+                    logDebug("Using savePath for XSL:", savePath);
+                }
+                saveText('file.xsl', response.code, 'xsl', savePath);
             }
         } catch (error) {
             logDebug("Error during unloadXSL:", error);
@@ -728,7 +917,15 @@ if (unloadXMLBtn) {
             if (await ensureContentScript(tab.id)) {
                 const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadXML' });
                 if (response?.code) {
-                    saveText('interface.xml', response.code, 'xml');
+                    // Get the SOAP interface rule from rulesList.json to get the savePath
+                    const rulesList = await fetchRulesList();
+                    const soapRule = rulesList.find(r => r.AppArea === 'Interfaces' && r.RuleName === 'SOAP');
+                    let savePath = '';
+                    if (soapRule && soapRule.savePath) {
+                        savePath = soapRule.savePath.replace('fileName', 'interface');
+                        logDebug("Using savePath for XML:", savePath);
+                    }
+                    saveText('interface.xml', response.code, 'xml', savePath);
                 }
             }
         } catch (error) {
@@ -769,7 +966,15 @@ if (unloadJSONBtn) {
             if (await ensureContentScript(tab.id)) {
                 const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadJSON' });
                 if (response?.code) {
-                    saveText('interface.json', response.code, 'json');
+                    // Get the REST interface rule from rulesList.json to get the savePath
+                    const rulesList = await fetchRulesList();
+                    const restRule = rulesList.find(r => r.AppArea === 'Interfaces' && r.RuleName === 'REST');
+                    let savePath = '';
+                    if (restRule && restRule.savePath) {
+                        savePath = restRule.savePath.replace('fileName', 'interface');
+                        logDebug("Using savePath for JSON:", savePath);
+                    }
+                    saveText('interface.json', response.code, 'json', savePath);
                 }
             }
         } catch (error) {

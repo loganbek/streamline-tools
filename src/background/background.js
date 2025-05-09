@@ -42,6 +42,55 @@ function initializeExtension() {
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     logDebug("Received message:", request);
     
+    // Handle saveToDirectory action from popup.js
+    if (request.action === 'saveToDirectory') {
+        const { url, dirPath, filename, fullPath, overwrite } = request.data;
+        
+        logDebug("Saving file with directory structure:", {dirPath, filename, overwrite});
+        
+        // Format the path for Chrome downloads API
+        // First strip any leading slashes to prevent issues
+        let finalDirPath = dirPath.replace(/^\/+/, '');
+        
+        // Format the full path for download
+        let downloadPath = finalDirPath ? `${finalDirPath}/${filename}` : filename;
+        logDebug("Using download path:", downloadPath);
+        
+        chrome.downloads.download({
+            url: url,
+            filename: downloadPath,
+            saveAs: false,
+            conflictAction: overwrite ? 'overwrite' : 'uniquify' // Use 'overwrite' to force overwriting existing files
+        }, (downloadId) => {
+            if (chrome.runtime.lastError) {
+                logDebug("Error saving file:", chrome.runtime.lastError);
+                sendResponse({ 
+                    success: false, 
+                    error: chrome.runtime.lastError.message,
+                    path: downloadPath
+                });
+            } else {
+                logDebug("File saved successfully to:", downloadPath);
+                
+                // Optional: Try to show the download in the file manager
+                try {
+                    chrome.downloads.show(downloadId);
+                } catch (e) {
+                    logDebug("Could not show download in file manager:", e);
+                }
+                
+                sendResponse({ 
+                    success: true, 
+                    downloadId: downloadId,
+                    path: downloadPath
+                });
+            }
+        });
+        
+        // Return true to indicate we'll send response asynchronously
+        return true;
+    }
+
     // Handle immediate responses
     if (request.type === 'ping' || request.greeting === 'ping') {
         sendResponse({ status: 'alive' });
@@ -161,10 +210,23 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
  * @param {string} url - The URL of the active tab.
  */
 async function setDynamicPopup(tabId, url) {
-    logDebug("Setting dynamic popup for URL:", url);
+    logDebug("==== Setting dynamic popup for URL ====");
+    logDebug("Tab ID:", tabId);
+    logDebug("URL:", url);
 
     try {
         const rulesList = await fetchRulesList();
+        logDebug(`Fetched ${rulesList.length} rules`);
+        
+        // Log all rules first for debugging purposes
+        rulesList.forEach((rule, index) => {
+            logDebug(`Rule ${index}: ${rule.RuleName}, URL pattern: ${rule.URL}, popup: ${rule.ui}`);
+        });
+
+        let matchFound = false;
+        let allRulesDetails = [];
+        
+        // Check matching rules with detailed logging
         const matchingRule = rulesList.find(rule => {
             const ruleUrl = rule.URL.replace(/\*/g, ''); // Remove wildcard for comparison
             
@@ -173,68 +235,115 @@ async function setDynamicPopup(tabId, url) {
             if (rule.opensNewWindow === "TRUE" && rule.newWindowURL !== "x") {
                 const newWindowUrl = rule.newWindowURL.replace(/\*/g, '');
                 cleanedRuleUrl = newWindowUrl;
+                logDebug(`Rule uses newWindowURL: ${cleanedRuleUrl}`);
             } else if (rule.redirect === "TRUE" && rule.redirectURL !== "x") {
                 const redirectUrl = rule.redirectURL.replace(/\*/g, '');
                 cleanedRuleUrl = redirectUrl;
+                logDebug(`Rule uses redirectURL: ${cleanedRuleUrl}`);
             }
             
-            logDebug("Matching URL against rule:", {
-              url: url,
-              ruleUrl: cleanedRuleUrl
-            });
+            // Collect details for all rules for debugging
+            const ruleDetail = {
+                ruleName: rule.RuleName,
+                ruleUrl: cleanedRuleUrl,
+                ui: rule.ui
+            };
             
-            // Use the same URL matching logic as popup.js and content.js
+            // Use the same URL matching logic EXACTLY as in popup.js
             try {
                 const urlObj = new URL(url);
                 const ruleUrlObj = new URL(cleanedRuleUrl.startsWith('http') ? cleanedRuleUrl : 'https://' + cleanedRuleUrl);
                 
-                // Compare hostname and path parts more securely
-                const hostMatch = 
-                    urlObj.hostname === ruleUrlObj.hostname ||
-                    urlObj.hostname.endsWith('.' + ruleUrlObj.hostname);
+                // Add URL components to rule details
+                ruleDetail.urlPathname = urlObj.pathname;
+                ruleDetail.rulePathname = ruleUrlObj.pathname;
+                ruleDetail.urlHostname = urlObj.hostname;
+                ruleDetail.ruleHostname = ruleUrlObj.hostname;
                 
-                // Must match BOTH host AND path to be considered a match
-                const pathMatch = urlObj.pathname.startsWith(ruleUrlObj.pathname);
-                const isMatch = hostMatch && pathMatch;
+                // EXACT same logic as popup.js - only check pathname
+                const isMatch = urlObj.pathname.startsWith(ruleUrlObj.pathname);
+                ruleDetail.isMatch = isMatch;
                 
                 if (isMatch) {
-                    logDebug("URL match found:", {
-                      urlHostname: urlObj.hostname,
-                      ruleHostname: ruleUrlObj.hostname,
-                      urlPath: urlObj.pathname,
-                      rulePath: ruleUrlObj.pathname
+                    matchFound = true;
+                    logDebug("✓ URL MATCH FOUND:", {
+                      ruleName: rule.RuleName,
+                      urlPathname: urlObj.pathname,
+                      rulePathname: ruleUrlObj.pathname,
+                      popupUI: rule.ui
                     });
                 }
                 
+                allRulesDetails.push(ruleDetail);
                 return isMatch;
+                
             } catch (e) {
-                logDebug("URL parsing failed, falling back to regex:", e);
-                // Fallback to a safer regex pattern if URL parsing fails
+                logDebug(`URL parsing failed for rule ${rule.RuleName}:`, e);
+                
+                // Fallback to regex pattern if URL parsing fails
                 const escapedPattern = cleanedRuleUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                 const regex = new RegExp(`^https?:\\/\\/([^\\/]*\\.)?${escapedPattern}\\/`);
-                return regex.test(url);
+                const isMatch = regex.test(url);
+                
+                ruleDetail.regex = regex.toString();
+                ruleDetail.isMatch = isMatch;
+                allRulesDetails.push(ruleDetail);
+                
+                if (isMatch) {
+                    matchFound = true;
+                    logDebug(`✓ URL REGEX MATCH FOUND: ${rule.RuleName}`);
+                }
+                
+                return isMatch;
             }
         });
 
+        // Log all rule matching attempts if no match was found
+        if (!matchFound) {
+            logDebug("NO MATCHING RULE FOUND. Detailed matching attempts:");
+            allRulesDetails.forEach(detail => {
+                logDebug(`Rule: ${detail.ruleName}`, detail);
+            });
+        }
+
         if (matchingRule) {
             let popupUrl = matchingRule.ui;
+            logDebug(`Setting popup to: ${popupUrl}`);
+            
             chrome.action.setPopup({
                 tabId,
                 popup: 'popup/' + popupUrl,
             });
 
-            logDebug("Popup set to:", popupUrl);
+            logDebug(`✓ POPUP SET SUCCESSFULLY to: popup/${popupUrl}`);
+            
+            // Verify the popup was set correctly
+            chrome.action.getPopup({tabId}, (result) => {
+                logDebug(`Popup verification - current popup is: ${result}`);
+                if (result !== 'popup/' + popupUrl) {
+                    logDebug(`⚠️ WARNING: Popup verification failed! Expected 'popup/${popupUrl}' but got '${result}'`);
+                }
+            });
         } else {
+            logDebug("No matching rule found, setting default popup");
             chrome.action.setPopup({
                 tabId,
                 popup: 'popup/popup.html',
             });
-
-            logDebug("Popup set to default:", 'popup/popup.html');
+            
+            // Verify default popup was set
+            chrome.action.getPopup({tabId}, (result) => {
+                logDebug(`Default popup verification - current popup is: ${result}`);
+                if (result !== 'popup/popup.html') {
+                    logDebug(`⚠️ WARNING: Default popup verification failed! Expected 'popup/popup.html' but got '${result}'`);
+                }
+            });
         }
     } catch (error) {
-        logDebug("Error setting dynamic popup:", error);
+        logDebug("❌ ERROR setting dynamic popup:", error);
     }
+    
+    logDebug("==== End of setDynamicPopup function ====");
 }
 
 /**
@@ -708,7 +817,7 @@ async function saveDomSnapshot(snapshot) {
     
     // 1. Save the full HTML content
     const htmlFilename = `${filename}.html`;
-    const htmlContent = snapshot.htmlContent || '<html><body><h1>HTML content not available</h1></body></html>';
+    const htmlContent = snapshot.htmlContent || '<html><body><h1>HTML content not available</h1></html>';
     downloadTextFile(htmlContent, htmlFilename);
     
     // 2. Save the structured metadata as JSON
