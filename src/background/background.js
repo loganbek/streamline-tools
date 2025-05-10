@@ -62,8 +62,18 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         // First strip any leading slashes to prevent issues
         let finalDirPath = dirPath.replace(/^\/+/, '');
         
-        // Format the full path for download
-        let downloadPath = finalDirPath ? `${finalDirPath}/${filename}` : filename;
+        // Check if the directory path already contains the filename (which can happen with REST interfaces)
+        let downloadPath;
+        if (finalDirPath.endsWith(filename) || finalDirPath.endsWith(filename.split('.')[0])) {
+            // Path already contains filename, so extract just the directory part
+            const lastSlashIndex = finalDirPath.lastIndexOf('/');
+            if (lastSlashIndex !== -1) {
+                finalDirPath = finalDirPath.substring(0, lastSlashIndex);
+            }
+        }
+        
+        // Now format the final download path correctly
+        downloadPath = finalDirPath ? `${finalDirPath}/${filename}` : filename;
         logDebug("Using download path:", downloadPath);
         
         chrome.downloads.download({
@@ -278,6 +288,43 @@ async function setDynamicPopup(tabId, url) {
         rulesList.forEach((rule, index) => {
             logDebug(`Rule ${index}: ${rule.RuleName}, URL pattern: ${rule.URL}, popup: ${rule.ui}`);
         });
+
+        // SPECIAL CASE 0: Document Designer page
+        if (url.includes('bigmachines.com/admin/document-designer/')) {
+            logDebug("✓ DETECTED DOCUMENT DESIGNER PAGE");
+            
+            // Find the Document Designer rule
+            const designerRule = rulesList.find(r => 
+                r.AppArea === 'Documents' && 
+                r.RuleName === 'Global XSL'
+            );
+            
+            if (designerRule) {
+                logDebug(`Setting Document Designer popup UI: ${designerRule.ui}`);
+                
+                chrome.action.setPopup({
+                    tabId,
+                    popup: 'popup/' + designerRule.ui,
+                });
+                
+                logDebug(`✓ POPUP SET SUCCESSFULLY to: popup/${designerRule.ui}`);
+                
+                // Verify popup was set correctly
+                chrome.action.getPopup({tabId}, (result) => {
+                    logDebug(`Popup verification - current popup is: ${result}`);
+                    const expectedPopupPath = 'popup/' + designerRule.ui;
+                    const isCorrect = result.endsWith(expectedPopupPath);
+                    
+                    if (!isCorrect) {
+                        logDebug(`⚠️ WARNING: Popup verification failed! Expected path to end with '${expectedPopupPath}' but got '${result}'`);
+                    } else {
+                        logDebug("✓ Popup verification successful!");
+                    }
+                });
+                
+                return; // Exit early since we've set the popup
+            }
+        }
 
         // SPECIAL CASE 1: Direct REST API endpoints
         // Check if URL contains a direct REST endpoint pattern like /rest/v18/

@@ -20,7 +20,11 @@ window.streamlineState = window.streamlineState || {
   retryAttempts: 0,
   maxRetries: 3,
   isIterating: false,
-  iterationCount: 0
+  iterationCount: 0,
+  lastClickedInterfaces: {
+    REST: null,
+    SOAP: null
+  }
 };
 
 // Use local reference for cleaner code
@@ -156,6 +160,9 @@ async function initialize() {
         action: 'setInterfaceType',
         interfaceType: interfaceType
       });
+      
+      // Add click listeners to all interface links to track the last clicked interface
+      setupInterfaceLinkTracking();
     }
     
     // Mark as fully initialized
@@ -177,6 +184,65 @@ async function initialize() {
     } else {
       logDebug("Max retry attempts reached. Initialization failed.");
     }
+  }
+}
+
+// Track interface link clicks
+function setupInterfaceLinkTracking() {
+  try {
+    // Find all REST and SOAP interface links
+    const interfaceLinks = document.querySelectorAll('a[name="display_resource"]');
+    logDebug(`Found ${interfaceLinks.length} interface links to track`);
+    
+    // Store interface link info with both type and URL details
+    window.streamlineState.lastClickedInterfaces = window.streamlineState.lastClickedInterfaces || {
+      REST: null,
+      SOAP: null
+    };
+    
+    interfaceLinks.forEach(link => {
+      // Add click listener to each link
+      link.addEventListener('click', function(e) {
+        // Extract the URL from the onclick attribute
+        const onclickAttr = this.getAttribute('onclick') || '';
+        const urlMatch = onclickAttr.match(/openWindow\(['"]([^'"]+)['"]/);
+        
+        if (urlMatch && urlMatch[1]) {
+          const interfaceUrl = urlMatch[1];
+          const interfaceName = this.textContent.trim();
+          
+          // Determine if this is REST or SOAP
+          let interfaceType = 'REST'; // Default
+          
+          // Look at parent row to determine if REST or SOAP
+          let row = this.closest('tr');
+          if (row) {
+            const cells = row.querySelectorAll('td.list-field');
+            cells.forEach(cell => {
+              const text = cell.textContent.trim();
+              if (text === 'REST') {
+                interfaceType = 'REST';
+              } else if (text === 'SOAP') {
+                interfaceType = 'SOAP';
+              }
+            });
+          }
+          
+          // Store the details of this clicked interface
+          window.streamlineState.lastClickedInterfaces[interfaceType] = {
+            url: interfaceUrl,
+            name: interfaceName,
+            timestamp: Date.now()
+          };
+          
+          logDebug(`Tracked ${interfaceType} interface click: ${interfaceName} - ${interfaceUrl}`);
+        }
+      });
+    });
+    
+    logDebug("Interface link tracking setup complete");
+  } catch (error) {
+    logDebug("Error setting up interface link tracking:", error);
   }
 }
 
@@ -510,6 +576,55 @@ function handleSpecialCaseMessages(request, sendResponse) {
         // We need to find the correct interface link to open
         const interfaceType = request.greeting === 'unloadJSON' ? 'REST' : 'SOAP';
         
+        // Check if we have a last clicked interface of this type
+        if (window.streamlineState.lastClickedInterfaces && 
+            window.streamlineState.lastClickedInterfaces[interfaceType] &&
+            window.streamlineState.lastClickedInterfaces[interfaceType].url) {
+          
+          const interfaceDetails = window.streamlineState.lastClickedInterfaces[interfaceType];
+          logDebug(`Found tracked ${interfaceType} interface: ${interfaceDetails.name}`);
+          
+          // Use fetch to directly download the interface content
+          fetch(interfaceDetails.url)
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              
+              if (interfaceType === 'REST') {
+                return response.json().then(data => {
+                  // Format JSON nicely
+                  const formattedJSON = JSON.stringify(data, null, 2);
+                  
+                  // Send the formatted JSON back
+                  sendResponse({
+                    code: formattedJSON,
+                    filename: interfaceDetails.name
+                  });
+                });
+              } else {
+                return response.text().then(text => {
+                  sendResponse({
+                    code: text,
+                    filename: interfaceDetails.name
+                  });
+                });
+              }
+            })
+            .catch(error => {
+              logDebug(`Error fetching ${interfaceType} interface:`, error);
+              
+              // Attempt fallback to window-based approach
+              sendResponse({
+                code: `// Error fetching ${interfaceType} interface directly: ${error.message}\n`,
+                filename: `error_${interfaceDetails.name}`
+              });
+            });
+          
+          // Return true to keep the messaging channel open for async response
+          return true;
+        }
+        
         // Special handling: Check for any open popup windows first
         const openedWindows = window.opener ? [] : getOpenedWindows();
         logDebug(`Found ${openedWindows.length} opened windows from this page`);
@@ -558,125 +673,55 @@ function handleSpecialCaseMessages(request, sendResponse) {
                 }
                 
                 // Extract filename from URL
-                const urlPath = openWindow.location.pathname;
-                const pathSegments = urlPath.split('/').filter(segment => segment.length > 0);
-                if (pathSegments.length > 0) {
-                  filename = pathSegments[pathSegments.length - 1];
-                } else {
-                  filename = interfaceType.toLowerCase() + '_interface';
+                const urlPath = new URL(windowUrl).pathname;
+                const pathParts = urlPath.split('/');
+                filename = pathParts[pathParts.length - 1];
+                
+                // If the filename doesn't look valid, try to extract it from metadata
+                if (!filename || filename === '' || filename === '/') {
+                  // Try to find filename in the document title or other metadata
+                  if (openWindow.document.title && openWindow.document.title !== 'Interface Catalog') {
+                    filename = openWindow.document.title
+                      .replace(/[^a-zA-Z0-9_-]/g, '_')
+                      .replace(/_+/g, '_');
+                  } else {
+                    // Generate a filename based on interface type and timestamp
+                    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+                    filename = `interface_${interfaceType.toLowerCase()}_${timestamp}`;
+                  }
                 }
                 
-                if (content) {
-                  logDebug(`Successfully extracted content from window. Length: ${content.length}, Filename: ${filename}`);
-                  sendResponse({
-                    code: content,
-                    filename: filename
-                  });
-                  return true;
+                // Ensure proper file extension
+                if (request.greeting === 'unloadJSON' && !filename.endsWith('.json')) {
+                  filename = filename.replace(/\.[^/.]+$/, '') + '.json';
+                } else if (request.greeting === 'unloadXML' && !filename.endsWith('.xml')) {
+                  filename = filename.replace(/\.[^/.]+$/, '') + '.xml';
                 }
+                
+                // Return the content and filename
+                sendResponse({
+                  code: content || `// No ${interfaceType} content found in the opened window.`,
+                  filename: filename.replace(/\.[^/.]+$/, '') // Remove extension as it will be added later
+                });
+                return true;
               }
-            } catch (windowError) {
-              logDebug(`Error accessing window content: ${windowError.message}`);
-              // Continue to next window
+            } catch (error) {
+              logDebug(`Error accessing window: ${error.message}`);
+              continue; // Try next window
             }
           }
         }
         
-        // If we get here, we couldn't extract from open windows or there were none
-        // Fall back to showing interface links
-        
-        // Look for all rows containing the specified interface type
-        const rows = Array.from(document.querySelectorAll('tr.bgcolor-list-odd, tr.bgcolor-list-even'));
-        logDebug(`Found ${rows.length} total rows in the interface table`);
-        
-        // Each row has multiple cells, we want to find rows where one cell contains "REST" or "SOAP"
-        const interfaceRows = rows.filter(row => {
-          const cells = Array.from(row.querySelectorAll('td.list-field'));
-          return cells.some(cell => cell.textContent.trim() === interfaceType);
-        });
-        
-        logDebug(`Found ${interfaceRows.length} ${interfaceType} interface rows`);
-        
-        if (interfaceRows.length === 0) {
-          sendResponse({
-            code: `// No ${interfaceType} interfaces found on this page.`,
-            filename: 'no_interfaces_found'
-          });
-          return true;
-        }
-        
-        // Process the first interface for now (we can enhance this later to handle multiple)
-        const firstRow = interfaceRows[0];
-        const cells = Array.from(firstRow.querySelectorAll('td.list-field'));
-        
-        // Find the link and interface name
-        let interfaceName = 'interface';
-        let interfaceUrl = '';
-        
-        // Usually the name is in the second column
-        if (cells.length > 1) {
-          const nameCell = cells[1];
-          const link = nameCell.querySelector('a[name="display_resource"]');
-          
-          if (link) {
-            interfaceName = link.textContent.trim();
-            // Extract URL from onclick attribute (typically in format: openWindow('url'))
-            const onclickAttr = link.getAttribute('onclick') || '';
-            const urlMatch = onclickAttr.match(/openWindow\(['"]([^'"]+)['"]/);
-            if (urlMatch && urlMatch[1]) {
-              interfaceUrl = urlMatch[1];
-              logDebug(`Found interface URL: ${interfaceUrl}`);
-            }
-          }
-        }
-        
-        // Create a helpful sample response explaining the workflow
-        let sampleCode = '';
-        if (interfaceType === 'REST') {
-          sampleCode = `{
-  "name": "${interfaceName}",
-  "type": "REST",
-  "instructions": {
-    "step1": "Click on the '${interfaceName}' link to open it in a new window",
-    "step2": "After the window opens, keep it open and return to this catalog page",
-    "step3": "Click the extension icon and the unloadJSON button again",
-    "step4": "The extension will try to extract the JSON from the opened window"
-  },
-  "url": "${interfaceUrl}"
-}`;
-        } else {
-          sampleCode = `<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Header>
-    <instructions>
-      <step1>Click on the '${interfaceName}' link to open it in a new window</step1>
-      <step2>After the window opens, keep it open and return to this catalog page</step2>
-      <step3>Click the extension icon and the unloadXML button again</step3>
-      <step4>The extension will try to extract the XML from the opened window</step4>
-    </instructions>
-  </soap:Header>
-  <soap:Body>
-    <interfaceName>${interfaceName}</interfaceName>
-    <interfaceUrl>${interfaceUrl}</interfaceUrl>
-  </soap:Body>
-</soap:Envelope>`;
-        }
-        
-        // Return a structured response with the sample content and helpful information
+        // If none of the above methods worked, display a more direct message
         sendResponse({
-          code: sampleCode,
-          filename: interfaceName
+          code: `// No ${interfaceType} interface content found.\n// Try clicking on a specific interface first.`,
+          filename: `${interfaceType.toLowerCase()}_interface`
         });
-        
         return true;
       } catch (error) {
         logDebug("Error handling interface catalog page:", error);
-        
-        // Fallback to a simpler but still informative response
-        sendResponse({
-          code: `// You're currently on the Interface Catalog page.\n// 1. Click on a specific interface link first to open it in a new window\n// 2. Keep that window open and return to this catalog page\n// 3. Click the extension icon and then click unloadJSON/unloadXML again\n// 4. The extension will extract the content from the open window`,
-          filename: 'interface_instructions'
-        });
-        return true;
+        sendResponse({ error: error.message });
+        return false;
       }
     }
     
@@ -724,35 +769,6 @@ function getOpenedWindows() {
   }
   
   return openWindows;
-}
-
-// Helper function to trigger input events to notify any JavaScript frameworks of the change
-function triggerInputEvents(element) {
-  // Create and dispatch events
-  ['input', 'change'].forEach(eventName => {
-    const event = new Event(eventName, { bubbles: true });
-    element.dispatchEvent(event);
-  });
-}
-
-function getFilename(rule) {
-  const element = document.querySelector(rule.fileNameSelector);
-  return element ? element.value || element.textContent : 'unknown.js';
-}
-
-function isSpecialCaseMessage(greeting) {
-  return greeting && (
-    greeting.includes('HeaderHTML') ||
-    greeting.includes('FooterHTML') ||
-    greeting.includes('CSS') ||
-    greeting.includes('XSL') ||
-    greeting.includes('XML') ||
-    greeting.includes('JSON') ||
-    greeting === 'unloadJSON' ||
-    greeting === 'loadJSON' ||
-    greeting === 'unloadXML' ||
-    greeting === 'loadXML'
-  );
 }
 
 // Initialize when document is ready
