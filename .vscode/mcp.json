@@ -1,0 +1,11 @@
+{
+    "servers": {
+        "my-mcp-server-ca831b39": {
+            "type": "stdio",
+            "command": "node",
+            "args": [
+                "server.js"
+            ]
+        }
+    }
+}

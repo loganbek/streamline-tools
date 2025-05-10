@@ -1,0 +1,14 @@
+{
+  "name": "streamline-tools-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP Server for Streamline Tools Chrome extension for Oracle CPQ Cloud",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.15.1",
+    "glob": "^10.3.10"
+  }
+}
