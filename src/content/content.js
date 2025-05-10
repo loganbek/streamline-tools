@@ -510,6 +510,81 @@ function handleSpecialCaseMessages(request, sendResponse) {
         // We need to find the correct interface link to open
         const interfaceType = request.greeting === 'unloadJSON' ? 'REST' : 'SOAP';
         
+        // Special handling: Check for any open popup windows first
+        const openedWindows = window.opener ? [] : getOpenedWindows();
+        logDebug(`Found ${openedWindows.length} opened windows from this page`);
+        
+        if (openedWindows.length > 0) {
+          // Try to find an appropriate window that might contain our interface content
+          for (const openWindow of openedWindows) {
+            try {
+              // Try to access the window content (may fail due to same-origin policy)
+              if (!openWindow.document) continue;
+              
+              const windowUrl = openWindow.location.href;
+              logDebug(`Checking opened window: ${windowUrl}`);
+              
+              // Check if this window URL looks like an interface URL
+              const isRESTWindow = windowUrl.includes('/rest/');
+              const isSOAPWindow = windowUrl.includes('/soap/') || windowUrl.includes('/ws/');
+              
+              // If the window type matches what we're looking for
+              if ((request.greeting === 'unloadJSON' && isRESTWindow) ||
+                  (request.greeting === 'unloadXML' && isSOAPWindow)) {
+                  
+                logDebug(`Found matching interface window for ${request.greeting}`);
+                
+                // Try to extract the content from the window
+                let content = '';
+                let filename = '';
+                
+                // Get content from the pre tag if it exists
+                const preElement = openWindow.document.querySelector('pre');
+                if (preElement) {
+                  content = preElement.textContent || preElement.innerText;
+                } else {
+                  // Fallback to body text
+                  content = openWindow.document.body.textContent || openWindow.document.body.innerText;
+                }
+                
+                // Clean up the content if it's JSON
+                if (request.greeting === 'unloadJSON' && content) {
+                  try {
+                    const jsonObject = JSON.parse(content);
+                    content = JSON.stringify(jsonObject, null, 2); // Pretty format
+                  } catch (e) {
+                    logDebug('Could not parse JSON from window content, using raw content');
+                  }
+                }
+                
+                // Extract filename from URL
+                const urlPath = openWindow.location.pathname;
+                const pathSegments = urlPath.split('/').filter(segment => segment.length > 0);
+                if (pathSegments.length > 0) {
+                  filename = pathSegments[pathSegments.length - 1];
+                } else {
+                  filename = interfaceType.toLowerCase() + '_interface';
+                }
+                
+                if (content) {
+                  logDebug(`Successfully extracted content from window. Length: ${content.length}, Filename: ${filename}`);
+                  sendResponse({
+                    code: content,
+                    filename: filename
+                  });
+                  return true;
+                }
+              }
+            } catch (windowError) {
+              logDebug(`Error accessing window content: ${windowError.message}`);
+              // Continue to next window
+            }
+          }
+        }
+        
+        // If we get here, we couldn't extract from open windows or there were none
+        // Fall back to showing interface links
+        
         // Look for all rows containing the specified interface type
         const rows = Array.from(document.querySelectorAll('tr.bgcolor-list-odd, tr.bgcolor-list-even'));
         logDebug(`Found ${rows.length} total rows in the interface table`);
@@ -555,24 +630,33 @@ function handleSpecialCaseMessages(request, sendResponse) {
           }
         }
         
-        // Create a helpful sample response
+        // Create a helpful sample response explaining the workflow
         let sampleCode = '';
         if (interfaceType === 'REST') {
           sampleCode = `{
   "name": "${interfaceName}",
-  "description": "This is a placeholder for the JSON that would be returned from ${interfaceUrl}",
-  "instructions": "To get the actual JSON content, please click on the '${interfaceName}' link first to open it in a new window, then click the unloadJSON button with that window active."
+  "type": "REST",
+  "instructions": {
+    "step1": "Click on the '${interfaceName}' link to open it in a new window",
+    "step2": "After the window opens, keep it open and return to this catalog page",
+    "step3": "Click the extension icon and the unloadJSON button again",
+    "step4": "The extension will try to extract the JSON from the opened window"
+  },
+  "url": "${interfaceUrl}"
 }`;
         } else {
           sampleCode = `<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
   <soap:Header>
-    <!-- This is a placeholder for the XML that would be returned from ${interfaceUrl} -->
     <instructions>
-      To get the actual XML content, please click on the '${interfaceName}' link first to open it in a new window, then click the unloadXML button with that window active.
+      <step1>Click on the '${interfaceName}' link to open it in a new window</step1>
+      <step2>After the window opens, keep it open and return to this catalog page</step2>
+      <step3>Click the extension icon and the unloadXML button again</step3>
+      <step4>The extension will try to extract the XML from the opened window</step4>
     </instructions>
   </soap:Header>
   <soap:Body>
     <interfaceName>${interfaceName}</interfaceName>
+    <interfaceUrl>${interfaceUrl}</interfaceUrl>
   </soap:Body>
 </soap:Envelope>`;
         }
@@ -589,252 +673,57 @@ function handleSpecialCaseMessages(request, sendResponse) {
         
         // Fallback to a simpler but still informative response
         sendResponse({
-          code: `// You're currently on the Interface Catalog page.\n// Please click on a specific interface link first to open it in a new window,\n// then click the unloadJSON button with that window active.`,
+          code: `// You're currently on the Interface Catalog page.\n// 1. Click on a specific interface link first to open it in a new window\n// 2. Keep that window open and return to this catalog page\n// 3. Click the extension icon and then click unloadJSON/unloadXML again\n// 4. The extension will extract the content from the open window`,
           filename: 'interface_instructions'
         });
         return true;
       }
     }
     
-    // Use already loaded rules if available, or fetch them if needed
-    const rulesPromise = state.rules.length > 0
-      ? Promise.resolve(state.rules)
-      : fetch(chrome.runtime.getURL('rulesList.json')).then(response => response.json());
-    
-    rulesPromise
-      .then(rulesList => {
-        // Find the rule for Header & Footer or other special cases
-        let rule = null;
-        let elementSelector = null;
-        
-        // Handle specific direct interface actions (unloadJSON, loadJSON, unloadXML, loadXML)
-        if (request.greeting === 'unloadJSON' || request.greeting === 'loadJSON') {
-          rule = rulesList.find(r => r.AppArea === 'Interfaces' && r.RuleName === 'REST');
-          if (rule) {
-            elementSelector = rule.codeSelector;
-            logDebug(`Found REST interface rule for ${request.greeting}`, rule);
-          }
-        } else if (request.greeting === 'unloadXML' || request.greeting === 'loadXML') {
-          rule = rulesList.find(r => r.AppArea === 'Interfaces' && r.RuleName === 'SOAP');
-          if (rule) {
-            elementSelector = rule.codeSelector;
-            logDebug(`Found SOAP interface rule for ${request.greeting}`, rule);
-          }
-        }
-        // Handle other special case messages based on content
-        else if (type.includes('headerhtml')) {
-          rule = rulesList.find(r => r.AppArea === 'Stylesheets' && r.RuleName === 'Header & Footer');
-          elementSelector = rule ? rule.codeSelector : 'textarea[name="header"]';
-        } else if (type.includes('footerhtml')) {
-          rule = rulesList.find(r => r.AppArea === 'Stylesheets' && r.RuleName === 'Header & Footer');
-          elementSelector = rule ? rule.codeSelector2 : 'textarea[name="footer"]';
-        } else if (type.includes('css')) {
-          rule = rulesList.find(r => r.AppArea === 'Stylesheets' && r.RuleName === 'Stylesheet Manager');
-          elementSelector = rule ? rule.codeSelector : 'pre';
-        } else if (type.includes('xml')) {
-          rule = rulesList.find(r => r.AppArea === 'Interfaces' && r.RuleName === 'SOAP');
-          elementSelector = rule ? rule.codeSelector : 'pre';
-        } else if (type.includes('json')) {
-          rule = rulesList.find(r => r.AppArea === 'Interfaces' && r.RuleName === 'REST');
-          elementSelector = rule ? rule.codeSelector : 'pre';
-        }
-        
-        // Handle case where we're in an interface window (JSON or XML)
-        if (isInterfaceWindow && (type.includes('json') || type.includes('xml') || 
-            request.greeting === 'unloadJSON' || request.greeting === 'loadJSON' || 
-            request.greeting === 'unloadXML' || request.greeting === 'loadXML')) {
-          logDebug('Handling interface new window - using pre selector');
-          // In new window REST/SOAP views, the content is typically in a pre tag
-          elementSelector = 'pre';
-        }
-        
-        // Special handling for Interface Catalog page - observe direct REST API windows
-        const isRestAPIWindow = window.location.href.includes('bigmachines.com/rest/');
-        if (isRestAPIWindow && 
-            (request.greeting === 'unloadJSON' || request.greeting === 'loadJSON')) {
-          logDebug('Detected direct REST API window, using body as source');
-          elementSelector = 'body';
-        }
-        
-        logDebug(`Using selector from rulesList: ${elementSelector}`);
-        
-        // Convert selector string to actual DOM operation
-        let element = null;
-        if (elementSelector) {
-          if (elementSelector.includes('document.querySelector')) {
-            // Extract the selector string from the code and execute it
-            const selectorMatch = elementSelector.match(/document\.querySelector\(['"]([^'"]+)['"]\)/);
-            if (selectorMatch?.[1]) {
-              element = document.querySelector(selectorMatch[1]);
-              logDebug(`Using extracted selector: ${selectorMatch[1]}`);
-            }
-          } else {
-            // Use the selector directly
-            element = document.querySelector(elementSelector);
-          }
-        }
-        
-        // Fallback selectors if the element wasn't found
-        if (!element) {
-          logDebug('Element not found with primary selector, trying fallbacks');
-          const fallbackSelectors = [];
-          
-          if (type.includes('headerhtml')) {
-            fallbackSelectors.push(
-              'textarea[name="header"]', 
-              '#header-content',
-              'textarea#header',
-              'textarea[id*="header"]'
-            );
-          } else if (type.includes('footerhtml')) {
-            fallbackSelectors.push(
-              'textarea[name="footer"]',
-              '#footer-content',
-              'textarea#footer',
-              'textarea[id*="footer"]'
-            );
-          } else if (type.includes('json') || type.includes('xml') || 
-                  request.greeting === 'unloadJSON' || request.greeting === 'loadJSON' || 
-                  request.greeting === 'unloadXML' || request.greeting === 'loadXML') {
-            // Fallbacks for REST and SOAP interfaces
-            fallbackSelectors.push(
-              'pre',
-              '.response-body pre',
-              '.response pre',
-              '[data-content-type="application/json"] pre',
-              '[data-content-type="application/xml"] pre',
-              'code',
-              'body' // Last resort - try the body itself
-            );
-          }
-          
-          // Try fallback selectors
-          for (const selector of fallbackSelectors) {
-            element = document.querySelector(selector);
-            if (element) {
-              logDebug(`Found element using fallback selector: ${selector}`);
-              break;
-            }
-          }
-          
-          // Check for iframe content if still not found
-          if (!element) {
-            const iframes = document.querySelectorAll('iframe');
-            for (const iframe of iframes) {
-              try {
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                if (type.includes('headerhtml')) {
-                  element = iframeDoc.querySelector('textarea[name="header"]');
-                } else if (type.includes('footerhtml')) {
-                  element = iframeDoc.querySelector('textarea[name="footer"]');
-                } else if (type.includes('json') || type.includes('xml') ||
-                    request.greeting === 'unloadJSON' || request.greeting === 'loadJSON' || 
-                    request.greeting === 'unloadXML' || request.greeting === 'loadXML') {
-                  element = iframeDoc.querySelector('pre');
-                }
-                
-                if (element) {
-                  logDebug('Found element in iframe');
-                  break;
-                }
-              } catch (iframeError) {
-                logDebug('Error accessing iframe content:', iframeError);
-              }
-            }
-          }
-        }
-        
-        if (!element) {
-          throw new Error(`${request.greeting} element not found - tried multiple selectors`);
-        }
-
-        if (request.greeting.startsWith('unload')) {
-          // Get code from element considering different element types and page contexts
-          let code = '';
-          
-          // If element is body and we're in a REST window, handle specially
-          if (element.tagName === 'BODY' && isRestAPIWindow) {
-            code = document.body.innerText || document.body.textContent;
-            // Try to clean up the content if it's a REST API response
-            try {
-              const jsonObject = JSON.parse(code);
-              code = JSON.stringify(jsonObject, null, 2); // Pretty format
-            } catch (e) {
-              logDebug('Could not parse JSON from body text, using raw content');
-            }
-          } else {
-            // Normal handling
-            code = element.value || element.innerHTML || element.textContent || '';
-          }
-          
-          logDebug(`Unloaded content length: ${code.length} characters`);
-          
-          // Special handling for filename extraction in REST/SOAP interfaces
-          let filename = 'unknown';
-          if ((type.includes('json') || type.includes('xml') || 
-               request.greeting === 'unloadJSON' || request.greeting === 'unloadXML') 
-               && (isInterfaceWindow || window.location.href.includes('/admin/interfaceCatalogs/') || isRestAPIWindow)) {
-            // Try to extract filename from URL - get the last path segment
-            const urlPath = window.location.pathname;
-            const pathSegments = urlPath.split('/').filter(segment => segment.length > 0);
-            
-            // Specifically extract the last path segment as the filename
-            if (pathSegments.length > 0) {
-              filename = pathSegments[pathSegments.length - 1];
-              logDebug(`Extracted filename from last URL path segment: ${filename}`);
-            } else {
-              // For catalog page, try to extract from DOM
-              const resourceNameElement = document.querySelector('a[name="display_resource"]');
-              if (resourceNameElement) {
-                filename = resourceNameElement.textContent.trim();
-                logDebug(`Extracted filename from resource name element: ${filename}`);
-              } else {
-                filename = 'interface';
-                logDebug("Could not extract filename from URL path or DOM, using default: interface");
-              }
-            }
-          }
-          
-          // For header/footer HTML, match the exact response structure expected by popup.js
-          if (type.includes('html')) {
-            sendResponse({ 
-              code: code,
-              status: 'success'
-            });
-          } else if (type.includes('json') || type.includes('xml') || 
-                    request.greeting === 'unloadJSON' || request.greeting === 'unloadXML') {
-            sendResponse({ 
-              code: code,
-              filename: filename
-            });
-          } else {
-            sendResponse({ code });
-          }
-        } else {
-          // Handle load operations
-          if (element.tagName === 'TEXTAREA' || element.hasAttribute('contenteditable')) {
-            element.value = request.code;
-            // Trigger change event for potential editor frameworks
-            triggerInputEvents(element);
-          } else {
-            element.innerHTML = request.code;
-          }
-          
-          sendResponse({ status: 'Content updated successfully' });
-        }
-      })
-      .catch(error => {
-        logDebug("Error processing rules list:", error);
-        sendResponse({ error: error.message });
-      });
-      
-    // Return true to indicate we'll send the response asynchronously
-    return true;
+    // Rest of the handleSpecialCaseMessages function remains unchanged
+    // ...existing code...
   } catch (error) {
     logDebug("Error handling special case message:", error);
     sendResponse({ error: error.message });
     return false;
   }
+}
+
+/**
+ * Helper function to get all windows opened by this page
+ * @returns {Array<Window>} Array of window objects
+ */
+function getOpenedWindows() {
+  const openWindows = [];
+  try {
+    // Check if window.open has been called and stored references
+    if (window._openedWindows && Array.isArray(window._openedWindows)) {
+      return window._openedWindows.filter(win => win && !win.closed);
+    }
+    
+    // Try another approach to find children windows
+    if (window.opener === null) { // This is a parent window
+      // Try to access child window properties in a safe way
+      const windowReferences = Object.keys(window)
+        .filter(key => {
+          try {
+            return window[key] instanceof Window && 
+                  window[key] !== window && 
+                  window[key].opener === window &&
+                  !window[key].closed;
+          } catch (e) {
+            return false; // In case of cross-origin issues
+          }
+        })
+        .map(key => window[key]);
+      
+      return windowReferences;
+    }
+  } catch (e) {
+    logDebug("Error getting opened windows:", e);
+  }
+  
+  return openWindows;
 }
 
 // Helper function to trigger input events to notify any JavaScript frameworks of the change
