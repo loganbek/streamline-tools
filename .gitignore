@@ -21,3 +21,6 @@ popup-verification-failure-*.png
 !test-videos/
 !tests/puppeteer/test-videos/
 
+# ignore page-doms
+page-doms/
+
