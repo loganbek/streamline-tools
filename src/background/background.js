@@ -284,12 +284,52 @@ async function setDynamicPopup(tabId, url) {
         const rulesList = await fetchRulesList();
         logDebug(`Fetched ${rulesList.length} rules`);
         
+        // Initialize allRulesDetails array here before it's used
+        const allRulesDetails = [];
+        
         // Log all rules first for debugging purposes
         rulesList.forEach((rule, index) => {
             logDebug(`Rule ${index}: ${rule.RuleName}, URL pattern: ${rule.URL}, popup: ${rule.ui}`);
         });
 
-        // SPECIAL CASE 0: Document Designer page
+        // SPECIAL CASE 0: Site Branding CSS page
+        if (url.includes('bigmachines.com/admin/ui/branding/edit_site_branding.jsp')) {
+            logDebug("✓ DETECTED SITE BRANDING PAGE");
+            
+            // Find the Site Branding / Stylesheet Manager rule
+            const cssRule = rulesList.find(r => 
+                r.AppArea === 'Stylesheets' && 
+                r.RuleName === 'Stylesheet Manager'
+            );
+            
+            if (cssRule) {
+                logDebug(`Setting Site Branding popup UI: ${cssRule.ui}`);
+                
+                chrome.action.setPopup({
+                    tabId,
+                    popup: 'popup/' + cssRule.ui,
+                });
+                
+                logDebug(`✓ POPUP SET SUCCESSFULLY to: popup/${cssRule.ui}`);
+                
+                // Verify popup was set correctly
+                chrome.action.getPopup({tabId}, (result) => {
+                    logDebug(`Popup verification - current popup is: ${result}`);
+                    const expectedPopupPath = 'popup/' + cssRule.ui;
+                    const isCorrect = result.endsWith(expectedPopupPath);
+                    
+                    if (!isCorrect) {
+                        logDebug(`⚠️ WARNING: Popup verification failed! Expected path to end with '${expectedPopupPath}' but got '${result}'`);
+                    } else {
+                        logDebug("✓ Popup verification successful!");
+                    }
+                });
+                
+                return; // Exit early since we've set the popup
+            }
+        }
+
+        // SPECIAL CASE 1: Document Designer page
         if (url.includes('bigmachines.com/admin/document-designer/')) {
             logDebug("✓ DETECTED DOCUMENT DESIGNER PAGE");
             
@@ -326,7 +366,7 @@ async function setDynamicPopup(tabId, url) {
             }
         }
 
-        // SPECIAL CASE 1: Direct REST API endpoints
+        // SPECIAL CASE 2: Direct REST API endpoints
         // Check if URL contains a direct REST endpoint pattern like /rest/v18/
         if (url.includes('.bigmachines.com/rest/')) {
             logDebug("✓ DETECTED DIRECT REST API ENDPOINT");
@@ -361,7 +401,7 @@ async function setDynamicPopup(tabId, url) {
             }
         }
         
-        // SPECIAL CASE 2: SOAP API endpoints
+        // SPECIAL CASE 3: SOAP API endpoints
         // Check if URL contains a direct SOAP endpoint pattern
         if (url.includes('.bigmachines.com/soap/') || 
             (url.includes('interfaceCatalogs/') && url.includes('/soap'))) {
@@ -397,7 +437,7 @@ async function setDynamicPopup(tabId, url) {
             }
         }
 
-        // SPECIAL CASE 3: Interface Catalog page
+        // SPECIAL CASE 4: Interface Catalog page
         const urlObj = new URL(url);
         const isInterfaceCatalog = urlObj.pathname.includes('/admin/interfaceCatalogs/list_ics_resources.jsp');
         

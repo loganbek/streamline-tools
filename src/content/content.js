@@ -556,11 +556,42 @@ function handleLoadTestRequest(rule, request, sendResponse) {
   }
 }
 
+function isSpecialCaseMessage(greeting) {
+  // Add new CSS-specific message types to the list
+  const specialCases = [
+    'unloadCSS', 'loadCSS', 
+    'unloadAltCSS', 'loadAltCSS', 
+    'unloadJETCSS', 'loadJETCSS',
+    'unloadHeaderHTML', 'loadHeaderHTML', 
+    'unloadFooterHTML', 'loadFooterHTML', 
+    'unloadJSON', 'loadJSON', 
+    'unloadXML', 'loadXML', 
+    'unloadGlobalXSL', 'loadGlobalXSL', 
+    'unloadXSL', 'loadXSL'
+  ];
+  return specialCases.includes(greeting);
+}
+
 function handleSpecialCaseMessages(request, sendResponse) {
   try {
     logDebug(`Handling special case message: ${request.greeting}`);
     const type = request.greeting.toLowerCase();
     
+    // CSS-related handlers
+    if (type.startsWith('unloadcss')) {
+      return handleCSSUnload('main', sendResponse);
+    } else if (type.startsWith('loadcss')) {
+      return handleCSSLoad('main', request.code, sendResponse);
+    } else if (type.startsWith('unloadaltcss')) {
+      return handleCSSUnload('alt', sendResponse);
+    } else if (type.startsWith('loadaltcss')) {
+      return handleCSSLoad('alt', request.code, sendResponse);
+    } else if (type.startsWith('unloadjetcss')) {
+      return handleCSSUnload('jet', sendResponse);
+    } else if (type.startsWith('loadjetcss')) {
+      return handleCSSLoad('jet', request.code, sendResponse);
+    }
+
     // Check if we're in a REST or SOAP interface new window
     const isInterfaceWindow = isNewWindowInterface(window.location.href);
     
@@ -726,7 +757,37 @@ function handleSpecialCaseMessages(request, sendResponse) {
     }
     
     // Rest of the handleSpecialCaseMessages function remains unchanged
-    // ...existing code...
+    // Handle REST/SOAP interface operations in new windows
+    if (isInterfaceWindow) {
+      // ...existing code...
+    }
+    
+    // Handle Header/Footer HTML operations
+    if (type === 'unloadheaderhtml') {
+      // ...existing code...
+    } else if (type === 'loadheaderhtml') {
+      // ...existing code...
+    } else if (type === 'unloadfooterhtml') {
+      // ...existing code...
+    } else if (type === 'loadfooterhtml') {
+      // ...existing code...
+    }
+    
+    // Handle XSL operations
+    if (type === 'unloadglobalxsl') {
+      // ...existing code...
+    } else if (type === 'loadglobalxsl') {
+      // ...existing code...
+    } else if (type === 'unloadxsl') {
+      // ...existing code...
+    } else if (type === 'loadxsl') {
+      // ...existing code...
+    }
+    
+    // If we couldn't handle the special case
+    logDebug(`Unhandled special case: ${request.greeting}`);
+    sendResponse({ error: `Handler not implemented for ${request.greeting}` });
+    return false;
   } catch (error) {
     logDebug("Error handling special case message:", error);
     sendResponse({ error: error.message });
@@ -735,40 +796,159 @@ function handleSpecialCaseMessages(request, sendResponse) {
 }
 
 /**
- * Helper function to get all windows opened by this page
- * @returns {Array<Window>} Array of window objects
+ * Handles unloading CSS from the site branding page
+ * @param {string} cssType - Type of CSS ('main', 'alt', or 'jet')
+ * @param {function} sendResponse - Function to send response back
+ * @returns {boolean} True if handled
  */
-function getOpenedWindows() {
-  const openWindows = [];
+function handleCSSUnload(cssType, sendResponse) {
   try {
-    // Check if window.open has been called and stored references
-    if (window._openedWindows && Array.isArray(window._openedWindows)) {
-      return window._openedWindows.filter(win => win && !win.closed);
+    logDebug(`Handling CSS unload for type: ${cssType}`);
+    
+    // These are common selectors for different CSS file download links on the branding page
+    let cssDownloadLink;
+    let filename;
+    
+    if (cssType === 'main') {
+      // Main CSS file
+      cssDownloadLink = document.querySelector('a[href*="/global/"].general-text');
+      filename = 'style';
+    } else if (cssType === 'alt') {
+      // Alternate CSS file
+      cssDownloadLink = document.querySelector('a[href*="Alt.css"].general-text');
+      filename = 'styleAlt';
+    } else if (cssType === 'jet') {
+      // JET/Alta CSS file
+      cssDownloadLink = document.querySelector('a[href*="Alta.css"].general-text');
+      filename = 'styleJET';
     }
     
-    // Try another approach to find children windows
-    if (window.opener === null) { // This is a parent window
-      // Try to access child window properties in a safe way
-      const windowReferences = Object.keys(window)
-        .filter(key => {
-          try {
-            return window[key] instanceof Window && 
-                  window[key] !== window && 
-                  window[key].opener === window &&
-                  !window[key].closed;
-          } catch (e) {
-            return false; // In case of cross-origin issues
-          }
-        })
-        .map(key => window[key]);
-      
-      return windowReferences;
+    if (!cssDownloadLink) {
+      throw new Error(`CSS download link not found for ${cssType} CSS`);
     }
-  } catch (e) {
-    logDebug("Error getting opened windows:", e);
+    
+    // Get the URL of the CSS file
+    const cssUrl = cssDownloadLink.href;
+    logDebug(`Found CSS URL: ${cssUrl}`);
+    
+    // Fetch the CSS content
+    fetch(cssUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch CSS: ${response.status} ${response.statusText}`);
+        }
+        return response.text();
+      })
+      .then(cssContent => {
+        // Send the CSS content back
+        sendResponse({
+          code: cssContent,
+          filename: filename
+        });
+      })
+      .catch(error => {
+        logDebug(`Error fetching ${cssType} CSS:`, error);
+        sendResponse({ error: error.message });
+      });
+    
+    // Return true to indicate async response
+    return true;
+  } catch (error) {
+    logDebug(`Error handling ${cssType} CSS unload:`, error);
+    sendResponse({ error: error.message });
+    return false;
   }
+}
+
+/**
+ * Handles loading CSS to the site branding page
+ * @param {string} cssType - Type of CSS ('main', 'alt', or 'jet')
+ * @param {string} cssCode - The CSS content to load
+ * @param {function} sendResponse - Function to send response back
+ * @returns {boolean} True if handled
+ */
+function handleCSSLoad(cssType, cssCode, sendResponse) {
+  try {
+    logDebug(`Handling CSS load for type: ${cssType}`);
+    
+    // These are common selectors for different CSS file upload fields on the branding page
+    let cssUploadField;
+    
+    if (cssType === 'main') {
+      // Main CSS file
+      cssUploadField = document.querySelector('input[name="_defaultCSS"]');
+    } else if (cssType === 'alt') {
+      // Alternate CSS file
+      cssUploadField = document.querySelector('input[name="_additionalCSS"]');
+    } else if (cssType === 'jet') {
+      // JET/Alta CSS file
+      cssUploadField = document.querySelector('input[name="_altaCSS"]');
+    }
+    
+    if (!cssUploadField) {
+      throw new Error(`CSS upload field not found for ${cssType} CSS`);
+    }
+    
+    // We can't directly set the value of a file input field for security reasons
+    // Instead, we need to create a temporary file and use the File API
+    
+    // Create a file object with the CSS content
+    const cssFile = new File([cssCode], `${cssType}.css`, { type: 'text/css' });
+    
+    // Create a DataTransfer object and add the file
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(cssFile);
+    
+    // Set the files property of the file input
+    cssUploadField.files = dataTransfer.files;
+    
+    // Trigger events to notify the page
+    triggerInputEvents(cssUploadField);
+    
+    // CSS files need to be saved, find save/apply button
+    const saveButton = document.querySelector('input[value="Apply"]') || 
+                     document.querySelector('input[value="Save"]') ||
+                     document.querySelector('button[name="_action_save"]');
+                     
+    if (saveButton) {
+      logDebug('Found save button, will click it automatically');
+      // Uncomment this if you want to auto-save:
+      // saveButton.click();
+    } else {
+      logDebug('No save button found, user will need to manually save');
+    }
+    
+    sendResponse({ success: true, message: `${cssType} CSS loaded, ready for user to apply changes` });
+    return true;
+  } catch (error) {
+    logDebug(`Error handling ${cssType} CSS load:`, error);
+    sendResponse({ error: error.message });
+    return false;
+  }
+}
+
+/**
+ * Helper function to trigger necessary events after modifying an input
+ * @param {HTMLElement} element - The element to trigger events on
+ */
+function triggerInputEvents(element) {
+  if (!element) return;
   
-  return openWindows;
+  try {
+    // Create and dispatch necessary events
+    ['input', 'change'].forEach(eventType => {
+      const event = new Event(eventType, { bubbles: true });
+      element.dispatchEvent(event);
+    });
+    
+    // Some frameworks need a focus and blur event
+    element.focus();
+    element.blur();
+    
+    logDebug('Input events triggered successfully');
+  } catch (error) {
+    logDebug('Error triggering input events:', error);
+  }
 }
 
 // Initialize when document is ready
