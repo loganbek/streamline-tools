@@ -1,0 +1,427 @@
+Test run started at 2025-05-07T04:43:57.385Z
+Configuration: {
+  "bypassLogin": true,
+  "headless": false,
+  "forceVideo": false,
+  "rule": "navigation"
+}
+
+Running command: npm test -- --testPathPattern=rule-navigation --verbose
+
+> streamline-tools@1.0.0 test
+> jest --testPathPattern=rule-navigation --verbose
+
+[ERROR] ● Validation Warning:
+
+  Unknown option "retryTimes" with value 1 was found.
+  This is probably a typing mistake. Fixing it will remove this message.
+
+  Configuration Documentation:
+  https://jestjs.io/docs/configuration
+
+[ERROR] ● Validation Warning:
+
+  Unknown option "testTimeout" with value 30000 was found.
+  This is probably a typing mistake. Fixing it will remove this message.
+
+  Configuration Documentation:
+  https://jestjs.io/docs/configuration
+
+[ERROR] ● Validation Warning:
+
+  Unknown option "testTimeout" with value 60000 was found.
+  This is probably a typing mistake. Fixing it will remove this message.
+
+  Configuration Documentation:
+  https://jestjs.io/docs/configuration
+
+[ERROR] 
+DevTools listening on ws://127.0.0.1:56836/devtools/browser/f37d8646-a470-4d9c-a728-9d44f56e1cae
+  console.log
+    Setting up Rule Navigation Tests...
+
+      at Object.log (tests/puppeteer/rule-navigation.test.js:17:17)
+
+  console.log
+    Completely bypassing login process for testing
+
+      at log (tests/puppeteer/videoHelper.js:62:11)
+
+  console.log
+    Initializing browser with login bypass
+
+      at TestHelper.log [as init] (tests/puppeteer/videoHelper.js:71:15)
+
+  console.error
+    Error in bypassed init: TypeError: this.launchBrowser is not a function
+        at TestHelper.launchBrowser [as init] (C:\Users\logan\code\streamline-tools\tests\puppeteer\videoHelper.js:75:20)
+        at Object.init (C:\Users\logan\code\streamline-tools\tests\puppeteer\rule-navigation.test.js:22:22)
+        at Promise.then.completed (C:\Users\logan\code\streamline-tools\node_modules\jest-circus\build\utils.js:298:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (C:\Users\logan\code\streamline-tools\node_modules\jest-circus\build\utils.js:231:10)
+        at _callCircusHook (C:\Users\logan\code\streamline-tools\node_modules\jest-circus\build\run.js:281:40)
+        at _runTestsForDescribeBlock (C:\Users\logan\code\streamline-tools\node_modules\jest-circus\build\run.js:95:7)
+        at _runTestsForDescribeBlock (C:\Users\logan\code\streamline-tools\node_modules\jest-circus\build\run.js:121:9)
+        at run (C:\Users\logan\code\streamline-tools\node_modules\jest-circus\build\run.js:71:3)
+        at runAndTransformResultsToJestFormat (C:\Users\logan\code\streamline-tools\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+        at jestAdapter (C:\Users\logan\code\streamline-tools\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+        at runTestInternal (C:\Users\logan\code\streamline-tools\node_modules\jest-runner\build\runTest.js:367:16)
+        at runTest (C:\Users\logan\code\streamline-tools\node_modules\jest-runner\build\runTest.js:444:34)
+
+    [0m [90m 105 |[39m       [36mreturn[39m [36mtrue[39m[33m;[39m
+     [90m 106 |[39m     } [36mcatch[39m (error) {
+    [31m[1m>[22m[39m[90m 107 |[39m       console[33m.[39merror([32m"Error in bypassed init:"[39m[33m,[39m error)[33m;[39m
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 108 |[39m       [36mthrow[39m error[33m;[39m
+     [90m 109 |[39m     }
+     [90m 110 |[39m   }[33m;[39m[0m
+
+      at TestHelper.error [as init] (tests/puppeteer/videoHelper.js:107:15)
+      at Object.init (tests/puppeteer/rule-navigation.test.js:22:22)
+
+  console.log
+    Test "" completed
+
+      at Object.log (tests/puppeteer/rule-navigation.test.js:50:17)
+
+  console.log
+    Test "" completed
+
+      at Object.log (tests/puppeteer/rule-navigation.test.js:50:17)
+
+  console.log
+    Test "" completed
+
+      at Object.log (tests/puppeteer/rule-navigation.test.js:50:17)
+
+  console.log
+    Test "" completed
+
+      at Object.log (tests/puppeteer/rule-navigation.test.js:50:17)
+
+  console.log
+    Test "" completed
+
+      at Object.log (tests/puppeteer/rule-navigation.test.js:50:17)
+
+  console.log
+    Test "" completed
+
+      at Object.log (tests/puppeteer/rule-navigation.test.js:50:17)
+
+  console.log
+    Test "" completed
+
+      at Object.log (tests/puppeteer/rule-navigation.test.js:50:17)
+
+  console.log
+    Test "" completed
+
+      at Object.log (tests/puppeteer/rule-navigation.test.js:50:17)
+
+  console.log
+    Test "" completed
+
+      at Object.log (tests/puppeteer/rule-navigation.test.js:50:17)
+
+  console.log
+    Test "" completed
+
+      at Object.log (tests/puppeteer/rule-navigation.test.js:50:17)
+
+  console.log
+    Test "" completed
+
+      at Object.log (tests/puppeteer/rule-navigation.test.js:50:17)
+
+  console.log
+    Test "" completed
+
+      at Object.log (tests/puppeteer/rule-navigation.test.js:50:17)
+
+  console.log
+    Test "" completed
+
+      at Object.log (tests/puppeteer/rule-navigation.test.js:50:17)
+
+  console.log
+    Test "" completed
+
+      at Object.log (tests/puppeteer/rule-navigation.test.js:50:17)
+
+  console.log
+    Test "" completed
+
+      at Object.log (tests/puppeteer/rule-navigation.test.js:50:17)
+
+  console.log
+    Test "" completed
+
+      at Object.log (tests/puppeteer/rule-navigation.test.js:50:17)
+
+[ERROR] FAIL puppeteer tests/puppeteer/rule-navigation.test.js
+  Rule Navigation & DOM Manipulation Tests
+[ERROR]     × should navigate to Config - Recommendation and verify DOM interaction (5 ms)
+    × should navigate to Config - Constraint and verify DOM interaction (1 ms)
+    × should navigate to Config - Hiding and verify DOM interaction (2 ms)
+    × should navigate to Config - Bom Mapping and verify DOM interaction (2 ms)
+    × should navigate to Commerce - Action Before Formulas and verify DOM interaction (2 ms)
+    × should navigate to Commerce - Action After Formulas and verify DOM interaction (2 ms)
+    × should navigate to Commerce - Library Rule and verify DOM interaction (6 ms)
+    × should navigate to Commerce - Constraint Rule and verify DOM interaction (1 ms)
+    × should navigate to Commerce - Hiding Rule and verify DOM interaction (3 ms)
+    × should navigate to Commerce - Validation Rule and verify DOM interaction (2 ms)
+    × should navigate to Utils - x and verify DOM interaction (1 ms)
+    × should navigate to Interfaces - REST and verify DOM interaction (1 ms)
+    × should navigate to Interfaces - SOAP and verify DOM interaction (1 ms)
+    × should navigate to Stylesheets - Stylesheet Manager and verify DOM interaction (1 ms)
+    × should navigate to Stylesheets - Header & Footer and verify DOM interaction (1 ms)
+    × should navigate to Documents - Global XSL and verify DOM interaction (1 ms)
+
+  ● Rule Navigation & DOM Manipulation Tests › should navigate to Config - Recommendation and verify DOM interaction
+
+    TypeError: this.launchBrowser is not a function
+
+    [0m [90m 73 |[39m       [90m// Launch browser without logging in[39m
+     [90m 74 |[39m       [36mif[39m ([33m![39m[36mthis[39m[33m.[39mbrowser) {
+    [31m[1m>[22m[39m[90m 75 |[39m         [36mawait[39m [36mthis[39m[33m.[39mlaunchBrowser()[33m;[39m
+     [90m    |[39m                    [31m[1m^[22m[39m
+     [90m 76 |[39m         console[33m.[39mlog([32m"Browser launched successfully"[39m)[33m;[39m
+     [90m 77 |[39m       }
+     [90m 78 |[39m       [0m
+
+      at TestHelper.launchBrowser [as init] (tests/puppeteer/videoHelper.js:75:20)
+      at Object.init (tests/puppeteer/rule-navigation.test.js:22:22)
+
+  ● Rule Navigation & DOM Manipulation Tests › should navigate to Config - Constraint and verify DOM interaction
+
+    TypeError: this.launchBrowser is not a function
+
+    [0m [90m 73 |[39m       [90m// Launch browser without logging in[39m
+     [90m 74 |[39m       [36mif[39m ([33m![39m[36mthis[39m[33m.[39mbrowser) {
+    [31m[1m>[22m[39m[90m 75 |[39m         [36mawait[39m [36mthis[39m[33m.[39mlaunchBrowser()[33m;[39m
+     [90m    |[39m                    [31m[1m^[22m[39m
+     [90m 76 |[39m         console[33m.[39mlog([32m"Browser launched successfully"[39m)[33m;[39m
+     [90m 77 |[39m       }
+     [90m 78 |[39m       [0m
+
+      at TestHelper.launchBrowser [as init] (tests/puppeteer/videoHelper.js:75:20)
+      at Object.init (tests/puppeteer/rule-navigation.test.js:22:22)
+
+  ● Rule Navigation & DOM Manipulation Tests › should navigate to Config - Hiding and verify DOM interaction
+
+    TypeError: this.launchBrowser is not a function
+
+    [0m [90m 73 |[39m       [90m// Launch browser without logging in[39m
+     [90m 74 |[39m       [36mif[39m ([33m![39m[36mthis[39m[33m.[39mbrowser) {
+    [31m[1m>[22m[39m[90m 75 |[39m         [36mawait[39m [36mthis[39m[33m.[39mlaunchBrowser()[33m;[39m
+     [90m    |[39m                    [31m[1m^[22m[39m
+     [90m 76 |[39m         console[33m.[39mlog([32m"Browser launched successfully"[39m)[33m;[39m
+     [90m 77 |[39m       }
+     [90m 78 |[39m       [0m
+
+      at TestHelper.launchBrowser [as init] (tests/puppeteer/videoHelper.js:75:20)
+      at Object.init (tests/puppeteer/rule-navigation.test.js:22:22)
+
+  ● Rule Navigation & DOM Manipulation Tests › should navigate to Config - Bom Mapping and verify DOM interaction
+
+    TypeError: this.launchBrowser is not a function
+
+    [0m [90m 73 |[39m       [90m// Launch browser without logging in[39m
+     [90m 74 |[39m       [36mif[39m ([33m![39m[36mthis[39m[33m.[39mbrowser) {
+    [31m[1m>[22m[39m[90m 75 |[39m         [36mawait[39m [36mthis[39m[33m.[39mlaunchBrowser()[33m;[39m
+     [90m    |[39m                    [31m[1m^[22m[39m
+     [90m 76 |[39m         console[33m.[39mlog([32m"Browser launched successfully"[39m)[33m;[39m
+     [90m 77 |[39m       }
+     [90m 78 |[39m       [0m
+
+      at TestHelper.launchBrowser [as init] (tests/puppeteer/videoHelper.js:75:20)
+      at Object.init (tests/puppeteer/rule-navigation.test.js:22:22)
+
+  ● Rule Navigation & DOM Manipulation Tests › should navigate to Commerce - Action Before Formulas and verify DOM interaction
+
+    TypeError: this.launchBrowser is not a function
+
+    [0m [90m 73 |[39m       [90m// Launch browser without logging in[39m
+     [90m 74 |[39m       [36mif[39m ([33m![39m[36mthis[39m[33m.[39mbrowser) {
+    [31m[1m>[22m[39m[90m 75 |[39m         [36mawait[39m [36mthis[39m[33m.[39mlaunchBrowser()[33m;[39m
+     [90m    |[39m                    [31m[1m^[22m[39m
+     [90m 76 |[39m         console[33m.[39mlog([32m"Browser launched successfully"[39m)[33m;[39m
+     [90m 77 |[39m       }
+     [90m 78 |[39m       [0m
+
+      at TestHelper.launchBrowser [as init] (tests/puppeteer/videoHelper.js:75:20)
+      at Object.init (tests/puppeteer/rule-navigation.test.js:22:22)
+
+  ● Rule Navigation & DOM Manipulation Tests › should navigate to Commerce - Action After Formulas and verify DOM interaction
+
+    TypeError: this.launchBrowser is not a function
+
+    [0m [90m 73 |[39m       [90m// Launch browser without logging in[39m
+     [90m 74 |[39m       [36mif[39m ([33m![39m[36mthis[39m[33m.[39mbrowser) {
+    [31m[1m>[22m[39m[90m 75 |[39m         [36mawait[39m [36mthis[39m[33m.[39mlaunchBrowser()[33m;[39m
+     [90m    |[39m                    [31m[1m^[22m[39m
+     [90m 76 |[39m         console[33m.[39mlog([32m"Browser launched successfully"[39m)[33m;[39m
+     [90m 77 |[39m       }
+     [90m 78 |[39m       [0m
+
+      at TestHelper.launchBrowser [as init] (tests/puppeteer/videoHelper.js:75:20)
+      at Object.init (tests/puppeteer/rule-navigation.test.js:22:22)
+
+  ● Rule Navigation & DOM Manipulation Tests › should navigate to Commerce - Library Rule and verify DOM interaction
+
+    TypeError: this.launchBrowser is not a function
+
+    [0m [90m 73 |[39m       [90m// Launch browser without logging in[39m
+     [90m 74 |[39m       [36mif[39m ([33m![39m[36mthis[39m[33m.[39mbrowser) {
+    [31m[1m>[22m[39m[90m 75 |[39m         [36mawait[39m [36mthis[39m[33m.[39mlaunchBrowser()[33m;[39m
+     [90m    |[39m                    [31m[1m^[22m[39m
+     [90m 76 |[39m         console[33m.[39mlog([32m"Browser launched successfully"[39m)[33m;[39m
+     [90m 77 |[39m       }
+     [90m 78 |[39m       [0m
+
+      at TestHelper.launchBrowser [as init] (tests/puppeteer/videoHelper.js:75:20)
+      at Object.init (tests/puppeteer/rule-navigation.test.js:22:22)
+
+  ● Rule Navigation & DOM Manipulation Tests › should navigate to Commerce - Constraint Rule and verify DOM interaction
+
+    TypeError: this.launchBrowser is not a function
+
+    [0m [90m 73 |[39m       [90m// Launch browser without logging in[39m
+     [90m 74 |[39m       [36mif[39m ([33m![39m[36mthis[39m[33m.[39mbrowser) {
+    [31m[1m>[22m[39m[90m 75 |[39m         [36mawait[39m [36mthis[39m[33m.[39mlaunchBrowser()[33m;[39m
+     [90m    |[39m                    [31m[1m^[22m[39m
+     [90m 76 |[39m         console[33m.[39mlog([32m"Browser launched successfully"[39m)[33m;[39m
+     [90m 77 |[39m       }
+     [90m 78 |[39m       [0m
+
+      at TestHelper.launchBrowser [as init] (tests/puppeteer/videoHelper.js:75:20)
+      at Object.init (tests/puppeteer/rule-navigation.test.js:22:22)
+
+  ● Rule Navigation & DOM Manipulation Tests › should navigate to Commerce - Hiding Rule and verify DOM interaction
+
+    TypeError: this.launchBrowser is not a function
+
+    [0m [90m 73 |[39m       [90m// Launch browser without logging in[39m
+     [90m 74 |[39m       [36mif[39m ([33m![39m[36mthis[39m[33m.[39mbrowser) {
+    [31m[1m>[22m[39m[90m 75 |[39m         [36mawait[39m [36mthis[39m[33m.[39mlaunchBrowser()[33m;[39m
+     [90m    |[39m                    [31m[1m^[22m[39m
+     [90m 76 |[39m         console[33m.[39mlog([32m"Browser launched successfully"[39m)[33m;[39m
+     [90m 77 |[39m       }
+     [90m 78 |[39m       [0m
+
+      at TestHelper.launchBrowser [as init] (tests/puppeteer/videoHelper.js:75:20)
+      at Object.init (tests/puppeteer/rule-navigation.test.js:22:22)
+
+  ● Rule Navigation & DOM Manipulation Tests › should navigate to Commerce - Validation Rule and verify DOM interaction
+
+    TypeError: this.launchBrowser is not a function
+
+    [0m [90m 73 |[39m       [90m// Launch browser without logging in[39m
+     [90m 74 |[39m       [36mif[39m ([33m![39m[36mthis[39m[33m.[39mbrowser) {
+    [31m[1m>[22m[39m[90m 75 |[39m         [36mawait[39m [36mthis[39m[33m.[39mlaunchBrowser()[33m;[39m
+     [90m    |[39m                    [31m[1m^[22m[39m
+     [90m 76 |[39m         console[33m.[39mlog([32m"Browser launched successfully"[39m)[33m;[39m
+     [90m 77 |[39m       }
+     [90m 78 |[39m       [0m
+
+      at TestHelper.launchBrowser [as init] (tests/puppeteer/videoHelper.js:75:20)
+      at Object.init (tests/puppeteer/rule-navigation.test.js:22:22)
+
+  ● Rule Navigation & DOM Manipulation Tests › should navigate to Utils - x and verify DOM interaction
+
+    TypeError: this.launchBrowser is not a function
+
+    [0m [90m 73 |[39m       [90m// Launch browser without logging in[39m
+     [90m 74 |[39m       [36mif[39m ([33m![39m[36mthis[39m[33m.[39mbrowser) {
+    [31m[1m>[22m[39m[90m 75 |[39m         [36mawait[39m [36mthis[39m[33m.[39mlaunchBrowser()[33m;[39m
+     [90m    |[39m                    [31m[1m^[22m[39m
+     [90m 76 |[39m         console[33m.[39mlog([32m"Browser launched successfully"[39m)[33m;[39m
+     [90m 77 |[39m       }
+     [90m 78 |[39m       [0m
+
+      at TestHelper.launchBrowser [as init] (tests/puppeteer/videoHelper.js:75:20)
+      at Object.init (tests/puppeteer/rule-navigation.test.js:22:22)
+
+  ● Rule Navigation & DOM Manipulation Tests › should navigate to Interfaces - REST and verify DOM interaction
+
+    TypeError: this.launchBrowser is not a function
+
+    [0m [90m 73 |[39m       [90m// Launch browser without logging in[39m
+     [90m 74 |[39m       [36mif[39m ([33m![39m[36mthis[39m[33m.[39mbrowser) {
+    [31m[1m>[22m[39m[90m 75 |[39m         [36mawait[39m [36mthis[39m[33m.[39mlaunchBrowser()[33m;[39m
+     [90m    |[39m                    [31m[1m^[22m[39m
+     [90m 76 |[39m         console[33m.[39mlog([32m"Browser launched successfully"[39m)[33m;[39m
+     [90m 77 |[39m       }
+     [90m 78 |[39m       [0m
+
+      at TestHelper.launchBrowser [as init] (tests/puppeteer/videoHelper.js:75:20)
+      at Object.init (tests/puppeteer/rule-navigation.test.js:22:22)
+
+  ● Rule Navigation & DOM Manipulation Tests › should navigate to Interfaces - SOAP and verify DOM interaction
+
+    TypeError: this.launchBrowser is not a function
+
+    [0m [90m 73 |[39m       [90m// Launch browser without logging in[39m
+     [90m 74 |[39m       [36mif[39m ([33m![39m[36mthis[39m[33m.[39mbrowser) {
+    [31m[1m>[22m[39m[90m 75 |[39m         [36mawait[39m [36mthis[39m[33m.[39mlaunchBrowser()[33m;[39m
+     [90m    |[39m                    [31m[1m^[22m[39m
+     [90m 76 |[39m         console[33m.[39mlog([32m"Browser launched successfully"[39m)[33m;[39m
+     [90m 77 |[39m       }
+     [90m 78 |[39m       [0m
+
+      at TestHelper.launchBrowser [as init] (tests/puppeteer/videoHelper.js:75:20)
+      at Object.init (tests/puppeteer/rule-navigation.test.js:22:22)
+
+  ● Rule Navigation & DOM Manipulation Tests › should navigate to Stylesheets - Stylesheet Manager and verify DOM interaction
+
+    TypeError: this.launchBrowser is not a function
+
+    [0m [90m 73 |[39m       [90m// Launch browser without logging in[39m
+     [90m 74 |[39m       [36mif[39m ([33m![39m[36mthis[39m[33m.[39mbrowser) {
+    [31m[1m>[22m[39m[90m 75 |[39m         [36mawait[39m [36mthis[39m[33m.[39mlaunchBrowser()[33m;[39m
+     [90m    |[39m                    [31m[1m^[22m[39m
+     [90m 76 |[39m         console[33m.[39mlog([32m"Browser launched successfully"[39m)[33m;[39m
+     [90m 77 |[39m       }
+     [90m 78 |[39m       [0m
+
+      at TestHelper.launchBrowser [as init] (tests/puppeteer/videoHelper.js:75:20)
+      at Object.init (tests/puppeteer/rule-navigation.test.js:22:22)
+
+  ● Rule Navigation & DOM Manipulation Tests › should navigate to Stylesheets - Header & Footer and verify DOM interaction
+
+    TypeError: this.launchBrowser is not a function
+
+    [0m [90m 73 |[39m       [90m// Launch browser without logging in[39m
+     [90m 74 |[39m       [36mif[39m ([33m![39m[36mthis[39m[33m.[39mbrowser) {
+    [31m[1m>[22m[39m[90m 75 |[39m         [36mawait[39m [36mthis[39m[33m.[39mlaunchBrowser()[33m;[39m
+     [90m    |[39m                    [31m[1m^[22m[39m
+     [90m 76 |[39m         console[33m.[39mlog([32m"Browser launched successfully"[39m)[33m;[39m
+     [90m 77 |[39m       }
+     [90m 78 |[39m       [0m
+
+      at TestHelper.launchBrowser [as init] (tests/puppeteer/videoHelper.js:75:20)
+      at Object.init (tests/puppeteer/rule-navigation.test.js:22:22)
+
+  ● Rule Navigation & DOM Manipulation Tests › should navigate to Documents - Global XSL and verify DOM interaction
+
+    TypeError: this.launchBrowser is not a function
+
+    [0m [90m 73 |[39m       [90m// Launch browser without logging in[39m
+     [90m 74 |[39m       [36mif[39m ([33m![39m[36mthis[39m[33m.[39mbrowser) {
+    [31m[1m>[22m[39m[90m 75 |[39m         [36mawait[39m [36mthis[39m[33m.[39mlaunchBrowser()[33m;[39m
+     [90m    |[39m                    [31m[1m^[22m[39m
+     [90m 76 |[39m         console[33m.[39mlog([32m"Browser launched successfully"[39m)[33m;[39m
+     [90m 77 |[39m       }
+     [90m 78 |[39m       [0m
+
+      at TestHelper.launchBrowser [as init] (tests/puppeteer/videoHelper.js:75:20)
+      at Object.init (tests/puppeteer/rule-navigation.test.js:22:22)
+
+[ERROR] Test Suites: 1 failed, 1 total
+Tests:       16 failed, 16 total
+Snapshots:   0 total
+Time:        2.793 s, estimated 116 s
+Ran all test suites matching /rule-navigation/i.
+
+Test run completed with exit code 1 in 6.69 seconds
