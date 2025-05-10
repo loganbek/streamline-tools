@@ -42,6 +42,16 @@ function initializeExtension() {
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     logDebug("Received message:", request);
     
+    // Handle interface type detection from content script
+    if (request.action === 'setInterfaceType') {
+        logDebug(`Received interface type from content script: ${request.interfaceType}`);
+        if (sender.tab) {
+            handleInterfaceTypeDetection(sender.tab.id, request.interfaceType);
+        }
+        sendResponse({ success: true });
+        return true;
+    }
+    
     // Handle saveToDirectory action from popup.js
     if (request.action === 'saveToDirectory') {
         const { url, dirPath, filename, fullPath, overwrite } = request.data;
@@ -189,6 +199,52 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true;
 });
 
+/**
+ * Handles the interface type detection from content script and sets the appropriate popup
+ * @param {number} tabId - The ID of the tab where the interface type was detected
+ * @param {string} interfaceType - The detected interface type ('REST' or 'SOAP')
+ */
+async function handleInterfaceTypeDetection(tabId, interfaceType) {
+    try {
+        logDebug(`Setting popup based on detected interface type: ${interfaceType}`);
+        
+        const rulesList = await fetchRulesList();
+        
+        // Find the appropriate rule based on the detected type
+        const rule = rulesList.find(r => 
+            r.AppArea === 'Interfaces' && 
+            r.RuleName === interfaceType
+        );
+        
+        if (rule) {
+            // Set the popup for the detected interface type
+            chrome.action.setPopup({
+                tabId,
+                popup: 'popup/' + rule.ui,
+            });
+            
+            logDebug(`✓ POPUP SET SUCCESSFULLY based on DOM analysis to: popup/${rule.ui}`);
+            
+            // Verify popup was set correctly
+            chrome.action.getPopup({tabId}, (result) => {
+                logDebug(`Popup verification - current popup is: ${result}`);
+                const expectedPopupPath = 'popup/' + rule.ui;
+                const isCorrect = result.endsWith(expectedPopupPath);
+                
+                if (!isCorrect) {
+                    logDebug(`⚠️ WARNING: Popup verification failed! Expected path to end with '${expectedPopupPath}' but got '${result}'`);
+                } else {
+                    logDebug("✓ Popup verification successful!");
+                }
+            });
+        } else {
+            logDebug(`No rule found for interface type: ${interfaceType}`);
+        }
+    } catch (error) {
+        logDebug("Error handling interface type detection:", error);
+    }
+}
+
 // Update popup dynamically based on active tab's URL
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (changeInfo.url) {
@@ -223,36 +279,170 @@ async function setDynamicPopup(tabId, url) {
             logDebug(`Rule ${index}: ${rule.RuleName}, URL pattern: ${rule.URL}, popup: ${rule.ui}`);
         });
 
-        let matchFound = false;
-        let allRulesDetails = [];
+        // SPECIAL CASE 1: Direct REST API endpoints
+        // Check if URL contains a direct REST endpoint pattern like /rest/v18/
+        if (url.includes('.bigmachines.com/rest/')) {
+            logDebug("✓ DETECTED DIRECT REST API ENDPOINT");
+            
+            // Find the REST rule
+            const restRule = rulesList.find(r => r.RuleName === 'REST');
+            
+            if (restRule) {
+                logDebug(`Setting REST popup UI for direct REST endpoint: ${restRule.ui}`);
+                
+                chrome.action.setPopup({
+                    tabId,
+                    popup: 'popup/' + restRule.ui,
+                });
+                
+                logDebug(`✓ POPUP SET SUCCESSFULLY to: popup/${restRule.ui}`);
+                
+                // Verify popup was set correctly
+                chrome.action.getPopup({tabId}, (result) => {
+                    logDebug(`Popup verification - current popup is: ${result}`);
+                    const expectedPopupPath = 'popup/' + restRule.ui;
+                    const isCorrect = result.endsWith(expectedPopupPath);
+                    
+                    if (!isCorrect) {
+                        logDebug(`⚠️ WARNING: Popup verification failed! Expected path to end with '${expectedPopupPath}' but got '${result}'`);
+                    } else {
+                        logDebug("✓ Popup verification successful!");
+                    }
+                });
+                
+                return; // Exit early since we've set the popup
+            }
+        }
         
+        // SPECIAL CASE 2: SOAP API endpoints
+        // Check if URL contains a direct SOAP endpoint pattern
+        if (url.includes('.bigmachines.com/soap/') || 
+            (url.includes('interfaceCatalogs/') && url.includes('/soap'))) {
+            logDebug("✓ DETECTED DIRECT SOAP API ENDPOINT");
+            
+            // Find the SOAP rule
+            const soapRule = rulesList.find(r => r.RuleName === 'SOAP');
+            
+            if (soapRule) {
+                logDebug(`Setting SOAP popup UI for direct SOAP endpoint: ${soapRule.ui}`);
+                
+                chrome.action.setPopup({
+                    tabId,
+                    popup: 'popup/' + soapRule.ui,
+                });
+                
+                logDebug(`✓ POPUP SET SUCCESSFULLY to: popup/${soapRule.ui}`);
+                
+                // Verify popup was set correctly
+                chrome.action.getPopup({tabId}, (result) => {
+                    logDebug(`Popup verification - current popup is: ${result}`);
+                    const expectedPopupPath = 'popup/' + soapRule.ui;
+                    const isCorrect = result.endsWith(expectedPopupPath);
+                    
+                    if (!isCorrect) {
+                        logDebug(`⚠️ WARNING: Popup verification failed! Expected path to end with '${expectedPopupPath}' but got '${result}'`);
+                    } else {
+                        logDebug("✓ Popup verification successful!");
+                    }
+                });
+                
+                return; // Exit early since we've set the popup
+            }
+        }
+
+        // SPECIAL CASE 3: Interface Catalog page
+        const urlObj = new URL(url);
+        const isInterfaceCatalog = urlObj.pathname.includes('/admin/interfaceCatalogs/list_ics_resources.jsp');
+        
+        // If this is an interface catalog page, check directly for REST and SOAP rules
+        if (isInterfaceCatalog) {
+            logDebug("✓ DETECTED INTERFACE CATALOG PAGE");
+            
+            // Find the REST and SOAP rules by their AppArea and RuleName
+            const restRule = rulesList.find(r => r.AppArea === 'Interfaces' && r.RuleName === 'REST');
+            const soapRule = rulesList.find(r => r.AppArea === 'Interfaces' && r.RuleName === 'SOAP');
+            
+            // Look for an indicator in the URL to determine if it's REST or SOAP
+            const isSOAPView = url.includes('/soap') || url.includes('SOAP');
+            const isRESTView = url.includes('/rest') || !isSOAPView; // Default to REST if not clearly SOAP
+            
+            // Set appropriate popup based on which view we think we're in
+            if (isSOAPView && soapRule) {
+                logDebug("✓ SETTING SOAP INTERFACE POPUP FOR CATALOG PAGE");
+                chrome.action.setPopup({
+                    tabId,
+                    popup: 'popup/' + soapRule.ui,
+                });
+                
+                logDebug(`✓ POPUP SET SUCCESSFULLY to: popup/${soapRule.ui}`);
+                
+                // Verify popup was set correctly
+                chrome.action.getPopup({tabId}, (result) => {
+                    logDebug(`Popup verification - current popup is: ${result}`);
+                    const expectedPopupPath = 'popup/' + soapRule.ui;
+                    const isCorrect = result.endsWith(expectedPopupPath);
+                    
+                    if (!isCorrect) {
+                        logDebug(`⚠️ WARNING: Popup verification failed! Expected path to end with '${expectedPopupPath}' but got '${result}'`);
+                    } else {
+                        logDebug("✓ Popup verification successful!");
+                    }
+                });
+                
+                return; // Exit early since we've set the popup
+            }
+            else if (restRule) {
+                logDebug("✓ SETTING REST INTERFACE POPUP FOR CATALOG PAGE");
+                // Set the popup for REST interfaces
+                chrome.action.setPopup({
+                    tabId,
+                    popup: 'popup/' + restRule.ui,
+                });
+                
+                logDebug(`✓ POPUP SET SUCCESSFULLY to: popup/${restRule.ui}`);
+                
+                // Verify popup was set correctly
+                chrome.action.getPopup({tabId}, (result) => {
+                    logDebug(`Popup verification - current popup is: ${result}`);
+                    const expectedPopupPath = 'popup/' + restRule.ui;
+                    const isCorrect = result.endsWith(expectedPopupPath);
+                    
+                    if (!isCorrect) {
+                        logDebug(`⚠️ WARNING: Popup verification failed! Expected path to end with '${expectedPopupPath}' but got '${result}'`);
+                    } else {
+                        logDebug("✓ Popup verification successful!");
+                    }
+                });
+                
+                return; // Exit early since we've set the popup
+            }
+        }
+        
+        // If we didn't find a direct match for interface catalog, continue with regular matching
         // Check matching rules with detailed logging
         const matchingRule = rulesList.find(rule => {
-            const ruleUrl = rule.URL.replace(/\*/g, ''); // Remove wildcard for comparison
+            // For URL matching, use the rule's main URL rather than newWindowURL/redirectURL at first
+            const ruleMainUrl = rule.URL.replace(/\*/g, ''); // Remove wildcard for comparison
             
-            // Handle special URL cases for specific rule types
-            let cleanedRuleUrl = ruleUrl;
+            // Handle special URL cases for specific rule types ONLY for detailed debugging
+            let cleanedRuleUrl = ruleMainUrl; 
             if (rule.opensNewWindow === "TRUE" && rule.newWindowURL !== "x") {
-                const newWindowUrl = rule.newWindowURL.replace(/\*/g, '');
-                cleanedRuleUrl = newWindowUrl;
-                logDebug(`Rule uses newWindowURL: ${cleanedRuleUrl}`);
+                logDebug(`Rule uses newWindowURL: ${rule.newWindowURL.replace(/\*/g, '')}`);
             } else if (rule.redirect === "TRUE" && rule.redirectURL !== "x") {
-                const redirectUrl = rule.redirectURL.replace(/\*/g, '');
-                cleanedRuleUrl = redirectUrl;
-                logDebug(`Rule uses redirectURL: ${cleanedRuleUrl}`);
+                logDebug(`Rule uses redirectURL: ${rule.redirectURL.replace(/\*/g, '')}`);
             }
             
             // Collect details for all rules for debugging
             const ruleDetail = {
                 ruleName: rule.RuleName,
-                ruleUrl: cleanedRuleUrl,
+                ruleUrl: ruleMainUrl, // Use main URL for matching
                 ui: rule.ui
             };
             
-            // Use the same URL matching logic EXACTLY as in popup.js
+            // Use a more flexible URL matching logic
             try {
                 const urlObj = new URL(url);
-                const ruleUrlObj = new URL(cleanedRuleUrl.startsWith('http') ? cleanedRuleUrl : 'https://' + cleanedRuleUrl);
+                const ruleUrlObj = new URL(ruleMainUrl.startsWith('http') ? ruleMainUrl : 'https://' + ruleMainUrl);
                 
                 // Add URL components to rule details
                 ruleDetail.urlPathname = urlObj.pathname;
@@ -260,16 +450,49 @@ async function setDynamicPopup(tabId, url) {
                 ruleDetail.urlHostname = urlObj.hostname;
                 ruleDetail.ruleHostname = ruleUrlObj.hostname;
                 
-                // EXACT same logic as popup.js - only check pathname
-                const isMatch = urlObj.pathname.startsWith(ruleUrlObj.pathname);
+                // Different matching strategies:
+                
+                // 1. Exact path match
+                const exactMatch = urlObj.pathname === ruleUrlObj.pathname;
+                
+                // 2. Path contains match
+                const pathContainsMatch = urlObj.pathname.includes(ruleUrlObj.pathname) && 
+                                          ruleUrlObj.pathname.length > 1; // Avoid matching just "/"
+                
+                // 3. Rule path contains URL path
+                const ruleContainsMatch = ruleUrlObj.pathname.includes(urlObj.pathname) &&
+                                          urlObj.pathname.length > 1; // Avoid matching just "/"
+                
+                // 4. Special case for interfaces - use the URL field directly
+                const isInterfaceRule = rule.RuleName === 'REST' || rule.RuleName === 'SOAP';
+                // Extract raw pathname without query params for comparison
+                const ruleUrlRaw = rule.URL.replace(/\*/g, '');
+                const urlRaw = url.split('?')[0]; // Remove query params
+                
+                // Check if interface catalog URL directly matches rule URL
+                const isInterfaceMatch = isInterfaceRule && 
+                                       (urlRaw.includes(ruleUrlRaw) || ruleUrlRaw.includes(urlRaw));
+                
+                const isMatch = exactMatch || pathContainsMatch || ruleContainsMatch || isInterfaceMatch;
+                
                 ruleDetail.isMatch = isMatch;
+                ruleDetail.exactMatch = exactMatch;
+                ruleDetail.pathContainsMatch = pathContainsMatch;
+                ruleDetail.ruleContainsMatch = ruleContainsMatch;
+                ruleDetail.isInterfaceMatch = isInterfaceMatch;
                 
                 if (isMatch) {
                     matchFound = true;
+                    let matchType = exactMatch ? "exact" : 
+                                   pathContainsMatch ? "path-contains" :
+                                   ruleContainsMatch ? "rule-contains" :
+                                   "interface";
+                    
                     logDebug("✓ URL MATCH FOUND:", {
                       ruleName: rule.RuleName,
                       urlPathname: urlObj.pathname,
                       rulePathname: ruleUrlObj.pathname,
+                      matchType: matchType,
                       popupUI: rule.ui
                     });
                 }
@@ -280,23 +503,28 @@ async function setDynamicPopup(tabId, url) {
             } catch (e) {
                 logDebug(`URL parsing failed for rule ${rule.RuleName}:`, e);
                 
-                // Fallback to regex pattern if URL parsing fails
-                const escapedPattern = cleanedRuleUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                const regex = new RegExp(`^https?:\\/\\/([^\\/]*\\.)?${escapedPattern}\\/`);
-                const isMatch = regex.test(url);
+                // Fallback to simple string matching if URL parsing fails
+                const urlSimple = url.toLowerCase();
+                const ruleSimple = ruleMainUrl.toLowerCase();
                 
-                ruleDetail.regex = regex.toString();
-                ruleDetail.isMatch = isMatch;
+                // Simple contains match for both directions
+                const simpleMatch = urlSimple.includes(ruleSimple) || ruleSimple.includes(urlSimple);
+                
+                ruleDetail.simpleMatch = simpleMatch;
+                ruleDetail.isMatch = simpleMatch;
                 allRulesDetails.push(ruleDetail);
                 
-                if (isMatch) {
+                if (simpleMatch) {
                     matchFound = true;
-                    logDebug(`✓ URL REGEX MATCH FOUND: ${rule.RuleName}`);
+                    logDebug(`✓ SIMPLE STRING MATCH FOUND: ${rule.RuleName}`);
                 }
                 
-                return isMatch;
+                return simpleMatch;
             }
         });
+
+        // If we found a matching rule through regular matching
+        let matchFound = !!matchingRule;
 
         // Log all rule matching attempts if no match was found
         if (!matchFound) {
@@ -320,8 +548,14 @@ async function setDynamicPopup(tabId, url) {
             // Verify the popup was set correctly
             chrome.action.getPopup({tabId}, (result) => {
                 logDebug(`Popup verification - current popup is: ${result}`);
-                if (result !== 'popup/' + popupUrl) {
-                    logDebug(`⚠️ WARNING: Popup verification failed! Expected 'popup/${popupUrl}' but got '${result}'`);
+                // Fix verification check to handle full paths
+                const expectedPopupPath = 'popup/' + popupUrl;
+                const isCorrect = result.endsWith(expectedPopupPath);
+                
+                if (!isCorrect) {
+                    logDebug(`⚠️ WARNING: Popup verification failed! Expected path to end with '${expectedPopupPath}' but got '${result}'`);
+                } else {
+                    logDebug("✓ Popup verification successful!");
                 }
             });
         } else {
@@ -334,8 +568,13 @@ async function setDynamicPopup(tabId, url) {
             // Verify default popup was set
             chrome.action.getPopup({tabId}, (result) => {
                 logDebug(`Default popup verification - current popup is: ${result}`);
-                if (result !== 'popup/popup.html') {
-                    logDebug(`⚠️ WARNING: Default popup verification failed! Expected 'popup/popup.html' but got '${result}'`);
+                const expectedPopupPath = 'popup/popup.html';
+                const isCorrect = result.endsWith(expectedPopupPath);
+                
+                if (!isCorrect) {
+                    logDebug(`⚠️ WARNING: Default popup verification failed! Expected path to end with '${expectedPopupPath}' but got '${result}'`);
+                } else {
+                    logDebug("✓ Default popup verification successful!");
                 }
             });
         }
@@ -843,3 +1082,105 @@ async function saveDomSnapshot(snapshot) {
     };
   }
 }
+
+// Listen for window creation to inject content scripts into interface popups
+chrome.windows.onCreated.addListener(async (window) => {
+    try {
+        // Short delay to let the window fully initialize
+        await new Promise(resolve => setTimeout(resolve, 300));
+
+        // Get all tabs in the new window
+        const tabs = await chrome.tabs.query({ windowId: window.id });
+        
+        if (tabs.length > 0) {
+            const tab = tabs[0];
+            
+            // Check if this might be an interface popup
+            const isInterfacePopup = tab.url.includes('.bigmachines.com/rest/') || 
+                                    tab.title === 'Interface Catalog';
+            
+            if (isInterfacePopup) {
+                logDebug('Detected potential interface popup window:', {
+                    windowId: window.id,
+                    tabId: tab.id,
+                    url: tab.url,
+                    title: tab.title
+                });
+                
+                // Inject content script
+                try {
+                    await chrome.scripting.executeScript({
+                        target: { tabId: tab.id },
+                        files: ['content/content.js']
+                    });
+                    
+                    logDebug('Successfully injected content script into interface popup window');
+                    
+                    // Set appropriate popup for this tab
+                    const rulesList = await fetchRulesList();
+                    let matchingRule = rulesList.find(rule => 
+                        (rule.RuleName === 'REST' && tab.url.includes('/rest/')) || 
+                        (rule.RuleName === 'SOAP' && tab.url.includes('/soap/'))
+                    );
+                    
+                    if (matchingRule) {
+                        logDebug(`Found matching rule for popup window: ${matchingRule.RuleName}`);
+                        chrome.action.setPopup({
+                            tabId: tab.id,
+                            popup: 'popup/' + matchingRule.ui,
+                        });
+                    }
+                } catch (err) {
+                    logDebug('Error injecting content script into interface popup:', err);
+                }
+            }
+        }
+    } catch (err) {
+        logDebug('Error processing new window:', err);
+    }
+});
+
+// Listen for all tab updates to catch REST interface windows
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    if (changeInfo.status === 'complete' && tab.url) {
+        // Check if this tab looks like a REST/SOAP interface
+        const isInterfaceTab = tab.url.includes('.bigmachines.com/rest/') || 
+                              (tab.title === 'Interface Catalog') ||
+                              (tab.url.includes('/admin/interfaceCatalogs/list_ics_resources.jsp')) ||
+                              (tab.url.includes('/interfaceCatalogs/') && tab.url.includes('/services/'));
+        
+        if (isInterfaceTab) {
+            logDebug('Detected REST/SOAP interface tab update:', {
+                tabId: tab.id,
+                url: tab.url,
+                title: tab.title
+            });
+            
+            // Inject content script if not already there
+            chrome.tabs.sendMessage(tabId, { greeting: 'ping' }, response => {
+                if (chrome.runtime.lastError) {
+                    logDebug('Content script not found in interface tab, injecting...');
+                    
+                    chrome.scripting.executeScript({
+                        target: { tabId: tab.id },
+                        files: ['content/content.js']
+                    }).then(() => {
+                        logDebug('Content script injected into interface tab');
+                        
+                        // Also update the dynamic popup
+                        setDynamicPopup(tabId, tab.url);
+                    }).catch(err => {
+                        logDebug('Error injecting content script:', err);
+                    });
+                } else {
+                    logDebug('Content script already present in interface tab');
+                }
+            });
+        }
+        
+        // Always check for URL changes to update the popup
+        if (changeInfo.url) {
+            setDynamicPopup(tabId, changeInfo.url);
+        }
+    }
+});

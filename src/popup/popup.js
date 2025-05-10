@@ -922,10 +922,17 @@ if (unloadXMLBtn) {
                     const soapRule = rulesList.find(r => r.AppArea === 'Interfaces' && r.RuleName === 'SOAP');
                     let savePath = '';
                     if (soapRule && soapRule.savePath) {
-                        savePath = soapRule.savePath.replace('fileName', 'interface');
+                        // Use the original directory structure from the rule
+                        // Use filename from response if available
+                        savePath = soapRule.savePath.replace('fileName', response.filename || 'interface');
                         logDebug("Using savePath for XML:", savePath);
                     }
-                    saveText('interface.xml', response.code, 'xml', savePath);
+                    
+                    // Use the filename from the response if available, otherwise use default
+                    const finalFilename = `${response.filename || 'interface'}.xml`;
+                    logDebug("Using filename for XML:", finalFilename);
+                    
+                    saveText(finalFilename, response.code, 'xml', savePath);
                 }
             }
         } catch (error) {
@@ -960,25 +967,81 @@ if (loadXMLBtn) {
 // REST Interface Handlers 
 if (unloadJSONBtn) {
     unloadJSONBtn.onclick = async () => {
-        logDebug("Unload JSON button clicked.");
+        logDebug("Unload JSON button clicked. Starting process...");
         try {
             const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            logDebug(`Active tab found, ID: ${tab.id}, URL: ${tab.url}`);
+            
             if (await ensureContentScript(tab.id)) {
-                const response = await chrome.tabs.sendMessage(tab.id, { greeting: 'unloadJSON' });
-                if (response?.code) {
-                    // Get the REST interface rule from rulesList.json to get the savePath
-                    const rulesList = await fetchRulesList();
-                    const restRule = rulesList.find(r => r.AppArea === 'Interfaces' && r.RuleName === 'REST');
-                    let savePath = '';
-                    if (restRule && restRule.savePath) {
-                        savePath = restRule.savePath.replace('fileName', 'interface');
-                        logDebug("Using savePath for JSON:", savePath);
+                logDebug("Content script is ready, sending unloadJSON message");
+                
+                try {
+                    // Use promise-based approach for better error handling
+                    const response = await new Promise((resolve, reject) => {
+                        chrome.tabs.sendMessage(
+                            tab.id, 
+                            { greeting: 'unloadJSON' }, 
+                            response => {
+                                const error = chrome.runtime.lastError;
+                                if (error) {
+                                    logDebug("Error in sendMessage callback:", error.message);
+                                    reject(error);
+                                } else if (!response) {
+                                    logDebug("No response received from content script");
+                                    reject(new Error("No response received from content script"));
+                                } else {
+                                    logDebug("Response received from content script:", response);
+                                    resolve(response);
+                                }
+                            }
+                        );
+                        
+                        // Add timeout to prevent hanging
+                        setTimeout(() => reject(new Error("Request timed out")), 5000);
+                    });
+                    
+                    if (response?.code) {
+                        // Get the REST interface rule from rulesList.json to get the savePath
+                        const rulesList = await fetchRulesList();
+                        const restRule = rulesList.find(r => r.AppArea === 'Interfaces' && r.RuleName === 'REST');
+                        logDebug("Found REST rule:", restRule);
+                        
+                        let savePath = '';
+                        if (restRule && restRule.savePath) {
+                            // Use the original directory structure from the rule
+                            savePath = restRule.savePath.replace('fileName', response.filename || 'interface');
+                            logDebug("Using savePath for JSON:", savePath);
+                        }
+                        
+                        // Use the filename from the response if available, otherwise use default
+                        const finalFilename = `${response.filename || 'interface'}.json`;
+                        logDebug("Using filename for JSON:", finalFilename);
+                        logDebug("Saving content with length:", response.code.length);
+                        
+                        saveText(finalFilename, response.code, 'json', savePath);
+                    } else {
+                        logDebug("Response does not contain code:", response);
+                        throw new Error('Invalid response from content script - missing code');
                     }
-                    saveText('interface.json', response.code, 'json', savePath);
+                } catch (messageError) {
+                    logDebug("Error sending/processing message:", messageError);
+                    throw messageError;
                 }
+            } else {
+                logDebug("Failed to ensure content script is loaded");
+                throw new Error('Content script not ready');
             }
         } catch (error) {
-            logDebug("Error unloading JSON:", error);
+            logDebug("Error in unloadJSON handler:", error);
+            // Show error to user
+            const footer = document.getElementById('footer');
+            if (footer) {
+                footer.innerHTML = `<p style="color:red">Error: ${error.message}</p>`;
+                setTimeout(() => {
+                    const manifest = chrome.runtime.getManifest();
+                    footer.innerHTML = `<p>${manifest.name} v${manifest.version}</p>`;
+                }, 5000);
+            }
         }
     };
 }
