@@ -4,14 +4,18 @@
         "inputs": [],
         "servers": {
             "mcp-server-time": {
-                "command": "python",
+                "command": "node",
                 "args": [
-                    "-m",
-                    "mcp_server_time",
-                    "--local-timezone=America/Los_Angeles"
+                    "server.js"
                 ],
                 "env": {}
             }
         }
+    },
+    "terminal.integrated.env.windows": {
+        "MCP_SERVER_URL": "ws://localhost:3000"
+    },
+    "terminal.integrated.env.linux": {
+        "MCP_SERVER_URL": "ws://localhost:3000"
     }
 }

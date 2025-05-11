@@ -20,59 +20,170 @@ const cpqContextProvider = new CPQContextProvider();
 // Handle WebSocket connections
 wss.on('connection', (ws) => {
   console.log('Client connected to the MCP server');
+  console.log('Waiting for initialize request from client...');
 
   // Handle messages from clients
   ws.on('message', async (message) => {
     try {
-      const request = JSON.parse(message);
-      console.log('Received query:', request.text || request.query);
-
-      // Process the query
-      const query = request.text || request.query || '';
-      let results = [];
-
-      // First try specialized CPQ context provider
-      const cpqResults = await cpqContextProvider.getContext(query);
-      results = [...cpqResults];
-
-      // If specialized provider didn't find enough results, use generic search
-      if (results.length < 3) {
-        const genericResults = await searchFiles(query);
-        
-        // Add generic results while avoiding duplication
-        for (const result of genericResults) {
-          const isDuplicate = results.some(r => r.filepath === result.path);
-          if (!isDuplicate) {
-            results.push({
-              content: result.content,
-              title: result.path,
-              filepath: result.path,
-              language: getLanguageFromFilePath(result.path),
-            });
+      // Convert Buffer to string if needed
+      const messageStr = message instanceof Buffer ? message.toString() : message;
+      console.log('Raw message received:', messageStr);
+      
+      let request;
+      try {
+        request = JSON.parse(messageStr);
+      } catch (parseError) {
+        console.error('Failed to parse message as JSON:', parseError.message);
+        ws.send(JSON.stringify({
+          jsonrpc: "2.0",
+          id: null,
+          error: {
+            code: -32700,
+            message: "Parse error: " + parseError.message
           }
-        }
+        }));
+        return;
       }
-
-      // Format response according to MCP spec
-      const response = {
-        type: 'response',
-        requestId: request.requestId || request.id || Date.now().toString(),
-        items: results.map((item, index) => ({
-          id: `result-${index}`,
-          ...item
-        })),
-      };
-
-      // Send response back to client
+      
+      console.log('Received request type:', request.type || request.method, 'id:', request.id);
+      
+      // Handle LSP-style initialize request
+      if (request.type === 'initialize') {
+        console.log('Handling LSP-style initialize request with id:', request.id);
+        const response = {
+          id: request.id,
+          type: 'response',
+          result: {
+            capabilities: {
+              contextProvider: true
+            },
+            name: "Streamline Tools MCP Server",
+            version: "1.0.0"
+          }
+        };
+        console.log('Sending initialize response:', JSON.stringify(response));
+        ws.send(JSON.stringify(response));
+        return;
+      }
+        // Handle JSON-RPC style initialize request
+      if (request.method === 'initialize') {
+        console.log('Handling JSON-RPC initialize request with id:', request.id);
+        const response = {
+          jsonrpc: "2.0",
+          id: request.id,
+          result: {
+            capabilities: {
+              contextProvider: true
+            },
+            name: "Streamline Tools MCP Server",
+            version: "1.0.0"
+          }
+        };
+        console.log('Sending JSON-RPC initialize response:', JSON.stringify(response));
+        ws.send(JSON.stringify(response));
+        console.log('✅ INITIALIZATION SUCCESSFUL! GitHub Copilot should now be using this MCP server.');
+        return;
+      }
+      
+      // Handle provideSuggestions or search request (used by GitHub Copilot)
+      if (request.type === 'search' || request.method === 'provideSuggestions' || request.type === 'query') {
+        // Extract query from different possible locations depending on protocol
+        let query = '';
+        
+        // JSON-RPC style
+        if (request.params && request.params.query) {
+          query = request.params.query;
+        }
+        // LSP style
+        else if (request.query) {
+          query = request.query;
+        }
+        // Handle other formats
+        else if (request.text) {
+          query = request.text;
+        }
+        
+        console.log('Processing query:', query);
+        let results = [];          try {          // First try specialized CPQ context provider with error handling
+          try {
+            // Use getContext which now exists in the CPQContextProvider class
+            const cpqResults = await cpqContextProvider.getContext(query);
+            if (Array.isArray(cpqResults)) {
+              results = [...cpqResults];
+            } else {
+              console.warn('getContext did not return an array, using empty array');
+              results = [];
+            }
+          } catch (cpqError) {
+            console.error('Error in context provider:', cpqError);
+            results = [];
+          }
+    
+          // If specialized provider didn't find enough results, use generic search
+          if (results.length < 3) {
+            const genericResults = await searchFiles(query);
+            
+            // Add generic results while avoiding duplication
+            for (const result of genericResults) {
+              const isDuplicate = results.some(r => r.filepath === result.path);
+              if (!isDuplicate) {
+                results.push({
+                  content: result.content,
+                  title: result.path,
+                  filepath: result.path,
+                  language: getLanguageFromFilePath(result.path),
+                });
+              }
+            }
+          }
+        } catch (searchError) {
+          console.error('Error during search:', searchError);
+        }
+        
+        // Format response according to protocol
+        let response;
+        
+        // JSON-RPC style
+        if (request.method) {
+          response = {
+            jsonrpc: "2.0", 
+            id: request.id,
+            result: {
+              items: results.map((item, index) => ({
+                id: `result-${index}`,
+                ...item
+              }))
+            }
+          };
+        }
+        // LSP style
+        else {
+          response = {
+            type: 'response',
+            id: request.id,
+            items: results.map((item, index) => ({
+              id: `result-${index}`,
+              ...item
+            }))
+          };
+        }      // Send response back to client
       ws.send(JSON.stringify(response));
-      console.log(`Sent ${response.items.length} results to client`);
+      
+      // Log sent items, make sure to handle different response formats
+      const itemCount = response.result ? response.result.items.length : response.items.length;
+      console.log(`Sent ${itemCount} results to client`);
+      return;
+      }
     } catch (error) {
       console.error('Error processing message:', error);
-      
-      // Send error response
+      // Send error response using JSON-RPC 2.0 format
       ws.send(JSON.stringify({
-        type: 'error',
-        message: `Error processing request: ${error.message}`
+        jsonrpc: "2.0",
+        id: request?.id || null,
+        error: {
+          code: -32603, // Internal error code
+          message: `Error processing request: ${error.message}`
+        }
       }));
     }
   });
@@ -80,12 +191,9 @@ wss.on('connection', (ws) => {
   ws.on('close', () => {
     console.log('Client disconnected from the MCP server');
   });
-
-  // Send welcome message
-  ws.send(JSON.stringify({
-    type: 'info',
-    message: 'Connected to Streamline Tools MCP Server'
-  }));
+  // Don't send welcome message, as it might interfere with the MCP protocol
+  // The initialize request will act as our handshake instead
+  console.log('Waiting for client to initiate the MCP handshake...');
 });
 
 // Function to determine language based on file extension
@@ -203,7 +311,17 @@ app.get('/', (req, res) => {
 
 // Start the server
 server.listen(port, () => {
-  console.log(`Streamline Tools MCP Server running on port ${port}`);
-  console.log(`WebSocket endpoint: ws://localhost:${port}`);
-  console.log(`To connect from GitHub Copilot, set MCP_SERVER_URL=ws://localhost:${port}`);
+  const startupMessage = [
+    `\n=======================================================`,
+    `   STREAMLINE TOOLS MCP SERVER`,
+    `=======================================================`,
+    `✓ Server running on port ${port}`,
+    `✓ WebSocket endpoint: ws://localhost:${port}`,
+    `✓ To connect from GitHub Copilot, set environment variable:`,
+    `    MCP_SERVER_URL=ws://localhost:${port}`,
+    `=======================================================`,
+    `Waiting for GitHub Copilot to connect...`,
+  ].join("\n");
+  
+  console.log(startupMessage);
 });

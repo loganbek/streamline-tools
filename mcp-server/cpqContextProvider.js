@@ -7,29 +7,67 @@ const { glob } = require('glob');
  * Specialized context provider for Streamline Tools for Oracle CPQ Cloud
  * This module focuses on understanding the relationships between rules, selectors, and application areas
  */
-class CPQContextProvider {
-  constructor() {
+class CPQContextProvider {  constructor() {
     this.rulesCache = null;
-    this.rulesPath = path.join(process.cwd(), 'src', 'rulesList.json');
+    // Fix the path to look in the parent directory instead of inside mcp-server
+    this.rulesPath = path.resolve(process.cwd(), '..', 'src', 'rulesList.json');
+    console.log('Rules path set to:', this.rulesPath);
   }
 
   /**
    * Load the rulesList.json configuration file
    * This file defines how Streamline Tools interacts with different CPQ application areas
-   */
-  async loadRules() {
+   */  async loadRules() {
     if (this.rulesCache) {
       return this.rulesCache;
     }
 
     try {
+      console.log('Attempting to load rules from:', this.rulesPath);
+      // Check if the file exists first
+      try {
+        await fs.promises.access(this.rulesPath, fs.constants.R_OK);
+      } catch (accessError) {
+        console.error('Rules file does not exist or is not accessible:', this.rulesPath);
+        // Try to find the file elsewhere
+        console.log('Searching for rulesList.json in the workspace...');
+        const potentialPaths = [
+          path.join(process.cwd(), 'src', 'rulesList.json'),
+          path.join(process.cwd(), '..', 'src', 'rulesList.json'),
+          path.join(process.cwd(), '../..', 'src', 'rulesList.json')
+        ];
+        
+        for (const potentialPath of potentialPaths) {
+          try {
+            await fs.promises.access(potentialPath, fs.constants.R_OK);
+            console.log('Found rules file at:', potentialPath);
+            this.rulesPath = potentialPath;
+            break;
+          } catch (e) {
+            console.log('No rules file at:', potentialPath);
+          }
+        }
+      }
+      
       const rulesContent = await fs.promises.readFile(this.rulesPath, 'utf8');
       this.rulesCache = JSON.parse(rulesContent);
+      console.log('Successfully loaded rules list with', this.rulesCache.length, 'rules');
       return this.rulesCache;
     } catch (error) {
       console.error('Error loading rules list:', error);
+      // Return an empty array as fallback
+      console.log('Using empty array as fallback for rules');
       return [];
     }
+  }
+  /**
+   * Get context from queries - generic method to match MCP protocol expectations
+   * @param {string} query - User's query
+   * @returns {Array} Relevant context items
+   */
+  async getContext(query) {
+    // Delegate to the specific implementation
+    return this.getCPQContext(query);
   }
 
   /**
