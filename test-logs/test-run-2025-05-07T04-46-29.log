@@ -1,0 +1,52 @@
+Test run started at 2025-05-07T04:46:29.189Z
+Configuration: {
+  "bypassLogin": true,
+  "headless": false,
+  "forceVideo": false,
+  "rule": "validation"
+}
+
+Running command: npm test -- --testPathPattern=commerceValidation --verbose
+
+> streamline-tools@1.0.0 test
+> jest --testPathPattern=commerceValidation --verbose
+
+[ERROR] ● Validation Warning:
+
+  Unknown option "retryTimes" with value 1 was found.
+  This is probably a typing mistake. Fixing it will remove this message.
+
+  Configuration Documentation:
+  https://jestjs.io/docs/configuration
+
+[ERROR] ● Validation Warning:
+
+  Unknown option "testTimeout" with value 30000 was found.
+  This is probably a typing mistake. Fixing it will remove this message.
+
+  Configuration Documentation:
+  https://jestjs.io/docs/configuration
+
+[ERROR] ● Validation Warning:
+
+  Unknown option "testTimeout" with value 60000 was found.
+  This is probably a typing mistake. Fixing it will remove this message.
+
+  Configuration Documentation:
+  https://jestjs.io/docs/configuration
+
+No tests found, exiting with code 1
+Run with `--passWithNoTests` to exit with code 0
+In C:\Users\logan\code\streamline-tools
+  92 files checked.
+  testMatch: C:/Users/logan/code/streamline-tools/tests/unit/**/*.test.js - 5 matches
+  testPathIgnorePatterns: \\node_modules\\ - 92 matches
+  testRegex:  - 0 matches
+In C:\Users\logan\code\streamline-tools
+  92 files checked.
+  testMatch: C:/Users/logan/code/streamline-tools/tests/puppeteer/**/*.test.js - 20 matches
+  testPathIgnorePatterns: \\node_modules\\ - 92 matches
+  testRegex:  - 0 matches
+Pattern: commerceValidation - 0 matches
+
+Test run completed with exit code 1 in 1.34 seconds

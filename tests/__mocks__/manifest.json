@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+  "name": "Streamline Tools",
+  "version": "1.0.0",
+  "description": "Streamline your CPQ workflows, development, administration and maintenance",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "background": {
+    "scripts": ["background/background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content/content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    "rulesList.json"
+  ]
+}

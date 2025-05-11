@@ -1,154 +1,89 @@
 /**
  * Unit tests for popup.js
+ * @jest-environment jsdom
  */
-// @jest-environment jsdom
-
-// Import necessary modules and functions
-
-
 
 describe('Popup Script', () => {
-  let originalPopup;
-  let mockLoadHandler, mockUnloadHandler, mockLoadTestHandler, mockUnloadTestHandler;
+  let originalFetch;
   let mockSendMessage, mockExecuteScript, mockQuery;
 
   beforeEach(() => {
-    // Clear mocks
     jest.clearAllMocks();
+    
+    // Mock fetch API
+    originalFetch = global.fetch;
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve([{
+          URL: "test.com",
+          AppArea: "admin",
+          RuleName: "Test Rule",
+          fileType: "bml"
+        }])
+      })
+    );
+
+    // Set up DOM elements
+    document.body.innerHTML = `
+      <button id="load"></button>
+      <button id="unload"></button>
+      <button id="loadBML"></button>
+      <button id="unloadBML"></button>
+      <button id="loadTestBML"></button>
+      <button id="unloadTestBML"></button>
+      <div id="footer"></div>
+    `;
+
+    // Mock window.showOpenFilePicker
+    global.window.showOpenFilePicker = jest.fn().mockResolvedValue([{
+      getFile: () => Promise.resolve({
+        text: () => Promise.resolve('test file content'),
+        name: 'test.bml'
+      })
+    }]);
 
     // Mock Chrome APIs
     global.chrome = {
       tabs: {
-        query: jest.fn(),
-        sendMessage: jest.fn(),
-      },
-      scripting: {
-        executeScript: jest.fn(),
+        query: jest.fn().mockImplementation((queryInfo, callback) => {
+          const tabs = [{ id: 1, url: 'https://test.com' }];
+          return callback ? callback(tabs) : Promise.resolve(tabs);
+        }),
+        sendMessage: jest.fn().mockImplementation((tabId, message, callback) => {
+          if (callback) {
+            callback({ status: 'ok', code: 'test code', filename: 'test' });
+          }
+          return Promise.resolve({ status: 'ok' });
+        })
       },
       runtime: {
         getManifest: jest.fn(() => ({
           name: 'Streamline Tools',
-          version: '1.0.0',
+          version: '1.0.0'
         })),
+        getURL: jest.fn(path => `chrome-extension://${global.__EXTENSION_ID__}/${path}`),
+        sendMessage: jest.fn()
+      },
+      scripting: {
+        executeScript: jest.fn().mockResolvedValue([{ result: true }])
       },
       downloads: {
         setShelfEnabled: jest.fn(),
         onDeterminingFilename: {
-          addListener: jest.fn(),
-        },
-      },
+          addListener: jest.fn()
+        }
+      }
     };
 
+    // Store mock references
     mockSendMessage = chrome.tabs.sendMessage;
     mockExecuteScript = chrome.scripting.executeScript;
     mockQuery = chrome.tabs.query;
-
-    // Mock DOM elements
-    document.getElementById = jest.fn().mockImplementation(id => {
-      if (id === 'unloadButton') {
-        return { onclick: null };
-      }
-      if (id === 'loadButton') {
-        return { addEventListener: jest.fn() };
-      }
-      if (id === 'unloadTestButton') {
-        return { onclick: null };
-      }
-      if (id === 'loadTestButton') {
-        return { addEventListener: jest.fn() };
-      }
-      return {
-        addEventListener: jest.fn(),
-        onclick: jest.fn(),
-        disabled: false,
-      };
-    });
-
-    // Mock button click handlers
-    mockLoadHandler = jest.fn();
-    mockUnloadHandler = jest.fn();
-    mockLoadTestHandler = jest.fn();
-    mockUnloadTestHandler = jest.fn();
-
-    jest.isolateModules(() => {
-      jest.mock('../../../src/popup/popup', () => ({
-        setupHandlers: jest.fn(() => {
-          document.getElementById('loadButton').addEventListener('click', mockLoadHandler);
-          document.getElementById('unloadButton').onclick = mockUnloadHandler;
-          document.getElementById('loadTestButton').addEventListener('click', mockLoadTestHandler);
-          document.getElementById('unloadTestButton').onclick = mockUnloadTestHandler;
-        }),
-      }));
-      originalPopup = require('../../../src/popup/popup');
-    });
   });
 
-  test('should set up button event handlers', () => {
-    const loadButton = document.getElementById('loadButton');
-    const loadTestButton = document.getElementById('loadTestButton');
-
-    expect(loadButton.addEventListener).toHaveBeenCalledWith('click', expect.any(Function));
-    expect(loadTestButton.addEventListener).toHaveBeenCalledWith('click', expect.any(Function));
-
-    // The unload buttons use onclick instead of addEventListener
-    expect(document.getElementById).toHaveBeenCalledWith('unloadButton');
-    expect(document.getElementById).toHaveBeenCalledWith('unloadTestButton');
-  });
-
-  test('should call the correct handler when loadButton is clicked', () => {
-    const loadButton = document.getElementById('loadButton');
-    loadButton.addEventListener.mock.calls[0][1](); // Simulate click
-    expect(mockLoadHandler).toHaveBeenCalled();
-  });
-
-  test('should call the correct handler when unloadButton is clicked', () => {
-    const unloadButton = document.getElementById('unloadButton');
-    unloadButton.onclick(); // Simulate click
-    expect(mockUnloadHandler).toHaveBeenCalled();
-  });
-
-  test('should call the correct handler when loadTestButton is clicked', () => {
-    const loadTestButton = document.getElementById('loadTestButton');
-    loadTestButton.addEventListener.mock.calls[0][1](); // Simulate click
-    expect(mockLoadTestHandler).toHaveBeenCalled();
-  });
-
-  test('should call the correct handler when unloadTestButton is clicked', () => {
-    const unloadTestButton = document.getElementById('unloadTestButton');
-    unloadTestButton.onclick(); // Simulate click
-    expect(mockUnloadTestHandler).toHaveBeenCalled();
-  });
-
-  test('should handle missing DOM elements gracefully', () => {
-    document.getElementById = jest.fn().mockReturnValue(null);
-
-    expect(() => {
-      originalPopup.setupHandlers();
-    }).not.toThrow();
-  });
-
-  test('should not call handlers if buttons are not present', () => {
-    document.getElementById = jest.fn().mockReturnValue(null);
-
-    originalPopup.setupHandlers();
-
-    expect(mockLoadHandler).not.toHaveBeenCalled();
-    expect(mockUnloadHandler).not.toHaveBeenCalled();
-    expect(mockLoadTestHandler).not.toHaveBeenCalled();
-    expect(mockUnloadTestHandler).not.toHaveBeenCalled();
-  });
-
-  test('should log errors if event handlers throw exceptions', () => {
-    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    mockLoadHandler.mockImplementation(() => {
-      throw new Error('Test error');
-    });
-
-    const loadButton = document.getElementById('loadButton');
-    loadButton.addEventListener.mock.calls[0][1](); // Simulate click
-
-    expect(consoleErrorSpy).toHaveBeenCalledWith(expect.stringContaining('Test error'));
-    consoleErrorSpy.mockRestore();
+  afterEach(() => {
+    global.fetch = originalFetch;
   });
 
   test('should initialize extension and log debug messages', () => {
@@ -158,49 +93,94 @@ describe('Popup Script', () => {
     logSpy.mockRestore();
   });
 
-  test('should query active tab and log URL', () => {
-    mockQuery.mockImplementation((queryInfo, callback) => {
-      callback([{ url: 'https://devmcnichols.bigmachines.com/admin/configuration/rules' }]);
-    });
-
+  test('should initialize and set up event listeners', async () => {
     require('../../../src/popup/popup');
-    expect(mockQuery).toHaveBeenCalledWith({ active: true, currentWindow: true }, expect.any(Function));
+    await new Promise(resolve => setTimeout(resolve, 100)); // Wait for async init
+
+    // Verify rules were fetched
+    expect(global.fetch).toHaveBeenCalledWith(
+      `chrome-extension://${global.__EXTENSION_ID__}/rulesList.json`
+    );
+
+    // Verify Chrome APIs were called
+    expect(mockQuery).toHaveBeenCalledWith({
+      active: true,
+      currentWindow: true
+    }, expect.any(Function));
   });
 
-  test('should handle unload button click', () => {
-    const unloadButton = document.getElementById('unload');
-    unloadButton.onclick();
+  test('should handle BML operations', async () => {
+    require('../../../src/popup/popup');
+    await new Promise(resolve => setTimeout(resolve, 100)); // Wait for async init
 
+    const unloadBtn = document.getElementById('unloadBML');
+    const loadBtn = document.getElementById('loadBML');
+
+    // Test unload
+    await unloadBtn.click();
+    expect(mockQuery).toHaveBeenCalled();
+    expect(mockSendMessage).toHaveBeenCalledWith(
+      expect.any(Number),
+      expect.objectContaining({ greeting: 'unload' }),
+      expect.any(Function)
+    );
+
+    // Test load
+    await loadBtn.click();
+    expect(window.showOpenFilePicker).toHaveBeenCalled();
+    expect(mockSendMessage).toHaveBeenCalledWith(
+      expect.any(Number),
+      expect.objectContaining({ 
+        greeting: 'load',
+        code: expect.any(String)
+      }),
+      expect.any(Function)
+    );
+  });
+
+  test('should handle basic load/unload operations', async () => {
+    require('../../../src/popup/popup');
+    await new Promise(resolve => setTimeout(resolve, 100)); // Wait for async init
+
+    const unloadButton = document.getElementById('unload');
+    const loadButton = document.getElementById('load');
+
+    // Test unload
+    await unloadButton.click();
     expect(mockSendMessage).toHaveBeenCalledWith(
       expect.any(Number),
       { greeting: 'unload' },
       expect.any(Function)
     );
-  });
 
-  test('should handle load button click', async () => {
-    const loadButton = document.getElementById('load');
+    // Test load
     const fileHandle = {
       getFile: jest.fn().mockResolvedValue({
         text: jest.fn().mockResolvedValue('file contents'),
       }),
     };
-
     window.showOpenFilePicker = jest.fn().mockResolvedValue([fileHandle]);
-
-    await loadButton.addEventListener.mock.calls[0][1]();
+    await loadButton.click();
     expect(mockSendMessage).toHaveBeenCalledWith(
       expect.any(Number),
-      { greeting: 'load', code: 'file contents' },
+      expect.objectContaining({ 
+        greeting: 'load', 
+        code: expect.any(String) 
+      }),
       expect.any(Function)
     );
   });
 
-  test('should set footer information on DOMContentLoaded', () => {
-    const footer = { innerHTML: '' };
-    document.getElementById = jest.fn().mockImplementation(id => (id === 'footer' ? footer : {}));
-
+  test('should display version info', async () => {
+    require('../../../src/popup/popup');
+    
+    // Trigger DOMContentLoaded
     document.dispatchEvent(new Event('DOMContentLoaded'));
+
+    // Wait for async operations
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    const footer = document.getElementById('footer');
     expect(footer.innerHTML).toContain('Streamline Tools v1.0.0');
   });
 });

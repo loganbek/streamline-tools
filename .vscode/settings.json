@@ -1,2 +1,21 @@
 {
+    "chat.tools.autoApprove": true,
+    "mcp": {
+        "inputs": [],
+        "servers": {
+            "mcp-server-time": {
+                "command": "node",
+                "args": [
+                    "server.js"
+                ],
+                "env": {}
+            }
+        }
+    },
+    "terminal.integrated.env.windows": {
+        "MCP_SERVER_URL": "ws://localhost:3000"
+    },
+    "terminal.integrated.env.linux": {
+        "MCP_SERVER_URL": "ws://localhost:3000"
+    }
 }

@@ -3,7 +3,7 @@ language: "en-US"
 early_access: true
 enable_free_tier: true
 reviews:
-  profile: "assertive"
+  profile: "chill"
   request_changes_workflow: true
   high_level_summary: true
   poem: true
@@ -28,7 +28,7 @@ reviews:
     ignore_title_keywords:
       - "WIP"
       - "DO NOT MERGE"
-    drafts: false
+    drafts: true
     base_branches:
       - "master"
       - "coverage"
