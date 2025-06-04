@@ -1,0 +1,25 @@
+{
+    "servers": {
+        "streamline-tools-sdk": {
+            "type": "stdio",
+            "command": "node",
+            "args": [
+                "${workspaceFolder}/mcp-server/sdk-server.js"
+            ]
+        },
+        "streamline-tools-simple": {
+            "type": "stdio",
+            "command": "node",
+            "args": [
+                "${workspaceFolder}/mcp-server/simple-server.js"
+            ]
+        },
+        "streamline-tools-main": {
+            "type": "stdio",
+            "command": "node",
+            "args": [
+                "${workspaceFolder}/mcp-server/server.js"
+            ]
+        }
+    }
+}

@@ -57,15 +57,27 @@ async function launchChromeWithExtension() {
     slowMo: 50 // Slow down for visual debugging
   });
 
-  // This part is tricky - we need to get the extension ID
-  const targets = await global.browser.targets();
-  const extensionTarget = targets.find(target => 
-    target.type() === 'service_worker' && 
-    target.url().startsWith('chrome-extension://')
-  );
+  // Try to get the extension ID with retries
+  let attempts = 0;
+  const maxAttempts = 5;
   
-  const extensionUrl = extensionTarget.url();
-  const [, , extensionId] = extensionUrl.split('/');
+  while (attempts < maxAttempts) {
+    const targets = await global.browser.targets();
+    const extensionTarget = targets.find(target => 
+      (target.type() === 'background_page' || target.type() === 'service_worker') && 
+      target.url().startsWith('chrome-extension://')
+    );
+    
+    if (extensionTarget) {
+      const extensionUrl = extensionTarget.url();
+      const [, , extensionId] = extensionUrl.split('/');
+      return extensionId;
+    }
+    
+    // Wait with exponential backoff
+    await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempts) * 1000));
+    attempts++;
+  }
   
-  return extensionId;
+  throw new Error('Extension background page or service worker not found after ' + maxAttempts + ' attempts');
 }
