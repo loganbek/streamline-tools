@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { glob } = require('glob');
 const WebSocket = require('ws');
+const _ = require('lodash');
 
 // Initialize Express app
 const app = express();
@@ -285,8 +286,10 @@ function calculateRelevance(content, keywords) {
   
   // Check each keyword
   for (const keyword of keywords) {
+    // Sanitize keyword to prevent regular expression injection
+    const safeKeyword = _.escapeRegExp(keyword);
     // Count occurrences
-    const occurrences = (contentLower.match(new RegExp(keyword, 'g')) || []).length;
+    const occurrences = (contentLower.match(new RegExp(safeKeyword, 'g')) || []).length;
     score += occurrences;
     
     // Bonus points for keywords in comments or function names
