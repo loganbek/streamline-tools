@@ -1,2 +1,67 @@
 {
+    "github.copilot.enable": {
+        "*": true,
+        "yaml": true,
+        "plaintext": true,
+        "markdown": true,
+        "javascript": true,
+        "typescript": true,
+        "json": true,
+        "xml": true,
+        "css": true,
+        "html": true
+    },
+    "github.copilot.advanced": {
+        "secret_key": "anonymous",
+        "length": 500,
+        "temperature": 0,
+        "top_p": 1,
+        "stop": ["\n\n"],
+        "inlineSuggestCount": 3,
+        "listCount": 10,
+        "debug.overrideEngine": "codegen-chat",
+        "debug.testOverrideProxyUrl": "",
+        "debug.overrideProxyUrl": ""
+    },
+    "github.copilot.chat.localeOverride": "en",
+    "github.copilot.chat.welcomeMessage": "always",
+    "files.associations": {
+        "*.bml": "javascript",
+        "*.xsl": "xml",
+        "*.cpq": "json"
+    },
+    "javascript.validate.enable": false,
+    "standard.enable": true,
+    "standard.run": "onType",
+    "standard.autoFixOnSave": true,
+    "typescript.preferences.includePackageJsonAutoImports": "auto",
+    "typescript.suggest.autoImports": true,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "jest.jestCommandLine": "npm test",
+    "jest.autoRun": "watch",
+    "jest.showCoverageOnLoad": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit"
+    },
+    "files.exclude": {
+        "**/node_modules": true,
+        "**/.git": true,
+        "**/coverage": true,
+        "**/dist": true
+    },
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/coverage": true,
+        "**/dist": true
+    },
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "git.enableCommitSigning": true,
+    "git.autofetch": true,
+    "git.confirmSync": false
 }

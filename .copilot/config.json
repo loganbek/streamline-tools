@@ -1,0 +1,76 @@
+{
+  "version": "1.0",
+  "name": "Streamline Tools Copilot Configuration",
+  "description": "GitHub Copilot configuration for Oracle CPQ development with Streamline Tools",
+  "context": {
+    "project": "streamline-tools",
+    "domain": "Oracle CPQ Cloud",
+    "technologies": [
+      "JavaScript",
+      "TypeScript", 
+      "Chrome Extensions",
+      "Oracle BML",
+      "XSL",
+      "JSON",
+      "XML",
+      "CSS",
+      "Jest",
+      "Puppeteer"
+    ]
+  },
+  "prompts": {
+    "systemPrompt": "You are helping with Oracle CPQ development using Streamline Tools, a Chrome extension. Focus on CPQ-specific patterns, BML syntax, XSL transformations, and Chrome extension best practices.",
+    "codeGeneration": {
+      "style": "StandardJS",
+      "patterns": [
+        "Chrome extension content scripts",
+        "Oracle CPQ BML functions", 
+        "XSL transformations",
+        "JSON configuration objects",
+        "Jest test cases",
+        "Puppeteer automation scripts"
+      ]
+    }
+  },
+  "codePatterns": {
+    "bml": {
+      "functions": "util.function_name()",
+      "variables": "var_name_format",
+      "conditionals": "if(condition) { ... } else { ... }",
+      "loops": "for(i = 0; i < length; i++) { ... }"
+    },
+    "chromeExtension": {
+      "messaging": "chrome.runtime.sendMessage()",
+      "storage": "chrome.storage.local.get()",
+      "tabs": "chrome.tabs.query()",
+      "contentScript": "Content script injection patterns"
+    }
+  },
+  "testPatterns": {
+    "jest": {
+      "structure": "describe/it/expect pattern",
+      "mocking": "Mock Chrome APIs and external dependencies",
+      "coverage": "Aim for high test coverage on business logic"
+    }
+  },
+  "qualityGuidelines": {
+    "security": [
+      "Sanitize all user inputs",
+      "Use Content Security Policy",
+      "Validate data transformations",
+      "Secure inter-script communication"
+    ],
+    "performance": [
+      "Minimize bundle size",
+      "Optimize DOM operations",
+      "Use efficient algorithms",
+      "Implement proper caching"
+    ],
+    "maintainability": [
+      "Follow StandardJS guidelines",
+      "Write comprehensive documentation",
+      "Use descriptive naming",
+      "Implement error handling"
+    ]
+  }
+}
