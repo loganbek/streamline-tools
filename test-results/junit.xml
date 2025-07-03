@@ -1,5 +1,5 @@
-<testsuites id="" name="" tests="7" failures="0" skipped="7" errors="0" time="0.181341">
-<testsuite name="extension.test.js" timestamp="2025-07-03T19:56:42.649Z" hostname="chromium-extension" tests="4" failures="0" skipped="4" time="0" errors="0">
+<testsuites id="" name="" tests="16" failures="0" skipped="16" errors="0" time="0.19177999999999998">
+<testsuite name="extension.test.js" timestamp="2025-07-03T20:00:27.824Z" hostname="chromium-extension" tests="4" failures="0" skipped="4" time="0" errors="0">
 <testcase name="Chrome Extension Tests › should load extension options page" classname="extension.test.js" time="0">
 <skipped>
 </skipped>
@@ -17,7 +17,25 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="login.test.js" timestamp="2025-07-03T19:56:42.649Z" hostname="chromium-extension" tests="3" failures="0" skipped="3" time="0" errors="0">
+<testsuite name="interfaces.test.js" timestamp="2025-07-03T20:00:27.824Z" hostname="chromium-extension" tests="4" failures="0" skipped="4" time="0" errors="0">
+<testcase name="Interfaces Tests › should navigate to interfaces REST page" classname="interfaces.test.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Interfaces Tests › should navigate to interfaces SOAP page" classname="interfaces.test.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Interfaces Tests › should handle REST metadata operations" classname="interfaces.test.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Interfaces Tests › should handle SOAP operations" classname="interfaces.test.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="login.test.js" timestamp="2025-07-03T20:00:27.824Z" hostname="chromium-extension" tests="3" failures="0" skipped="3" time="0" errors="0">
 <testcase name="Login Tests › should successfully login using helper function" classname="login.test.js" time="0">
 <skipped>
 </skipped>
@@ -27,6 +45,28 @@
 </skipped>
 </testcase>
 <testcase name="Login Tests › should validate login form elements" classname="login.test.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="stylesheet.test.js" timestamp="2025-07-03T20:00:27.824Z" hostname="chromium-extension" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="Stylesheet Tests › should navigate to stylesheet editor" classname="stylesheet.test.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Stylesheet Tests › should load CSS content into editor" classname="stylesheet.test.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Stylesheet Tests › should verify stylesheet popup functionality" classname="stylesheet.test.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Stylesheet Tests › should test CSS validation and formatting" classname="stylesheet.test.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Stylesheet Tests › should test CSS unload and load workflow" classname="stylesheet.test.js" time="0">
 <skipped>
 </skipped>
 </testcase>
