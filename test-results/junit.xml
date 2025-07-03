@@ -1,5 +1,5 @@
-<testsuites id="" name="" tests="16" failures="0" skipped="16" errors="0" time="0.19177999999999998">
-<testsuite name="extension.test.js" timestamp="2025-07-03T20:00:27.824Z" hostname="chromium-extension" tests="4" failures="0" skipped="4" time="0" errors="0">
+<testsuites id="" name="" tests="19" failures="0" skipped="19" errors="0" time="0.14560799999999996">
+<testsuite name="extension.test.js" timestamp="2025-07-03T20:03:18.241Z" hostname="chromium-extension" tests="4" failures="0" skipped="4" time="0" errors="0">
 <testcase name="Chrome Extension Tests › should load extension options page" classname="extension.test.js" time="0">
 <skipped>
 </skipped>
@@ -17,7 +17,21 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="interfaces.test.js" timestamp="2025-07-03T20:00:27.824Z" hostname="chromium-extension" tests="4" failures="0" skipped="4" time="0" errors="0">
+<testsuite name="header-footer-basic.test.js" timestamp="2025-07-03T20:03:18.241Z" hostname="chromium-extension" tests="3" failures="0" skipped="3" time="0" errors="0">
+<testcase name="Header &amp; Footer Basic Tests › should simulate header/footer HTML editor without CPQ" classname="header-footer-basic.test.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Header &amp; Footer Basic Tests › should test header/footer template validation" classname="header-footer-basic.test.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Header &amp; Footer Basic Tests › should test extension popup integration" classname="header-footer-basic.test.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="interfaces.test.js" timestamp="2025-07-03T20:03:18.241Z" hostname="chromium-extension" tests="4" failures="0" skipped="4" time="0" errors="0">
 <testcase name="Interfaces Tests › should navigate to interfaces REST page" classname="interfaces.test.js" time="0">
 <skipped>
 </skipped>
@@ -35,7 +49,7 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="login.test.js" timestamp="2025-07-03T20:00:27.824Z" hostname="chromium-extension" tests="3" failures="0" skipped="3" time="0" errors="0">
+<testsuite name="login.test.js" timestamp="2025-07-03T20:03:18.241Z" hostname="chromium-extension" tests="3" failures="0" skipped="3" time="0" errors="0">
 <testcase name="Login Tests › should successfully login using helper function" classname="login.test.js" time="0">
 <skipped>
 </skipped>
@@ -49,7 +63,7 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="stylesheet.test.js" timestamp="2025-07-03T20:00:27.824Z" hostname="chromium-extension" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testsuite name="stylesheet.test.js" timestamp="2025-07-03T20:03:18.241Z" hostname="chromium-extension" tests="5" failures="0" skipped="5" time="0" errors="0">
 <testcase name="Stylesheet Tests › should navigate to stylesheet editor" classname="stylesheet.test.js" time="0">
 <skipped>
 </skipped>
