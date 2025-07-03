@@ -20,6 +20,25 @@
 </head>
 
 <body>
+        <!-- GitHub Login Section -->
+        <div id="githubSection">
+            <div id="githubLoginContainer" style="display: none;">
+                <button id="githubLogin" aria-label="Login with GitHub">
+                    <i class="material-icons md-18">login</i> Login with GitHub
+                </button>
+            </div>
+            <div id="githubUserContainer" style="display: none;">
+                <p id="githubUserInfo">Logged in as: <span id="githubUsername"></span></p>
+                <button id="githubLogout" aria-label="Logout from GitHub">
+                    <i class="material-icons md-18">logout</i> Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Separator -->
+        <hr style="margin: 10px 0; border: 1px solid #ccc;">
+
+        <!-- Existing BML Tools -->
         <button id="unload" aria-label="Unload BML"> Unload BML <i class="material-icons md-18">keyboard_arrow_right</i><i
                         class="material-icons md-18">keyboard_arrow_right</i></button>
 

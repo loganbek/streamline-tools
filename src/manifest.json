@@ -11,7 +11,12 @@
     "tabs",
     "scripting",
     "commands",
-    "sidePanel"
+    "sidePanel",
+    "identity"
+  ],
+  "host_permissions": [
+    "https://github.com/*",
+    "https://api.github.com/*"
   ],
   "options_ui": {
     "page": "options/options.html",

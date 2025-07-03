@@ -19,6 +19,8 @@ let bmSiteSubDomain = '';
 let bmSiteType = '';
 let bmRuleType = '';
 let bmFileType = 'bml';
+let githubLoginStatus = false;
+let githubUsername = null;
 
 // URL Matchers for Different Sections and Rule Types
 const URL_MATCHERS = {
@@ -225,6 +227,20 @@ document.getElementById('loadTest').addEventListener('click', async () => {
     });
 });
 
+// Options button event listener
+document.getElementById('options').addEventListener('click', () => {
+    logDebug("Options button clicked.");
+    chrome.runtime.openOptionsPage();
+});
+
+// Logs button event listener
+document.getElementById('logs').addEventListener('click', () => {
+    logDebug("Logs button clicked.");
+    // For now, just log a message. This could open a log viewer in the future.
+    console.log("Logs feature not yet implemented.");
+    alert("Logs feature coming soon!");
+});
+
 // Initialize Extension
 chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const url = tabs[0]?.url;
@@ -239,11 +255,92 @@ logDebug("Extension initialized.");
 // FOOTER INFORMATION
 const manifest = chrome.runtime.getManifest();
 
-document.addEventListener('DOMContentLoaded', () => {
-    logDebug("DOM fully loaded, setting footer information.");
-    document.getElementById('footer').innerHTML = getFooter();
-});
-
 function getFooter() {
     return '<p>' + manifest.name + ' v' + manifest.version + '</p>';
 }
+
+// GitHub Login Functions
+/**
+ * Updates the GitHub login UI based on login status
+ */
+function updateGitHubUI() {
+    const loginContainer = document.getElementById('githubLoginContainer');
+    const userContainer = document.getElementById('githubUserContainer');
+    const usernameSpan = document.getElementById('githubUsername');
+    
+    if (githubLoginStatus && githubUsername) {
+        loginContainer.style.display = 'none';
+        userContainer.style.display = 'block';
+        usernameSpan.textContent = githubUsername;
+        logDebug("GitHub UI updated: logged in as", githubUsername);
+    } else {
+        loginContainer.style.display = 'block';
+        userContainer.style.display = 'none';
+        logDebug("GitHub UI updated: not logged in");
+    }
+}
+
+/**
+ * Check GitHub login status on popup load
+ */
+function checkGitHubLoginStatus() {
+    logDebug("Checking GitHub login status...");
+    chrome.runtime.sendMessage({ action: 'checkGitHubStatus' });
+}
+
+// GitHub Login Event Listeners
+document.addEventListener('DOMContentLoaded', () => {
+    logDebug("DOM fully loaded, setting up GitHub login...");
+    
+    // Set up event listeners for GitHub login/logout
+    document.getElementById('githubLogin').addEventListener('click', () => {
+        logDebug("GitHub login button clicked");
+        chrome.runtime.sendMessage({ action: 'githubLogin' });
+    });
+    
+    document.getElementById('githubLogout').addEventListener('click', () => {
+        logDebug("GitHub logout button clicked");
+        chrome.runtime.sendMessage({ action: 'githubLogout' });
+    });
+    
+    // Check login status
+    checkGitHubLoginStatus();
+    
+    // Set footer
+    document.getElementById('footer').innerHTML = getFooter();
+});
+
+// Listen for messages from background script
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    logDebug("Popup received message:", message);
+    
+    switch (message.type) {
+        case 'githubLoginStatus':
+            githubLoginStatus = message.isLoggedIn;
+            githubUsername = message.user || null;
+            updateGitHubUI();
+            break;
+            
+        case 'githubAuthSuccess':
+            githubLoginStatus = true;
+            githubUsername = message.user;
+            updateGitHubUI();
+            logDebug("GitHub login successful:", message.user);
+            break;
+            
+        case 'githubAuthError':
+            logDebug("GitHub auth error:", message.error);
+            alert(`GitHub Login Error: ${message.error}`);
+            break;
+            
+        case 'githubLogoutSuccess':
+            githubLoginStatus = false;
+            githubUsername = null;
+            updateGitHubUI();
+            logDebug("GitHub logout successful");
+            break;
+            
+        default:
+            logDebug("Unhandled message type:", message.type);
+    }
+});

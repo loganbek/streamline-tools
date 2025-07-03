@@ -11,6 +11,9 @@ function logDebug(message, ...args) {
 document.addEventListener('DOMContentLoaded', function () {
   console.log('document loaded');
 
+  // Load existing options
+  loadOptions();
+
   // Initialize save button
   const saveButton = document.getElementById('save');
   if (saveButton) {
@@ -19,13 +22,14 @@ document.addEventListener('DOMContentLoaded', function () {
       
       // Get values from form elements
       const options = {
+        githubClientId: document.getElementById('githubClientId').value.trim(),
         // Add your options here, for example:
         // setting1: document.getElementById('setting1').value,
         // setting2: document.getElementById('setting2').checked,
       };
 
       // Save to Chrome storage
-      chrome.storage.sync.set(options, function() {
+      chrome.storage.local.set(options, function() {
         // Update status to let user know options were saved
         const status = document.getElementById('status');
         if (status) {
@@ -63,13 +67,20 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
+/**
+ * Load existing options from storage
+ */
+function loadOptions() {
+  chrome.storage.local.get(['githubClientId'], function(result) {
+    if (result.githubClientId) {
+      document.getElementById('githubClientId').value = result.githubClientId;
+      logDebug("Loaded GitHub Client ID from storage");
+    }
+  });
+}
+
 // FOOTER INFORMATION
 const manifest = chrome.runtime.getManifest();
-
-document.addEventListener('DOMContentLoaded', () => {
-    logDebug("DOM fully loaded, setting footer information.");
-    document.getElementById('footer').innerHTML = getFooter();
-});
 
 // Function to get footer content
 function getFooter() {

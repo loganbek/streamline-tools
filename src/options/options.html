@@ -27,7 +27,22 @@
     
     <!-- Placeholder for future options -->
     <div>
-        <h2>(Coming Soon!)</h2>
+        <h2>GitHub Configuration</h2>
+        <div style="margin-bottom: 20px;">
+            <label for="githubClientId">GitHub OAuth Client ID:</label>
+            <input type="text" id="githubClientId" placeholder="Enter your GitHub OAuth App Client ID" style="width: 300px; margin-left: 10px;" />
+            <p style="font-size: 12px; color: #666; margin-top: 5px;">
+                To use GitHub login, create an OAuth App at 
+                <a href="https://github.com/settings/developers" target="_blank">GitHub Developer Settings</a>
+                and enter the Client ID here.
+            </p>
+            <p style="font-size: 12px; color: #666;">
+                <strong>Authorization callback URL:</strong> Set this to the extension's redirect URL (shown in console when you attempt login).
+            </p>
+        </div>
+
+        <h2>Other Options</h2>
+        <h3>(Coming Soon!)</h3>
         <!-- REVIEW | Future Options Selections -->
         <!-- <label><input type="checkbox" id="includeCommentHeader"> Include Comment Header</label> -->
         <!-- <label>GitHub Repository: <textarea>https://github.com/loganbek/streamlineTools</textarea></label> -->
