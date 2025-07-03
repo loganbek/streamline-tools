@@ -1,0 +1,81 @@
+# GitHub Copilot Agent setup steps for Streamline Tools
+# This file configures the development environment before firewall restrictions are applied
+# Addresses Chrome browser installation issues for Puppeteer testing
+
+name: Copilot Setup Steps
+
+steps:
+  # Install Chrome browser for Puppeteer testing
+  # This addresses the firewall blocks for Chrome download URLs
+  - name: Install Chrome Browser
+    run: |
+      # Update package lists
+      sudo apt-get update
+      
+      # Install dependencies for Chrome
+      sudo apt-get install -y \
+        wget \
+        gnupg \
+        lsb-release \
+        ca-certificates \
+        apt-transport-https
+      
+      # Add Google Chrome repository
+      wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+      echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+      
+      # Update package lists and install Chrome
+      sudo apt-get update
+      sudo apt-get install -y google-chrome-stable
+      
+      # Verify Chrome installation
+      google-chrome --version
+
+  # Install Node.js dependencies
+  - name: Install Node.js Dependencies
+    run: |
+      # Install npm dependencies
+      npm ci
+      
+      # Verify installations
+      npm list --depth=0
+
+  # Set up Chrome for headless testing
+  - name: Configure Chrome for Headless Testing
+    run: |
+      # Set Chrome executable path for Puppeteer
+      export CHROME_BIN=/usr/bin/google-chrome-stable
+      
+      # Create Chrome user data directory
+      mkdir -p ~/.chrome-user-data
+      
+      # Set permissions
+      chmod 755 ~/.chrome-user-data
+
+  # Install additional development tools
+  - name: Install Development Tools
+    run: |
+      # Install TypeScript globally for better tooling
+      npm install -g typescript
+      
+      # Install StandardJS globally for linting
+      npm install -g standard
+      
+      # Verify installations
+      tsc --version
+      standard --version
+
+  # Warm up test environment
+  - name: Warm Up Test Environment
+    run: |
+      # Run linting to verify setup
+      npm run test -- --dry-run || true
+      
+      # Verify Jest can detect Chrome
+      npx jest --detectOpenHandles --dry-run || true
+
+# Environment variables for Chrome/Puppeteer
+environment:
+  CHROME_BIN: /usr/bin/google-chrome-stable
+  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+  PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome-stable
