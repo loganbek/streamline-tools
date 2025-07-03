@@ -1,0 +1,34 @@
+<testsuites id="" name="" tests="7" failures="0" skipped="7" errors="0" time="0.181341">
+<testsuite name="extension.test.js" timestamp="2025-07-03T19:56:42.649Z" hostname="chromium-extension" tests="4" failures="0" skipped="4" time="0" errors="0">
+<testcase name="Chrome Extension Tests › should load extension options page" classname="extension.test.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Chrome Extension Tests › should validate options page interface" classname="extension.test.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Chrome Extension Tests › should verify extension popup availability" classname="extension.test.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Chrome Extension Tests › should handle extension popup button states" classname="extension.test.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="login.test.js" timestamp="2025-07-03T19:56:42.649Z" hostname="chromium-extension" tests="3" failures="0" skipped="3" time="0" errors="0">
+<testcase name="Login Tests › should successfully login using helper function" classname="login.test.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Tests › should handle failed login" classname="login.test.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Login Tests › should validate login form elements" classname="login.test.js" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+</testsuites>

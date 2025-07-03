@@ -38,6 +38,17 @@ module.exports = {
         // Explicitly set to reuse the same browser instance
         browserContext: 'default'
       }
+    },
+    {
+      displayName: 'playwright',
+      testMatch: ['<rootDir>/tests/playwright/**/*.test.js'],
+      testEnvironment: 'node',
+      setupFilesAfterEnv: [
+        '<rootDir>/tests/playwright-setup.js'
+      ],
+      globals: {
+        __PLAYWRIGHT__: true
+      }
     }
   ],
   // Limit workers to prevent spawning multiple browsers
